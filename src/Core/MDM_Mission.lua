@@ -29,6 +29,14 @@ function MDM_Mission:new (args)
   setmetatable(mission, self)
   self.__index = self
 
+  if not args then
+    error("args not set",2)
+  end
+
+  if not args.title then
+    error("title not set" ,2)
+  end
+
   mission.args = args
   mission.objectives = {}
   mission.directors = {}
@@ -337,7 +345,7 @@ end
 
 function MDM_Mission.UnitTest()
   print("---------------MDM_Mission Unit Test")
-  local  m = MDM_Mission:new("Missiontest")
+  local  m = MDM_Mission:new({title = "Missiontest"})
 
   local  o1 = MDM_MockObjective:new({mission = m})
   MDM_Objective.SetInformation(o1,"M1","","")

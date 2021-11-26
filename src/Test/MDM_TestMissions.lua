@@ -51,4 +51,6 @@ function MDM_TestMissions.TestMissions()
   TestMissions.GangWarTest()
   print("---------------Testmissions DestroyCarInAreaTest")
   TestMissions.DestroyCarInAreaTest()
+  print("---------------Testmissions HosileZoneTest")
+  TestMissions.HostileZoneTest()
 end

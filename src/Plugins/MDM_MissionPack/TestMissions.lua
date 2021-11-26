@@ -293,3 +293,31 @@ function TestMissions.GetInCar()
   MDM_MissionManager.StartMission(mission)
 end
 
+function TestMissions.HostileZoneTest()
+  local position = MDM_Utils.GetVector(-907.94,-180.41,2)
+  local npc1 = MDM_NPC:new("13604348442857333985",position,MDM_Utils.GetVector(0,0,0))
+
+  local mission = MDM_Mission:new({
+    title = "Hostile AreaTest"
+  })
+
+  local objective = MDM_KillTargetsObjective:new({
+    targets = {npc1}
+  })
+  mission:AddObjective(objective)
+
+  local hostileZone =  MDM_HostileZoneDirector:new({
+    position = position,
+    radius = 50,
+    detectionRadius = 5,
+    showArea = true,
+    enemies = {npc1}
+  }
+  )
+
+  MDM_ActivatorUtils.RunBetweenObjectives(hostileZone,objective,objective)
+
+  mission:AddDirector(hostileZone)
+  mission:AddAssets({npc1})
+  MDM_MissionManager.StartMission(mission)
+end

@@ -45,7 +45,7 @@ function MDM_NPC:new(npcId,pos,dir)
   return npc
 end
 
-function MDM_NPC.AttackPlayer(self, entity)
+function MDM_NPC.AttackPlayer(self)
   local ent = self:GetGameEntity()
 
   local func = function()

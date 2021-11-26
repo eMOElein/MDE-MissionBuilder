@@ -83,7 +83,7 @@ function MDM_SalieriMissions.M2_WhiskyWhopper()
   local npc8 = MDM_NPC:new("9024609446539980771",MDM_Utils.GetVector(-922.49371,-728.50079,3.1785531),MDM_Utils.GetVector(0.60751921,-0.79430497,0))
   local npc9 = MDM_NPC:new("18187434932497386406",MDM_Utils.GetVector(-899.25873,-723.43848,3.1321092),MDM_Utils.GetVector(0.21112774,-0.97745848,0))
   local npc10 = MDM_NPC:new("18187434932497386406",MDM_Utils.GetVector(-915.8587,-745.17853,3.0953269),MDM_Utils.GetVector(0.70855165,-0.70565885,0))
-  local npc_assets = {npc1,npc2,npc3,npc4,npc5,npc6,npc7,npc8,npc9,npc10}
+  local enemyNpcs = {npc1,npc2,npc3,npc4,npc5,npc6,npc7,npc8,npc9,npc10}
 
   local car_bolt_pickup_1 = MDM_Car:new("bolt_pickup",MDM_Utils.GetVector(-893.90149,-745.11334,3.8092734),MDM_Utils.GetVector(0.72964358,0.68382657,0.0011832109))
   local car_bolt_pickup_2 = MDM_Car:new("bolt_pickup",MDM_Utils.GetVector(-898.30536,-751.86047,3.3934219),MDM_Utils.GetVector(-0.74674648,-0.66510487,-0.0023534386))
@@ -106,7 +106,9 @@ function MDM_SalieriMissions.M2_WhiskyWhopper()
     title = "Salieri - Whisky Whopper",
     introText = M2_introText
   })
-
+  -------------------------------------
+  --------------Objectives-------------
+  -------------------------------------
   local objective1 = MDM_GoToObjective:new({
     mission = mission,
     position = MDM_Utils.GetVector(-634.74359,-272.58469,2.9996707),
@@ -129,25 +131,41 @@ function MDM_SalieriMissions.M2_WhiskyWhopper()
   })
   mission:AddObjective(objective3)
 
-  local noPoliceZoneDirector = MDM_PoliceFreeZoneDirector:new({position = MDM_Utils.GetVector(-903.87787,-729.97449,3.1465139), radius = 60})
-  MDM_ActivatorUtils.EnableOnObjectiveStart(noPoliceZoneDirector,objective2)
-  MDM_ActivatorUtils.DisableOnObjectiveStop(noPoliceZoneDirector,objective3)
-
   local objective4 = MDM_GoToObjective:new({
     mission = mission,
     position = MDM_Utils.GetVector(-1531.4517,-372.92609,2.9755383),
-    introText = "Drive to the meeting area.",
+    title = "Drive to the meeting area.",
     onObjectiveEnd = function() npc_paulie:MakeAlly(false) end
   })
   mission:AddObjective(objective4)
+  -------------------------------------
+  --------------Directors--------------
+  -------------------------------------
+  local zonePosition = MDM_Utils.GetVector(-903.87787,-729.97449,3.1465139)
+  local zoneRadius = 60
 
-  mission:AddAssets(npc_assets)
+  local noPoliceZoneDirector = MDM_PoliceFreeZoneDirector:new({position = zonePosition, radius = zoneRadius})
+  MDM_ActivatorUtils.EnableOnObjectiveStart(noPoliceZoneDirector,objective2)
+  MDM_ActivatorUtils.DisableOnObjectiveStop(noPoliceZoneDirector,objective3)
+  mission:AddDirector(noPoliceZoneDirector)
+
+  local hostileZoneDirector = MDM_HostileZoneDirector:new({
+    position = zonePosition,
+    radius = zoneRadius,
+    detectionRadius = 10,
+    enemies = enemyNpcs,
+    showArea = true
+  })
+  MDM_ActivatorUtils.RunBetweenObjectives(hostileZoneDirector,objective2,objective3)
+  mission:AddDirector(hostileZoneDirector)
+
+  mission:AddAssets(enemyNpcs)
   mission:AddAssets(car_assets)
   mission:AddAssets({npc_paulie})
 
   if MDM_MissionManager.StartMission(mission) then
     MDM_Utils.SpawnAll(car_assets)
-    MDM_Utils.SpawnAll(npc_assets)
+    MDM_Utils.SpawnAll(enemyNpcs)
     MDM_Utils.SpawnAll({npc_paulie}) -- Important to put single objects in brackets as method can only handle tables!!!
   end
 

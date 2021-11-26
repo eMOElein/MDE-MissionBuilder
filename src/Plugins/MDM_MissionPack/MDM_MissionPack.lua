@@ -161,25 +161,11 @@ function MDM_MissionPack.InitializeTestMissions()
   }
   MDM_Core.missionManager:AddMissionProvider(WaveTest)
 
+  local hostileZoneTest = {
+    title = "Hostile Zone Test",
+    client = client,
+    missionSupplier = TestMissions.HostileZoneTest
+  }
+  MDM_Core.missionManager:AddMissionProvider(hostileZoneTest)
+
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

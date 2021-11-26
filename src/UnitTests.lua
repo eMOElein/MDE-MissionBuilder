@@ -20,7 +20,6 @@ function all()
   UnitTest.TestVector()
   UnitTest.TestVectorDistance()
   MDM_Updateable.UnitTest()
-  MDM_Core._Initialize()
   --  MDM_MainMenu.UnitTest()
   MDM_MapCircle.UnitTest()
   ----------------
@@ -45,6 +44,7 @@ function all()
   MDM_PlayerInCarBannerDirector.UnitTest()
   MDM_PoliceFreeZoneDirector.UnitTest()
   MDM_BannerNotificationDirector.UnitTest()
+  MDM_HostileZoneDirector.UnitTest()
   ----------------
   -- Objectives --
   ----------------
@@ -54,6 +54,10 @@ function all()
   MDM_KillTargetsObjective.UnitTest()
   MDM_HurtNPCObjective.UnitTest()
   MDM_WaveObjective.UnitTest()
+  ----------------
+  --Initialize Plugins
+  ----------------
+  MDM_Core._Initialize()
   ----------------
   --- Missions ---
   ----------------
