@@ -1,0 +1,17 @@
+{
+    "author": "eMOElein",
+	"enableAutoRefresh": true,
+	"entrypoint": "main.lua",
+    "keyBinds": {
+		"toggle": "F5"
+    },
+    "keyBindsInfo": [
+        {
+            "info": "Toggle Menu",
+            "name": "toggle",
+            "text": "Shows or hides the mission menu"
+        }
+    ],
+	"name": "Mafia Definitive Missionbuilder",
+    "version": "0.1"
+}
