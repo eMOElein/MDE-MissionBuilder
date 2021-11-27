@@ -65,7 +65,7 @@ function MDM_LucasBertone.M2_1_TripToTheCountry()
 
   local mission = MDM_Mission:new({
     initialOutfit = "9354636703565519112", --Trenchcoat and hat
-    initialWeather = "mm_100_farm_cp_080",
+    initialWeather = "mm_100_farm_cp_050",
     initialSeason = 3, --1933
     outroText = M2_1_outroText,
     --    startPosition = MDM_Utils.GetVector(1714.9164,529.63013,2.7865424),
@@ -109,9 +109,10 @@ end
 
 function MDM_LucasBertone.M2_2_TripToTheCountry()
   local car_culver = MDM_Car:new("culver_airmaster",MDM_Utils.GetVector(1455.7325,-645.18976,45.83866),MDM_Utils.GetVector(0.20905077,-0.97790265,-0.0020436067))
+  car_culver:SetPrimaryColor(70,70,10)
 
   local mission = MDM_Mission:new({
-    initialWeather = "mm_100_farm_cp_080",
+    initialWeather = "mm_100_farm_cp_050",
     initialOutfit = "9354636703565519112", --Trenchcoat and Hat
     title = "Lucas Bertone 2-2 - A Trip To The Country"
   })
@@ -174,7 +175,7 @@ end
 
 function MDM_LucasBertone.M3_2_Omerta()
   local car_berkley = MDM_Car:new("berkley_810",MDM_Utils.GetVector(2127.3906,-252.37337,122.8),MDM_Utils.GetVector(-0.99890906,-0.045765243,-0.0092927944))
-  car_berkley:SetPrimaryColor(255,136,0)
+  car_berkley:SetPrimaryColor(100,30,0)
 
   local mission = MDM_Mission:new({
     initialWeather = "mm_110_omerta_cp_050_cs_safehouse",
@@ -227,7 +228,6 @@ function MDM_LucasBertone.M5_1_CremeDeLaCreme()
   mission:OnMissionEnd(function() MDM_PoliceUtils.UnlockWantedLevel() end)
 
   mission:AddObjective(MDM_RestorePlayerObjective:new())
-
 
   local objective1 = MDM_GoToObjective:new({
     outroText = "The car outside was used in a crime.\nI need you to drive it to the lighthouse and destroy it there.\nBut be careful. The police knows the vehicle.",
@@ -481,6 +481,40 @@ function MDM_LucasBertone.M7_2_Robbery()
     car_trautenberg:Spawn()
   end
 end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

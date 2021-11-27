@@ -41,8 +41,14 @@ function MDM_TestFunctions.Test()
     print("Drive Car")
     -- Setting the Navmode only works if an npc is sitting in the driver seat
     --     smithCar:GetGameEntity():SetRubberBandingOn("true")
-    smithCar:GetGameEntity():SetMaxAISpeed(false,   enums.CarAIProfile.NORMAL )
-    smithCar:GetGameEntity():InitializeAIParams(enums.CarAIProfile.NORMAL ,1 )
+
+
+    --    smithCar:GetGameEntity():SetMaxAISpeed(false,   enums.CarAIProfile.NORMAL )
+    --    smithCar:GetGameEntity():InitializeAIParams(enums.CarAIProfile.NORMAL ,1 )
+    smithCar:GetGameEntity():InitializeAIParams(enums.CarAIProfile.AGGRESSIVE   ,enums.CarAIProfile.AGGRESSIVE   )
+    smithCar:GetGameEntity():SetMaxAISpeed(true,70)
+
+
     --   smithCar:GetGameEntity():SetNavModeHunt(getp(),5,  enums.CarHuntRole.POKE   )--
     smithCar:GetGameEntity():SetNavModeWanderArea(false,nil)
     --    smithCar:GetGameEntity():SetNavModeMoveTo(MDM_LocationPositions.BERTONES_AUTOSERVICE_FRONTDOOR,   enums.CarPathEnd.PARK )

@@ -48,7 +48,7 @@ function MDM_Mission:new (args)
   mission.description = ""
   mission.Outcome = 0
   mission.failText = "Mission Failed"
-  mission.failDescription = ""
+  mission.failDescription = nil
   mission.flagFailed = false
   mission.introductionShown = false
   mission.titleBanner = MDM_Banner:new(mission:GetTitle())
@@ -115,12 +115,6 @@ end
 
 function MDM_Mission.OnActiveObjectiveChanged(self,callback)
   table.insert(self.OnActiveObjectiveChangedCallbacks,callback)
-end
-
-function MDM_Mission.callListeners(self,var, listeners)
-  for index,callback in ipairs(self.OnActiveObjectiveChangedCallbacks) do
-    callback(var)
-  end
 end
 
 function MDM_Mission.SetInitialOutfit(self,outfitId)
@@ -251,24 +245,28 @@ function MDM_Mission.Stop(self)
   --game.audio:PlaySimpleEvent("ui_EF_Textbox_Show")
   --game.audio:PlaySimpleEvent("ui_Store_Menu_Enter")
   --game.audio:PlaySimpleEvent("ui_Store_Menu_Exit")
-  if self.flagFailed then
-    color = 0
-    text = self.failText
-    description = self.failDescription
-    sound = "ui_EF_Textbox_Hide"
-  else
-    color = 1
-    text = "Mission Complete"
-    sound = "mx_Gameplay_Music_Mission_Complete"
-  end
 
-  for _,callback in ipairs(self.OnMissionEndCallbacks) do
-    callback()
+
+  --  if self.flagFailed then
+  --    color = 0
+  --    text = self.failText
+  --    description = self.failDescription
+  --    sound = "ui_EF_Textbox_Hide"
+  --  else
+  --    color = 1
+  --    text = "Mission Complete"
+  --    sound = "mx_Gameplay_Music_Mission_Complete"
+  --  end
+
+  if not self.flagFailed then
+    for _,callback in ipairs(self.OnMissionEndCallbacks) do
+      callback()
+    end
   end
 
   if game then
     if self.flagFailed then
-      self.missionCompleteBanner.title = "Mission Failed!"
+      self.missionCompleteBanner.title = self.failDescription or "Mission Failed!"
       self.missionCompleteBanner.color = 0
     end
     game.audio:PlaySimpleEvent(sound)
@@ -283,7 +281,13 @@ function MDM_Mission.Stop(self)
 
 
   MDM_Utils.DespawnAll(self.assets,50)
-  MDM_Utils.ForEach(self.assets,function(asset) MDM_SpawnManager.MarkForRadiusDespawn(asset,50)end)
+  for _,a in ipairs(self.assets) do
+    if self.flagFailed then
+      a:Despawn()
+    else
+      MDM_SpawnManager.MarkForRadiusDespawn(a,50)
+    end
+  end
 end
 
 function MDM_Mission.Succeed(self)
@@ -296,7 +300,9 @@ function MDM_Mission.UpdateDirectors(self)
     error ("directors not set",2)
   end
 
-  for _,d in ipairs(self.directors) do d:Update() end
+  for _,d in ipairs(self.directors) do
+    d:Update()
+  end
 end
 
 function MDM_Mission.Update(self)

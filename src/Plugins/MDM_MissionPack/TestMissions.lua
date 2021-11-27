@@ -257,9 +257,10 @@ function TestMissions.BannerTest()
 end
 
 function TestMissions.GetInCar()
-  local falconerCar = MDM_Car:new("smith_v12",MDM_Utils.GetVector(-898.71429,-181.9543,4),MDM_Utils.GetVector(-0,000001,-0.000004,0.000150))
+  local falconerCar = MDM_Car:new("berkley_810",MDM_Utils.GetVector(-898.71429,-181.9543,4),MDM_Utils.GetVector(-0,000001,-0.000004,0.000150))
   falconerCar:SetIndestructable(true)
-  falconerCar:SetPrimaryColor(150,100,0)
+  --    falconerCar:SetPrimaryColor(48,45,10)
+  falconerCar:SetPrimaryColor(100,30,0)
   local mission = MDM_Mission:new({title = "Get in the Car"})
 
   -- Objective1: Get In The Car

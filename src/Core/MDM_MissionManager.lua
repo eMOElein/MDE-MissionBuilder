@@ -139,13 +139,4 @@ function MDM_MissionManager.Update(self)
   end
 end
 
-local function PrintInfo()
-  if(game ~= nil) then
-    print("Printing Game:")
-    print(MDM_Utils.tprint(game))
-    print("Printing Police:")
-    print(MDM_Utils.tprint(game.police))
-    print("Printing game.police:GetActiveZones:")
-    print(MDM_Utils.tprint(game.police:GetActiveZones()))
-  end
-end
+
