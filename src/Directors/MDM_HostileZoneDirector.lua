@@ -58,7 +58,7 @@ function MDM_HostileZoneDirector.Update(self)
     return
   end
 
-  if  not self.inAreaDetector:Test() then
+  if not self.inAreaDetector:Test() then
     return
   end
 
@@ -83,7 +83,6 @@ function MDM_HostileZoneDirector.Update(self)
 end
 
 function MDM_HostileZoneDirector.Enable(self)
-  print("Enable")
   MDM_Director.Enable(self)
   if self.showArea then
     self.mapCircle:Show()
@@ -91,7 +90,6 @@ function MDM_HostileZoneDirector.Enable(self)
 end
 
 function MDM_HostileZoneDirector.Disable(self)
-  print("Disable")
   MDM_Director.Disable(self)
   self.mapCircle:Hide()
 end

@@ -135,9 +135,6 @@ function MDM_Objective.Start(self)
 end
 
 function MDM_Objective.OnObjectiveStop(self,callback)
-  if game  and self.args.outroText then
-    game.hud:SendMessageMovie("HUD", "OnShowFreerideBanner", "", self.args.outroText)
-  end
   MDM_Objective.OnObjectiveEnd(self,callback)
 end
 
@@ -186,11 +183,13 @@ function MDM_Objective.Stop(self)
   self.entity = nil
   self.running = false
 
+  --Call onObjective End Callbacks
+  MDM_Utils.ForEach(self.onObjectiveEndCallbacks,function(callback) callback(self) end)
+
   if self:GetOutcome() > 0 and self:GetOutroText() and game then
     game.hud:SendMessageMovie("HUD", "OnShowFreerideBanner", "", self:GetOutroText())
   end
-  --Call onObjective End Callbacks
-  MDM_Utils.ForEach(self.onObjectiveEndCallbacks,function(callback) callback(self) end)
+
 end
 
 function MDM_Objective.Succeed(self)

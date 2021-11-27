@@ -23,12 +23,13 @@ function MDM_MissionManager:new ()
   self.__index = self
 
   missionManager.missionProviders = {}
+  missionManager.missionInitialized = false
   return missionManager
 end
 
 function MDM_MissionManager.ToggleMissionMenu(self)
   if not menuInitialized then
-    MDM_MainMenu.Initialize(self:FetchMissionProviders())
+    MDM_MainMenu.Initialize(self.missionProviders)
     menuInitialized = true
   end
   MDM_MainMenu.Toggle()
@@ -107,7 +108,7 @@ function MDM_MissionManager.StartMission(mission)
 
   activeMission = mission
   _InitializeMission(mission)
-  MDM_MainMenu.Deactivate()
+  MDM_MainMenu.Hide()
   mission:Start()
   return true
 end
@@ -126,16 +127,16 @@ function MDM_MissionManager.Update(self)
     return
   end
 
-  if activeMission then
-    if activeMission.Update then activeMission:Update() end
-    if not activeMission:IsRunning() then activeMission = nil end
-  end
+  MDM_SpawnManager.Update()
 
   if activeMission and game and getp():IsDeath() then
     activeMission:Fail()
   end
 
-  MDM_SpawnManager.Update()
+  if activeMission then
+    if activeMission.Update then activeMission:Update() end
+    if not activeMission:IsRunning() then activeMission = nil end
+  end
 end
 
 local function PrintInfo()

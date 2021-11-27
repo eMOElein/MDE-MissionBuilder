@@ -23,49 +23,49 @@ function MDM_SalieriMissions.M1_BackyardTrouble()
   local npc3 = MDM_NPC:new("13604348442857333985",MDM_Utils.GetVector(-684.01532,-21.848021,3.352128),MDM_Utils.GetVector(0.9708972,0.23949677,0))
   local npc4 = MDM_NPC:new("13604348442857333985",MDM_Utils.GetVector(-678.65411,-14.920903,3.2161522),MDM_Utils.GetVector(-0.31570739,-0.94885659,0))
 
-  local m = MDM_Mission:new({
+  local mission = MDM_Mission:new({
     title = "Salieri - Backyard Trouble",
-    introText = M1_Introtext
+    introText = M1_introText
   })
 
-  m:AddObjective(MDM_RestorePlayerObjective:new())
+  mission:AddObjective(MDM_RestorePlayerObjective:new())
 
   local objective1 = MDM_KillTargetsObjective:new({
-    mission = m,
+    mission = mission,
     targets = {npc1,npc2,npc3,npc4},
     title = "Take out Morello's henchmen in a nearby backyard",
     task = "Take out Morello's henchmen in a nearby backyard",
     onObjectiveStart = function() MDM_PlayerUtils.RestorePlayer() end
   })
-  m:AddObjective(objective1)
+  mission:AddObjective(objective1)
 
   local objective2 = MDM_PoliceEvadeObjective:new ({
-    mission = m,
+    mission = mission,
     initialLevel = 2,
     title = "The police is on the way - Escape!"
   })
-  m:AddObjective(objective2)
+  mission:AddObjective(objective2)
 
   local objective3 = MDM_GoToObjective:new({
-    mission = m,
+    mission = mission,
     position = MDM_Utils.GetVector(-907.94,-210.41,2),
     title = "Drive back to Salieri's Bar"
   })
-  m:AddObjective(objective3)
+  mission:AddObjective(objective3)
 
   -- police should not interfere during the shooting. only afterwards.
   local noPoliceZoneDirector = MDM_PoliceFreeZoneDirector:new({position = MDM_Utils.GetVector(-671.66565,-10.197743,3.1811743), radius = 60})
   MDM_ActivatorUtils.RunWhileObjective(noPoliceZoneDirector,objective1)
-  m:AddDirector(noPoliceZoneDirector)
+  mission:AddDirector(noPoliceZoneDirector)
 
   local assets = {npc1,npc2,npc3,npc4,car_schubert} -- Important to add single objects in brackets as method can only handle tables!!!
-  m:AddAssets(assets)
+  mission:AddAssets(assets)
 
-  if MDM_MissionManager.StartMission(m) then
+  if MDM_MissionManager.StartMission(mission) then
     MDM_Utils.SpawnAll(assets)
   end
 
-  return m
+  return mission
 end
 
 function MDM_SalieriMissions.M2_WhiskyWhopper()
@@ -144,9 +144,11 @@ function MDM_SalieriMissions.M2_WhiskyWhopper()
   local zonePosition = MDM_Utils.GetVector(-903.87787,-729.97449,3.1465139)
   local zoneRadius = 60
 
-  local noPoliceZoneDirector = MDM_PoliceFreeZoneDirector:new({position = zonePosition, radius = zoneRadius})
-  MDM_ActivatorUtils.EnableOnObjectiveStart(noPoliceZoneDirector,objective2)
-  MDM_ActivatorUtils.DisableOnObjectiveStop(noPoliceZoneDirector,objective3)
+  local noPoliceZoneDirector = MDM_PoliceFreeZoneDirector:new({
+    position = zonePosition,
+    radius = zoneRadius
+  })
+  MDM_ActivatorUtils.RunBetweenObjectives(noPoliceZoneDirector,objective2,objective3)
   mission:AddDirector(noPoliceZoneDirector)
 
   local hostileZoneDirector = MDM_HostileZoneDirector:new({
@@ -163,10 +165,16 @@ function MDM_SalieriMissions.M2_WhiskyWhopper()
   mission:AddAssets(car_assets)
   mission:AddAssets({npc_paulie})
 
-  if MDM_MissionManager.StartMission(mission) then
+  mission:OnMissionStart(function()
     MDM_Utils.SpawnAll(car_assets)
     MDM_Utils.SpawnAll(enemyNpcs)
-    MDM_Utils.SpawnAll({npc_paulie}) -- Important to put single objects in brackets as method can only handle tables!!!
+    MDM_Utils.SpawnAll({npc_paulie}) -- Important to put single objects in brackets!!!
+  end)
+
+  if MDM_MissionManager.StartMission(mission) then
+  -- MDM_Utils.SpawnAll(car_assets)
+  -- MDM_Utils.SpawnAll(enemyNpcs)
+  -- MDM_Utils.SpawnAll({npc_paulie}) -- Important to put single objects in brackets!!!
   end
 
   return mission
@@ -207,12 +215,18 @@ function MDM_SalieriMissions.M3_GangWar1()
     MDM_NPC:newFriend("5874491335140879700",MDM_Utils.GetVector(-908.85223,-227.08142,2.808135),MDM_Utils.GetVector(0.99617749,0.087352395,0)),
   }
 
-  local wave1 = {enemies = wave1Npcs,
-    title = "Wave 1 - They are coming from the North"
+  local wave1 = {
+    enemies = wave1Npcs,
+    title = "Wave 1 - They are coming from the North",
+    restorePlayer = true,
+    preparationTime = 10,
   }
 
-  local wave2 = {enemies = wave2NPCs,
-    title = "Wave 2 - They are coming from the South"
+  local wave2 = {
+    enemies = wave2NPCs,
+    title = "Wave 2 - They are coming from the South",
+    restorePlayer = true,
+    preparationTime = 10,
   }
 
   local warConfig = MDM_GangWarMission.GangWarConfiguration()
@@ -265,17 +279,23 @@ function MDM_SalieriMissions.M4_GangWar2()
 
   local wave1 = {
     enemies = wave1Npcs,
-    title = "Wave 1 - Attack from the north"
+    title = "Wave 1 - Attack from the north",
+    restorePlayer = true,
+    preparationTime = 10,
   }
 
   local wave2 = {
     enemies = wave2NPCs,
-    title = "Wave 2 - Attack from the west"
+    title = "Wave 2 - Attack from the west",
+    restorePlayer = true,
+    preparationTime = 10,
   }
 
   local wave3 = {
     enemies = wave3NPCs,
-    title = "Wave 3 - Attack from the south"
+    title = "Wave 3 - Attack from the south",
+    restorePlayer = true,
+    preparationTime = 10,
   }
 
   local warConfig = MDM_GangWarMission.GangWarConfiguration()

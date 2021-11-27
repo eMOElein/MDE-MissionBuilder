@@ -4,8 +4,3 @@ MDM_Plugins.luas = {
   "Plugins/MDM_MissionPack/MDM_MissionPack",
   "Plugins/XXX_YourMissions/XXX_YourMissions"
 }
-
-
-
-
-

@@ -20,7 +20,6 @@ function all()
   UnitTest.TestVector()
   UnitTest.TestVectorDistance()
   MDM_Updateable.UnitTest()
-  --  MDM_MainMenu.UnitTest()
   MDM_MapCircle.UnitTest()
   ----------------
   --- Entities ---
@@ -58,6 +57,7 @@ function all()
   --Initialize Plugins
   ----------------
   MDM_Core._Initialize()
+  MDM_MainMenu.UnitTest()
   ----------------
   --- Missions ---
   ----------------

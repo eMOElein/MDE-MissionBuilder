@@ -13,6 +13,7 @@
 MDM_LucasBertone = {}
 
 local pos_SalierisBar = MDM_LocationPositions.SALIERIS_BAR_GARAGE_FRONTDOOR--MDM_Utils.GetVector(-907.94,-210.41,2)
+-- MDM_Utils.GetVector(437.38721,38.019478,12.10504)
 local pos_BertonesAutoservice = MDM_LocationPositions.BERTONES_AUTOSERVICE_FRONTDOOR --real location
 --local pos_BertonesAutoservice = MDM_Utils.GetVector(-907.94,-180.41,2) -- fake location at Salieris bar
 
@@ -219,7 +220,6 @@ function MDM_LucasBertone.M5_1_CremeDeLaCreme()
   local mission = MDM_Mission:new({
     initialWeather = "mm_170_plane_cp_060_cine_1750_plane_airport",
     initialOutfit = "9354636703565519112",
-    introText = "The car outside was used in a crime.\nI need you to drive it to the lighthouse and destroy it there.\nBut be careful. The police knows the vehicle.",
     outroText = "Thank you Tommy.",
     startPosition = MDM_LocationPositions.BERTONES_AUTOSERVICE_FRONTDOOR,
     title = "Lucas Bertone 5-1 - Creme de la Creme"
@@ -228,8 +228,9 @@ function MDM_LucasBertone.M5_1_CremeDeLaCreme()
 
   mission:AddObjective(MDM_RestorePlayerObjective:new())
 
+
   local objective1 = MDM_GoToObjective:new({
-    outroText = "Destroy the car at the lighthouse.",
+    outroText = "The car outside was used in a crime.\nI need you to drive it to the lighthouse and destroy it there.\nBut be careful. The police knows the vehicle.",
     position = pos_BertonesAutoservice,
     radius = 2,
     title = "Visit Lucas Bertone"
@@ -443,6 +444,7 @@ function MDM_LucasBertone.M7_1_Robbery()
   local noPoliceZoneDirector = MDM_PoliceFreeZoneDirector:new({position = MDM_Utils.GetVector(506.13187,-711.24323,4.2604446),radius = 60})
   MDM_ActivatorUtils.EnableOnObjectiveStart(noPoliceZoneDirector,objective2)
   MDM_ActivatorUtils.DisableOnObjectiveStop(noPoliceZoneDirector,objective3)
+  mission:AddDirector(noPoliceZoneDirector)
 
   -- Visit Lucas Bertone
   local objective4 = MDM_GoToObjective:new({
@@ -479,6 +481,24 @@ function MDM_LucasBertone.M7_2_Robbery()
     car_trautenberg:Spawn()
   end
 end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
