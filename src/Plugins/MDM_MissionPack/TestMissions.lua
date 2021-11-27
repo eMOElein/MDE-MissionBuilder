@@ -308,7 +308,7 @@ function TestMissions.HostileZoneTest()
 
   local hostileZone =  MDM_HostileZoneDirector:new({
     position = position,
-    radius = 50,
+    radius = 80,
     detectionRadius = 5,
     showArea = true,
     enemies = {npc1}

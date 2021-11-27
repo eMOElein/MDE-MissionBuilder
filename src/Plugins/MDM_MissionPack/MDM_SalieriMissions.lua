@@ -152,7 +152,7 @@ function MDM_SalieriMissions.M2_WhiskyWhopper()
   local hostileZoneDirector = MDM_HostileZoneDirector:new({
     position = zonePosition,
     radius = zoneRadius,
-    detectionRadius = 10,
+    detectionRadius = 15,
     enemies = enemyNpcs,
     showArea = true
   })

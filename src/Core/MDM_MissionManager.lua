@@ -131,6 +131,10 @@ function MDM_MissionManager.Update(self)
     if not activeMission:IsRunning() then activeMission = nil end
   end
 
+  if activeMission and game and getp():IsDeath() then
+    activeMission:Fail()
+  end
+
   MDM_SpawnManager.Update()
 end
 

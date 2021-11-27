@@ -54,12 +54,10 @@ function MDM_HostileZoneDirector:new (args)
 end
 
 function MDM_HostileZoneDirector.Update(self)
-  print("Test1")
   if not self:IsEnabled() then
     return
   end
 
-  print("Test2")
   if  not self.inAreaDetector:Test() then
     return
   end
@@ -68,7 +66,7 @@ function MDM_HostileZoneDirector.Update(self)
   if enemy then
     local gameEntity = enemy:GetGameEntity(self)
     if gameEntity then
-      if MDM_Utils.VectorDistance(gameEntity:GetPos(),MDM_PlayerUtils.GetPlayer():GetPos()) > self.args.detectionRadius then
+      if MDM_Utils.VectorDistance(gameEntity:GetPos(),MDM_PlayerUtils.GetPlayer():GetPos()) < self.args.detectionRadius then
         if gameEntity:GetSeePlayer() then
           enemy:AttackPlayer()
         end
