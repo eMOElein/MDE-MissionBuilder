@@ -96,25 +96,25 @@ end
 
 
 function MDM_HostileZoneDirector.UnitTest()
+  print("--------------- MDM_HostileZoneDirector Unit Test")
   local director = MDM_HostileZoneDirector:new({
     position = MDM_Utils.GetVector(0,0,0),
     radius = 50,
     detectionRadius = 20,
-    enemies = {},
+    enemies = {
+      MDM_NPC:new("",MDM_Utils.GetVector(0,0,0),MDM_Utils.GetVector(0,0,0)),
+      MDM_NPC:new("",MDM_Utils.GetVector(0,0,0),MDM_Utils.GetVector(0,0,0)),
+      MDM_NPC:new("",MDM_Utils.GetVector(0,0,0),MDM_Utils.GetVector(0,0,0))
+    },
     showArea = true
   })
 
   director:Enable()
   director:Update()
-  print(director.index)
   director:Update()
-  print(director.index)
   director:Update()
-  print(director.index)
   director:Update()
-  print(director.index)
   director:Update()
-  print(director.index)
   director:Update()
-  print(director.index)
+  print("OK")
 end

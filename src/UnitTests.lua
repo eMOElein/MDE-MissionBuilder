@@ -53,6 +53,7 @@ function all()
   MDM_KillTargetsObjective.UnitTest()
   MDM_HurtNPCObjective.UnitTest()
   MDM_WaveObjective.UnitTest()
+  MDM_CallbackObjective.UnitTest()
   ----------------
   --Initialize Plugins
   ----------------
@@ -92,3 +93,5 @@ end
 
 
 all()
+MDM_TestFunctions.Test()
+MDM_CallbackObjective.UnitTest()

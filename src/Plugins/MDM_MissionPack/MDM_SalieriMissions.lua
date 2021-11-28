@@ -32,7 +32,6 @@ function MDM_SalieriMissions.M1_BackyardTrouble()
   mission:AddObjective(MDM_RestorePlayerObjective:new())
 
   local objective1 = MDM_KillTargetsObjective:new({
-    mission = mission,
     targets = {npc1,npc2,npc3,npc4},
     title = "Take out Morello's henchmen in a nearby backyard",
     task = "Take out Morello's henchmen in a nearby backyard",
@@ -41,14 +40,12 @@ function MDM_SalieriMissions.M1_BackyardTrouble()
   mission:AddObjective(objective1)
 
   local objective2 = MDM_PoliceEvadeObjective:new ({
-    mission = mission,
     initialLevel = 2,
     title = "The police is on the way - Escape!"
   })
   mission:AddObjective(objective2)
 
   local objective3 = MDM_GoToObjective:new({
-    mission = mission,
     position = MDM_Utils.GetVector(-907.94,-210.41,2),
     title = "Drive back to Salieri's Bar"
   })
@@ -112,7 +109,6 @@ function MDM_SalieriMissions.M2_WhiskyWhopper()
   --------------Objectives-------------
   -------------------------------------
   local objective1 = MDM_GoToObjective:new({
-    mission = mission,
     position = MDM_Utils.GetVector(-634.74359,-272.58469,2.9996707),
     radius = 10,
     title = "Pick up Paulie.",
@@ -134,7 +130,6 @@ function MDM_SalieriMissions.M2_WhiskyWhopper()
   mission:AddObjective(objective3)
 
   local objective4 = MDM_GoToObjective:new({
-    mission = mission,
     position = MDM_Utils.GetVector(-1531.4517,-372.92609,2.9755383),
     title = "Drive to the meeting area.",
     onObjectiveEnd = function() npc_paulie:MakeAlly(false) end

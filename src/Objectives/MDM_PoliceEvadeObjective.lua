@@ -17,10 +17,6 @@ local args = {
   initialLevel = 1
 }
 function MDM_PoliceEvadeObjective:new (args)
-  if not args.mission then
-    error("mission not set",2)
-  end
-
   if not args.initialLevel then
     error("initial level not set",2)
   end

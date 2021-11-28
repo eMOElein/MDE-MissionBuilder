@@ -448,7 +448,6 @@ function MDM_LucasBertone.M7_1_Robbery()
 
   -- Visit Lucas Bertone
   local objective4 = MDM_GoToObjective:new({
-    mission = mission,
     position = pos_BertonesAutoservice,
     radius = 2,
     title = "Go back to Lucas Bertone"

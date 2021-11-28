@@ -55,6 +55,7 @@ function MDM_Objective:new(args)
 
   if args.onObjectiveStart then objective:OnObjectiveStart(args.onObjectiveStart) end
   if args.onObjectiveEnd then objective:OnObjectiveEnd(args.onObjectiveEnd) end
+  if args.mission then args.mission:AddObjective(objective) end
   return objective
 end
 
@@ -219,11 +220,9 @@ function MDM_Objective.UnitTest()
   local cnt = 0
   local m = MDM_Mission:new({title = "test"})
   local o1 = MDM_MockObjective:new({mission = m, ttl = 1})
-  m:AddObjective(o1)
 
   local o2 = MDM_MockObjective:new({mission = m, ttl = 1})
   o2:OnObjectiveStart(function() cnt = cnt+1 end)
-  m:AddObjective(o2)
 
   m:Start()
   m:Update()

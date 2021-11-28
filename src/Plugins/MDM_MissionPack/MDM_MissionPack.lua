@@ -168,4 +168,12 @@ function MDM_MissionPack.InitializeTestMissions()
   }
   MDM_Core.missionManager:AddMissionProvider(hostileZoneTest)
 
+  local carchaseTest = {
+    title = "Carchase Test",
+    client = client,
+    missionSupplier = TestMissions.CarchaseTest
+  }
+  MDM_Core.missionManager:AddMissionProvider(carchaseTest)
+
+
 end

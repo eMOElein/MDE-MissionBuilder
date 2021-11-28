@@ -22,14 +22,46 @@ function MDM_CallbackObjective:new (args)
   setmetatable(objective, self)
   self.__index = self
 
-  self.callback = args.callback
+  if not args.callback then
+    error("callback not set",2)
+  end
+
+  objective.callback = args.callback
   return objective
 end
 
 function MDM_CallbackObjective.Update(self)
   MDM_Objective.Update(self)
 
-  if self.callback() then
+  local result = self.callback()
+  if result then
     self:Succeed()
   end
+end
+
+function MDM_CallbackObjective.UnitTest()
+  print("---------------MDM_CallbackObjective UnitTest")
+  local mission = MDM_Mission:new({
+    title = "m"
+  })
+
+  local obj = MDM_CallbackObjective:new({
+    mission = mission,
+    callback = function() print("cbk") return true end
+  })
+
+  local obj2 = MDM_CallbackObjective:new({
+    mission = mission,
+    callback = function() print("cbk2") return true end
+  })
+
+  mission:Start()
+  mission:Update()
+  mission:Update()
+  mission:Update()
+  mission:Update()
+  mission:Update()
+  mission:Update()
+  mission:Update()
+  print("OK")
 end
