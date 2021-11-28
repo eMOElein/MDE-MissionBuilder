@@ -24,6 +24,8 @@ function MDM_MissionManager:new ()
 
   missionManager.missionProviders = {}
   missionManager.missionInitialized = false
+  self.missionInitialized = false
+  self.missionStarted = false
   return missionManager
 end
 
@@ -55,6 +57,10 @@ function MDM_MissionManager.FetchMissionProviders(self)
 end
 
 local function _InitializeMission(mission)
+  if not mission then
+    error("mission not set",2)
+  end
+
   if game then
     local initialWeather = mission:GetInitialWeather()
     if initialWeather then
@@ -96,7 +102,11 @@ local function _ShowBlockedBanner()
   end
 end
 
-function MDM_MissionManager.StartMission(mission)
+function MDM_MissionManager.StartMission(self, mission)
+  if not mission then
+    error("mission not set",2)
+  end
+
   if activeMission then
     _ShowBlockedBanner()
     return false
@@ -107,9 +117,11 @@ function MDM_MissionManager.StartMission(mission)
   end
 
   activeMission = mission
-  _InitializeMission(mission)
+  self.missionInitialized = false
+  self.missionStarted = false
+  -- _InitializeMission(mission)
   MDM_MainMenu.Hide()
-  mission:Start()
+  --  mission:Start()
   return true
 end
 
@@ -123,11 +135,27 @@ function MDM_MissionManager.StopActiveMission()
 end
 
 function MDM_MissionManager.Update(self)
+  MDM_SpawnManager.Update()
+
+  if not activeMission then
+    return
+  end
+
   if game.hud:IsFadingOut() or game.hud:IsFadedOut() then
     return
   end
 
-  MDM_SpawnManager.Update()
+  if not self.missionInitialized then
+    _InitializeMission(activeMission)
+    self.missionInitialized = true
+    return
+  end
+
+  if not self.missionStarted then
+    activeMission:Start()
+    self.missionStarted = true
+  end
+
 
   if activeMission and game and getp():IsDeath() then
     activeMission:Fail()
@@ -138,5 +166,3 @@ function MDM_MissionManager.Update(self)
     if not activeMission:IsRunning() then activeMission = nil end
   end
 end
-
-

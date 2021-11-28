@@ -6,7 +6,7 @@ MDM_LuaLoader._luas = {
   "Core/MDM_Core",
   "Core/MDM_MissionManager",
   "Core/MDM_Chronometer",
-  "Enums/MDM_LocationPositions",
+  "Enums/MDM_Locations",
   "MDM_Userimports",
   "Utils/MDM_ActivatorUtils",
   "Core/MDM_Updateable",

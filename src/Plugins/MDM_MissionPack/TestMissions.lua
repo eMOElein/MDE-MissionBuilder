@@ -82,7 +82,7 @@ function TestMissions.DestroyCarInAreaTest()
   car_smith:Spawn()
   local objective = MDM_DestroyCarInAreaObjective:new({mission = mission, car = car_smith, position = MDM_Utils.GetVector(-898.71429,-181.9543,4), radius = 20})
   mission:AddObjective(objective)
-  MDM_MissionManager.StartMission(mission)
+  MDM_Core.missionManager:StartMission(mission)
 end
 
 function TestMissions.WaveTest()
@@ -101,7 +101,7 @@ function TestMissions.WaveTest()
   local wave = MDM_WaveObjective:new(config)
 
 
-  MDM_MissionManager.StartMission(mission)
+  MDM_Core.missionManager:StartMission(mission)
 end
 
 
@@ -138,10 +138,10 @@ function TestMissions.GangWarTest()
   warConfig.waves = {wave1}
   warConfig.carAssets = carAssets
   warConfig.allyNpcs = allyNpcs
-  warConfig.initialPosition = MDM_LocationPositions.SALIERIS_BAR_FRONTDOOR
+  warConfig.initialPosition = MDM_Locations.SALIERIS_BAR_FRONTDOOR
 
   local mission = MDM_GangWarMission:new(warConfig)
-  MDM_MissionManager.StartMission(mission)
+  MDM_Core.missionManager:StartMission(mission)
 
   return mission
 end
@@ -201,7 +201,7 @@ function TestMissions.KillMission()
   --  npc2:Spawn()
   --  npc3:Spawn()
   --  npc4:Spawn()
-  MDM_MissionManager.StartMission(m)
+  MDM_Core.missionManager:StartMission(m)
 end
 
 function TestMissions.NPCHurtTest()
@@ -213,7 +213,7 @@ function TestMissions.NPCHurtTest()
   objective1.task = "Hurt the NPC"
   m:AddObjective(objective1)
 
-  if MDM_MissionManager.StartMission(m) then
+  if MDM_Core.missionManager:StartMission(m) then
     npc1:Spawn()
   end
 end
@@ -240,7 +240,7 @@ function TestMissions.WaypointMission()
   objective3.description = "Blablabla"
   mission:AddObjective(objective3)
 
-  MDM_MissionManager.StartMission(mission)
+  MDM_Core.missionManager:StartMission(mission)
 end
 
 function TestMissions.EvadeMission()
@@ -248,7 +248,7 @@ function TestMissions.EvadeMission()
   local objective_policeEvade = MDM_PoliceEvadeObjective:new ({mission = m, initialLevel = 1})
   objective_policeEvade:SetInitialWantedLevel(1)
   --  m:AddObjective(objective_policeEvade)
-  MDM_MissionManager.StartMission(m)
+  MDM_Core.missionManager:StartMission(m)
 end
 
 function TestMissions.BannerTest()
@@ -291,7 +291,7 @@ function TestMissions.GetInCar()
   MDM_ActivatorUtils.RunWhileObjective(damageDetector,objective2)
 
   mission:AddAssets({falconerCar})
-  MDM_MissionManager.StartMission(mission)
+  MDM_Core.missionManager:StartMission(mission)
 end
 
 function TestMissions.HostileZoneTest()
@@ -320,5 +320,5 @@ function TestMissions.HostileZoneTest()
 
   mission:AddDirector(hostileZone)
   mission:AddAssets({npc1})
-  MDM_MissionManager.StartMission(mission)
+  MDM_Core.missionManager:StartMission(mission)
 end

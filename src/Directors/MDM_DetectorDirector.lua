@@ -20,10 +20,6 @@ local arguments = {
 }
 
 function MDM_DetectorDirector:new (args)
-  if not args.mission then
-    error("mission not set",2)
-  end
-
   if not args.detector then
     error("detector not set",2)
   end

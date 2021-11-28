@@ -11,7 +11,7 @@
 -- You should have received a copy of the GNU General Public License
 -- along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-MDM_LocationPositions = {
+MDM_Locations = {
   BERTONES_AUTOSERVICE_FRONTDOOR = MDM_Utils.GetVector(434.55957,27.981985,12.104329),
   SALIERIS_BAR_FRONTDOOR = MDM_Utils.GetVector(-908.87714,-230.55869,2.8005137),
   SALIERIS_BAR_GARAGE_FRONTDOOR = MDM_Utils.GetVector(-947.46552,-235.61624,2.8207958)

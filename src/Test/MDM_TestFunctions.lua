@@ -51,7 +51,7 @@ function MDM_TestFunctions.Test()
 
     --   smithCar:GetGameEntity():SetNavModeHunt(getp(),5,  enums.CarHuntRole.POKE   )--
     smithCar:GetGameEntity():SetNavModeWanderArea(false,nil)
-    --    smithCar:GetGameEntity():SetNavModeMoveTo(MDM_LocationPositions.BERTONES_AUTOSERVICE_FRONTDOOR,   enums.CarPathEnd.PARK )
+    --    smithCar:GetGameEntity():SetNavModeMoveTo(MDM_Locations.BERTONES_AUTOSERVICE_FRONTDOOR,   enums.CarPathEnd.PARK )
     --     smithCar:GetGameEntity():SetSirenOn(true)
 
   end

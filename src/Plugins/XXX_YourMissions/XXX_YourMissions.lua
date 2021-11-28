@@ -33,7 +33,7 @@ function XXX_YourMissions.M1_RunAroundTheBlock()
     outroText = "What a stress.\nTime for some more of Luigi's calzone",
     initialOutfit = "4784166002411347668",
     initialWeather = "mm_170_plane_cp_060_cine_1750_plane_airport",
-  --    startPosition = MDM_Utils.GetVector(-908.99677,-230.64401,2.800674), MDM_Utils.GetVector(0.57007295,0.82159406,0) --currently blocks the game when introtext is set. Workaround needed.
+    startPosition = MDM_Locations.SALIERIS_BAR_FRONTDOOR
   })
 
   local objective1 = MDM_GoToObjective:new({
@@ -61,6 +61,16 @@ function XXX_YourMissions.M1_RunAroundTheBlock()
     title = "Run to the last location"
   })
 
+
+  -- we create a director that fails the mission if the player enters a car.
+  -- we run it while objective1 - objective5 are active.
+  local carDirector = MDM_DetectorDirector:new({
+    mission = mission,
+    detector = MDM_PlayerInCarDetector:new({}),
+    callback = function() mission:Fail("Mission Failed: You cheated!!!") end
+  })
+  MDM_ActivatorUtils.RunBetweenObjectives(carDirector,objective1,objective5)
+
   -- Add the objectives to the mission
   mission:AddObjectives({
     objective1,
@@ -71,7 +81,7 @@ function XXX_YourMissions.M1_RunAroundTheBlock()
   })
 
 
-  MDM_MissionManager.StartMission(mission)
+  MDM_Core.missionManager:StartMission(mission)
   return mission
 end
 

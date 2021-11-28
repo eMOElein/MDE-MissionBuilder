@@ -25,7 +25,8 @@ function MDM_SalieriMissions.M1_BackyardTrouble()
 
   local mission = MDM_Mission:new({
     title = "Salieri - Backyard Trouble",
-    introText = M1_introText
+    introText = M1_introText,
+    startPosition = MDM_Locations.SALIERIS_BAR_FRONTDOOR
   })
 
   mission:AddObjective(MDM_RestorePlayerObjective:new())
@@ -61,7 +62,7 @@ function MDM_SalieriMissions.M1_BackyardTrouble()
   local assets = {npc1,npc2,npc3,npc4,car_schubert} -- Important to add single objects in brackets as method can only handle tables!!!
   mission:AddAssets(assets)
 
-  if MDM_MissionManager.StartMission(mission) then
+  if MDM_Core.missionManager:StartMission(mission) then
     MDM_Utils.SpawnAll(assets)
   end
 
@@ -104,7 +105,8 @@ function MDM_SalieriMissions.M2_WhiskyWhopper()
 
   local mission = MDM_Mission:new({
     title = "Salieri - Whisky Whopper",
-    introText = M2_introText
+    introText = M2_introText,
+    startPosition = MDM_Locations.SALIERIS_BAR_FRONTDOOR
   })
   -------------------------------------
   --------------Objectives-------------
@@ -171,7 +173,7 @@ function MDM_SalieriMissions.M2_WhiskyWhopper()
     MDM_Utils.SpawnAll({npc_paulie}) -- Important to put single objects in brackets!!!
   end)
 
-  if MDM_MissionManager.StartMission(mission) then
+  if MDM_Core.missionManager:StartMission(mission) then
   -- MDM_Utils.SpawnAll(car_assets)
   -- MDM_Utils.SpawnAll(enemyNpcs)
   -- MDM_Utils.SpawnAll({npc_paulie}) -- Important to put single objects in brackets!!!
@@ -234,10 +236,10 @@ function MDM_SalieriMissions.M3_GangWar1()
   warConfig.waves = {wave1,wave2}
   warConfig.carAssets = carAssets
   warConfig.allyNpcs = allyNpcs
-  warConfig.initialPosition = MDM_LocationPositions.SALIERIS_BAR_FRONTDOOR
+  warConfig.initialPosition = MDM_Locations.SALIERIS_BAR_FRONTDOOR
 
   local mission = MDM_GangWarMission:new(warConfig)
-  MDM_MissionManager.StartMission(mission)
+  MDM_Core.missionManager:StartMission(mission)
 
   return mission
 end
@@ -306,7 +308,7 @@ function MDM_SalieriMissions.M4_GangWar2()
   warConfig.initialPosition = MDM_Utils.GetVector(-1330.4849,15.178551,3.9502649)
 
   local mission = MDM_GangWarMission:new(warConfig)
-  MDM_MissionManager.StartMission(mission)
+  MDM_Core.missionManager:StartMission(mission)
 
   return mission
 end

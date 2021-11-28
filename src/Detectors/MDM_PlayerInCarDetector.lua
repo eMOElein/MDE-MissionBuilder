@@ -15,7 +15,7 @@ MDM_PlayerInCarDetector = {}
 MDM_PlayerInCarDetector = MDM_Detector:new()
 
 local args = {
-car = nil --Mandatory
+  car = nil
 }
 
 function MDM_PlayerInCarDetector:new (args)
@@ -23,33 +23,23 @@ function MDM_PlayerInCarDetector:new (args)
   setmetatable(detector, self)
   self.__index = self
 
-  if not args.car then
-    error("car is nil",2)
-  end
-
-  if type(args.car) ~= "table" then
+  if args.car and type(args.car) ~= "table" then
     error("car must be of type table",2)
   end
 
-  detector.car = args.car
+  detector.args = args
+  detector.car = args.car or nil
   return detector
 end
 
 function MDM_PlayerInCarDetector.Test(self)
-  return self.car:IsPlayerInCar()
+  if self.car then
+    return self.car:IsPlayerInCar()
+  else
+    return MDM_VehicleUtils.GetPlayerCurrentVehicle() ~= nil
+  end
 end
 
 function MDM_PlayerInCarDetector.UnitTest()
-  local value = false
-  local detector = MDM_PlayerInCarDetector:new({car = {IsPlayerInCar = function() return value end}})
 
-  if detector:Test() then
-    error("test should have failed ",1)
-  end
-
-  value = true
-
-  if not detector:Test() then
-    error("test should not have failed ",1)
-  end
 end

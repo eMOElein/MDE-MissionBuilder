@@ -12,9 +12,9 @@
 -- along with this program.  If not, see <http://www.gnu.org/licenses/>.
 MDM_LucasBertone = {}
 
-local pos_SalierisBar = MDM_LocationPositions.SALIERIS_BAR_GARAGE_FRONTDOOR--MDM_Utils.GetVector(-907.94,-210.41,2)
+local pos_SalierisBar = MDM_Locations.SALIERIS_BAR_GARAGE_FRONTDOOR--MDM_Utils.GetVector(-907.94,-210.41,2)
 -- MDM_Utils.GetVector(437.38721,38.019478,12.10504)
-local pos_BertonesAutoservice = MDM_LocationPositions.BERTONES_AUTOSERVICE_FRONTDOOR --real location
+local pos_BertonesAutoservice = MDM_Locations.BERTONES_AUTOSERVICE_FRONTDOOR --real location
 --local pos_BertonesAutoservice = MDM_Utils.GetVector(-907.94,-180.41,2) -- fake location at Salieris bar
 
 function MDM_LucasBertone.M1_1_Fairplay()
@@ -55,7 +55,7 @@ function MDM_LucasBertone.M1_1_Fairplay()
   })
   MDM_ActivatorUtils.RunWhileObjective(director,objective2)
 
-  MDM_MissionManager.StartMission(mission)
+  MDM_Core.missionManager:StartMission(mission)
 end
 
 function MDM_LucasBertone.M2_1_TripToTheCountry()
@@ -102,7 +102,7 @@ function MDM_LucasBertone.M2_1_TripToTheCountry()
 
   mission:AddAssets({boltCar})
 
-  if MDM_MissionManager.StartMission(mission) then
+  if MDM_Core.missionManager:StartMission(mission) then
     boltCar:Spawn()
   end
 end
@@ -132,7 +132,7 @@ function MDM_LucasBertone.M2_2_TripToTheCountry()
   })
   mission:AddObjective(objective2)
 
-  MDM_MissionManager.StartMission(mission)
+  MDM_Core.missionManager:StartMission(mission)
 end
 
 function MDM_LucasBertone.M3_1_Omerta()
@@ -168,7 +168,7 @@ function MDM_LucasBertone.M3_1_Omerta()
   })
   mission:AddObjective(objective3)
 
-  if MDM_MissionManager.StartMission(mission) then
+  if MDM_Core.missionManager:StartMission(mission) then
     MDM_Utils.SpawnAll({npc_big_stan})
   end
 end
@@ -194,7 +194,7 @@ function MDM_LucasBertone.M3_2_Omerta()
   })
   mission:AddObjective(objective2)
 
-  MDM_MissionManager.StartMission(mission)
+  MDM_Core.missionManager:StartMission(mission)
 end
 
 function MDM_LucasBertone.M4_1_LuckyBastard()
@@ -222,7 +222,7 @@ function MDM_LucasBertone.M5_1_CremeDeLaCreme()
     initialWeather = "mm_170_plane_cp_060_cine_1750_plane_airport",
     initialOutfit = "9354636703565519112",
     outroText = "Thank you Tommy.",
-    startPosition = MDM_LocationPositions.BERTONES_AUTOSERVICE_FRONTDOOR,
+    startPosition = MDM_Locations.BERTONES_AUTOSERVICE_FRONTDOOR,
     title = "Lucas Bertone 5-1 - Creme de la Creme"
   })
   mission:OnMissionEnd(function() MDM_PoliceUtils.UnlockWantedLevel() end)
@@ -278,7 +278,7 @@ function MDM_LucasBertone.M5_1_CremeDeLaCreme()
   MDM_ActivatorUtils.RunBetweenObjectives(damageDirector,objective2,objective3)
 
   mission:AddAssets(car_assets)
-  MDM_MissionManager.StartMission(mission)
+  MDM_Core.missionManager:StartMission(mission)
 end
 
 function MDM_LucasBertone.M5_2_CremeDeLaCreme()
@@ -309,7 +309,7 @@ function MDM_LucasBertone.M5_2_CremeDeLaCreme()
   mission:AddObjective(objective2)
 
   mission:AddAssets({car_celeste,npc_enemy1,npc_enemy2})
-  if MDM_MissionManager.StartMission(mission) then
+  if MDM_Core.missionManager:StartMission(mission) then
     car_celeste:Spawn()
     npc_enemy1:Spawn()
     npc_enemy2:Spawn()
@@ -352,7 +352,7 @@ function MDM_LucasBertone.M6_1_Election()
   mission:AddObjective(objective3)
 
   mission:AddAssets({npc_friend})
-  if MDM_MissionManager.StartMission(mission) then
+  if MDM_Core.missionManager:StartMission(mission) then
   end
 end
 
@@ -378,7 +378,7 @@ function MDM_LucasBertone.M6_2_Election()
   mission:AddObjective(objective2)
 
   mission:AddAssets({car_apollon})
-  if MDM_MissionManager.StartMission(mission) then
+  if MDM_Core.missionManager:StartMission(mission) then
     car_apollon:Spawn()
   end
 end
@@ -455,7 +455,7 @@ function MDM_LucasBertone.M7_1_Robbery()
   })
   mission:AddObjective(objective4)
 
-  MDM_MissionManager.StartMission(mission)
+  MDM_Core.missionManager:StartMission(mission)
 end
 
 function MDM_LucasBertone.M7_2_Robbery()
@@ -477,7 +477,7 @@ function MDM_LucasBertone.M7_2_Robbery()
   })
   m:AddObjective(objective1)
 
-  if  MDM_MissionManager.StartMission(m) then
+  if  MDM_Core.missionManager:StartMission(m) then
     car_trautenberg:Spawn()
   end
 end
