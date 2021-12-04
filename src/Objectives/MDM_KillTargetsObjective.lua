@@ -22,11 +22,19 @@ function MDM_KillTargetsObjective:new (args)
   setmetatable(objective, self)
   self.__index = self
 
+  if not args.targets then
+    error("targets not set",2)
+  end
+
+  if #args.targets < 1 then
+    error("targets is empty",2)
+  end
+
   objective.targets = args.targets
 
   objective._targetsDeadDetector = MDM_TargetsDeadDetector:new({targets = args.targets,onTargetsDead = function() MDM_Objective.SetOutcome(objective,1) end})
 
-  objective.blip = MDM_ObjectivePosition:new(objective:GetTitle() ..":TestMDM_ObjectivePosition",objective.targets[1]:GetPos())
+  objective.blip = MDM_ObjectivePosition:new(objective:GetTitle() ..":TestMDM_ObjectivePosition",args.targets[1]:GetPos())
   return objective
 end
 

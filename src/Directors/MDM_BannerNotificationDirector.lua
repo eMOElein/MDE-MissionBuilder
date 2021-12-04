@@ -43,7 +43,7 @@ function MDM_BannerNotificationDirector:new (args)
   end
 
 
-  local director = MDM_Director:new({mission = args.mission})
+  local director = MDM_Director:new(args)
   setmetatable(director, self)
   self.__index = self
 

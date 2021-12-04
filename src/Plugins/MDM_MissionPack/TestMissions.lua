@@ -12,21 +12,6 @@
 -- along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 TestMissions = {}
-local function GetEntity(Name)
-  return game.entitywrapper:GetEntityByName("Name")
-end
-
-local function createSpawner(model, pos,dir)
-  local ent = game.game:CreateCleanEntity(pos, 0, false, false, true)
-  ent:SetPos(pos)
-  ent:SetDir(dir)
-  local entWrapComp = ent:GetComponent("C_EntityWrapperComponent")
-  entWrapComp:SetGameEntityType(enums.EntityType.ENTITY)
-  entWrapComp:SetModelName(model)
-  ent:AddComponent("C_SpawnerComponent")
-  ent:AddComponent("C_RuntimeSpawnerComponent")
-  return ent -- The Spawner
-end
 
 local objBlip = nil
 function TestMissions.Test()
@@ -74,6 +59,169 @@ function TestMissions.Test()
   --game.hud:SetDamageGaugeValue(50) -- Wert für Anzeige Fahrzeugschaden
 
   --game.hud:StartCountDown(20) Countdown vom Rennen
+end
+
+function TestMissions.DuelTest()
+
+  --- @param enemyNpcs = MDM_NPC instances
+  --- @param allyNpcs = MDM_NPC instances
+  local function DuelTestMission(args)
+
+    if not args.enemyNpcs then
+      error("enemyNpcs not set",2)
+    end
+
+    if #args.enemyNpcs < 1 then
+      error("enemyNpcs is empty",2)
+    end
+
+    if not args.allyNpcs then
+      error("allyNpcs not set",2)
+    end
+
+    if #args.allyNpcs < 1 then
+      error("allyNpcs is empty",2)
+    end
+
+    local mission = MDM_Mission:new(args)
+    mission:OnMissionStart(function()
+      MDM_Utils.SpawnAll(args.enemyNpcs)
+      MDM_Utils.SpawnAll(args.allyNpcs)
+    end)
+    -- mission:OnMissionEnd(function() MDM_Utils.DespawnAll(assets) end)
+    mission:AddAssets(args.allyNpcs)
+    mission:AddAssets(args.enemyNpcs)
+
+    local objective1_waitForSpawns = MDM_CallbackObjective:new ({
+      title = "Spawntime",
+      callback = function ()
+        if not MDM_SpawnUtils.AreAllSpawned(args.allyNpcs) then return false end
+        if not MDM_SpawnUtils.AreAllSpawned(args.enemyNpcs) then return false end
+
+        local enemyIndex = 1
+        for _,a in ipairs(args.allyNpcs) do
+          if enemyIndex > #args.enemyNpcs then
+            enemyIndex = 1
+          end
+          a:GetGameEntity():Attack(args.enemyNpcs[enemyIndex]:GetGameEntity())
+          enemyIndex = enemyIndex + 1
+        end
+
+        return true
+      end,
+    })
+
+    local objective100_KillTargets = MDM_KillTargetsObjective:new({
+      title ="Take out your targets",
+      targets = args.enemyNpcs
+    })
+    mission:AddObjective(objective100_KillTargets)
+
+    mission:AddObjective(MDM_RestorePlayerObjective:new())
+
+    return mission
+  end
+
+
+  local mission = DuelTestMission({
+    title = "Duel Test",
+    startPosition = MDM_Utils.GetVector(-1454.884,-453.95401,3.0223277),
+    initialWeather = "mm_110_omerta_cp_050_cs_safehouse",
+    enemyNpcs = {
+      MDM_NPC:new("13604348442857333985", MDM_Utils.GetVector(-1444.2271,-488.13773,3.2395408), MDM_Utils.GetVector(-0.27127859,0.96250087,0)),
+      MDM_NPC:new("13604348442857333985", MDM_Utils.GetVector(-1440.8369,-486.95615,3.2213628), MDM_Utils.GetVector(-0.2992492,0.954175,0)),
+      MDM_NPC:new("13604348442857333985", MDM_Utils.GetVector(-1437.6008,-485.80936,3.222491), MDM_Utils.GetVector(-0.29935825,0.95414078,0)),
+      MDM_NPC:new("13604348442857333985", MDM_Utils.GetVector(-1436.2045,-482.95331,3.1876981), MDM_Utils.GetVector(-0.94076848,0.3390497,0)),
+      MDM_NPC:new("13604348442857333985", MDM_Utils.GetVector(-1437.4296,-491.64578,3.1564496), MDM_Utils.GetVector(-0.70401907,0.71018106,0)),
+      MDM_NPC:new("13604348442857333985", MDM_Utils.GetVector(-1442.595,-491.52405,3.2064359), MDM_Utils.GetVector(-0.64396787,0.76505256,0)),
+      MDM_NPC:new("13604348442857333985", MDM_Utils.GetVector(-1446.0928,-486.38669,3.2213938), MDM_Utils.GetVector(-0.62356263,0.78177339,0))
+    },
+    allyNpcs = {
+      MDM_NPC:newFriend("13604348442857333985", MDM_Utils.GetVector(-1447.3892,-468.7261,3.1898816), MDM_Utils.GetVector(0.43327615,-0.90126121,0)),
+      MDM_NPC:newFriend("13604348442857333985", MDM_Utils.GetVector(-1450.9735,-469.41238,3.1904457), MDM_Utils.GetVector(0.16622388,-0.98608804,0)),
+      MDM_NPC:newFriend("13604348442857333985", MDM_Utils.GetVector(-1448.8175,-472.27847,3.1461122), MDM_Utils.GetVector(0.59389323,-0.80454385,0)),
+      MDM_NPC:newFriend("13604348442857333985", MDM_Utils.GetVector(-1445.1748,-472.47644,3.1494639), MDM_Utils.GetVector(0.11688796,-0.99314511,0)),
+      MDM_NPC:newFriend("13604348442857333985", MDM_Utils.GetVector(-1453.8947,-466.51282,3.1729071), MDM_Utils.GetVector(0.41520488,-0.90972793,0))
+    }
+  })
+
+  MDM_Core.missionManager:StartMission(mission)
+  return mission
+end
+
+function TestMissions.PursuitTest()
+  local car_target = MDM_Car:new("smith_v12", MDM_Utils.GetVector(-898.98346,-190.64536,2.9552386), MDM_Utils.GetVector(0.028562285,0.99954069,-0.010129704))
+  local npc_target = MDM_NPC:newFriend("13604348442857333985",MDM_Utils.GetVector(-907.94,-180.41,25),MDM_Utils.GetVector(0,0,0))
+  local npc_target2 = MDM_NPC:newFriend("13604348442857333985",MDM_Utils.GetVector(-907.98,-180.41,25),MDM_Utils.GetVector(0,0,0))
+  local car_police = MDM_Car:new("shubert_e_six_p", MDM_Utils.GetVector(-899.25092,-203.29758,2.9997153), MDM_Utils.GetVector(-0.0055011963,0.99997598,-0.0042084511))
+  local npc_police = MDM_NPC:new("13604348442857333985",MDM_Utils.GetVector(-907.94,-180.41,2),MDM_Utils.GetVector(0,0,0))
+  local car_player = MDM_Car:new("shubert_e_six", MDM_Utils.GetVector(-899.16278,-225.84026,2.977174), MDM_Utils.GetVector(0.044264518,0.99901813,-0.0018530977))
+
+  local mission = MDM_Mission:new({
+    title = "Carchase Test",
+    startPosition = MDM_Utils.GetVector(-892.93268,-216.92448,2.9243827),
+    initialWeather = "mm_180_sniper_cp_010"
+  })
+
+  mission:AddAssets({car_target,npc_target,npc_police,car_police,car_player,npc_target2})
+  mission:OnMissionStart(function() MDM_Utils.SpawnAll({car_target,npc_police,car_police,npc_target,car_player,npc_target2})end)
+
+  local objective1_waitForSpawns = MDM_CallbackObjective:new ({
+    title = "Spawntime",
+    callback = function ()
+      if car_target:IsSpawned() and
+        car_police:IsSpawned() and
+        npc_police:IsSpawned() and
+        npc_target:IsSpawned() and
+        car_player:IsSpawned()
+      then
+        npc_target:GetGameEntity():GetInOutCar(car_target:GetGameEntity(),1,false,false)
+        npc_target2:GetGameEntity():GetInOutCar(car_target:GetGameEntity(),2,false,false)
+        car_target:GetGameEntity():InitializeAIParams(enums.CarAIProfile.PIRATE   ,enums.CarAIProfile.PIRATE   )
+        car_target:GetGameEntity():SetMaxAISpeed(true,65)
+        car_target:GetGameEntity():SetNavModeWanderArea(false,nil)
+
+        npc_police:GetGameEntity():GetInOutCar(car_police:GetGameEntity(),1,false,false)
+        car_police:GetGameEntity():InitializeAIParams(enums.CarAIProfile.PIRATE   ,enums.CarAIProfile.PIRATE   )
+        car_police:GetGameEntity():SetMaxAISpeed(true,65)
+        car_police:GetGameEntity():SetSirenOn(true)
+        car_police:GetGameEntity():SetBeaconLightOn(true)
+        car_police:GetGameEntity():SetNavModeHunt(npc_target:GetGameEntity(),5,  enums.CarHuntRole.FOLLOW    )
+
+        getp():GetOnVehicle(car_player:GetGameEntity(), 1, false, "WALK")
+
+        npc_target2:GetGameEntity():Attack( car_police:GetGameEntity())
+        return true
+      else
+        return false
+      end
+    end,
+  })
+  mission:AddObjective(objective1_waitForSpawns)
+
+
+  --  local objective2_Teleports = MDM_CallbackObjective:new ({
+  --    title = "Teleporting",
+  --    callback = function ()
+  --      print("Teleporting!!!")
+  --      enemyNpc:GetGameEntity():GetInOutCar(enemyCar:GetGameEntity(),1,false,false)
+  --      getp():GetOnVehicle(playerCar:GetGameEntity(), 1, false, "WALK")
+  --
+  --      enemyCar:GetGameEntity():InitializeAIParams(enums.CarAIProfile.AGGRESSIVE   ,enums.CarAIProfile.AGGRESSIVE   )
+  --      enemyCar:GetGameEntity():SetMaxAISpeed(true,60)
+  --      enemyCar:GetGameEntity():SetNavModeWanderArea(false,nil)
+  --      return true
+  --    end
+  --  })
+  --  mission:AddObjective(objective2_Teleports)
+
+  local objective3_Killtarget = MDM_KillTargetsObjective:new({
+    title ="Take out your target",
+    targets = {npc_target}
+  })
+  mission:AddObjective(objective3_Killtarget)
+
+  MDM_Core.missionManager:StartMission(mission)
 end
 
 function TestMissions.CarchaseTest()
@@ -200,48 +348,6 @@ function TestMissions.GangWarTest()
   MDM_Core.missionManager:StartMission(mission)
 
   return mission
-end
-
-function TestMissions.SpawnTest()
-  if not game then
-    return
-  end
-
-  print("SpawnTest:")
-
-  local pos = getp():GetPos()
-  local dir = MDM_Utils.GetVector(-907.94,-180.41,2)
-
-  print("Pos: " ..tostring(pos))
-  print("Dir: " ..tostring(dir))
-  local ObjectName = "1711773440634993571"
-
-  local spawner_ent = createSpawner(ObjectName, pos,dir)
-
-  StartThread(function ()
-    local spawner = spawner_ent:GetComponent("C_RuntimeSpawnerComponent")
-    local SpawnPos = pos
-    local SpawnDir = dir
-    --   SpawnPos.x = SpawnPos.x + (SpawnDir.x * 3)
-    --   SpawnPos.y = SpawnPos.y + (SpawnDir.y * 3)
-    --    SpawnDir.x = 0 - SpawnDir.x
-    --    SpawnDir.y = 0 - SpawnDir.y
-    --    SpawnDir.z = 0
-    --   spawner_ent:Deactivate()
-    spawner_ent:Activate()
-    --    spawner:SetSpawnProfile(spawnId)
-    spawner:SetSpawnProfile(ObjectName)
-    print("Before")
-    Wait(spawner:GetSpawnProfileLoadSyncObject())
-    print("After")
-    local output = spawner:CreateObject()
-    print("Created")
-    print("Output: " .. tostring(output))
-    output:SetPos(pos)
-    output:SetDir(dir)
-    output:Activate()
-    return
-  end)
 end
 
 function TestMissions.KillMission()

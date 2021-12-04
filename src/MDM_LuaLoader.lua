@@ -3,6 +3,7 @@ MDM_LuaLoader = {}
 MDM_LuaLoader._luas = {
   "Utils/MDM_Utils",
   "Utils/MDM_Math",
+  "Utils/MDM_SpawnUtils",
   "Core/MDM_Core",
   "Core/MDM_MissionManager",
   "Core/MDM_Chronometer",

@@ -189,5 +189,18 @@ function MDM_MissionPack.InitializeTestMissions()
   }
   MDM_Core.missionManager:AddMissionProvider(carchaseTest)
 
+  local pursuitTest = {
+    title = "Pursuit Test",
+    client = client,
+    missionSupplier = TestMissions.PursuitTest
+  }
+  MDM_Core.missionManager:AddMissionProvider(pursuitTest)
+
+  local duelTest = {
+    title = "Duel Test",
+    client = client,
+    missionSupplier = TestMissions.DuelTest
+  }
+  MDM_Core.missionManager:AddMissionProvider(duelTest)
 
 end

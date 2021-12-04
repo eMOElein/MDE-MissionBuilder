@@ -28,34 +28,43 @@ function MDM_LucasBertone.M1_1_Fairplay()
     initialWeather = "mm_050_race_cp_120",
     initialSeason = 2, --1932
     startPosition = MDM_Locations.SALIERIS_BAR_FRONTDOOR
-
   })
-  -- Objective1: Get in the parked car.
+
+  -- Objective 1: Visit Lucas Bertone.
+  local objective1 = MDM_GoToObjective:new({
+    position = pos_BertonesAutoservice,
+    title = "Visit Lucas Bertone.",
+    task = "Visit Lucas Bertone.",
+    description = "Visit Lucas Bertone."
+  })
+  mission:AddObjective(objective1)
+
+  -- Objective2: Get in the parked car.
   -- No need to spawn the car manually. The objective does that for us on start.
   -- If the car is already spawned it wont be spawned again.
-  local objective1 = MDM_GetInCarObjective:new({
+  local objective2 = MDM_GetInCarObjective:new({
     car = smithV12Car,
     title = "Steal the Smith V12",
     task = "Steal the Smith V12","Go to the marked location",
     description = "Steal the parked vehicle and try not to get spottet"
   })
-  mission:AddObjective(objective1)
+  mission:AddObjective(objective2)
 
-  -- Objective 2: Drive back to Salieris bar.
-  local objective2 = MDM_GoToObjective:new({
+  -- Objective 3: Drive back to Salieris bar.
+  local objective3 = MDM_GoToObjective:new({
     position = pos_SalierisBar,
     title = "Drive back to Salieri's bar",
     task = "Drive back to Salieri's bar",
     description = "Park the car behind Salieri's bar"
   })
-  mission:AddObjective(objective2)
+  mission:AddObjective(objective3)
 
   -- Create the director that notifies the HUD when the player is not in the vehicle.
   -- Only active while objective2 is running.
   local director= MDM_PlayerInCarBannerDirector:new ({
     car = smithV12Car
   })
-  MDM_ActivatorUtils.RunWhileObjective(director,objective2)
+  MDM_ActivatorUtils.RunWhileObjective(director,objective3)
 
   MDM_Core.missionManager:StartMission(mission)
 end
@@ -239,12 +248,13 @@ function MDM_LucasBertone.M4_1_LuckyBastard()
     position = MDM_Locations.OAKWOOD_DOCTOR_DRIVEWAY,
     radius = 7,
     title = "Drive to the doctor in Oakwood.",
-    onObjectiveEnd = function() npcFriend1:MakeAlly(false)  npcFriend2:MakeAlly(false) end
+    introText = "Drive us to the doctor in Oakwood",
+    outroText = "You made it. Thanks mate!",
+    onObjectiveEnd = function() MDM_Utils.DespawnAll({npcFriend1,npcFriend2}) end
   })
   mission:AddObjective(objective_300_toDoctor)
 
   MDM_MissionUtils.RunTimerBetweenObjectives(mission,objective_200_pickupFriends,objective_300_toDoctor,400,function() mission:Fail("You did not make it in time!") end)
-  -- enemy parking lot MDM_NPC:new("000000000000", MDM_Utils.GetVector(144.16101,-518.84393,2.6868534), MDM_Utils.GetVector(0.60738873,0.79440475,0))
 
   MDM_Core.missionManager:StartMission(mission)
   return mission
@@ -373,12 +383,15 @@ function MDM_LucasBertone.M5_2_CremeDeLaCreme()
     initialWeather = "mm_170_plane_cp_060_cine_1750_plane_airport ",
     initialOutfit = "9354636703565519112"
   })
+  mission:AddAssets({car_celeste,npc_enemy1,npc_enemy2})
+
 
   mission:AddObjective(MDM_RestorePlayerObjective:new())
 
   local objective1 = MDM_GetInCarObjective:new({
     car = car_celeste,
     title = "Steal the Celeste Mark 5 from the diner.",
+    onObjectiveStart = function() MDM_Utils.SpawnAll({car_celeste,npc_enemy1,npc_enemy2}) end,
     onObjectiveEnd = function() npc_enemy1:AttackPlayer() npc_enemy2:AttackPlayer() end
   })
   mission:AddObjective(objective1)
@@ -389,12 +402,8 @@ function MDM_LucasBertone.M5_2_CremeDeLaCreme()
   })
   mission:AddObjective(objective2)
 
-  mission:AddAssets({car_celeste,npc_enemy1,npc_enemy2})
-  if MDM_Core.missionManager:StartMission(mission) then
-    car_celeste:Spawn()
-    npc_enemy1:Spawn()
-    npc_enemy2:Spawn()
-  end
+  MDM_Core.missionManager:StartMission(mission)
+  return mission
 end
 
 function MDM_LucasBertone.M6_1_Election()
@@ -546,26 +555,44 @@ function MDM_LucasBertone.M7_2_Robbery()
     title = "Lucas Bertone 7-2 - Moonlighting",
     initialWeather = "mm_110_omerta_cp_050_cs_safehouse",
     initialOutfit = "7399986759921114297",
-    introText = "Steal the Trautenberg from the Oak Wood Junior High-School"
+    introText = "Steal the Trautenberg from the Oak Wood Junior High-School",
+    startPosition = MDM_Locations.OAKWOOD_DOCTOR_DRIVEWAY
   })
 
-  mission:AddAssets(car_trautenberg)
+  mission:AddAssets(car_trautenberg,npc_Driver)
   MDM_RestorePlayerObjective:new (mission)
 
   local objective1 = MDM_GoToObjective:new({
     position = MDM_Utils.GetVector(1582.7761,-513.8941,49.780258),
-    radius = 150,
+    radius = 50,
     title = "Steal the Trautenberg from the Oak Wood Junior High-School.",
     onObjectiveStart = function () MDM_Utils.SpawnAll({car_trautenberg,npc_Driver})end
   })
   mission:AddObjective(objective1)
 
-  local objective2 = MDM_GetInCarObjective:new({
+  local objective2_waitForSpawns = MDM_CallbackObjective:new ({
+    title = "Spawntime",
+    callback = function ()
+      if car_trautenberg:IsSpawned() and npc_Driver:IsSpawned()then
+        npc_Driver:GetGameEntity():GetInOutCar(car_trautenberg:GetGameEntity(),1,false,false)
+
+        car_trautenberg:GetGameEntity():InitializeAIParams(enums.CarAIProfile.NORMAL,enums.CarAIProfile.NORMAL)
+        car_trautenberg:GetGameEntity():SetMaxAISpeed(true,50)
+        car_trautenberg:GetGameEntity():SetNavModeWanderArea(false,nil)
+        return true
+      else
+        return false
+      end
+    end
+  })
+  mission:AddObjective(objective2_waitForSpawns)
+
+  local objective3_GetInCar = MDM_GetInCarObjective:new({
     car = car_trautenberg,
     title = "Steal the Trautenberg.",
     onObjectiveStart = function() end
   })
-  mission:AddObjective(objective2)
+  mission:AddObjective(objective3_GetInCar)
 
   MDM_Core.missionManager:StartMission(mission)
   return mission

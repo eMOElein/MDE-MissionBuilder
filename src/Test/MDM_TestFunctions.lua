@@ -95,9 +95,6 @@ function MDM_TestFunctions.TestWander()
     --
     -- move commands can be set to the car in the same update cycle when teleporting.
     npc:GetGameEntity():GetInOutCar(smithCar:GetGameEntity(),1,false,false)
-
-
-    --
   end
 
   if MDM_TestFunctions.index_V1 == 2 then
