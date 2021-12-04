@@ -14,16 +14,24 @@
 MDM_NPC = {}
 MDM_NPC = MDM_Entity:class()
 
-function MDM_NPC:new(npcId,pos,dir)
-  local npc = MDM_Entity:new(pos,dir)
+local arguments = {
+  npcId = nil, --MANDATORY
+  position = nil, --MANDATORY
+  direction = nil,
+  aiType = nil
+}
+
+function MDM_NPC:fromArgs(args)
+  local npc = MDM_Entity:new(args.position,args.direction)
   setmetatable(npc, self)
   self.__index = self
 
-  if not npcId then
+  if not args.npcId then
     error("npcId not set",2)
   end
 
-  npc.npcId = npcId
+  npc.args = args
+  npc.npcId = args.npcId
   npc.game_id = nil
   npc.game_GUID = nil
   npc.game_npc = nil
@@ -35,14 +43,22 @@ function MDM_NPC:new(npcId,pos,dir)
   npc.onSpawnedCallbacks = {}
 
   --attributes
-  npc.pos = pos
-  npc.dir = dir or MDM_Utils.GetVector(0,0,0)
+  npc.pos = args.position
+  npc.dir = args.direction or MDM_Utils.GetVector(0,0,0)
 
   if game then
     npc.aitype = enums.AI_TYPE.ENEMY
   end
 
   return npc
+end
+
+function MDM_NPC:new(npcId,pos,dir)
+  return MDM_NPC:fromArgs({
+    npcId = npcId,
+    position = pos,
+    direction = dir
+  })
 end
 
 function MDM_NPC.AttackPlayer(self)
@@ -111,7 +127,7 @@ function MDM_NPC:newFriend(npcId,pos,dir)
   return npc
 end
 
-local function createSpawner(pos,dir)
+local function _CreateSpawner(pos,dir)
   local ent = game.game:CreateCleanEntity(pos, 0, false, false, true)
   ent:SetPos(pos)
   ent:SetDir(dir)
@@ -177,13 +193,13 @@ function MDM_NPC.OnSpawned(self,callback)
   table.insert(self.onSpawnedCallbacks,callback)
 end
 
-local function SpawnNPC(self,callback, spawnId, pos, dir)
+local function _SpawnNPC(self,callback, spawnId, pos, dir)
   if not game then
     return
   end
 
   if not self.spawner then
-    self.spawner = createSpawner(self.pos,self.dir)
+    self.spawner = _CreateSpawner(self.pos,self.dir)
   end
 
   local spawner_ent = self.spawner
@@ -198,7 +214,6 @@ local function SpawnNPC(self,callback, spawnId, pos, dir)
     output:SetPos(pos)
     output:SetDir(dir)
     output:Activate()
-    --    spawner:TransferObjectToTrafficRaw(output) -- !!!!! DONT'T ACTIVATE !!!!! CAUSES THE NPC TO DESPAWN WHEN OUT OF SIGHT LIKE THE NORMAL TRAFFIC DOES !!!!!
     local NPCGUID = output:GetGUID()
     local NPC = game.entitywrapper:GetEntityByGUID(NPCGUID)
     self:SetGameEntity(NPC)
@@ -304,7 +319,7 @@ function MDM_NPC.Spawn(self)
     end
   end
 
-  SpawnNPC(self,callback, self.npcId,self.pos,self.dir)
+  _SpawnNPC(self,callback, self.npcId,self.pos,self.dir)
 end
 
 function MDM_NPC.UnitTest ()

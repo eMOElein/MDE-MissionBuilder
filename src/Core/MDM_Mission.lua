@@ -206,7 +206,8 @@ function MDM_Mission.Start(self)
     game.hud:SendMessageMovie("HUD", "OnShowFreerideBanner", "", self:GetIntroText())
   end
 
-  MDM_Utils.ForEach(self.OnMissionStartCallbacks,function(callback) callback(self) end)
+  for _,callback in ipairs(self.OnMissionStartCallbacks) do callback(self) end
+  --  MDM_Utils.ForEach(self.OnMissionStartCallbacks,function(callback) callback(self) end)
 end
 
 function MDM_Mission.SetFailText(self,text)
@@ -232,31 +233,14 @@ function MDM_Mission.Stop(self)
 
   self.running = false
 
-  local color = 0
-  local text = ""
-  local description = ""
-
   local cObj =  self:GetCurrentObjective()
   if cObj and cObj:IsRunning() then
     cObj:Stop()
   end
 
-  local sound = "mx_Gameplay_Music_Mission_Complete"
   --game.audio:PlaySimpleEvent("ui_EF_Textbox_Show")
   --game.audio:PlaySimpleEvent("ui_Store_Menu_Enter")
   --game.audio:PlaySimpleEvent("ui_Store_Menu_Exit")
-
-
-  --  if self.flagFailed then
-  --    color = 0
-  --    text = self.failText
-  --    description = self.failDescription
-  --    sound = "ui_EF_Textbox_Hide"
-  --  else
-  --    color = 1
-  --    text = "Mission Complete"
-  --    sound = "mx_Gameplay_Music_Mission_Complete"
-  --  end
 
   if not self.flagFailed then
     for _,callback in ipairs(self.OnMissionEndCallbacks) do
@@ -269,6 +253,7 @@ function MDM_Mission.Stop(self)
       self.missionCompleteBanner.title = self.failDescription or "Mission Failed!"
       self.missionCompleteBanner.color = 0
     end
+    local sound = "mx_Gameplay_Music_Mission_Complete"
     game.audio:PlaySimpleEvent(sound)
     self.missionCompleteBanner.time = 2000
     self.missionCompleteBanner:Show()

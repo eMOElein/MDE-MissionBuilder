@@ -80,6 +80,20 @@ function MDM_MissionPack.InitializeLucasBertoneMissions()
   }
   MDM_Core.missionManager:AddMissionProvider(M3_2_Omerta)
 
+  local M4_1_LuckyBastard = {
+    title = "Lucky Bastard 4-1",
+    client = client,
+    missionSupplier = MDM_LucasBertone.M4_1_LuckyBastard
+  }
+  MDM_Core.missionManager:AddMissionProvider(M4_1_LuckyBastard)
+
+  local M4_2_LuckyBastard = {
+    title = "Lucky Bastard 4-2",
+    client = client,
+    missionSupplier = MDM_LucasBertone.M4_2_LuckyBastard
+  }
+  MDM_Core.missionManager:AddMissionProvider(M4_2_LuckyBastard)
+
   local M5_1_CremeDeLaCreme = {
     title = "Creme de la Creme 1-2",
     client = client,

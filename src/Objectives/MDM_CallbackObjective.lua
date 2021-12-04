@@ -47,12 +47,12 @@ function MDM_CallbackObjective.UnitTest()
 
   local obj = MDM_CallbackObjective:new({
     mission = mission,
-    callback = function() print("cbk") return true end
+    callback = function()  return true end
   })
 
   local obj2 = MDM_CallbackObjective:new({
     mission = mission,
-    callback = function() print("cbk2") return true end
+    callback = function()  return true end
   })
 
   mission:Start()

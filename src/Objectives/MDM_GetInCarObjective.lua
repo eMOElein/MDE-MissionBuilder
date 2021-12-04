@@ -10,7 +10,8 @@
 --
 -- You should have received a copy of the GNU General Public License
 -- along with this program.  If not, see <http://www.gnu.org/licenses/>.
---- MDM_GetInCarObjective
+--
+-- MDM_GetInCarObjective
 -- An objective where the player has to enter a specific car.
 MDM_GetInCarObjective = {}
 MDM_GetInCarObjective = MDM_Objective:class()

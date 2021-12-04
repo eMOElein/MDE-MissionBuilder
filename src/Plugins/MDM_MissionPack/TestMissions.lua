@@ -77,7 +77,7 @@ function TestMissions.Test()
 end
 
 function TestMissions.CarchaseTest()
-  local smithCar = MDM_Car:new("smith_v12",MDM_Utils.GetVector(-898.71429,-181.9543,4),MDM_Utils.GetVector(-0,000001,-0.000004,0.000150))
+  local enemyCar = MDM_Car:new("smith_v12",MDM_Utils.GetVector(-898.71429,-181.9543,4),MDM_Utils.GetVector(-0,000001,-0.000004,0.000150))
   local enemyNpc = MDM_NPC:new("13604348442857333985",MDM_Utils.GetVector(-907.94,-180.41,2),MDM_Utils.GetVector(0,0,0))
   local playerCar = MDM_Car:new("smith_v12", MDM_Utils.GetVector(-898.67657,-205.45827,2.96613), MDM_Utils.GetVector(0.013172975,0.99991018,-0.0024737401))
 
@@ -86,25 +86,21 @@ function TestMissions.CarchaseTest()
     startPosition = MDM_Utils.GetVector(-904.78802,-206.16048,2.7450461)
   })
 
-  mission:AddAssets({smithCar,enemyNpc,playerCar})
-  mission:OnMissionStart(function() MDM_Utils.SpawnAll({smithCar,enemyNpc,playerCar})end)
-  mission:OnMissionEnd(function()
-    smithCar:Despawn()
-    enemyNpc:Despawn()
-    playerCar:Despawn()
-  end)
+  mission:AddAssets({enemyCar,enemyNpc,playerCar})
+  mission:OnMissionStart(function() MDM_Utils.SpawnAll({enemyCar,enemyNpc,playerCar})end)
 
   local objective1_waitForSpawns = MDM_CallbackObjective:new ({
     title = "Spawntime",
     callback = function ()
-      print("s1: " ..tostring(smithCar:IsSpawned()))
-      print("s2: " ..tostring(playerCar:IsSpawned()))
-      print("npc: " ..tostring(enemyNpc:IsSpawned()))
-      if smithCar:IsSpawned() and playerCar:IsSpawned() and enemyNpc:IsSpawned()then
-        print("Spawned!!!")
+      if enemyCar:IsSpawned() and playerCar:IsSpawned() and enemyNpc:IsSpawned()then
+        enemyNpc:GetGameEntity():GetInOutCar(enemyCar:GetGameEntity(),1,false,false)
+        getp():GetOnVehicle(playerCar:GetGameEntity(), 1, false, "WALK")
+
+        enemyCar:GetGameEntity():InitializeAIParams(enums.CarAIProfile.AGGRESSIVE   ,enums.CarAIProfile.AGGRESSIVE   )
+        enemyCar:GetGameEntity():SetMaxAISpeed(true,60)
+        enemyCar:GetGameEntity():SetNavModeWanderArea(false,nil)
         return true
       else
-        print("Waiting")
         return false
       end
     end
@@ -112,20 +108,20 @@ function TestMissions.CarchaseTest()
   mission:AddObjective(objective1_waitForSpawns)
 
 
-  local objective2_Teleports = MDM_CallbackObjective:new ({
-    title = "Teleporting",
-    callback = function ()
-      print("Teleporting!!!")
-      enemyNpc:GetGameEntity():GetInOutCar(smithCar:GetGameEntity(),1,false,false)
-      getp():GetOnVehicle(playerCar:GetGameEntity(), 1, false, "WALK")
-
-      smithCar:GetGameEntity():InitializeAIParams(enums.CarAIProfile.AGGRESSIVE   ,enums.CarAIProfile.AGGRESSIVE   )
-      smithCar:GetGameEntity():SetMaxAISpeed(true,60)
-      smithCar:GetGameEntity():SetNavModeWanderArea(false,nil)
-      return true
-    end
-  })
-  mission:AddObjective(objective2_Teleports)
+  --  local objective2_Teleports = MDM_CallbackObjective:new ({
+  --    title = "Teleporting",
+  --    callback = function ()
+  --      print("Teleporting!!!")
+  --      enemyNpc:GetGameEntity():GetInOutCar(enemyCar:GetGameEntity(),1,false,false)
+  --      getp():GetOnVehicle(playerCar:GetGameEntity(), 1, false, "WALK")
+  --
+  --      enemyCar:GetGameEntity():InitializeAIParams(enums.CarAIProfile.AGGRESSIVE   ,enums.CarAIProfile.AGGRESSIVE   )
+  --      enemyCar:GetGameEntity():SetMaxAISpeed(true,60)
+  --      enemyCar:GetGameEntity():SetNavModeWanderArea(false,nil)
+  --      return true
+  --    end
+  --  })
+  --  mission:AddObjective(objective2_Teleports)
 
   local objective3_Killtarget = MDM_KillTargetsObjective:new({
     title ="Take out your target",
