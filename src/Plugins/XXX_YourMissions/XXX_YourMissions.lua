@@ -1,17 +1,3 @@
--- This program is free software: you can redistribute it and/or modify
--- it under the terms of the GNU General Public License as published by
--- the Free Software Foundation, either version 3 of the License, or
--- (at your option) any later version.
---
--- This program is distributed in the hope that it will be useful,
--- but WITHOUT ANY WARRANTY; without even the implied warranty of
--- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
--- GNU General Public License for more details.
---
--- You should have received a copy of the GNU General Public License
--- along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
-
 -- Create a namespace for your plugin.
 -- Don't use MDM_* as namespace.
 XXX_YourMissions = {
@@ -24,8 +10,18 @@ XXX_YourMissions = {
 -- Add your plugin to the plugin list.
 MDM_Core.AddPlugin(XXX_YourMissions)
 
--- We want to create a new mission for the player
--- So we build a function that creates and returns one.
+-- When a plugin is successfully loaded it's Initialize() function is called.
+-- Wrap your each of your missions in a mission provider and pass them to MDM_Core.missionManager:AddMissionProvider()
+function XXX_YourMissions.Initialize()
+  local M1_RunAroundTheBlock = {
+    title = "Run Around The Block",
+    client = "Your Missions",
+    missionSupplier = XXX_YourMissions.M1_RunAroundTheBlock -- a callback function that returns the mission we want to play
+  }
+  MDM_Core.missionManager:AddMissionProvider(M1_RunAroundTheBlock)
+end
+
+-- We build a function that returns a mission and use it in the mission provider above as missionSupplier.
 function XXX_YourMissions.M1_RunAroundTheBlock()
   local mission = MDM_Mission:new({
     title = "Run Around The Block",
@@ -38,34 +34,38 @@ function XXX_YourMissions.M1_RunAroundTheBlock()
 
   local objective1 = MDM_GoToObjective:new({
     position = MDM_Utils.GetVector(-908.02795,-270.76718,2.7738907),
+    radius = 10,
     title = "Run to the first location"
   })
 
   local objective2 = MDM_GoToObjective:new({
     position = MDM_Utils.GetVector(-1050.2584,-272.37515,1.8958902),
+    radius = 10,
     title = "Run to the second location"
   })
 
   local objective3 = MDM_GoToObjective:new({
     position = MDM_Utils.GetVector(-1051.5273,-96.92054,2.78895),
+    radius = 10,
     title = "Run to the third location"
   })
 
   local objective4 = MDM_GoToObjective:new({
     position = MDM_Utils.GetVector(-910.51318,-99.115875,4.0460014),
+    radius = 10,
     title = "Run to the fourth location"
   })
 
   local objective5 = MDM_GoToObjective:new({
     position = MDM_Utils.GetVector(-908.99677,-230.64401,2.800674),
+    radius = 10,
     title = "Run to the last location"
   })
-
 
   -- we create a director that fails the mission if the player enters a car.
   -- we run it while objective1 - objective5 are active.
   local carDirector = MDM_DetectorDirector:new({
-    mission = mission,
+    mission = mission, -- we assign the mission to the director so that the director gets updated on each update cycle of the mission.
     detector = MDM_PlayerInCarDetector:new({}),
     callback = function() mission:Fail("Mission Failed: You cheated!!!") end
   })
@@ -80,18 +80,5 @@ function XXX_YourMissions.M1_RunAroundTheBlock()
     objective5
   })
 
-
-  MDM_Core.missionManager:StartMission(mission)
   return mission
-end
-
--- When a plugin is successfully loaded it's Initialize() function is called.
--- Wrap your missions in mission providers and pass them to MDM_Core.missionManager:AddMissionProvider()
-function XXX_YourMissions.Initialize()
-  local M1_RunAroundTheBlock = {
-    title = "Run Around The Block",
-    client = "Your Missions",
-    missionSupplier = XXX_YourMissions.M1_RunAroundTheBlock -- the callback function that returns the mission we want to play.
-  }
-  MDM_Core.missionManager:AddMissionProvider(M1_RunAroundTheBlock)
 end

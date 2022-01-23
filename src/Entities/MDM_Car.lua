@@ -1,42 +1,37 @@
--- This program is free software: you can redistribute it and/or modify
--- it under the terms of the GNU General Public License as published by
--- the Free Software Foundation, either version 3 of the License, or
--- (at your option) any later version.
---
--- This program is distributed in the hope that it will be useful,
--- but WITHOUT ANY WARRANTY; without even the implied warranty of
--- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
--- GNU General Public License for more details.
---
--- You should have received a copy of the GNU General Public License
--- along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 MDM_Car = {}
 MDM_Car = MDM_Entity:class()
 
 local arguments = {
   carId = nil,
   direction = nil,
-  position = nil,
-  primaryColors = nil,
-  secondaryColors = nil
+  position = nil
 }
 
-function MDM_Car:new(carId,pos,dir)
-  return MDM_Car:newArgs({
-    carId = carId,
-    position = pos,
-    direction = dir
-  })
-end
+function MDM_Car:new(args, dummyPos, dummyDir)
+  -- convert old constructor parameters into argument table
+  if type(args) == "string" then
+    local tempId = args
+    args = {
+      carId = tempId,
+      position = dummyPos,
+      direction = dummyDir
+    }
+  end
 
-function MDM_Car:newArgs(args)
   local car = MDM_Entity:new(args.position,args.direction)
   setmetatable(car, self)
   self.__index = self
 
-  if args.carId ~= nil and type(args.carId) ~= "string" then
+  if args.carId == nil or type(args.carId) ~= "string" then
     error("no carId",2)
+  end
+
+  if args.position == nil then
+    error("no position",2)
+  end
+
+  if args.direction == nil then
+    error("no direction",2)
   end
 
   car.args = args
@@ -76,13 +71,13 @@ function MDM_Car.OnGameEntitySpawned(self, id, so, game_entity)
   self.spawned = true
   self:SetGameEntity(game_entity)
 
-  if self.args.primaryColor then
-    self:SetPrimaryColor(self.args.primaryColor[1], self.args.primaryColor[2], self.args.primaryColor[3])
+  if self.args.primaryColorRGB then
+    self:SetPrimaryColorRGB(self.args.primaryColorRGB[1], self.args.primaryColorRGB[2], self.args.primaryColorRGB[3])
   end
 
   if game_entity then
     if self.primaryColor then
-      self:SetPrimaryColor(self.primaryColor.r, self.primaryColor.g, self.primaryColor.b)
+      self:SetPrimaryColorRGB(self.primaryColor.r, self.primaryColor.g, self.primaryColor.b)
     end
     self:SetIndestructable(self.indestructableFlag)
   end
@@ -103,7 +98,7 @@ function MDM_Car.Spawn(self)
     self:SetGameEntity(veh)
 
     if veh and self.self.primaryColor then
-      self:SetPrimaryColor(self.primaryColor.r, self.primaryColor.g, self.primaryColor.b)
+      self:SetPrimaryColorRGB(self.primaryColor.r, self.primaryColor.g, self.primaryColor.b)
     end
   end
 
@@ -168,8 +163,8 @@ function MDM_Car.SetIndestructable(self,bool)
   end
 end
 
-function MDM_Car.SetPrimaryColor(self,r,g,b)
-  self.args.primaryColor = {r,g,b}
+function MDM_Car.SetPrimaryColorRGB(self,r,g,b)
+  self.args.primaryColorRGB = {r,g,b}
 
   local veh = self:GetGameEntity()
   if game and veh then
@@ -179,7 +174,7 @@ end
 
 function MDM_Car.UnitTest()
   print("---------------MDM_Car:UnitTest")
-  local car = MDM_Car:new("falconer_classic",MDM_Utils.GetVector(-907.94,-210.41,2),MDM_Utils.GetVector(-907.94,-210.41,2))
+  local car = MDM_Car:new("falconer_classic", MDM_Utils.GetVector(-907.94,-210.41,2),MDM_Utils.GetVector(-907.94,-210.41,2))
   car:Spawn()
   car:Despawn()
 

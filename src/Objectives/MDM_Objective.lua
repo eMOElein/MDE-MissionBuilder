@@ -1,16 +1,3 @@
--- This program is free software: you can redistribute it and/or modify
--- it under the terms of the GNU General Public License as published by
--- the Free Software Foundation, either version 3 of the License, or
--- (at your option) any later version.
---
--- This program is distributed in the hope that it will be useful,
--- but WITHOUT ANY WARRANTY; without even the implied warranty of
--- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
--- GNU General Public License for more details.
---
--- You should have received a copy of the GNU General Public License
--- along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 MDM_Objective = {}
 
 local arguments = {
@@ -36,7 +23,7 @@ function MDM_Objective:new(args)
   self.__index = self
 
   -- args consinstency checks
-  if not args then error("args not set",2) end
+  if args == nil then error("args not set",2) end
   if type(args) ~= "table" then error("args is not of type table",2) end
 
   -- initializations
@@ -84,11 +71,6 @@ function MDM_Objective.OnUpdate(self,callbacks)
   MDM_Utils.AddAll(self.onUpdateCallbacks,callbacks)
 end
 
-local function AddQuest(self)
-  HUD_AddQuestObjective(self:GetTitle())
-  game.hud:UpdateSimpleObjective(self:GetTask(), self:GetDescription(), false, false, self:GetTitle())
-end
-
 function MDM_Objective.GetDescription(self)
   return self.args.description
 end
@@ -125,7 +107,7 @@ function MDM_Objective.Start(self)
 
   if game then
     self.entity  = game.game:CreateCleanEntity(Math:newVector(-1225,-390,0), 0, false, false, true)
-    game.hud:UpdateSimpleObjective(self:GetTitle(), "simpleobjective param2", true, true, self:GetTitle())
+    game.hud:UpdateSimpleObjective(self:GetTitle(), "param 2", true, true, "param 3")
   end
 
   if self:GetIntroText() and game then

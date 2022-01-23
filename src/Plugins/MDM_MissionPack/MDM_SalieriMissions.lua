@@ -1,16 +1,3 @@
--- This program is free software: you can redistribute it and/or modify
--- it under the terms of the GNU General Public License as published by
--- the Free Software Foundation, either version 3 of the License, or
--- (at your option) any later version.
---
--- This program is distributed in the hope that it will be useful,
--- but WITHOUT ANY WARRANTY; without even the implied warranty of
--- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
--- GNU General Public License for more details.
---
--- You should have received a copy of the GNU General Public License
--- along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 MDM_SalieriMissions = {}
 
 function MDM_SalieriMissions.M1_BackyardTrouble()
@@ -47,7 +34,8 @@ function MDM_SalieriMissions.M1_BackyardTrouble()
 
   local objective3 = MDM_GoToObjective:new({
     position = MDM_Utils.GetVector(-907.94,-210.41,2),
-    title = "Drive back to Salieri's Bar"
+    title = "Drive back to Salieri's Bar",
+    noPolice = true
   })
   mission:AddObjective(objective3)
 
@@ -119,20 +107,22 @@ function MDM_SalieriMissions.M2_WhiskyWhopper()
 
   local objective2 = MDM_GoToObjective:new({
     position = MDM_Utils.GetVector(-905.73865,-721.30676,3.1869726),
-    title = "Find the truck."
+    title = "Find the truck.",
+    radius = 40
   })
   mission:AddObjective(objective2)
 
   local objective3 = MDM_GetInCarObjective:new({
     car = car_truck,
-    title = "Find the truck."
+    title = "Get in the truck."
   })
   mission:AddObjective(objective3)
 
   local objective4 = MDM_GoToObjective:new({
     position = MDM_Utils.GetVector(-1531.4517,-372.92609,2.9755383),
     title = "Drive to the meeting area.",
-    onObjectiveEnd = function() npc_paulie:MakeAlly(false) end
+    onObjectiveEnd = function() npc_paulie:MakeAlly(false) end,
+    noPolice = true
   })
   mission:AddObjective(objective4)
   -------------------------------------
@@ -167,12 +157,6 @@ function MDM_SalieriMissions.M2_WhiskyWhopper()
     MDM_Utils.SpawnAll(enemyNpcs)
     MDM_Utils.SpawnAll({npc_paulie}) -- Important to put single objects in brackets!!!
   end)
-
-  if MDM_Core.missionManager:StartMission(mission) then
-  -- MDM_Utils.SpawnAll(car_assets)
-  -- MDM_Utils.SpawnAll(enemyNpcs)
-  -- MDM_Utils.SpawnAll({npc_paulie}) -- Important to put single objects in brackets!!!
-  end
 
   return mission
 end
@@ -263,11 +247,11 @@ function MDM_SalieriMissions.M4_GangWar2()
   }
 
   local carAssets = {
-    MDM_Car:new("shubert_e_six", MDM_Utils.GetVector(-1332.9858,9.4035025,4.2480459), MDM_Utils.GetVector(-0.95426929,-0.29860383,0.014352869)),
-    MDM_Car:new("shubert_e_six", MDM_Utils.GetVector(-1339.9849,10.249894,4.169414), MDM_Utils.GetVector(0.94146079,-0.33535159,0.03451445)),
-    MDM_Car:new("shubert_e_six", MDM_Utils.GetVector(-1335.6543,24.85214,4.0719504), MDM_Utils.GetVector(-0.9127509,0.40821823,-0.015609706)),
-    MDM_Car:new("bolt_delivery", MDM_Utils.GetVector(-1341.9893,26.62381,3.9106264), MDM_Utils.GetVector(0.99264538,-0.11264583,0.044340719)),
-    MDM_Car:new("shubert_six", MDM_Utils.GetVector(-1349.9421,22.056082,3.5512807), MDM_Utils.GetVector(0.046726886,-0.99883455,0.012112266))
+    MDM_Car:new({carId = "shubert_e_six", position = MDM_Utils.GetVector(-1332.9858,9.4035025,4.2480459), direction = MDM_Utils.GetVector(-0.95426929,-0.29860383,0.014352869)}),
+    MDM_Car:new({carId = "shubert_e_six", position = MDM_Utils.GetVector(-1339.9849,10.249894,4.169414), direction = MDM_Utils.GetVector(0.94146079,-0.33535159,0.03451445)}),
+    MDM_Car:new({carId = "shubert_e_six", position = MDM_Utils.GetVector(-1335.6543,24.85214,4.0719504), direction = MDM_Utils.GetVector(-0.9127509,0.40821823,-0.015609706)}),
+    MDM_Car:new({carId = "bolt_delivery", position = MDM_Utils.GetVector(-1341.9893,26.62381,3.9106264), direction = MDM_Utils.GetVector(0.99264538,-0.11264583,0.044340719)}),
+    MDM_Car:new({carId = "shubert_six", position = MDM_Utils.GetVector(-1349.9421,22.056082,3.5512807), direction = MDM_Utils.GetVector(0.046726886,-0.99883455,0.012112266)})
   }
 
   local allyNpcs = {

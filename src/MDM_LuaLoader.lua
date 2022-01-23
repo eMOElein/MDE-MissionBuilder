@@ -8,12 +8,10 @@ MDM_LuaLoader._luas = {
   "Core/MDM_MissionManager",
   "Core/MDM_Chronometer",
   "Enums/MDM_Locations",
-  "MDM_Userimports",
   "Utils/MDM_ActivatorUtils",
   "Core/MDM_Updateable",
   "Core/MDM_SpawnManager",
   "Core/MDM_Mission",
-  "Core/MDM_MissionProvider",
   "Hud/MDM_Banner",
   "Detectors/MDM_Detector",
   "Detectors/MDM_CarDamageDetector",
@@ -43,10 +41,11 @@ MDM_LuaLoader._luas = {
   "Objectives/MDM_KillTargetsObjective",
   "Objectives/MDM_MockObjective",
   "Objectives/Functional/MDM_RestorePlayerObjective",
+  "Objectives/Functional/MDM_SpawnerObjective",
   "Objectives/MDM_CallbackObjective",
   "Objectives/MDM_DestroyCarInAreaObjective",
   "Objectives/MDM_WaveObjective",
-  "Objectives/Functional/MDM_FunctionObjective",
+  "Objectives/MDM_WaitObjective",
   "MissionPrototypes/MDM_GangWarMission",
   "Utils/MDM_VehicleUtils",
   "Utils/MDM_PlayerUtils",
@@ -62,7 +61,6 @@ MDM_LuaLoader._luas = {
 
 function MDM_LuaLoader.ImportLuas(luas)
   for _,lua in ipairs(luas) do
-    --    print("Importing: " ..lua)
     if game then
       local lua = lua ..".lua"
       include(lua)

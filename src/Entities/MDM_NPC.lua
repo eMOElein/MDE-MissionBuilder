@@ -1,16 +1,3 @@
--- This program is free software: you can redistribute it and/or modify
--- it under the terms of the GNU General Public License as published by
--- the Free Software Foundation, either version 3 of the License, or
--- (at your option) any later version.
---
--- This program is distributed in the hope that it will be useful,
--- but WITHOUT ANY WARRANTY; without even the implied warranty of
--- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
--- GNU General Public License for more details.
---
--- You should have received a copy of the GNU General Public License
--- along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 MDM_NPC = {}
 MDM_NPC = MDM_Entity:class()
 
@@ -29,6 +16,11 @@ function MDM_NPC:fromArgs(args)
   if not args.npcId then
     error("npcId not set",2)
   end
+
+  if not args.position then
+    error("position not set",2)
+  end
+
 
   npc.args = args
   npc.npcId = args.npcId
@@ -105,12 +97,14 @@ function MDM_NPC.GetPos(self)
   end
 end
 
-function MDM_NPC.newCivilian(npcId,pos,dir)
+function MDM_NPC:newCivilian(npcId,pos,dir)
   local npc = MDM_NPC:new(npcId,pos,dir)
 
   if game then
     npc.aitype = enums.AI_TYPE.CIVILIAN
   end
+
+  return npc
 end
 
 --Human:Patrol

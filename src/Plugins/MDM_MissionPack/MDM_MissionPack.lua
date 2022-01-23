@@ -203,4 +203,11 @@ function MDM_MissionPack.InitializeTestMissions()
   }
   MDM_Core.missionManager:AddMissionProvider(duelTest)
 
+  local waitObjectiveTest = {
+    title = "WaitObjective Test",
+    client = client,
+    missionSupplier = TestMissions.WaitObjectiveTest
+  }
+  MDM_Core.missionManager:AddMissionProvider(waitObjectiveTest)
+
 end

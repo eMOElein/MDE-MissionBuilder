@@ -29,14 +29,9 @@ function MDM_WaveObjective:new (args)
 
   args.title = args.title or "Wave"
   objective:SetInformation(args.title,args.title,args.title)
-  objective.configuration = args
+  objective.args = args
   objective.npcsDeadDetector = MDM_NPCDeadDetector:new({npcs = args.enemies})
-  objective.preparationTimeOver = args.preparationTime == 0
-  objective.preparationTime = args.preparationTime or 10
-  objective.time = -1
-  objective.timerStarted = false
   if args.restorePlayer == nil or args.restorePlayer then objective:OnObjectiveStart(function() MDM_PlayerUtils.RestorePlayer() end) end
-  self.timerBanner = MDM_Banner:new("Next Wave in ...")
   return objective
 end
 
@@ -45,45 +40,16 @@ function MDM_WaveObjective.Update(self)
     return
   end
 
-  if game then
-    if not self.preparationTimeOver then
-      if not self.timerStarted and self.preparationTime > 0 then
-        MDM_HUDUtils.StartTimer(self.preparationTime)
-        self.timerStarted = true
-      else
-        if MDM_HUDUtils.GetTimerValue()  == 0 then
-          MDM_HUDUtils.StopTimer()
-          self.timerBanner:Hide()
-          self.preparationTimeOver = true
-        end
-      end
+  if not self.enemysSpawned then
+    for _, enemy in ipairs(self.args.enemies) do
+      enemy:Spawn()
+      enemy:AttackPlayer()
     end
-  else
-    self.preparationTimeOver = true -- for unit testing we need to skip preparation if we are not ingame
+    self.enemysSpawned = true
   end
 
-  if not self.preparationTimeOver then
-    self.time = MDM_Math.Round(MDM_HUDUtils.GetTimerValue(),1)
-    if self.time ~= self.lastTime then
-      MDM_HUDUtils.HideTimer()
-      self.lastTime = time
-      self.timerBanner.title = "Next wave in " ..tostring(self.time)
-      self.timerBanner:Show()
-    end
-  end
-
-  if self.preparationTimeOver then
-    if not self.enemysSpawned then
-      for i, enemy in ipairs(self.configuration.enemies) do
-        enemy:Spawn()
-        enemy:AttackPlayer()
-      end
-      self.enemysSpawned = true
-    end
-
-    if self.npcsDeadDetector:Test() == true then
-      self:Succeed(self)
-    end
+  if self.npcsDeadDetector:Test() == true then
+    self:Succeed(self)
   end
 
 end

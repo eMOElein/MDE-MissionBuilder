@@ -1,16 +1,3 @@
--- This program is free software: you can redistribute it and/or modify
--- it under the terms of the GNU General Public License as published by
--- the Free Software Foundation, either version 3 of the License, or
--- (at your option) any later version.
---
--- This program is distributed in the hope that it will be useful,
--- but WITHOUT ANY WARRANTY; without even the implied warranty of
--- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
--- GNU General Public License for more details.
---
--- You should have received a copy of the GNU General Public License
--- along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 MDM_Mission = {}
 MDM_Mission = MDM_Updateable:new()
 
@@ -33,10 +20,6 @@ function MDM_Mission:new (args)
     error("args not set",2)
   end
 
-  if not args.title then
-    error("title not set" ,2)
-  end
-
   mission.args = args
   mission.objectives = {}
   mission.directors = {}
@@ -51,7 +34,11 @@ function MDM_Mission:new (args)
   mission.failDescription = nil
   mission.flagFailed = false
   mission.introductionShown = false
-  mission.titleBanner = MDM_Banner:new(mission:GetTitle())
+
+  if args.title then
+    mission.titleBanner = MDM_Banner:new(mission:GetTitle())
+  end
+
   mission.missionCompleteBanner = MDM_Banner:new("Mission Passed!")
   mission.assets = {}
   return mission
@@ -197,8 +184,10 @@ function MDM_Mission.Start(self)
   self.running = true
 
   if game then
-    self.titleBanner.time = 2000
-    self.titleBanner:Show()
+    if self.titleBanner then
+      self.titleBanner.time = 2000
+      self.titleBanner:Show()
+    end
     game.audio:PlaySimpleEvent("mx_Gameplay_Music_Mission_Complete")
   end
 
@@ -270,7 +259,7 @@ function MDM_Mission.Stop(self)
     if self.flagFailed then
       a:Despawn()
     else
-      MDM_SpawnManager.MarkForRadiusDespawn(a,50)
+      MDM_SpawnManager.MarkForDistanceDespawn(a,50)
     end
   end
 end

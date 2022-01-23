@@ -1,16 +1,3 @@
--- This program is free software: you can redistribute it and/or modify
--- it under the terms of the GNU General Public License as published by
--- the Free Software Foundation, either version 3 of the License, or
--- (at your option) any later version.
---
--- This program is distributed in the hope that it will be useful,
--- but WITHOUT ANY WARRANTY; without even the implied warranty of
--- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
--- GNU General Public License for more details.
---
--- You should have received a copy of the GNU General Public License
--- along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 TestMissions = {}
 
 local objBlip = nil
@@ -151,11 +138,13 @@ end
 
 function TestMissions.PursuitTest()
   local car_target = MDM_Car:new("smith_v12", MDM_Utils.GetVector(-898.98346,-190.64536,2.9552386), MDM_Utils.GetVector(0.028562285,0.99954069,-0.010129704))
-  local npc_target = MDM_NPC:newFriend("13604348442857333985",MDM_Utils.GetVector(-907.94,-180.41,25),MDM_Utils.GetVector(0,0,0))
-  local npc_target2 = MDM_NPC:newFriend("13604348442857333985",MDM_Utils.GetVector(-907.98,-180.41,25),MDM_Utils.GetVector(0,0,0))
+  local npc_target = MDM_NPC:new("13604348442857333985",MDM_Utils.GetVector(-907.94,-180.41,25),MDM_Utils.GetVector(0,0,0))
+  local npc_target2 = MDM_NPC:new("13604348442857333985",MDM_Utils.GetVector(-907.98,-180.41,25),MDM_Utils.GetVector(0,0,0))
   local car_police = MDM_Car:new("shubert_e_six_p", MDM_Utils.GetVector(-899.25092,-203.29758,2.9997153), MDM_Utils.GetVector(-0.0055011963,0.99997598,-0.0042084511))
   local npc_police = MDM_NPC:new("13604348442857333985",MDM_Utils.GetVector(-907.94,-180.41,2),MDM_Utils.GetVector(0,0,0))
   local car_player = MDM_Car:new("shubert_e_six", MDM_Utils.GetVector(-899.16278,-225.84026,2.977174), MDM_Utils.GetVector(0.044264518,0.99901813,-0.0018530977))
+
+  local assets = {car_target,npc_target,npc_target2,car_police,npc_police,car_player}
 
   local mission = MDM_Mission:new({
     title = "Carchase Test",
@@ -163,57 +152,40 @@ function TestMissions.PursuitTest()
     initialWeather = "mm_180_sniper_cp_010"
   })
 
-  mission:AddAssets({car_target,npc_target,npc_police,car_police,car_player,npc_target2})
-  mission:OnMissionStart(function() MDM_Utils.SpawnAll({car_target,npc_police,car_police,npc_target,car_player,npc_target2})end)
+  mission:AddAssets(assets)
+
+  local objective0_spawnerObjective = MDM_SpawnerObjective:new({
+    spawnables = assets
+  })
+  mission:AddObjective(objective0_spawnerObjective)
 
   local objective1_waitForSpawns = MDM_CallbackObjective:new ({
     title = "Spawntime",
     callback = function ()
-      if car_target:IsSpawned() and
-        car_police:IsSpawned() and
-        npc_police:IsSpawned() and
-        npc_target:IsSpawned() and
-        car_player:IsSpawned()
-      then
-        npc_target:GetGameEntity():GetInOutCar(car_target:GetGameEntity(),1,false,false)
-        npc_target2:GetGameEntity():GetInOutCar(car_target:GetGameEntity(),2,false,false)
-        car_target:GetGameEntity():InitializeAIParams(enums.CarAIProfile.PIRATE   ,enums.CarAIProfile.PIRATE   )
-        car_target:GetGameEntity():SetMaxAISpeed(true,65)
-        car_target:GetGameEntity():SetNavModeWanderArea(false,nil)
+      --      if not MDM_SpawnUtils.AreAllSpawned(assets) then
+      --        return false
+      --      end
 
-        npc_police:GetGameEntity():GetInOutCar(car_police:GetGameEntity(),1,false,false)
-        car_police:GetGameEntity():InitializeAIParams(enums.CarAIProfile.PIRATE   ,enums.CarAIProfile.PIRATE   )
-        car_police:GetGameEntity():SetMaxAISpeed(true,65)
-        car_police:GetGameEntity():SetSirenOn(true)
-        car_police:GetGameEntity():SetBeaconLightOn(true)
-        car_police:GetGameEntity():SetNavModeHunt(npc_target:GetGameEntity(),5,  enums.CarHuntRole.FOLLOW    )
+      npc_target:GetGameEntity():GetInOutCar(car_target:GetGameEntity(),1,false,false)
+      npc_target2:GetGameEntity():GetInOutCar(car_target:GetGameEntity(),2,false,false)
+      car_target:GetGameEntity():InitializeAIParams(enums.CarAIProfile.PIRATE   ,enums.CarAIProfile.PIRATE   )
+      car_target:GetGameEntity():SetMaxAISpeed(true,65)
+      car_target:GetGameEntity():SetNavModeWanderArea(false,nil)
 
-        getp():GetOnVehicle(car_player:GetGameEntity(), 1, false, "WALK")
+      npc_police:GetGameEntity():GetInOutCar(car_police:GetGameEntity(),1,false,false)
+      car_police:GetGameEntity():InitializeAIParams(enums.CarAIProfile.PIRATE   ,enums.CarAIProfile.PIRATE   )
+      car_police:GetGameEntity():SetSirenOn(true)
+      car_police:GetGameEntity():SetBeaconLightOn(true)
+      car_police:GetGameEntity():SetMaxAISpeed(true,65)
+      car_police:GetGameEntity():SetNavModeHunt(npc_target:GetGameEntity(),5,  enums.CarHuntRole.FOLLOW    )
 
-        npc_target2:GetGameEntity():Attack( car_police:GetGameEntity())
-        return true
-      else
-        return false
-      end
+      getp():GetOnVehicle(car_player:GetGameEntity(), 1, false, "WALK")
+
+      --     npc_target2:GetGameEntity():Attack( car_police:GetGameEntity())
+      return true
     end,
   })
   mission:AddObjective(objective1_waitForSpawns)
-
-
-  --  local objective2_Teleports = MDM_CallbackObjective:new ({
-  --    title = "Teleporting",
-  --    callback = function ()
-  --      print("Teleporting!!!")
-  --      enemyNpc:GetGameEntity():GetInOutCar(enemyCar:GetGameEntity(),1,false,false)
-  --      getp():GetOnVehicle(playerCar:GetGameEntity(), 1, false, "WALK")
-  --
-  --      enemyCar:GetGameEntity():InitializeAIParams(enums.CarAIProfile.AGGRESSIVE   ,enums.CarAIProfile.AGGRESSIVE   )
-  --      enemyCar:GetGameEntity():SetMaxAISpeed(true,60)
-  --      enemyCar:GetGameEntity():SetNavModeWanderArea(false,nil)
-  --      return true
-  --    end
-  --  })
-  --  mission:AddObjective(objective2_Teleports)
 
   local objective3_Killtarget = MDM_KillTargetsObjective:new({
     title ="Take out your target",
@@ -221,7 +193,7 @@ function TestMissions.PursuitTest()
   })
   mission:AddObjective(objective3_Killtarget)
 
-  MDM_Core.missionManager:StartMission(mission)
+  return mission
 end
 
 function TestMissions.CarchaseTest()
@@ -277,7 +249,7 @@ function TestMissions.CarchaseTest()
   })
   mission:AddObjective(objective3_Killtarget)
 
-  MDM_Core.missionManager:StartMission(mission)
+  return mission
 end
 
 function TestMissions.DestroyCarInAreaTest()
@@ -286,7 +258,20 @@ function TestMissions.DestroyCarInAreaTest()
   car_smith:Spawn()
   local objective = MDM_DestroyCarInAreaObjective:new({mission = mission, car = car_smith, position = MDM_Utils.GetVector(-898.71429,-181.9543,4), radius = 20})
   mission:AddObjective(objective)
-  MDM_Core.missionManager:StartMission(mission)
+
+  return mission
+end
+
+function TestMissions.WaitObjectiveTest()
+  local mission = MDM_Mission:new({})
+
+  local objective = MDM_WaitObjective:new({
+    seconds = 10
+  })
+
+  mission:AddObjective(objective)
+  --  MDM_Core.missionManager:StartMission(mission)
+  return mission
 end
 
 function TestMissions.WaveTest()
@@ -305,7 +290,7 @@ function TestMissions.WaveTest()
   local wave = MDM_WaveObjective:new(config)
 
 
-  MDM_Core.missionManager:StartMission(mission)
+  return mission
 end
 
 
@@ -363,7 +348,8 @@ function TestMissions.KillMission()
   --  npc2:Spawn()
   --  npc3:Spawn()
   --  npc4:Spawn()
-  MDM_Core.missionManager:StartMission(m)
+
+  return m
 end
 
 function TestMissions.NPCHurtTest()
@@ -383,26 +369,36 @@ end
 
 function TestMissions.WaypointMission()
   local mission = MDM_Mission:new({title = "Waypoint Mission"})
-  local objective1 = MDM_GoToObjective:new({mission = mission, position = MDM_Utils.GetVector(-907.94,-210.41,2)})
-  objective1.title = "Objective 1"
-  objective1.task = "Go to the marked location"
-  objective1.description = "Blablabla"
-  mission:AddObjective(objective1)
 
-  local objective2 = MDM_GoToObjective:new({mission = mission, position = MDM_Utils.GetVector(-907.94,-180.41,2)})
-  objective2.title = "Objective 2"
-  objective2.task = "Go to the marked location"
-  objective2.description = "Blablabla"
-  mission:AddObjective(objective2)
+  local objective1 = MDM_GoToObjective:new({
+    mission = mission,
+    position = MDM_Utils.GetVector(-907.94,-210.41,2),
+    title = "Objective 1",
+    task = "Go to the marked location",
+    description = "Blablabla"
+  })
 
 
-  local objective3 = MDM_GoToObjective:new({mission = mission,position = MDM_Utils.GetVector(-907.94,-160.41,2)})
-  objective3.title = "Objective 2"
-  objective3.task = "Go to the marked location"
-  objective3.description = "Blablabla"
-  mission:AddObjective(objective3)
+  local objective2 = MDM_GoToObjective:new({
+    mission = mission,
+    position = MDM_Utils.GetVector(-907.94,-180.41,2),
+    title = "Objective 2",
+    task = "Go to the marked location",
+    description = "Blablabla"
+  })
 
-  MDM_Core.missionManager:StartMission(mission)
+
+
+  local objective3 = MDM_GoToObjective:new({
+    mission = mission,
+    title = "Objective 3",
+    task = "Go to the marked location",
+    description = "Blablabla",
+    position = MDM_Utils.GetVector(-907.94,-160.41,2),
+    noPolice = true
+  })
+
+  return mission
 end
 
 function TestMissions.EvadeMission()
@@ -410,7 +406,8 @@ function TestMissions.EvadeMission()
   local objective_policeEvade = MDM_PoliceEvadeObjective:new ({mission = m, initialLevel = 1})
   objective_policeEvade:SetInitialWantedLevel(1)
   --  m:AddObjective(objective_policeEvade)
-  MDM_Core.missionManager:StartMission(m)
+
+  return m
 end
 
 function TestMissions.BannerTest()
@@ -421,8 +418,8 @@ end
 function TestMissions.GetInCar()
   local falconerCar = MDM_Car:new("berkley_810",MDM_Utils.GetVector(-898.71429,-181.9543,4),MDM_Utils.GetVector(-0,000001,-0.000004,0.000150))
   falconerCar:SetIndestructable(true)
-  --    falconerCar:SetPrimaryColor(48,45,10)
-  falconerCar:SetPrimaryColor(100,30,0)
+  --    falconerCar:SetPrimaryColorRGB(48,45,10)
+  falconerCar:SetPrimaryColorRGB(100,30,0)
   local mission = MDM_Mission:new({title = "Get in the Car"})
 
   -- Objective1: Get In The Car
@@ -453,7 +450,8 @@ function TestMissions.GetInCar()
   MDM_ActivatorUtils.RunWhileObjective(damageDetector,objective2)
 
   mission:AddAssets({falconerCar})
-  MDM_Core.missionManager:StartMission(mission)
+
+  return mission
 end
 
 function TestMissions.HostileZoneTest()
@@ -482,5 +480,6 @@ function TestMissions.HostileZoneTest()
 
   mission:AddDirector(hostileZone)
   mission:AddAssets({npc1})
-  MDM_Core.missionManager:StartMission(mission)
+
+  return mission
 end
