@@ -189,7 +189,6 @@ local function _SpawnNPC(self,callback, spawnId, pos, dir)
 
     local npcGuid = output:GetGUID()
     local npcEntity = game.entitywrapper:GetEntityByGUID(npcGuid)
-    self:SetGameEntity(npcEntity)
 
     local returnArgs = {
       guid = npcGuid,
@@ -207,8 +206,7 @@ function MDM_NPC.IsDead(self)
     return npc:IsDeath()
   end
 
-  local val = self:GetHealth() == 0
-  return val
+  return self:GetHealth() == 0
 end
 
 
