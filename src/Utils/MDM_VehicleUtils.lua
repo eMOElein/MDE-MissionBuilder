@@ -48,8 +48,6 @@ function MDM_VehicleUtils.AdvancedCarSpawner(caller, callback, Vehicle, Pos, Dir
   local so, id = game.traffic:ObtainSpecificCar(Vehicle)
   local veh
   StartThread(function ()
-    --        local so, id = game.traffic:ObtainSpecificCar(Vehicle)
-    --    print(id)
     Wait(so)
 
     local    SpawnPos = Pos

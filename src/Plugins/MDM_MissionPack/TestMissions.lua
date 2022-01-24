@@ -162,9 +162,6 @@ function TestMissions.PursuitTest()
   local objective1_waitForSpawns = MDM_CallbackObjective:new ({
     title = "Spawntime",
     callback = function ()
-      --      if not MDM_SpawnUtils.AreAllSpawned(assets) then
-      --        return false
-      --      end
 
       npc_target:GetGameEntity():GetInOutCar(car_target:GetGameEntity(),1,false,false)
       npc_target2:GetGameEntity():GetInOutCar(car_target:GetGameEntity(),2,false,false)
@@ -266,7 +263,8 @@ function TestMissions.WaitObjectiveTest()
   local mission = MDM_Mission:new({})
 
   local objective = MDM_WaitObjective:new({
-    seconds = 10
+    seconds = 10,
+    bannerText = "wait"
   })
 
   mission:AddObjective(objective)

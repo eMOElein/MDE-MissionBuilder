@@ -1,8 +1,8 @@
 MDM_ObjectivePosition = {}
 
 function MDM_ObjectivePosition:new (title, pos,radius,color)
-  local blip = {}
-  setmetatable(blip, self)
+  local objPos = {}
+  setmetatable(objPos, self)
   self.__index = self
 
   if not pos then
@@ -13,13 +13,13 @@ function MDM_ObjectivePosition:new (title, pos,radius,color)
     error("title not set",2)
   end
 
-  self.radius = radius or 20
-  self.color = color or 4
-  blip.title = title
-  blip.pos = pos
-  blip.mapCircle = MDM_MapCircle:new(blip.pos ,blip.radius,blip.color)
+  objPos.radius = radius or 20
+  objPos.color = color or 4
+  objPos.title = title
+  objPos.pos = pos
+  objPos.mapCircle = MDM_MapCircle:new(objPos.pos ,objPos.radius,objPos.color)
 
-  return blip
+  return objPos
 end
 
 function MDM_ObjectivePosition:AddToMap()
@@ -38,8 +38,6 @@ function MDM_ObjectivePosition.show(self)
   if self.onMap then
     return
   end
-
-  local AreaRadius = 20
 
   if game then
     self.objectiveMDM_ObjectivePosition = game.navigation:RegisterObjectivePos(self.pos, "BLIPSTRING1", "BLIPSTRING2", true)

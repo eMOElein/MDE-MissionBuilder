@@ -55,7 +55,7 @@ function MDM_WaitObjective.Update(self)
       self.lastTime = self.time
 
       if self.timerBanner ~= nil then
-        self.timerBanner.title = self.args.bannerText ..tostring(self.time)
+        self.timerBanner.title = self.args.bannerText .." " ..tostring(self.time)
         self.timerBanner:Show()
       end
     end

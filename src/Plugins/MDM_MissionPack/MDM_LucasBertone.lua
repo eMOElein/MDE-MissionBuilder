@@ -37,7 +37,7 @@ function MDM_LucasBertone.M1_1_Fairplay()
   local objective2 = MDM_GetInCarObjective:new({
     car = smithV12Car,
     title = "Steal the Smith V12",
-    task = "Steal the Smith V12","Go to the marked location",
+    task = "Steal the Smith V12",
     description = "Steal the parked vehicle and try not to get spottet"
   })
   mission:AddObjective(objective2)

@@ -9,7 +9,7 @@ function MDM_KillTargetsObjective:new (args)
   setmetatable(objective, self)
   self.__index = self
 
-  if not args.targets then
+  if args.targets == nil then
     error("targets not set",2)
   end
 
@@ -18,8 +18,7 @@ function MDM_KillTargetsObjective:new (args)
   end
 
   objective.targets = args.targets
-
-  objective._targetsDeadDetector = MDM_TargetsDeadDetector:new({targets = args.targets,onTargetsDead = function() MDM_Objective.SetOutcome(objective,1) end})
+  objective.targetsDeadDetector = MDM_TargetsDeadDetector:new({targets = args.targets,onTargetsDead = function()  end})
 
   objective.blip = MDM_ObjectivePosition:new(objective:GetTitle() ..":TestMDM_ObjectivePosition",args.targets[1]:GetPos())
   return objective
@@ -36,8 +35,41 @@ function MDM_KillTargetsObjective.Update(self)
   if not self.running then
     return
   end
-  self._targetsDeadDetector:Test()
+
+
   MDM_Objective.Update(self)
+
+  if self.targets == nil then
+    error("targets nil")
+  end
+
+  if not self.indicator then
+    for _,t in ipairs(self.targets) do
+      if t:IsSpawned() then
+        print("Add Indicator")
+        print(t:GetGameEntity())
+        --        game.navigation:SetIconShowByEntity(t:GetGameEntity(), true)
+        game.hud:AddEntityIndicator(t:GetGameEntity(), "objective_primary", Math:newVector(0,0,0))
+        self.indicator = true
+      end
+    end
+  end
+
+
+  if self.targetsDeadDetector:Test() then
+    MDM_Objective.Succeed(self)
+
+    if self.indicator then
+      print("Remove Indicator")
+      for _,t in ipairs(self.targets) do
+        if t:IsSpawned() then
+          --         game.navigation:SetIconShowByEntity(t:GetGameEntity(), false)
+          game.hud:RemoveEntityIndicator(t:GetGameEntity(), "objective_primary", Math:newVector(3,3,3))
+          self.indicator = true
+        end
+      end
+    end
+  end
 end
 
 function MDM_KillTargetsObjective.Stop(self)

@@ -30,6 +30,7 @@ function MDM_TargetsDeadDetector.Test(self)
 
   if cnt == #self.npcList then
     MDM_Utils.ForEach(self.onTargetsDeadCallbacks,function(callback) callback() end)
+    return true
   end
 
 end

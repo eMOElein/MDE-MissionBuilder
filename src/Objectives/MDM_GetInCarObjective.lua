@@ -1,5 +1,3 @@
--- MDM_GetInCarObjective
--- An objective where the player has to enter a specific car.
 MDM_GetInCarObjective = {}
 MDM_GetInCarObjective = MDM_Objective:class()
 
@@ -39,7 +37,21 @@ end
 function MDM_GetInCarObjective.Update(self)
   if self.car and self.car:IsPlayerInCar() then
     MDM_Objective.Succeed(self)
+
+    --    if self.car:GetGameEntity() ~= nil and self.indicator then
+    --      print("remove indicator")
+    --      game.hud:RemoveEntityIndicator(self.car:GetGameEntity())
+    --    end
+
   end
+
+  --  if self.car:GetGameEntity() ~= nil and not self.indicator then
+  --    print("Add Indicator")
+  --    print(tostring(self.car:GetGameEntity()))
+  --    game.navigation:SetIconShowByEntity(self.car:GetGameEntity(), true)
+  --    game.hud:AddEntityIndicator(self.car:GetGameEntity(), "objective_primary", Math:newVector(3,3,3))
+  --    self.indicator = true
+  --  end
 
   MDM_Objective.Update(self)
 end

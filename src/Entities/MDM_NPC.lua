@@ -38,10 +38,6 @@ function MDM_NPC:fromArgs(args)
   npc.pos = args.position
   npc.dir = args.direction or MDM_Utils.GetVector(0,0,0)
 
-  if game then
-    npc.aitype = enums.AI_TYPE.ENEMY
-  end
-
   return npc
 end
 
@@ -72,28 +68,11 @@ function MDM_NPC.AttackPlayer(self)
   end
 end
 
-function MDM_NPC.AttackPlayer(self)
-  local ent = self:GetGameEntity()
-
-  local func = function()
-    local ent = self:GetGameEntity()
-    if ent then
-      ent:Attack(getp())
-    end
-  end
-
-  -- Execute function immediately if entity is already spawned.
-  -- If not then wait till entity is spawned.
-  if ent then
-    func()
-  else
-    self:OnSpawned(func)
-  end
-end
-
 function MDM_NPC.GetPos(self)
   if self.ent then
-    return ent:GetPos()
+    return self.ent:GetPos()
+  else
+    return self.pos
   end
 end
 
@@ -194,35 +173,30 @@ local function _SpawnNPC(self,callback, spawnId, pos, dir)
 
   if not self.spawner then
     self.spawner = _CreateSpawner(self.pos,self.dir)
+    self.spawner:Activate()
   end
 
-  local spawner_ent = self.spawner
-
   StartThread(function ()
-    local spawner = spawner_ent:GetComponent("C_RuntimeSpawnerComponent")
+    local runtimeSpawner = self.spawner:GetComponent("C_RuntimeSpawnerComponent")
 
-    spawner_ent:Activate()
-    spawner:SetSpawnProfile(spawnId)
-    Wait(spawner:GetSpawnProfileLoadSyncObject())
-    local output = spawner:CreateObject()
+    runtimeSpawner:SetSpawnProfile(spawnId)
+    Wait(runtimeSpawner:GetSpawnProfileLoadSyncObject())
+
+    local output = runtimeSpawner:CreateObject()
     output:SetPos(pos)
     output:SetDir(dir)
     output:Activate()
-    local NPCGUID = output:GetGUID()
-    local NPC = game.entitywrapper:GetEntityByGUID(NPCGUID)
-    self:SetGameEntity(NPC)
-    --    if NPCCurrentAI == enums.AI_TYPE.CIVILIAN then
-    --      print("Civilian NPC - Won't shoot")
-    --    else
-    --      enums.AI_TYPE.ENEMY
-    --      NPC:SwitchBrain(enums.AI_TYPE.FRIEND)
-    --    end
-    --    table.insert(SpawnedNPCs, NPCGUID)
-    -- NPC:SwitchBrain(self.aitype)
-    -- NPC:SetPreventCleaning(true) !!!!!!!!!!!!!!!!!!!!!!!!!
-    --NPC:DespawnImmunity() !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    --    NPC:Follow(game.game:GetActivePlayer(), "RUN", 1, 1.5)
-    callback(NPCGUID,NPC)
+
+    local npcGuid = output:GetGUID()
+    local npcEntity = game.entitywrapper:GetEntityByGUID(npcGuid)
+    self:SetGameEntity(npcEntity)
+
+    local returnArgs = {
+      guid = npcGuid,
+      entity = npcEntity
+    }
+
+    callback(returnArgs,npcGuid,npcEntity)
     return
   end)
 end
@@ -292,23 +266,21 @@ function MDM_NPC.Spawn(self)
 
   self.spawning = true
 
-  local callback = function(game_GUID, game_npc)
+  local callback = function(args,game_GUID, game_npc)
     self.spawning = false
     self.spawned = true
-    self.game_npc = game_npc
-    self.game_GUID = game_GUID
-    self:SetGameEntity(game_npc)
+    self.game_npc = args.entity
+    self.game_GUID = args.guid
+    self:SetGameEntity(args.entity)
 
     if self.aitype then
       game_npc:SwitchBrain(self.aitype)
     end
-    --    print("Callback Set God: " .. tostring(game_npc) .. " - " .. tostring(self:GetGameEntity()) )
-    --    print("Self: " .. tostring(self) .. " GM: " .. tostring(self.godmode) )
+
     MDM_NPC.Godmode(self,self.godmode)
     self:Godmode()
-    --    MDM_Utils.RmoveTrowableWeapons(self) -- Trying to remove molovotvs from enemies but does not work
 
-    for i,callback in ipairs(self.onSpawnedCallbacks) do
+    for _,callback in ipairs(self.onSpawnedCallbacks) do
       callback()
     end
   end

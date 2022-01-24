@@ -70,6 +70,7 @@ function MDM_Car.OnGameEntitySpawned(self, id, so, game_entity)
   self.spawning = false
   self.spawned = true
   self:SetGameEntity(game_entity)
+  self.sceneObject = so
 
   if self.args.primaryColorRGB then
     self:SetPrimaryColorRGB(self.args.primaryColorRGB[1], self.args.primaryColorRGB[2], self.args.primaryColorRGB[3])
