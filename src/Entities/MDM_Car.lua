@@ -43,9 +43,6 @@ function MDM_Car:new(args, dummyPos, dummyDir)
   car.spawnDir = args.direction
   car.indestructableFlag = false
 
-  --math.randomseed(os.clock())
-  --  car.primaryColor = {r=math.random(), g=math.random(), b=math.random()}
-
   return car
 end
 

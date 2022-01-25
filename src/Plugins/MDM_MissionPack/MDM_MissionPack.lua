@@ -210,4 +210,11 @@ function MDM_MissionPack.InitializeTestMissions()
   }
   MDM_Core.missionManager:AddMissionProvider(waitObjectiveTest)
 
+  local civilWanderTest = {
+    title = "Civil Wander Test",
+    client = client,
+    missionSupplier = TestMissions.CivilWanderTest
+  }
+  MDM_Core.missionManager:AddMissionProvider(civilWanderTest)
+
 end

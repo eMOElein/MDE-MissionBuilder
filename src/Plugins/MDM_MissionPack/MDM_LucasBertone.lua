@@ -188,6 +188,7 @@ function MDM_LucasBertone.M3_1_Omerta()
     npc = npc_big_stan,
     threshold = 85,
     title = "Teach Big Stan a lesson - He's at the former Black Cat bar",
+    onObjectiveEnd = function() end
   })
   mission:AddObjective(objective2)
 

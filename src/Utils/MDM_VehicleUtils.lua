@@ -134,6 +134,10 @@ function MDM_VehicleUtils.Info()
   print("PrintInfos" .. tostring(MDM_VehicleUtils.GetPlayerCurrentVehicle()))
   local veh = MDM_VehicleUtils.GetPlayerCurrentVehicle()
 
+  if not veh then
+    return
+  end
+
   local pos = veh:GetPos()
   local dir = veh:GetDir()
   local name = veh:GetName()
@@ -161,7 +165,7 @@ function MDM_VehicleUtils.Info()
 
     local cPos = "(" ..pos.x .."," .. pos.y .. "," .. pos.z .. ")"
     local cDir = "(" ..dir.x .."," .. dir.y .. "," .. dir.z .. ")"
-    local sCreate = "MDM_Car:new(\"" ..name ..", MDM_Utils.GetVector" ..cPos ..", MDM_Utils.GetVector" ..cDir ..")"
+    local sCreate = "MDM_Car:new({carId = \"" ..name .."\", position = MDM_Utils.GetVector" ..cPos ..", direction = MDM_Utils.GetVector" ..cDir .."})"
     print(sCreate)
     MDM_Utils.WriteDebug(sCreate)
   end

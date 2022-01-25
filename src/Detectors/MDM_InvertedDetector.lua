@@ -1,5 +1,5 @@
 --- MDM_InvertedDetector
--- A detector that inverts the result of the given detector
+-- A detector that returns the inverted result of the given detector
 --
 -- @param detector the detector that should be inverted
 MDM_InvertedDirector = {}

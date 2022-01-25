@@ -1,6 +1,14 @@
 MDM_Mission = {}
 MDM_Mission = MDM_Updateable:new()
 
+function MDM_Mission:class()
+  local objective =  {}
+  setmetatable(objective, self)
+  self.__index = self
+
+  return objective
+end
+
 local args = {
   introText = nil,
   initialOutfit = nil,
@@ -34,13 +42,17 @@ function MDM_Mission:new (args)
   mission.failDescription = nil
   mission.flagFailed = false
   mission.introductionShown = false
+  mission.assets = {}
+
+  if args.assets ~= nil then
+    MDM_Mission.AddAssets(mission,args.assets)
+  end
 
   if args.title then
     mission.titleBanner = MDM_Banner:new(mission:GetTitle())
   end
 
   mission.missionCompleteBanner = MDM_Banner:new("Mission Passed!")
-  mission.assets = {}
   return mission
 end
 
@@ -54,7 +66,7 @@ function MDM_Mission.AddAssets(self, spawnable_assets)
   end
 
   for _,a in ipairs(spawnable_assets) do
-    self:AddAsset(a)
+    MDM_Mission.AddAsset(self,a)
   end
 end
 

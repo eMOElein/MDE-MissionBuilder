@@ -2,20 +2,24 @@ MDM_Utils = {}
 
 function MDM_Utils.AddAll(tab, objects)
   if not tab then
-    tab = {}
+    error("tab not set", 2)
   end
 
-  if objects then
-    if type(objects) == "table" then
-      for index,object in ipairs(objects) do
-        table.insert(tab,object)
-      end
-    else
-      table.insert(tab,objects)
-    end
+  if not type(tab) == "table" then
+    error("tab is not of type table")
   end
 
-  return tab
+  if not objects then
+    return
+  end
+
+  if not type(objects) == "table" then
+    error("objects is not of type table")
+  end
+
+  for _,object in ipairs(objects) do
+    table.insert(tab,object)
+  end
 end
 
 function MDM_Utils.ForEach(table, consumer)
@@ -32,6 +36,12 @@ function MDM_Utils.GetDistance(pos1, pos2)
   return MDM_Utils.VectorDistance(pos1,pos2)
 end
 
+function MDM_Utils.GetFirstElement(table)
+  for _,element in ipairs(table) do
+    return element
+  end
+end
+
 function MDM_Utils.VectorDistance(vector1,vector2)
   local distance = ((vector1.x - vector2.x)^2 + (vector1.y - vector2.y)^2 + (vector1.z - vector2.z)^2)^0.5
   return distance
@@ -40,12 +50,10 @@ end
 function MDM_Utils.GetVector(x,y,z)
   local vector = nil
 
-  if not pcall(
-    function()
-      vector = Math:newVector(x,y,z)
-    end
-  ) then
-    vector = {x = x,y = y,z = z}
+  if game then
+    vector = Math:newVector(x,y,z)
+  else
+    vector = {x = x, y = y, z = z}
   end
 
   return vector
@@ -63,15 +71,13 @@ end
 
 function MDM_Utils.SpawnAll(spawnables)
   for _,spawnable in ipairs(spawnables) do
-    if not spawnable:IsSpawned() then
-      --      print("Spawning Entity")
+    if not spawnable:IsSpawned() and not spawnable:IsSpawning() then
       spawnable:Spawn()
     end
   end
 end
 
 function MDM_Utils.DespawnAll(spawnables, radius)
-  --  print("Despawn with Radius: " .. tostring(radius))
   for index,spawnable in ipairs(spawnables) do
     local despawn = true
 
@@ -90,18 +96,6 @@ function MDM_Utils.DistanceToPlayer(entity)
   if game then
     distance = getp():GetPos():DistanceToPoint(entity:GetPos())
     return distance
-  end
-end
-
-function MDM_Utils.RmoveTrowableWeapons(npc)
-  local game_npc = npc:GetGameEntity()
-  if game_npc then
-    --    print("Removing Throwables")
-    game_npc:InventorySetUnlimitedAmmo(false)
-    game_npc:InventorySetUnlimitedAmmo(71,false)
-    game_npc:GetGameEntity():InventoryRemoveGrenades(1000)
-    game_npc:GetGameEntity():InventoryRemoveAmmoByCategory(71, 1000)
-    game_npc:DisableInput(enums.DisabledInput.GRENADE )
   end
 end
 

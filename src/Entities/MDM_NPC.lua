@@ -1,13 +1,6 @@
 MDM_NPC = {}
 MDM_NPC = MDM_Entity:class()
 
-local arguments = {
-  npcId = nil, --MANDATORY
-  position = nil, --MANDATORY
-  direction = nil,
-  aiType = nil
-}
-
 function MDM_NPC:fromArgs(args)
   local npc = MDM_Entity:new(args.position,args.direction)
   setmetatable(npc, self)
@@ -20,7 +13,6 @@ function MDM_NPC:fromArgs(args)
   if not args.position then
     error("position not set",2)
   end
-
 
   npc.args = args
   npc.npcId = args.npcId

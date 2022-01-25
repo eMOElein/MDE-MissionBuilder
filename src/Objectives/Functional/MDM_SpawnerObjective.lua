@@ -31,24 +31,19 @@ function MDM_SpawnerObjective.AddSpawnables(self,spawnables)
   end
 end
 
-function MDM_SpawnerObjective.Start(self)
-  MDM_Objective.Start(self)
-end
-
-function MDM_SpawnerObjective.Stop(self)
-  MDM_Objective.Stop(self)
-end
-
 function MDM_SpawnerObjective.Update(self)
   local spawnedNPCs = 0
 
+  print("Spawner: " ..#self.spawnables .." - " ..tostring(self.running))
   MDM_Objective.Update(self)
   if not self.running then
     return
   end
 
+  print("Try Spawn: " ..#self.spawnables)
   if not self.spawning then
     for _,spawnable in ipairs(self.spawnables) do
+      print("Spawn")
       spawnable:Spawn()
     end
     self.spawning = true

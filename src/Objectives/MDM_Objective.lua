@@ -114,7 +114,9 @@ function MDM_Objective.Start(self)
     game.hud:SendMessageMovie("HUD", "OnShowFreerideBanner", "", self:GetIntroText())
   end
 
-  MDM_Utils.ForEach(self.onObjectiveStartCallbacks,function(callback) callback(self) end)
+  for _,callback in ipairs(self.onObjectiveStartCallbacks) do
+    callback()
+  end
 end
 
 function MDM_Objective.OnObjectiveStop(self,callback)

@@ -64,6 +64,17 @@ function MDM_MainMenu._ClientSelectionMenuFactory()
   return menu
 end
 
+function MDM_MainMenu._TeleportMenu()
+  local menu = MDM_MainMenu.CreateSimpleMenu()
+
+  menu:SetTitle("Teleport")
+  for key, coordinate in pairs(MDM_Locations) do
+    menu:AddButton(key, function()  getp():Teleport(coordinate, getp():GetDir(), true) end)
+  end
+
+  return menu
+end
+
 function MDM_MainMenu._ClientMenuFactory(client)
   return function ()
     local menu = MDM_MainMenu.CreateSimpleMenu()
@@ -101,6 +112,7 @@ function MDM_MainMenu._DebugMenu()
   local menu = MDM_MainMenu.CreateSimpleMenu()
   menu:SetTitle("Debug Menu")
   menu:AddButton("Testfunction", MDM_TestFunctions.Test)
+  menu:AddButton("Teleport", "Teleport", script:CacheMenu(MDM_MainMenu._TeleportMenu))
   menu:AddButton("Print PlayerPos", MDM_PlayerUtils.PrintPosition)
   menu:AddButton("Print Vehicle Infos", MDM_VehicleUtils.Info)
   menu:AddButton("Stop Active Mission", MDM_MissionManager.StopActiveMission)

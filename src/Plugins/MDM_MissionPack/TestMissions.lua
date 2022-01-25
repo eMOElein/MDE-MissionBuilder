@@ -53,7 +53,6 @@ function TestMissions.DuelTest()
   --- @param enemyNpcs = MDM_NPC instances
   --- @param allyNpcs = MDM_NPC instances
   local function DuelTestMission(args)
-
     if not args.enemyNpcs then
       error("enemyNpcs not set",2)
     end
@@ -70,33 +69,42 @@ function TestMissions.DuelTest()
       error("allyNpcs is empty",2)
     end
 
+    local spawnables = {}
+    MDM_Utils.AddAll(spawnables,args.allyNpcs)
+    MDM_Utils.AddAll(spawnables,args.enemyNpcs)
+
     local mission = MDM_Mission:new(args)
-    mission:OnMissionStart(function()
-      MDM_Utils.SpawnAll(args.enemyNpcs)
-      MDM_Utils.SpawnAll(args.allyNpcs)
-    end)
-    -- mission:OnMissionEnd(function() MDM_Utils.DespawnAll(assets) end)
-    mission:AddAssets(args.allyNpcs)
-    mission:AddAssets(args.enemyNpcs)
+    mission:AddAssets(spawnables)
 
-    local objective1_waitForSpawns = MDM_CallbackObjective:new ({
-      title = "Spawntime",
+    local objective50_spawnerObjective = MDM_SpawnerObjective:new({
+      spawnables = spawnables
+    })
+    mission:AddObjective(objective50_spawnerObjective)
+
+    local objective1_startAttack = MDM_CallbackObjective:new ({
+      title = "Attack",
       callback = function ()
-        if not MDM_SpawnUtils.AreAllSpawned(args.allyNpcs) then return false end
-        if not MDM_SpawnUtils.AreAllSpawned(args.enemyNpcs) then return false end
-
-        local enemyIndex = 1
-        for _,a in ipairs(args.allyNpcs) do
-          if enemyIndex > #args.enemyNpcs then
-            enemyIndex = 1
+        local targetIndex = 1
+        for _,ally in ipairs(args.allyNpcs) do
+          if targetIndex > #args.enemyNpcs then
+            targetIndex = 1
           end
-          a:GetGameEntity():Attack(args.enemyNpcs[enemyIndex]:GetGameEntity())
-          enemyIndex = enemyIndex + 1
+          ally:GetGameEntity():Attack(args.enemyNpcs[targetIndex]:GetGameEntity())
+          targetIndex = targetIndex + 1
         end
 
+        targetIndex = 1
+        for _,enemy in ipairs(args.enemyNpcs) do
+          if targetIndex > #args.allyNpcs then
+            targetIndex = 1
+          end
+          enemy:GetGameEntity():Attack(args.allyNpcs[targetIndex]:GetGameEntity())
+          targetIndex = targetIndex + 1
+        end
         return true
       end,
     })
+    mission:AddObjective(objective1_startAttack)
 
     local objective100_KillTargets = MDM_KillTargetsObjective:new({
       title ="Take out your targets",
@@ -105,7 +113,6 @@ function TestMissions.DuelTest()
     mission:AddObjective(objective100_KillTargets)
 
     mission:AddObjective(MDM_RestorePlayerObjective:new())
-
     return mission
   end
 
@@ -132,7 +139,6 @@ function TestMissions.DuelTest()
     }
   })
 
-  MDM_Core.missionManager:StartMission(mission)
   return mission
 end
 
@@ -480,4 +486,48 @@ function TestMissions.HostileZoneTest()
   mission:AddAssets({npc1})
 
   return mission
+end
+
+function TestMissions.CivilWanderTest()
+
+  local npcTarget = MDM_NPC:newCivilian("13604348442857333985", MDM_Utils.GetVector(-908.67175,-185.3815,2.833797), MDM_Utils.GetVector(0.011134353,0.99993801,0))
+  local npcBodyguard1 = MDM_NPC:new("13604348442857333985", MDM_Utils.GetVector(-907.36566,-190.83984,2.8284881), MDM_Utils.GetVector(0.2797617,0.96006948,0))
+  local npcBodyguard2 = MDM_NPC:new("13604348442857333985", MDM_Utils.GetVector(-909.70911,-190.3795,2.8368874), MDM_Utils.GetVector(0.1081597,0.99413353,0))
+
+  local spawnables = {npcTarget,npcBodyguard1,npcBodyguard2}
+
+  local mission = MDM_Mission:new({
+    title = "Civil Wander Test",
+    startPosition = MDM_Utils.GetVector(-907.95496,-217.03046,2.8169303),
+    initialWeather = "mm_110_omerta_cp_050_cs_safehouse",
+    assets = spawnables
+  })
+
+  local objective50_spawnerObjective = MDM_SpawnerObjective:new({
+    spawnables = spawnables
+  })
+  mission:AddObjective(objective50_spawnerObjective)
+
+  local objective1_Wander = MDM_CallbackObjective:new ({
+    title = "Civil Wander",
+    callback = function ()
+      npcTarget:GetGameEntity():WanderAway()
+  --    npcTarget:GetGameEntity():OverrideWanderMoveMode(enums.HumanMoveMode.SPRINT)
+  npcTarget:GetGameEntity():SetMovementSpeedMult(2)
+      npcBodyguard1:GetGameEntity():Follow(npcTarget:GetGameEntity())
+      npcBodyguard2:GetGameEntity():Follow(npcTarget:GetGameEntity())
+      return true
+    end,
+  })
+  mission:AddObjective(objective1_Wander)
+
+  local objective100_KillTargets = MDM_KillTargetsObjective:new({
+    title ="Take out your targets",
+    targets = {npcTarget,npcBodyguard1,npcBodyguard2}
+  })
+  mission:AddObjective(objective100_KillTargets)
+
+  mission:AddObjective(MDM_RestorePlayerObjective:new())
+  return mission
+
 end

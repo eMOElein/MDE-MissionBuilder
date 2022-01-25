@@ -1,10 +1,6 @@
 MDM_GetInCarObjective = {}
 MDM_GetInCarObjective = MDM_Objective:class()
 
-local args = {
-  car = nil
-}
-
 function MDM_GetInCarObjective:new (args)
   local objective = MDM_Objective:new(args)
   setmetatable(objective, self)
@@ -15,7 +11,6 @@ function MDM_GetInCarObjective:new (args)
   end
 
   objective.car = args.car
-  objective.blip = MDM_ObjectivePosition:new(objective:GetTitle(), objective.car:GetPos())
 
   return objective
 end
@@ -25,30 +20,29 @@ function MDM_GetInCarObjective.Start(self)
     self.car:Spawn()
   end
 
-  --  MDM_ObjectivePosition.show(self.blip)
   MDM_Objective.Start(self)
 end
 
 function MDM_GetInCarObjective.Stop(self)
-  --  MDM_ObjectivePosition.Hide(self.blip)
   MDM_Objective.Stop(self)
 end
 
 function MDM_GetInCarObjective.Update(self)
-  if self.car:GetGameEntity() ~= nil and not self.indicator then
-    self.objectivePosition = game.navigation:RegisterObjectiveEntityDirect(self.car:GetGameEntity(), "BLIPSTRING1", "BLIPSTRING2", true)
-    game.hud:AddEntityIndicator(self.car:GetGameEntity(), "objective_primary", Math:newVector(0,0,2))
-    self.indicator = true
+  MDM_Objective.Update(self)
+
+  if game and not self.markersAdded and self.car:GetGameEntity() ~= nil then
+    self.mapMarker = game.navigation:RegisterObjectiveEntityDirect(self.car:GetGameEntity(), "Unknown 1", "Unknown 2", true)
+    game.hud:AddEntityIndicator(self.car:GetGameEntity(), "objective_primary", MDM_Utils.GetVector(0,0,2))
+    self.markersAdded = true
   end
 
   if self.car and self.car:IsPlayerInCar() then
-    MDM_Objective.Succeed(self)
-
-    if self.car:GetGameEntity() ~= nil and self.indicator then
+    if game and self.markersAdded and self.car:GetGameEntity() ~= nil then
       game.hud:RemoveEntityIndicator(self.car:GetGameEntity())
-      HUD_UnregisterIcon(self.objectivePosition)
+      HUD_UnregisterIcon(self.mapMarker)
     end
+
+    MDM_Objective.Succeed(self)
   end
 
-  MDM_Objective.Update(self)
 end

@@ -7,7 +7,7 @@ local arguments = {
   showArea = false
 }
 --- MDM_PoliceFreeZoneDirector
--- Creates an area around a radius in which the police is disabled when the player enters it.
+-- Creates an area around a point in which the police is disabled when the player enters it.
 -- Police is enabled again when the player leaves the area.
 --
 function MDM_PoliceFreeZoneDirector:new (args)
@@ -27,6 +27,11 @@ function MDM_PoliceFreeZoneDirector:new (args)
   director.detector = MDM_EntityInCircleDetector:new({entity = MDM_PlayerUtils.GetPlayer(),position = args.position, radius = args.radius})
   director.area = MDM_MapCircle:new (args.position,args.radius,1)
   director.showArea = false
+
+  if args.showArea ~= nil then
+    director.showArea = args.showArea
+  end
+
   return director
 end
 
