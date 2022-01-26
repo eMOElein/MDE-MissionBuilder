@@ -5,10 +5,10 @@ function MDM_SalieriMissions.M1_BackyardTrouble()
 
   local car_schubert = MDM_Car:new("shubert_six",MDM_Utils.GetVector(-670.4494,-22.954449,3.3371413),MDM_Utils.GetVector(-0.32917213,-0.94427019,-0.0002347008))
 
-  local npc1 = MDM_NPC:new("13604348442857333985",MDM_Utils.GetVector(-683.10767,-15.692556,3.2338758),MDM_Utils.GetVector(0.6981827,-0.71591961,0))
-  local npc2 = MDM_NPC:new("13604348442857333985",MDM_Utils.GetVector(-681.30603,-24.531549,3.2201567),MDM_Utils.GetVector(0.41589907,0.90941077,0))
-  local npc3 = MDM_NPC:new("13604348442857333985",MDM_Utils.GetVector(-684.01532,-21.848021,3.352128),MDM_Utils.GetVector(0.9708972,0.23949677,0))
-  local npc4 = MDM_NPC:new("13604348442857333985",MDM_Utils.GetVector(-678.65411,-14.920903,3.2161522),MDM_Utils.GetVector(-0.31570739,-0.94885659,0))
+  local npc1 = MDM_NPC:new({npcId="13604348442857333985",position=MDM_Utils.GetVector(-683.10767,-15.692556,3.2338758),direction=MDM_Utils.GetVector(0.6981827,-0.71591961,0)})
+  local npc2 = MDM_NPC:new({npcId="13604348442857333985",position=MDM_Utils.GetVector(-681.30603,-24.531549,3.2201567),direction=MDM_Utils.GetVector(0.41589907,0.90941077,0)})
+  local npc3 = MDM_NPC:new({npcId="13604348442857333985",position=MDM_Utils.GetVector(-684.01532,-21.848021,3.352128),direction=MDM_Utils.GetVector(0.9708972,0.23949677,0)})
+  local npc4 = MDM_NPC:new({npcId="13604348442857333985",position=MDM_Utils.GetVector(-678.65411,-14.920903,3.2161522),direction=MDM_Utils.GetVector(-0.31570739,-0.94885659,0)})
 
   local mission = MDM_Mission:new({
     title = "Salieri - Backyard Trouble",
@@ -57,18 +57,18 @@ end
 function MDM_SalieriMissions.M2_WhiskyWhopper()
   local M2_introText = "Bottles of an exclusive Whisky were smuggled to Lost Heaven on a ship today\nOne of our men at the harbour stored it in a truck and hid it on a nearby compound.\nHe was supposed to meet Sam a few hours ago but he didn't show up.\nMaybe Morello has someting to do with that.\nGo to the compound, find out what happened and bring the truck to the meetingpoint."
 
-  local npc_paulie = MDM_NPC:newFriend("5874491335140879700",MDM_Utils.GetVector(-634.74359,-272.58469,2.9996707),MDM_Utils.GetVector (-0.22052898,-0.97538036,0))
+  local npc_paulie = MDM_NPC:newFriend({npcId="5874491335140879700",position=MDM_Utils.GetVector(-634.74359,-272.58469,2.9996707),direction=MDM_Utils.GetVector (-0.22052898,-0.97538036,0)})
 
-  local npc1 = MDM_NPC:new("18187434932497386406",MDM_Utils.GetVector(-918.92773,-706.95239,3.146647),MDM_Utils.GetVector(0.43737864,-0.89927745,0))
-  local npc2 = MDM_NPC:new("18187434932497386406",MDM_Utils.GetVector(-921.99921,-711.38287,3.1582365),MDM_Utils.GetVector(0.70571977,-0.70849109,0))
-  local npc3 = MDM_NPC:new("18187434932497386406",MDM_Utils.GetVector(-928.05493,-690.15259,3.061234),MDM_Utils.GetVector(-0.96647418,-0.2567637,0))
-  local npc4 = MDM_NPC:new("18187434932497386406",MDM_Utils.GetVector(-913.62866,-690.31207,3.1151304),MDM_Utils.GetVector(-0.10116922,-0.99486923,0))
-  local npc5 = MDM_NPC:new("18187434932497386406",MDM_Utils.GetVector(-909.53839,-699.11597,3.1243472),MDM_Utils.GetVector(-0.1667802,-0.9859941,0))
-  local npc6 = MDM_NPC:new("18187434932497386406",MDM_Utils.GetVector(-922.41571,-744.79175,3.0986309),MDM_Utils.GetVector(-0.90848875,0.4179092,0))
-  local npc7 = MDM_NPC:new("18187434932497386406",MDM_Utils.GetVector(-923.88202,-740.05048,3.093822),MDM_Utils.GetVector(-0.99298406,-0.11824846,0))
-  local npc8 = MDM_NPC:new("9024609446539980771",MDM_Utils.GetVector(-922.49371,-728.50079,3.1785531),MDM_Utils.GetVector(0.60751921,-0.79430497,0))
-  local npc9 = MDM_NPC:new("18187434932497386406",MDM_Utils.GetVector(-899.25873,-723.43848,3.1321092),MDM_Utils.GetVector(0.21112774,-0.97745848,0))
-  local npc10 = MDM_NPC:new("18187434932497386406",MDM_Utils.GetVector(-915.8587,-745.17853,3.0953269),MDM_Utils.GetVector(0.70855165,-0.70565885,0))
+  local npc1 = MDM_NPC:new({npcId="18187434932497386406",position=MDM_Utils.GetVector(-918.92773,-706.95239,3.146647),direction=MDM_Utils.GetVector(0.43737864,-0.89927745,0)})
+  local npc2 = MDM_NPC:new({npcId="18187434932497386406",position=MDM_Utils.GetVector(-921.99921,-711.38287,3.1582365),direction=MDM_Utils.GetVector(0.70571977,-0.70849109,0)})
+  local npc3 = MDM_NPC:new({npcId="18187434932497386406",position=MDM_Utils.GetVector(-928.05493,-690.15259,3.061234),direction=MDM_Utils.GetVector(-0.96647418,-0.2567637,0)})
+  local npc4 = MDM_NPC:new({npcId="18187434932497386406",position=MDM_Utils.GetVector(-913.62866,-690.31207,3.1151304),direction=MDM_Utils.GetVector(-0.10116922,-0.99486923,0)})
+  local npc5 = MDM_NPC:new({npcId="18187434932497386406",position=MDM_Utils.GetVector(-909.53839,-699.11597,3.1243472),direction=MDM_Utils.GetVector(-0.1667802,-0.9859941,0)})
+  local npc6 = MDM_NPC:new({npcId="18187434932497386406",position=MDM_Utils.GetVector(-922.41571,-744.79175,3.0986309),direction=MDM_Utils.GetVector(-0.90848875,0.4179092,0)})
+  local npc7 = MDM_NPC:new({npcId="18187434932497386406",position=MDM_Utils.GetVector(-923.88202,-740.05048,3.093822),direction=MDM_Utils.GetVector(-0.99298406,-0.11824846,0)})
+  local npc8 = MDM_NPC:new({npcId="9024609446539980771",position=MDM_Utils.GetVector(-922.49371,-728.50079,3.1785531),direction=MDM_Utils.GetVector(0.60751921,-0.79430497,0)})
+  local npc9 = MDM_NPC:new({npcId="18187434932497386406",position=MDM_Utils.GetVector(-899.25873,-723.43848,3.1321092),direction=MDM_Utils.GetVector(0.21112774,-0.97745848,0)})
+  local npc10 = MDM_NPC:new({npcId="18187434932497386406",position=MDM_Utils.GetVector(-915.8587,-745.17853,3.0953269),direction=MDM_Utils.GetVector(0.70855165,-0.70565885,0)})
   local enemyNpcs = {npc1,npc2,npc3,npc4,npc5,npc6,npc7,npc8,npc9,npc10}
 
   local car_bolt_pickup_1 = MDM_Car:new("bolt_pickup",MDM_Utils.GetVector(-893.90149,-745.11334,3.8092734),MDM_Utils.GetVector(0.72964358,0.68382657,0.0011832109))
@@ -164,21 +164,21 @@ end
 
 function MDM_SalieriMissions.M3_GangWar1()
   local wave1Npcs = {
-    MDM_NPC:new("13604348442857333985", MDM_Utils.GetVector(-877.54053,-179.31276,2.8210607), MDM_Utils.GetVector(-0.91717273,-0.39848995,0)),
-    MDM_NPC:new("13604348442857333985", MDM_Utils.GetVector(-909.6463,-188.8774,2.8385715), MDM_Utils.GetVector(0.51778549,-0.85551047,0)),
-    MDM_NPC:new("13604348442857333985", MDM_Utils.GetVector(-898.08289,-183.80492,2.7595434), MDM_Utils.GetVector(-0.23320645,-0.97242725,0)),
-    MDM_NPC:new("13604348442857333985", MDM_Utils.GetVector(-892.63867,-181.422,2.7360954), MDM_Utils.GetVector(-0.15583517,-0.98778307,0)),
-    MDM_NPC:new("13604348442857333985", MDM_Utils.GetVector(-900.65839,-176.99596,2.7371385), MDM_Utils.GetVector(-0.19901529,-0.97999644,0)),
-    MDM_NPC:new("13604348442857333985", MDM_Utils.GetVector(-895.70215,-174.4108,2.7366309), MDM_Utils.GetVector(-0.21996461,-0.97550786,0))
+    MDM_NPC:new({npcId="13604348442857333985", position = MDM_Utils.GetVector(-877.54053,-179.31276,2.8210607), direction=MDM_Utils.GetVector(-0.91717273,-0.39848995,0)}),
+    MDM_NPC:new({npcId="13604348442857333985", position = MDM_Utils.GetVector(-909.6463,-188.8774,2.8385715),direction= MDM_Utils.GetVector(0.51778549,-0.85551047,0)}),
+    MDM_NPC:new({npcId="13604348442857333985", position = MDM_Utils.GetVector(-898.08289,-183.80492,2.7595434),direction= MDM_Utils.GetVector(-0.23320645,-0.97242725,0)}),
+    MDM_NPC:new({npcId="13604348442857333985", position = MDM_Utils.GetVector(-892.63867,-181.422,2.7360954), direction=MDM_Utils.GetVector(-0.15583517,-0.98778307,0)}),
+    MDM_NPC:new({npcId="13604348442857333985", position = MDM_Utils.GetVector(-900.65839,-176.99596,2.7371385), direction=MDM_Utils.GetVector(-0.19901529,-0.97999644,0)}),
+    MDM_NPC:new({npcId="13604348442857333985", position = MDM_Utils.GetVector(-895.70215,-174.4108,2.7366309), direction=MDM_Utils.GetVector(-0.21996461,-0.97550786,0)})
   }
 
   local wave2NPCs = {
-    MDM_NPC:new("13604348442857333985", MDM_Utils.GetVector(-912.276,-272.20651,2.7572498), MDM_Utils.GetVector(0.77677119,0.62978292,0)),
-    MDM_NPC:new("13604348442857333985", MDM_Utils.GetVector(-902.5733,-281.51898,2.6639752), MDM_Utils.GetVector(-0.45808861,0.88890654,0)),
-    MDM_NPC:new("13604348442857333985", MDM_Utils.GetVector(-890.86993,-274.1214,2.6641729), MDM_Utils.GetVector(-0.39807889,0.91735119,0)),
-    MDM_NPC:new("13604348442857333985", MDM_Utils.GetVector(-884.85193,-272.28378,2.7870576), MDM_Utils.GetVector(-0.26791304,0.9634431,0)),
-    MDM_NPC:new("13604348442857333985", MDM_Utils.GetVector(-882.34644,-270.70609,2.8150592), MDM_Utils.GetVector(-0.1980121,0.98019958,0)),
-    MDM_NPC:new("13604348442857333985", MDM_Utils.GetVector(-896.8877,-297.81766,2.793437), MDM_Utils.GetVector(-0.051288676,0.99868387,0))
+    MDM_NPC:new({npcId="13604348442857333985", position = MDM_Utils.GetVector(-912.276,-272.20651,2.7572498), direction=MDM_Utils.GetVector(0.77677119,0.62978292,0)}),
+    MDM_NPC:new({npcId="13604348442857333985", position = MDM_Utils.GetVector(-902.5733,-281.51898,2.6639752), direction=MDM_Utils.GetVector(-0.45808861,0.88890654,0)}),
+    MDM_NPC:new({npcId="13604348442857333985", position = MDM_Utils.GetVector(-890.86993,-274.1214,2.6641729),direction= MDM_Utils.GetVector(-0.39807889,0.91735119,0)}),
+    MDM_NPC:new({npcId="13604348442857333985", position = MDM_Utils.GetVector(-884.85193,-272.28378,2.7870576),direction= MDM_Utils.GetVector(-0.26791304,0.9634431,0)}),
+    MDM_NPC:new({npcId="13604348442857333985", position = MDM_Utils.GetVector(-882.34644,-270.70609,2.8150592),direction= MDM_Utils.GetVector(-0.1980121,0.98019958,0)}),
+    MDM_NPC:new({npcId="13604348442857333985", position = MDM_Utils.GetVector(-896.8877,-297.81766,2.793437),direction= MDM_Utils.GetVector(-0.051288676,0.99868387,0)})
 
   }
 
@@ -193,7 +193,7 @@ function MDM_SalieriMissions.M3_GangWar1()
   }
 
   local allyNpcs = {
-    MDM_NPC:newFriend("5874491335140879700",MDM_Utils.GetVector(-908.85223,-227.08142,2.808135),MDM_Utils.GetVector(0.99617749,0.087352395,0)),
+    MDM_NPC:newFriend({npcId="5874491335140879700",position=MDM_Utils.GetVector(-908.85223,-227.08142,2.808135),direction=MDM_Utils.GetVector(0.99617749,0.087352395,0)}),
   }
 
   local wave1 = {
@@ -225,25 +225,25 @@ end
 
 function MDM_SalieriMissions.M4_GangWar2()
   local wave1Npcs = {
-    MDM_NPC:new("13604348442857333985", MDM_Utils.GetVector(-1341.6405,60.678833,3.3377147), MDM_Utils.GetVector(0.057904456,-0.99832207,0)),
-    MDM_NPC:new("13604348442857333985", MDM_Utils.GetVector(-1338.4283,61.330421,3.4274106), MDM_Utils.GetVector(-0.1250236,-0.9921537,0)),
-    MDM_NPC:new("13604348442857333985", MDM_Utils.GetVector(-1333.8378,60.914726,3.4938006), MDM_Utils.GetVector(0.83252376,-0.55398923,0)),
-    MDM_NPC:new("13604348442857333985", MDM_Utils.GetVector(-1336.9178,64.083038,3.4031191), MDM_Utils.GetVector(-0.029945441,-0.99955148,0))
+    MDM_NPC:new({npcId="13604348442857333985", position= MDM_Utils.GetVector(-1341.6405,60.678833,3.3377147), direction = MDM_Utils.GetVector(0.057904456,-0.99832207,0)}),
+    MDM_NPC:new({npcId="13604348442857333985", position= MDM_Utils.GetVector(-1338.4283,61.330421,3.4274106), direction = MDM_Utils.GetVector(-0.1250236,-0.9921537,0)}),
+    MDM_NPC:new({npcId="13604348442857333985", position= MDM_Utils.GetVector(-1333.8378,60.914726,3.4938006), direction = MDM_Utils.GetVector(0.83252376,-0.55398923,0)}),
+    MDM_NPC:new({npcId="13604348442857333985", position= MDM_Utils.GetVector(-1336.9178,64.083038,3.4031191), direction = MDM_Utils.GetVector(-0.029945441,-0.99955148,0)})
   }
 
   local wave2NPCs = {
-    MDM_NPC:new("13604348442857333985", MDM_Utils.GetVector(-1379.2908,20.443228,3.3324304), MDM_Utils.GetVector(0.99984968,0.017331241,0)),
-    MDM_NPC:new("13604348442857333985", MDM_Utils.GetVector(-1378.7825,23.249542,3.3157849), MDM_Utils.GetVector(0.8313151,0.55580127,0)),
-    MDM_NPC:new("13604348442857333985", MDM_Utils.GetVector(-1378.5864,25.967979,3.2988653), MDM_Utils.GetVector(0.9989906,-0.044919487,0))
+    MDM_NPC:new({npcId="13604348442857333985", position= MDM_Utils.GetVector(-1379.2908,20.443228,3.3324304), direction = MDM_Utils.GetVector(0.99984968,0.017331241,0)}),
+    MDM_NPC:new({npcId="13604348442857333985", position= MDM_Utils.GetVector(-1378.7825,23.249542,3.3157849), direction = MDM_Utils.GetVector(0.8313151,0.55580127,0)}),
+    MDM_NPC:new({npcId="13604348442857333985", position= MDM_Utils.GetVector(-1378.5864,25.967979,3.2988653), direction = MDM_Utils.GetVector(0.9989906,-0.044919487,0)})
   }
 
   local wave3NPCs = {
-    MDM_NPC:new("13604348442857333985", MDM_Utils.GetVector(-1339.7012,-24.598413,4.0049219), MDM_Utils.GetVector(-0.030802596,0.99952543,0)),
-    MDM_NPC:new("13604348442857333985", MDM_Utils.GetVector(-1335.7605,-24.900768,4.0430508), MDM_Utils.GetVector(-0.024835717,0.99969149,0)),
-    MDM_NPC:new("13604348442857333985", MDM_Utils.GetVector(-1332.0574,-24.968515,4.0788627), MDM_Utils.GetVector(-0.013719424,0.99990582,0)),
-    MDM_NPC:new("13604348442857333985", MDM_Utils.GetVector(-1328.6531,-25.033279,4.1118484), MDM_Utils.GetVector(-0.01357092,0.99990785,0)),
-    MDM_NPC:new("13604348442857333985", MDM_Utils.GetVector(-1331.3779,-20.022778,4.0834484), MDM_Utils.GetVector(-0.16082166,0.98698342,0)),
-    MDM_NPC:new("13604348442857333985", MDM_Utils.GetVector(-1336.2496,-19.2791,4.05158), MDM_Utils.GetVector(-0.61400998,0.78929818,0)),
+    MDM_NPC:new({npcId="13604348442857333985", position= MDM_Utils.GetVector(-1339.7012,-24.598413,4.0049219), direction = MDM_Utils.GetVector(-0.030802596,0.99952543,0)}),
+    MDM_NPC:new({npcId="13604348442857333985", position= MDM_Utils.GetVector(-1335.7605,-24.900768,4.0430508), direction = MDM_Utils.GetVector(-0.024835717,0.99969149,0)}),
+    MDM_NPC:new({npcId="13604348442857333985", position= MDM_Utils.GetVector(-1332.0574,-24.968515,4.0788627), direction = MDM_Utils.GetVector(-0.013719424,0.99990582,0)}),
+    MDM_NPC:new({npcId="13604348442857333985", position= MDM_Utils.GetVector(-1328.6531,-25.033279,4.1118484), direction = MDM_Utils.GetVector(-0.01357092,0.99990785,0)}),
+    MDM_NPC:new({npcId="13604348442857333985", position= MDM_Utils.GetVector(-1331.3779,-20.022778,4.0834484), direction = MDM_Utils.GetVector(-0.16082166,0.98698342,0)}),
+    MDM_NPC:new({npcId="13604348442857333985", position= MDM_Utils.GetVector(-1336.2496,-19.2791,4.05158), direction = MDM_Utils.GetVector(-0.61400998,0.78929818,0)}),
   }
 
   local carAssets = {
@@ -255,7 +255,7 @@ function MDM_SalieriMissions.M4_GangWar2()
   }
 
   local allyNpcs = {
-    MDM_NPC:newFriend("5874491335140879700", MDM_Utils.GetVector(-1330.4849,16.178551,3.9502649), MDM_Utils.GetVector(-0.95933074,0.28228405,0))
+    MDM_NPC:newFriend({npcId= "5874491335140879700", position= MDM_Utils.GetVector(-1330.4849,16.178551,3.9502649), direction = MDM_Utils.GetVector(-0.95933074,0.28228405,0)})
   }
 
   local wave1 = {

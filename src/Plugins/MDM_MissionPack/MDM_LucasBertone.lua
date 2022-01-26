@@ -153,7 +153,7 @@ end
 
 function MDM_LucasBertone.M3_1_Omerta()
   local M3_1_introText = "A guy from Oakwod has beaten up one of my guys.\nA guy from the Black Cat bar. Someone needs to teach him a lesson.\nBut don't kill him. Just give him one or two good punches.\nAnd say him it's a lesson from Carlo."
-  local npc_big_stan = MDM_NPC:new("2541916285709005291",MDM_Utils.GetVector(-1040.7507,-302.92154,4.3719287),MDM_Utils.GetVector(-0.67485845,0.73794723,0))
+  local npc_big_stan = MDM_NPC:new({npcId = "2541916285709005291",position = MDM_Utils.GetVector(-1040.7507,-302.92154,4.3719287),direction = MDM_Utils.GetVector(-0.67485845,0.73794723,0)})
   local car_shubert = MDM_Car:new({
     carId = "shubert_e_six",
     position = MDM_Utils.GetVector(866.77765,124.30984,27.451666),
@@ -232,9 +232,9 @@ function MDM_LucasBertone.M3_2_Omerta()
 end
 
 function MDM_LucasBertone.M4_1_LuckyBastard()
-  local npcFriend1 = MDM_NPC:newFriend("18187434932497386406", MDM_Utils.GetVector(-1047.1255,533.90619,17.958805), MDM_Utils.GetVector(-0.36978897,-0.92911577,0))
-  local npcFriend2 = MDM_NPC:newFriend("18187434932497386406", MDM_Utils.GetVector(-1045.6821,533.11432,17.960611), MDM_Utils.GetVector(-0.80718642,-0.59029663,0))
-  local npdDead = MDM_NPC:new("18187434932497386406", MDM_Utils.GetVector(-1048.6772,530.96112,17.956875), MDM_Utils.GetVector(-0.70304906,-0.71114135,0))
+  local npcFriend1 = MDM_NPC:newFriend({npcId="18187434932497386406",position=MDM_Utils.GetVector(-1047.1255,533.90619,17.958805),direction=MDM_Utils.GetVector(-0.36978897,-0.92911577,0)})
+  local npcFriend2 = MDM_NPC:newFriend({npcId="18187434932497386406",position=MDM_Utils.GetVector(-1045.6821,533.11432,17.960611),direction=MDM_Utils.GetVector(-0.80718642,-0.59029663,0)})
+  local npdDead = MDM_NPC:new({npcId="18187434932497386406",position=MDM_Utils.GetVector(-1048.6772,530.96112,17.956875),direction=MDM_Utils.GetVector(-0.70304906,-0.71114135,0)})
 
   local mission = MDM_Mission:new({
     title = "Lucas Bertone 4-1 Lucky Bastard",
@@ -279,7 +279,7 @@ function MDM_LucasBertone.M4_1_LuckyBastard()
 end
 
 function MDM_LucasBertone.M4_2_LuckyBastard()
-  local npc_Owner = MDM_NPC:new("18187434932497386406", MDM_Utils.GetVector(144.16101,-518.84393,2.6868534), MDM_Utils.GetVector(0.60738873,0.79440475,0))
+  local npc_Owner = MDM_NPC:new({npcId="18187434932497386406",position=MDM_Utils.GetVector(144.16101,-518.84393,2.6868534),direction=MDM_Utils.GetVector(0.60738873,0.79440475,0)})
 
   local car_Lassiter =  MDM_Car:new({
     carId = "lassiter_v16_roadster",
@@ -404,8 +404,8 @@ function MDM_LucasBertone.M5_2_CremeDeLaCreme()
     direction = MDM_Utils.GetVector(0.022378264,-0.99973452,0.005499539)
   })
 
-  local npc_enemy1 = MDM_NPC:new("18187434932497386406",MDM_Utils.GetVector(545.29333,423.88425,19.781425), MDM_Utils.GetVector(-0.5477711,-0.83662814,0))
-  local npc_enemy2 = MDM_NPC:new("18187434932497386406",MDM_Utils.GetVector(519.13971,426.54214,19.845762),MDM_Utils.GetVector(-0.5401746,-0.84155297,0))
+  local npc_enemy1 = MDM_NPC:new({npcId="18187434932497386406",position=MDM_Utils.GetVector(545.29333,423.88425,19.781425),direction=MDM_Utils.GetVector(-0.5477711,-0.83662814,0)})
+  local npc_enemy2 = MDM_NPC:new({npcId="18187434932497386406",position=MDM_Utils.GetVector(519.13971,426.54214,19.845762),direction=MDM_Utils.GetVector(-0.5401746,-0.84155297,0)})
 
 
   local mission = MDM_Mission:new({
@@ -436,7 +436,7 @@ function MDM_LucasBertone.M5_2_CremeDeLaCreme()
 end
 
 function MDM_LucasBertone.M6_1_Election()
-  local npc_friend = MDM_NPC:newFriend("18187434932497386406",MDM_Utils.GetVector(-1735.0616,-477.45865,2.6067872),MDM_Utils.GetVector(-0.76740706,0.64116019,0))
+  local npc_friend = MDM_NPC:newFriend({npcId="18187434932497386406",position=MDM_Utils.GetVector(-1735.0616,-477.45865,2.6067872),direction=MDM_Utils.GetVector(-0.76740706,0.64116019,0)})
   local mission = MDM_Mission:new({
     title = "Lucas Bertone 6-1 - Election Campaign",
     initialWeather = "mm_180_sniper_cp_010",
@@ -512,13 +512,13 @@ end
 
 function MDM_LucasBertone.M7_1_Robbery()
   local car_schubert = MDM_Car:new({carId = "shubert_e_six", position = MDM_Utils.GetVector(503.34198,-723.47284,4.4603772), direction = MDM_Utils.GetVector(-0.0096728336,0.99994606,-0.0037835632)})
-  local npc_bigdick = MDM_NPC:newFriend("18187434932497386406",MDM_Utils.GetVector(504.8013,-723.25311,4.2775931),MDM_Utils.GetVector(0.72326815,-0.69056726,0))
+  local npc_bigdick = MDM_NPC:newFriend({npcId="18187434932497386406",position=MDM_Utils.GetVector(504.8013,-723.25311,4.2775931),direction=MDM_Utils.GetVector(0.72326815,-0.69056726,0)})
   npc_bigdick:Godmode(true)
 
-  local npc_enemy1 = MDM_NPC:new("18187434932497386406",MDM_Utils.GetVector(513.33789,-707.03601,7.0374451),MDM_Utils.GetVector(-0.34904775,-0.93710494,0))
-  local npc_enemy2 = MDM_NPC:new("18187434932497386406",MDM_Utils.GetVector(515.18402,-706.78918,12.788147),MDM_Utils.GetVector(-0.33973026,-0.94052291,0))
-  local npc_enemy3 = MDM_NPC:new("18187434932497386406",MDM_Utils.GetVector(513.67609,-695.6297,4.204731),MDM_Utils.GetVector(-0.19928837,-0.97994089,0))
-  local npc_enemy4 = MDM_NPC:new("18187434932497386406",MDM_Utils.GetVector(500.04239,-689.76831,4.2494841),MDM_Utils.GetVector(0.2406131,-0.97062111,0))
+  local npc_enemy1 = MDM_NPC:new({npcId="18187434932497386406",position=MDM_Utils.GetVector(513.33789,-707.03601,7.0374451),direction=MDM_Utils.GetVector(-0.34904775,-0.93710494,0)})
+  local npc_enemy2 = MDM_NPC:new({npcId="18187434932497386406",position=MDM_Utils.GetVector(515.18402,-706.78918,12.788147),direction=MDM_Utils.GetVector(-0.33973026,-0.94052291,0)})
+  local npc_enemy3 = MDM_NPC:new({npcId="18187434932497386406",position=MDM_Utils.GetVector(513.67609,-695.6297,4.204731),direction=MDM_Utils.GetVector(-0.19928837,-0.97994089,0)})
+  local npc_enemy4 = MDM_NPC:new({npcId="18187434932497386406",position=MDM_Utils.GetVector(500.04239,-689.76831,4.2494841),direction=MDM_Utils.GetVector(0.2406131,-0.97062111,0)})
   local enemy_assets = {npc_enemy1,npc_enemy2,npc_enemy3,npc_enemy4}
 
   local mission = MDM_Mission:new({
@@ -592,7 +592,7 @@ function MDM_LucasBertone.M7_2_Robbery()
     direction = MDM_Utils.GetVector(-0.0058350917,0.99998069,-0.0021573838)
   })
 
-  local npc_Driver = MDM_NPC:newCivilian("18187434932497386406", MDM_Utils.GetVector(1585.3451,-514.1037,49.55558), MDM_Utils.GetVector(-0.99988061,0.015445053,0))
+  local npc_Driver = MDM_NPC:newCivilian({npcId="18187434932497386406",position=MDM_Utils.GetVector(1585.3451,-514.1037,49.55558),direction=MDM_Utils.GetVector(-0.99988061,0.015445053,0)})
 
   local mission = MDM_Mission:new({
     title = "Lucas Bertone 7-2 - Moonlighting",

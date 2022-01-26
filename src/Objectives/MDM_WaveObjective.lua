@@ -56,7 +56,7 @@ end
 
 function MDM_WaveObjective.UnitTest()
   print("---------------MDM_WaveObjective Unit Test")
-  local enemyNpc = MDM_NPC:new("1234",MDM_Utils.GetVector(1,1,1),MDM_Utils.GetVector(1,1,1))
+  local enemyNpc = MDM_NPC:new({npcId = "1234",position = MDM_Utils.GetVector(1,1,1),direction = MDM_Utils.GetVector(1,1,1)})
 
   local mission = MDM_Mission:new({title = "Test"})
   local config = {enemies = {enemyNpc}}

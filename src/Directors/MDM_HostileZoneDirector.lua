@@ -90,9 +90,9 @@ function MDM_HostileZoneDirector.UnitTest()
     radius = 50,
     detectionRadius = 20,
     enemies = {
-      MDM_NPC:new("",MDM_Utils.GetVector(0,0,0),MDM_Utils.GetVector(0,0,0)),
-      MDM_NPC:new("",MDM_Utils.GetVector(0,0,0),MDM_Utils.GetVector(0,0,0)),
-      MDM_NPC:new("",MDM_Utils.GetVector(0,0,0),MDM_Utils.GetVector(0,0,0))
+      MDM_NPC:new({npcId="",position=MDM_Utils.GetVector(0,0,0),direction=MDM_Utils.GetVector(0,0,0)}),
+      MDM_NPC:new({npcId="",position=MDM_Utils.GetVector(0,0,0),direction=MDM_Utils.GetVector(0,0,0)}),
+      MDM_NPC:new({npcId="",position=MDM_Utils.GetVector(0,0,0),direction=MDM_Utils.GetVector(0,0,0)})
     },
     showArea = true
   })

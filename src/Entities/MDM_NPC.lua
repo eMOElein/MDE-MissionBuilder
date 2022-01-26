@@ -1,10 +1,14 @@
 MDM_NPC = {}
 MDM_NPC = MDM_Entity:class()
 
-function MDM_NPC:fromArgs(args)
+function MDM_NPC:new(args)
   local npc = MDM_Entity:new(args.position,args.direction)
   setmetatable(npc, self)
   self.__index = self
+
+  if type(args) ~= "table" then
+    error("args is not of type table",2)
+  end
 
   if not args.npcId then
     error("npcId not set",2)
@@ -33,13 +37,13 @@ function MDM_NPC:fromArgs(args)
   return npc
 end
 
-function MDM_NPC:new(npcId,pos,dir)
-  return MDM_NPC:fromArgs({
-    npcId = npcId,
-    position = pos,
-    direction = dir
-  })
-end
+--function MDM_NPC:new(npcId,pos,dir)
+--  return MDM_NPC:fromArgs({
+--    npcId = npcId,
+--    position = pos,
+--    direction = dir
+--  })
+--end
 
 function MDM_NPC.AttackPlayer(self)
   local ent = self:GetGameEntity()
@@ -68,8 +72,8 @@ function MDM_NPC.GetPos(self)
   end
 end
 
-function MDM_NPC:newCivilian(npcId,pos,dir)
-  local npc = MDM_NPC:new(npcId,pos,dir)
+function MDM_NPC:newCivilian(args)
+  local npc = MDM_NPC:new(args)
 
   if game then
     npc.aitype = enums.AI_TYPE.CIVILIAN
@@ -81,9 +85,9 @@ end
 --Human:Patrol
 --Human:PatrolWayPoints
 
-function MDM_NPC:newFriend(npcId,pos,dir)
+function MDM_NPC:newFriend(args)
   --Human:NeverLoseTrackOfPlayer
-  local npc = MDM_NPC:new(npcId,pos,dir)
+  local npc = MDM_NPC:new(args)
 
   if game then
     npc.aitype = enums.AI_TYPE.FRIEND
@@ -280,7 +284,7 @@ end
 
 function MDM_NPC.UnitTest ()
   print("---------------MDM_NPC UnitTest")
-  local npc1 = MDM_NPC:new("123",MDM_Utils.GetVector(0,0,0),MDM_Utils.GetVector(0,0,0))
+  local npc1 = MDM_NPC:new({npcId = "123",position = MDM_Utils.GetVector(0,0,0),direction = MDM_Utils.GetVector(0,0,0)})
 
   if not npc1:GetHealth() == 100 then
     error("health 100 expected")

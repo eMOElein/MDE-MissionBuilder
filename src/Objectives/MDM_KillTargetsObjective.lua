@@ -77,9 +77,9 @@ end
 
 function MDM_KillTargetsObjective.UnitTest()
   print("---------------KillTargetsObjective:UnitTest")
-  local npc1 = MDM_NPC:new("13604348442857333985",MDM_Utils.GetVector(-907.94,-180.41,2),MDM_Utils.GetVector(0,0,0))
-  local npc2 = MDM_NPC:new("13604348442857333985",MDM_Utils.GetVector(-907.94,-182.41,2),MDM_Utils.GetVector(0,0,0))
-  local npc3 = MDM_NPC:new("13604348442857333985",MDM_Utils.GetVector(-907.94,-184.41,2),MDM_Utils.GetVector(0,0,0))
+  local npc1 = MDM_NPC:new({npcId="13604348442857333985",position=MDM_Utils.GetVector(-907.94,-180.41,2),direction=MDM_Utils.GetVector(0,0,0)})
+  local npc2 = MDM_NPC:new({npcId="13604348442857333985",position=MDM_Utils.GetVector(-907.94,-180.41,2),direction=MDM_Utils.GetVector(0,0,0)})
+  local npc3 = MDM_NPC:new({npcId="13604348442857333985",position=MDM_Utils.GetVector(-907.94,-180.41,2),direction=MDM_Utils.GetVector(0,0,0)})
 
   local m = MDM_Mission:new({title = "TEST: Kill Targets"})
   local killTargetsObjective = MDM_KillTargetsObjective:new({mission = m, targets = {npc1,npc2,npc3}})

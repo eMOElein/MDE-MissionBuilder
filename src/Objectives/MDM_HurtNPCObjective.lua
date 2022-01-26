@@ -65,7 +65,7 @@ end
 function MDM_HurtNPCObjective.UnitTest()
   print("---------------MDM_HurtNPCObjective UnitTest")
   
-  local npc = MDM_NPC:new("12345",MDM_Utils.GetVector(1,2,3),MDM_Utils.GetVector(4,5,6))
+  local npc = MDM_NPC:new({npcId="12345",position=MDM_Utils.GetVector(1,2,3),direction=MDM_Utils.GetVector(4,5,6)})
 
   local mission = MDM_Mission:new({title = "test"})
   local objective = MDM_HurtNPCObjective:new({mission = mission, npc = npc, threshold = 70})

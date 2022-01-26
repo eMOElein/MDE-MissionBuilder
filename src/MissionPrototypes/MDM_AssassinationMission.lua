@@ -73,8 +73,8 @@ end
 function MDM_AssassinationMission.UnitTest()
   print("---------------MDM_AssassinationMission")
   local mission = MDM_AssassinationMission:new({
-    targets = {MDM_NPC:new("123",MDM_Utils.GetVector(1,2,3),MDM_Utils.GetVector(1,1,1))},
-    bodyguards = {MDM_NPC:new("123",MDM_Utils.GetVector(1,1,1),MDM_Utils.GetVector(1,1,1))},
+    targets = {MDM_NPC:new({npcId = "123", position = MDM_Utils.GetVector(1,2,3), direction = MDM_Utils.GetVector(1,1,1)})},
+    bodyguards = {MDM_NPC:new({npcId = "123", position = MDM_Utils.GetVector(1,2,3), direction = MDM_Utils.GetVector(1,1,1)})},
   --    position = MDM_Utils.GetVector(1,1,1)
   })
   mission:Start()

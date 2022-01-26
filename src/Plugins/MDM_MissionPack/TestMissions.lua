@@ -122,20 +122,20 @@ function TestMissions.DuelTest()
     startPosition = MDM_Utils.GetVector(-1454.884,-453.95401,3.0223277),
     initialWeather = "mm_110_omerta_cp_050_cs_safehouse",
     enemyNpcs = {
-      MDM_NPC:new("13604348442857333985", MDM_Utils.GetVector(-1444.2271,-488.13773,3.2395408), MDM_Utils.GetVector(-0.27127859,0.96250087,0)),
-      MDM_NPC:new("13604348442857333985", MDM_Utils.GetVector(-1440.8369,-486.95615,3.2213628), MDM_Utils.GetVector(-0.2992492,0.954175,0)),
-      MDM_NPC:new("13604348442857333985", MDM_Utils.GetVector(-1437.6008,-485.80936,3.222491), MDM_Utils.GetVector(-0.29935825,0.95414078,0)),
-      MDM_NPC:new("13604348442857333985", MDM_Utils.GetVector(-1436.2045,-482.95331,3.1876981), MDM_Utils.GetVector(-0.94076848,0.3390497,0)),
-      MDM_NPC:new("13604348442857333985", MDM_Utils.GetVector(-1437.4296,-491.64578,3.1564496), MDM_Utils.GetVector(-0.70401907,0.71018106,0)),
-      MDM_NPC:new("13604348442857333985", MDM_Utils.GetVector(-1442.595,-491.52405,3.2064359), MDM_Utils.GetVector(-0.64396787,0.76505256,0)),
-      MDM_NPC:new("13604348442857333985", MDM_Utils.GetVector(-1446.0928,-486.38669,3.2213938), MDM_Utils.GetVector(-0.62356263,0.78177339,0))
+      MDM_NPC:new({npcId = "13604348442857333985", position = MDM_Utils.GetVector(-1444.2271,-488.13773,3.2395408), direction = MDM_Utils.GetVector(-0.27127859,0.96250087,0)}),
+      MDM_NPC:new({npcId = "13604348442857333985", position = MDM_Utils.GetVector(-1440.8369,-486.95615,3.2213628), direction = MDM_Utils.GetVector(-0.2992492,0.954175,0)}),
+      MDM_NPC:new({npcId = "13604348442857333985", position = MDM_Utils.GetVector(-1437.6008,-485.80936,3.222491), direction = MDM_Utils.GetVector(-0.29935825,0.95414078,0)}),
+      MDM_NPC:new({npcId = "13604348442857333985", position = MDM_Utils.GetVector(-1436.2045,-482.95331,3.1876981), direction = MDM_Utils.GetVector(-0.94076848,0.3390497,0)}),
+      MDM_NPC:new({npcId = "13604348442857333985", position = MDM_Utils.GetVector(-1437.4296,-491.64578,3.1564496), direction = MDM_Utils.GetVector(-0.70401907,0.71018106,0)}),
+      MDM_NPC:new({npcId = "13604348442857333985", position = MDM_Utils.GetVector(-1442.595,-491.52405,3.2064359), direction = MDM_Utils.GetVector(-0.64396787,0.76505256,0)}),
+      MDM_NPC:new({npcId = "13604348442857333985", position = MDM_Utils.GetVector(-1446.0928,-486.38669,3.2213938), direction = MDM_Utils.GetVector(-0.62356263,0.78177339,0)})
     },
     allyNpcs = {
-      MDM_NPC:newFriend("13604348442857333985", MDM_Utils.GetVector(-1447.3892,-468.7261,3.1898816), MDM_Utils.GetVector(0.43327615,-0.90126121,0)),
-      MDM_NPC:newFriend("13604348442857333985", MDM_Utils.GetVector(-1450.9735,-469.41238,3.1904457), MDM_Utils.GetVector(0.16622388,-0.98608804,0)),
-      MDM_NPC:newFriend("13604348442857333985", MDM_Utils.GetVector(-1448.8175,-472.27847,3.1461122), MDM_Utils.GetVector(0.59389323,-0.80454385,0)),
-      MDM_NPC:newFriend("13604348442857333985", MDM_Utils.GetVector(-1445.1748,-472.47644,3.1494639), MDM_Utils.GetVector(0.11688796,-0.99314511,0)),
-      MDM_NPC:newFriend("13604348442857333985", MDM_Utils.GetVector(-1453.8947,-466.51282,3.1729071), MDM_Utils.GetVector(0.41520488,-0.90972793,0))
+      MDM_NPC:newFriend({npcId = "13604348442857333985", position = MDM_Utils.GetVector(-1447.3892,-468.7261,3.1898816), direction = MDM_Utils.GetVector(0.43327615,-0.90126121,0)}),
+      MDM_NPC:newFriend({npcId = "13604348442857333985", position = MDM_Utils.GetVector(-1450.9735,-469.41238,3.1904457), direction = MDM_Utils.GetVector(0.16622388,-0.98608804,0)}),
+      MDM_NPC:newFriend({npcId = "13604348442857333985", position = MDM_Utils.GetVector(-1448.8175,-472.27847,3.1461122), direction = MDM_Utils.GetVector(0.59389323,-0.80454385,0)}),
+      MDM_NPC:newFriend({npcId = "13604348442857333985", position = MDM_Utils.GetVector(-1445.1748,-472.47644,3.1494639), direction = MDM_Utils.GetVector(0.11688796,-0.99314511,0)}),
+      MDM_NPC:newFriend({npcId = "13604348442857333985", position = MDM_Utils.GetVector(-1453.8947,-466.51282,3.1729071), direction = MDM_Utils.GetVector(0.41520488,-0.90972793,0)})
     }
   })
 
@@ -280,8 +280,8 @@ end
 
 function TestMissions.WaveTest()
   local enemyNpcs = {
-    MDM_NPC:new("13604348442857333985",MDM_Utils.GetVector(-887.94025,-228.11867,2.7994239),MDM_Utils.GetVector(-0.99984133,0.017813683,0)),
-    MDM_NPC:new("13604348442857333985",MDM_Utils.GetVector(-887.56146,-233.41458,2.8025167),MDM_Utils.GetVector(-0.97434926,0.22504109,0))
+    MDM_NPC:new({npcId = "13604348442857333985", position = MDM_Utils.GetVector(-887.94025,-228.11867,2.7994239),direction = MDM_Utils.GetVector(-0.99984133,0.017813683,0)}),
+    MDM_NPC:new({npcId = "13604348442857333985", position = MDM_Utils.GetVector(-887.56146,-233.41458,2.8025167),direction = MDM_Utils.GetVector(-0.97434926,0.22504109,0)})
   }
 
   local mission = MDM_Mission:new({title = "Wave Tesmission"})
@@ -300,13 +300,13 @@ end
 
 function TestMissions.GangWarTest()
   local wave1Npcs = {
-    MDM_NPC:new("13604348442857333985",MDM_Utils.GetVector(-887.94025,-228.11867,2.7994239),MDM_Utils.GetVector(-0.99984133,0.017813683,0)),
-    MDM_NPC:new("13604348442857333985",MDM_Utils.GetVector(-887.56146,-233.41458,2.8025167),MDM_Utils.GetVector(-0.97434926,0.22504109,0))
+    MDM_NPC:new({npcId= "13604348442857333985", position = MDM_Utils.GetVector(-887.94025,-228.11867,2.7994239), direction = MDM_Utils.GetVector(-0.99984133,0.017813683,0)}),
+    MDM_NPC:new({npcId= "13604348442857333985", position = MDM_Utils.GetVector(-887.56146,-233.41458,2.8025167),MDM_Utils.GetVector(-0.97434926,0.22504109,0)})
   }
 
   local wave2NPCs = {
-    MDM_NPC:new("13604348442857333985",MDM_Utils.GetVector(-887.94025,-228.11867,2.7994239),MDM_Utils.GetVector(-0.99984133,0.017813683,0)),
-    MDM_NPC:new("13604348442857333985",MDM_Utils.GetVector(-887.56146,-233.41458,2.8025167),MDM_Utils.GetVector(-0.97434926,0.22504109,0))
+    MDM_NPC:new({npcId= "13604348442857333985", position = MDM_Utils.GetVector(-887.94025,-228.11867,2.7994239), direction = MDM_Utils.GetVector(-0.99984133,0.017813683,0)}),
+    MDM_NPC:new({npcId= "13604348442857333985", position = MDM_Utils.GetVector(-887.56146,-233.41458,2.8025167), direction = MDM_Utils.GetVector(-0.97434926,0.22504109,0)})
   }
 
   local carAssets = {
@@ -314,7 +314,7 @@ function TestMissions.GangWarTest()
   }
 
   local allyNpcs = {
-    MDM_NPC:newFriend("5874491335140879700",MDM_Utils.GetVector(-908.85223,-227.08142,2.808135),MDM_Utils.GetVector(0.99617749,0.087352395,0)),
+    MDM_NPC:newFriend({npcId="5874491335140879700", position = MDM_Utils.GetVector(-908.85223,-227.08142,2.808135), direction = MDM_Utils.GetVector(0.99617749,0.087352395,0)}),
   }
 
   local wave1 = {
@@ -340,7 +340,7 @@ function TestMissions.GangWarTest()
 end
 
 function TestMissions.KillMission()
-  local npc1 = MDM_NPC:new("13604348442857333985",MDM_Utils.GetVector(-907.94,-180.41,2),MDM_Utils.GetVector(0,0,0))
+  local npc1 = MDM_NPC:new({npcId="13604348442857333985",position=MDM_Utils.GetVector(-907.94,-180.41,2),direction=MDM_Utils.GetVector(0,0,0)})
   local m = MDM_Mission:new({title = "TEST: Kill Targets"})
   m:AddObjective(MDM_RestorePlayerObjective:new ())
 
@@ -357,7 +357,7 @@ function TestMissions.KillMission()
 end
 
 function TestMissions.NPCHurtTest()
-  local npc1 = MDM_NPC:new("13604348442857333985",MDM_Utils.GetVector(-907.94,-180.41,2),MDM_Utils.GetVector(-0.67485845,0.73794723,0))
+  local npc1 = MDM_NPC:new({npcId="13604348442857333985",position=MDM_Utils.GetVector(-907.94,-180.41,2),direction=MDM_Utils.GetVector(-0.67485845,0.73794723,0)})
 
   local m = MDM_Mission:new({title = "Test NPC Hurt"})
   local objective1 = MDM_HurtNPCObjective:new({mission = m, npc = npc1, threshold = 80})
@@ -460,7 +460,7 @@ end
 
 function TestMissions.HostileZoneTest()
   local position = MDM_Utils.GetVector(-907.94,-180.41,2)
-  local npc1 = MDM_NPC:new("13604348442857333985",position,MDM_Utils.GetVector(0,0,0))
+  local npc1 = MDM_NPC:new({npcId="13604348442857333985",position = position, direction = MDM_Utils.GetVector(0,0,0)})
 
   local mission = MDM_Mission:new({
     title = "Hostile AreaTest"
@@ -490,9 +490,9 @@ end
 
 function TestMissions.CivilWanderTest()
 
-  local npcTarget = MDM_NPC:newCivilian("13604348442857333985", MDM_Utils.GetVector(-908.67175,-185.3815,2.833797), MDM_Utils.GetVector(0.011134353,0.99993801,0))
-  local npcBodyguard1 = MDM_NPC:new("13604348442857333985", MDM_Utils.GetVector(-907.36566,-190.83984,2.8284881), MDM_Utils.GetVector(0.2797617,0.96006948,0))
-  local npcBodyguard2 = MDM_NPC:new("13604348442857333985", MDM_Utils.GetVector(-909.70911,-190.3795,2.8368874), MDM_Utils.GetVector(0.1081597,0.99413353,0))
+  local npcTarget = MDM_NPC:newCivilian({npcId = "13604348442857333985", position = MDM_Utils.GetVector(-908.67175,-185.3815,2.833797), direction = MDM_Utils.GetVector(0.011134353,0.99993801,0)})
+  local npcBodyguard1 = MDM_NPC:new({npcId = "13604348442857333985", position = MDM_Utils.GetVector(-907.36566,-190.83984,2.8284881), direction = MDM_Utils.GetVector(0.2797617,0.96006948,0)})
+  local npcBodyguard2 = MDM_NPC:new({npcId = "13604348442857333985", position = MDM_Utils.GetVector(-909.70911,-190.3795,2.8368874), direction = MDM_Utils.GetVector(0.1081597,0.99413353,0)})
 
   local spawnables = {npcTarget,npcBodyguard1,npcBodyguard2}
 
@@ -512,8 +512,8 @@ function TestMissions.CivilWanderTest()
     title = "Civil Wander",
     callback = function ()
       npcTarget:GetGameEntity():WanderAway()
-  --    npcTarget:GetGameEntity():OverrideWanderMoveMode(enums.HumanMoveMode.SPRINT)
-  npcTarget:GetGameEntity():SetMovementSpeedMult(2)
+      --    npcTarget:GetGameEntity():OverrideWanderMoveMode(enums.HumanMoveMode.SPRINT)
+      npcTarget:GetGameEntity():SetMovementSpeedMult(2)
       npcBodyguard1:GetGameEntity():Follow(npcTarget:GetGameEntity())
       npcBodyguard2:GetGameEntity():Follow(npcTarget:GetGameEntity())
       return true

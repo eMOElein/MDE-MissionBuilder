@@ -56,13 +56,13 @@ function MDM_EntityInCircleDetector.UnitTest()
   local pos1 = MDM_Utils.GetVector(0,0,0)
   local pos2 = MDM_Utils.GetVector(500,500,500)
 
-  local npc1 = MDM_NPC:new("12345",pos1,pos1)
+  local npc1 = MDM_NPC:new({npcId = "12345",position = pos1, direction = pos1})
   local detector1 = MDM_EntityInCircleDetector:new ({entity = npc1, position = pos2, radius = 50})
   if detector1:Test() then
     error("false expected but was: " ..tostring(detector1:Test()),1)
   end
 
-  local npc2 = MDM_NPC:new("12345",pos2,pos1)
+  local npc2 = MDM_NPC:new({npcId = "12345",position = pos2,direction = pos1})
   local detector2 = MDM_EntityInCircleDetector:new ({entity = npc2, position = pos2, radius = 50})
   if not detector2:Test() then
     error("true expected but was: " ..tostring(detector2:Test()),1)
