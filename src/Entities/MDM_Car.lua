@@ -62,18 +62,35 @@ function MDM_Car.GetMotorDamage(self)
   return
 end
 
-function MDM_Car.OnGameEntitySpawned(self, id, so, game_entity)
-  self.game_id = id
+local function _SpawnCar(self,args)
+  local so, id = game.traffic:ObtainSpecificCar(args.carId)
+  StartThread(function ()
+    Wait(so)
+
+    local so = game.traffic:SpawnCar(id, args.position, args.direction)
+    Wait(so)
+
+    local carEntity = game.traffic:GetSpawnedEntity(id)
+
+    if args.callback then
+      args.callback(self,{guid = id, so = so, game_entity = carEntity})
+    end
+    return
+  end)
+end
+
+function MDM_Car.OnGameEntitySpawned(self,args)
+  self.game_id = args.guid
   self.spawning = false
   self.spawned = true
-  self:SetGameEntity(game_entity)
-  self.sceneObject = so
+  self:SetGameEntity(args.game_entity)
+  self.sceneObject = args.so
 
   if self.args.primaryColorRGB then
     self:SetPrimaryColorRGB(self.args.primaryColorRGB[1], self.args.primaryColorRGB[2], self.args.primaryColorRGB[3])
   end
 
-  if game_entity then
+  if args.game_entity then
     if self.primaryColor then
       self:SetPrimaryColorRGB(self.primaryColor.r, self.primaryColor.g, self.primaryColor.b)
     end
@@ -102,13 +119,24 @@ function MDM_Car.Spawn(self)
 
   if game then
     StartThread(function()
-      MDM_VehicleUtils.AdvancedCarSpawner( self, self.OnGameEntitySpawned, self.carId, self.spawnPos, self.spawnDir)
+
+
+
+        -- MDM_VehicleUtils.AdvancedCarSpawner( self, self.OnGameEntitySpawned, self.carId, self.spawnPos, self.spawnDir)
+        _SpawnCar(self,{
+          carId = self.carId,
+          position = self.spawnPos,
+          direction = self.spawnDir,
+          callback = self.OnGameEntitySpawned
+        })
     end)
   else
     self.spawning = false
     self.spawned = true
   end
 end
+
+
 
 function MDM_Car.Despawn(self)
   local entity = self:GetGameEntity()

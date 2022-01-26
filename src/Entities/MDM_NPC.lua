@@ -97,15 +97,15 @@ function MDM_NPC:newFriend(args)
 end
 
 local function _CreateSpawner(pos,dir)
-  local ent = game.game:CreateCleanEntity(pos, 0, false, false, true)
-  ent:SetPos(pos)
-  ent:SetDir(dir)
-  local entWrapComp = ent:GetComponent("C_EntityWrapperComponent")
-  entWrapComp:SetGameEntityType(enums.EntityType.ITEM_NAVDUMMY)
-  entWrapComp:SetModelName("spawn_special")
-  ent:AddComponent("C_SpawnerComponent")
-  ent:AddComponent("C_RuntimeSpawnerComponent")
-  return ent -- The Spawner
+  local entity = game.game:CreateCleanEntity(pos, 0, false, false, true)
+  entity:SetPos(pos)
+  entity:SetDir(dir)
+  local entityWrapper = entity:GetComponent("C_EntityWrapperComponent")
+  entityWrapper:SetGameEntityType(enums.EntityType.ITEM_NAVDUMMY)
+  entityWrapper:SetModelName("spawn_special")
+  entity:AddComponent("C_SpawnerComponent")
+  entity:AddComponent("C_RuntimeSpawnerComponent")
+  return entity -- the Spawner
 end
 
 function MDM_NPC.Despawn(self)
@@ -178,12 +178,12 @@ local function _SpawnNPC(self,callback, spawnId, pos, dir)
     runtimeSpawner:SetSpawnProfile(spawnId)
     Wait(runtimeSpawner:GetSpawnProfileLoadSyncObject())
 
-    local output = runtimeSpawner:CreateObject()
-    output:SetPos(pos)
-    output:SetDir(dir)
-    output:Activate()
+    local object = runtimeSpawner:CreateObject()
+    object:SetPos(pos)
+    object:SetDir(dir)
+    object:Activate()
 
-    local npcGuid = output:GetGUID()
+    local npcGuid = object:GetGUID()
     local npcEntity = game.entitywrapper:GetEntityByGUID(npcGuid)
 
     local returnArgs = {

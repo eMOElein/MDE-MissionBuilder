@@ -1,8 +1,6 @@
 MDM_SalieriMissions = {}
 
 function MDM_SalieriMissions.M1_BackyardTrouble()
-  local M1_introText = "Some of Morello's gunmen were reported hanging around in our neighbourhood harassing our people.\nThis can not be tolerated.\nSend Morello a message and take them out."
-
   local car_schubert = MDM_Car:new("shubert_six",MDM_Utils.GetVector(-670.4494,-22.954449,3.3371413),MDM_Utils.GetVector(-0.32917213,-0.94427019,-0.0002347008))
 
   local npc1 = MDM_NPC:new({npcId="13604348442857333985",position=MDM_Utils.GetVector(-683.10767,-15.692556,3.2338758),direction=MDM_Utils.GetVector(0.6981827,-0.71591961,0)})
@@ -10,19 +8,23 @@ function MDM_SalieriMissions.M1_BackyardTrouble()
   local npc3 = MDM_NPC:new({npcId="13604348442857333985",position=MDM_Utils.GetVector(-684.01532,-21.848021,3.352128),direction=MDM_Utils.GetVector(0.9708972,0.23949677,0)})
   local npc4 = MDM_NPC:new({npcId="13604348442857333985",position=MDM_Utils.GetVector(-678.65411,-14.920903,3.2161522),direction=MDM_Utils.GetVector(-0.31570739,-0.94885659,0)})
 
+local assets = {car_schubert,npc1,npc2,npc3,npc4}
+
   local mission = MDM_Mission:new({
     title = "Salieri - Backyard Trouble",
-    introText = M1_introText,
-    startPosition = MDM_Locations.SALIERIS_BAR_FRONTDOOR
+    introText = "Some of Morello's gunmen were reported hanging around in our neighbourhood harassing our people.\nThis can not be tolerated.\nSend Morello a message and take them out.",
+    startPosition = MDM_Locations.SALIERIS_BAR_FRONTDOOR,
+    assets = assets
   })
-
-  mission:AddObjective(MDM_RestorePlayerObjective:new())
 
   local objective1 = MDM_KillTargetsObjective:new({
     targets = {npc1,npc2,npc3,npc4},
     title = "Take out Morello's henchmen in a nearby backyard",
     task = "Take out Morello's henchmen in a nearby backyard",
-    onObjectiveStart = function() MDM_PlayerUtils.RestorePlayer() end
+    onObjectiveStart = function()
+      MDM_PlayerUtils.RestorePlayer()
+      MDM_Utils.SpawnAll(mission.assets)
+    end
   })
   mission:AddObjective(objective1)
 
@@ -40,16 +42,11 @@ function MDM_SalieriMissions.M1_BackyardTrouble()
   mission:AddObjective(objective3)
 
   -- police should not interfere during the shooting. only afterwards.
-  local noPoliceZoneDirector = MDM_PoliceFreeZoneDirector:new({position = MDM_Utils.GetVector(-671.66565,-10.197743,3.1811743), radius = 60})
+  local noPoliceZoneDirector = MDM_PoliceFreeZoneDirector:new({
+    mission = mission,
+    position = MDM_Utils.GetVector(-671.66565,-10.197743,3.1811743), radius = 60
+  })
   MDM_ActivatorUtils.RunWhileObjective(noPoliceZoneDirector,objective1)
-  mission:AddDirector(noPoliceZoneDirector)
-
-  local assets = {npc1,npc2,npc3,npc4,car_schubert} -- Important to add single objects in brackets as method can only handle tables!!!
-  mission:AddAssets(assets)
-
-  if MDM_Core.missionManager:StartMission(mission) then
-    MDM_Utils.SpawnAll(assets)
-  end
 
   return mission
 end

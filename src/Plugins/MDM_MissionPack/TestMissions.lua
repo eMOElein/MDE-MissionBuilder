@@ -143,12 +143,12 @@ function TestMissions.DuelTest()
 end
 
 function TestMissions.PursuitTest()
-  local car_target = MDM_Car:new("smith_v12", MDM_Utils.GetVector(-898.98346,-190.64536,2.9552386), MDM_Utils.GetVector(0.028562285,0.99954069,-0.010129704))
-  local npc_target = MDM_NPC:new("13604348442857333985",MDM_Utils.GetVector(-907.94,-180.41,25),MDM_Utils.GetVector(0,0,0))
-  local npc_target2 = MDM_NPC:new("13604348442857333985",MDM_Utils.GetVector(-907.98,-180.41,25),MDM_Utils.GetVector(0,0,0))
-  local car_police = MDM_Car:new("shubert_e_six_p", MDM_Utils.GetVector(-899.25092,-203.29758,2.9997153), MDM_Utils.GetVector(-0.0055011963,0.99997598,-0.0042084511))
-  local npc_police = MDM_NPC:new("13604348442857333985",MDM_Utils.GetVector(-907.94,-180.41,2),MDM_Utils.GetVector(0,0,0))
-  local car_player = MDM_Car:new("shubert_e_six", MDM_Utils.GetVector(-899.16278,-225.84026,2.977174), MDM_Utils.GetVector(0.044264518,0.99901813,-0.0018530977))
+  local car_target = MDM_Car:new({carId = "smith_v12", position = MDM_Utils.GetVector(-898.98346,-190.64536,2.9552386), direction = MDM_Utils.GetVector(0.028562285,0.99954069,-0.010129704)})
+  local npc_target = MDM_NPC:new({npcId = "13604348442857333985", position = MDM_Utils.GetVector(-907.94,-180.41,25), direction = MDM_Utils.GetVector(0,0,0)})
+  local npc_target2 = MDM_NPC:new({npcId = "13604348442857333985", position = MDM_Utils.GetVector(-907.98,-180.41,25), direction = MDM_Utils.GetVector(0,0,0)})
+  local car_police = MDM_Car:new({carId = "shubert_e_six_p", position = MDM_Utils.GetVector(-899.25092,-203.29758,2.9997153), direction = MDM_Utils.GetVector(-0.0055011963,0.99997598,-0.0042084511)})
+  local npc_police = MDM_NPC:new({npcId = "13604348442857333985", position = MDM_Utils.GetVector(-907.94,-180.41,2), direction = MDM_Utils.GetVector(0,0,0)})
+  local car_player = MDM_Car:new({carId = "shubert_e_six", position = MDM_Utils.GetVector(-899.16278,-225.84026,2.977174), direction = MDM_Utils.GetVector(0.044264518,0.99901813,-0.0018530977)})
 
   local assets = {car_target,npc_target,npc_target2,car_police,npc_police,car_player}
 
@@ -200,9 +200,9 @@ function TestMissions.PursuitTest()
 end
 
 function TestMissions.CarchaseTest()
-  local enemyCar = MDM_Car:new("smith_v12",MDM_Utils.GetVector(-898.71429,-181.9543,4),MDM_Utils.GetVector(-0,000001,-0.000004,0.000150))
-  local enemyNpc = MDM_NPC:new("13604348442857333985",MDM_Utils.GetVector(-907.94,-180.41,2),MDM_Utils.GetVector(0,0,0))
-  local playerCar = MDM_Car:new("smith_v12", MDM_Utils.GetVector(-898.67657,-205.45827,2.96613), MDM_Utils.GetVector(0.013172975,0.99991018,-0.0024737401))
+  local enemyCar = MDM_Car:new({carId = "smith_v12", position = MDM_Utils.GetVector(-898.71429,-181.9543,4), direction = MDM_Utils.GetVector(-0,000001,-0.000004,0.000150)})
+  local enemyNpc = MDM_NPC:new({npcId = "13604348442857333985", position = MDM_Utils.GetVector(-907.94,-180.41,2), direction = MDM_Utils.GetVector(0,0,0)})
+  local playerCar = MDM_Car:new({carId = "smith_v12", position = MDM_Utils.GetVector(-898.67657,-205.45827,2.96613), direction = MDM_Utils.GetVector(0.013172975,0.99991018,-0.0024737401)})
 
   local mission = MDM_Mission:new({
     title = "Carchase Test",

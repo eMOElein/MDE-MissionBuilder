@@ -6,6 +6,12 @@ local npc
 local smithCar
 
 function MDM_TestFunctions.Test()
+
+
+
+end
+
+function MDM_TestFunctions.Test1()
   local smithCar = MDM_Car:new("smith_v12",MDM_Utils.GetVector(-898.71429,-181.9543,4),MDM_Utils.GetVector(-0,000001,-0.000004,0.000150))
   local enemyNpc = MDM_NPC:new({npcId="13604348442857333985",position=MDM_Utils.GetVector(-907.94,-180.41,2),direction=MDM_Utils.GetVector(0,0,0)})
   local playerCar = MDM_Car:new("smith_v12", MDM_Utils.GetVector(-898.67657,-205.45827,2.96613), MDM_Utils.GetVector(0.013172975,0.99991018,-0.0024737401))

@@ -59,6 +59,10 @@ function MDM_TestMissions.TestMissions()
   TestMissions.DuelTest()
   print("---------------Civil Wander Test")
   TestMissions.CivilWanderTest()
+  print("---------------Pursuit Test")
+  TestMissions.PursuitTest()
+  print("---------------Carchase Test")
+  TestMissions.CarchaseTest()
 
   MDM_AssassinationMission.UnitTest()
 end
