@@ -57,6 +57,10 @@ function MDM_Mission:new (args)
 end
 
 function MDM_Mission.AddAsset(self, spawnable_asset)
+  if spawnable_asset == nil then
+    error("asset is nil",2)
+  end
+
   table.insert(self.assets,spawnable_asset)
 end
 
@@ -66,6 +70,10 @@ function MDM_Mission.AddAssets(self, spawnable_assets)
   end
 
   for _,a in ipairs(spawnable_assets) do
+    if a == nil then
+      error("at least one asset is nil",2)
+    end
+
     MDM_Mission.AddAsset(self,a)
   end
 end

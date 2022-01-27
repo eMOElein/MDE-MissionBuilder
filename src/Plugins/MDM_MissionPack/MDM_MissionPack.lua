@@ -14,6 +14,7 @@ MDM_Core.AddPlugin(MDM_MissionPack)
 function MDM_MissionPack.Initialize()
   MDM_MissionPack.InitializeSalieriMissions()
   MDM_MissionPack.InitializeLucasBertoneMissions()
+  MDM_MissionPack.InitializeVincenzoMissions()
   MDM_MissionPack.InitializeTestMissions()
 end
 
@@ -217,4 +218,21 @@ function MDM_MissionPack.InitializeTestMissions()
   }
   MDM_Core.missionManager:AddMissionProvider(civilWanderTest)
 
+  local assassinationMissionTest = {
+    title = "Assassination Mission Test",
+    client = client,
+    missionSupplier = TestMissions.AssassinationMission
+  }
+  MDM_Core.missionManager:AddMissionProvider(assassinationMissionTest)
+end
+
+function MDM_MissionPack.InitializeVincenzoMissions()
+  local client = "Vincenzo"
+
+  local assassinationMissionTest = {
+    title = "Random Assassination",
+    client = client,
+    missionSupplier = MDM_AssassinationMissionConfigurations.CreateRandomAssassinationMission
+  }
+  MDM_Core.missionManager:AddMissionProvider(assassinationMissionTest)
 end

@@ -1,11 +1,6 @@
 MDM_EntityInCircleDetector = {}
 MDM_EntityInCircleDetector = MDM_Detector:new()
 
-local arguments = {
-  entity = nil,
-  position = nil,
-  radius = nil
-}
 function MDM_EntityInCircleDetector:new (args)
   if not args.entity then
     error("entity not set",2)

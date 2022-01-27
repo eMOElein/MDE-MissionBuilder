@@ -1,11 +1,8 @@
+---------------------------------------
+------ DEPRECATED DO NOT USE !!! ------
+---------------------------------------
 MDM_HurtNPCObjective = {}
 MDM_HurtNPCObjective = MDM_Objective:class()
-
-local args = {
-  npc = nil,
-  threshold = 50,
-  onThreshold = function () end
-}
 
 function MDM_HurtNPCObjective:new(args)
   local objective = MDM_Objective:new(args)
@@ -24,18 +21,11 @@ function MDM_HurtNPCObjective:new(args)
   objective.threshold = args.threshold
   objective.blip = MDM_ObjectivePosition:new(objective:GetTitle(),objective.npc:GetPos())
   objective.onThresholdCallbacks = {}
-  if args.onThreshold then objective:OnThreshold(args.onThreshold) end
   return objective
 end
 
-function MDM_HurtNPCObjective.OnThreshold(self,callback)
-  table.insert(self.onThresholdCallbacks,callback)
-end
-
-
 function MDM_HurtNPCObjective.OnThreshold(self)
   self.npc:GetGameEntity():SwitchBrain(enums.AI_TYPE.CIVILIAN)
-  self:SetOutcome(1)
 end
 
 function MDM_HurtNPCObjective.Update(self)
@@ -44,6 +34,10 @@ function MDM_HurtNPCObjective.Update(self)
   end
 
   if self.npc:GetHealth() <= self.threshold then
+    local gameEntity =  self.npc:GetGameEntity()
+    if gameEntity ~= nil then
+      self.npc:GetGameEntity():SwitchBrain(enums.AI_TYPE.CIVILIAN)
+    end
     self:SetOutcome(1)
   end
 
@@ -64,7 +58,7 @@ end
 
 function MDM_HurtNPCObjective.UnitTest()
   print("---------------MDM_HurtNPCObjective UnitTest")
-  
+
   local npc = MDM_NPC:new({npcId="12345",position=MDM_Utils.GetVector(1,2,3),direction=MDM_Utils.GetVector(4,5,6)})
 
   local mission = MDM_Mission:new({title = "test"})

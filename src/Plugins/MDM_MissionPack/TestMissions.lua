@@ -300,26 +300,21 @@ end
 
 function TestMissions.GangWarTest()
   local wave1Npcs = {
-    MDM_NPC:new({npcId= "13604348442857333985", position = MDM_Utils.GetVector(-887.94025,-228.11867,2.7994239), direction = MDM_Utils.GetVector(-0.99984133,0.017813683,0)}),
-    MDM_NPC:new({npcId= "13604348442857333985", position = MDM_Utils.GetVector(-887.56146,-233.41458,2.8025167),MDM_Utils.GetVector(-0.97434926,0.22504109,0)})
+    {npcId= "13604348442857333985", position = MDM_Utils.GetVector(-887.94025,-228.11867,2.7994239), direction = MDM_Utils.GetVector(-0.99984133,0.017813683,0)},
+    {npcId= "13604348442857333985", position = MDM_Utils.GetVector(-887.56146,-233.41458,2.8025167),MDM_Utils.GetVector(-0.97434926,0.22504109,0)}
   }
 
   local wave2NPCs = {
-    MDM_NPC:new({npcId= "13604348442857333985", position = MDM_Utils.GetVector(-887.94025,-228.11867,2.7994239), direction = MDM_Utils.GetVector(-0.99984133,0.017813683,0)}),
-    MDM_NPC:new({npcId= "13604348442857333985", position = MDM_Utils.GetVector(-887.56146,-233.41458,2.8025167), direction = MDM_Utils.GetVector(-0.97434926,0.22504109,0)})
+    {npcId= "13604348442857333985", position = MDM_Utils.GetVector(-887.94025,-228.11867,2.7994239), direction = MDM_Utils.GetVector(-0.99984133,0.017813683,0)},
+    {npcId= "13604348442857333985", position = MDM_Utils.GetVector(-887.56146,-233.41458,2.8025167), direction = MDM_Utils.GetVector(-0.97434926,0.22504109,0)}
   }
 
   local carAssets = {
-    MDM_Car:new("shubert_six",MDM_Utils.GetVector(-903.09753,-229.61916,2.9170983),MDM_Utils.GetVector(-0.014218162,-0.99989843,0.0011345582))
+    {carId = "shubert_six", position= MDM_Utils.GetVector(-903.09753,-229.61916,2.9170983), direction = MDM_Utils.GetVector(-0.014218162,-0.99989843,0.0011345582)}
   }
 
   local allyNpcs = {
-    MDM_NPC:newFriend({npcId="5874491335140879700", position = MDM_Utils.GetVector(-908.85223,-227.08142,2.808135), direction = MDM_Utils.GetVector(0.99617749,0.087352395,0)}),
-  }
-
-  local wave1 = {
-    enemies = wave1Npcs,
-    title = "Wave 1"
+    {npcId="5874491335140879700", position = MDM_Utils.GetVector(-908.85223,-227.08142,2.808135), direction = MDM_Utils.GetVector(0.99617749,0.087352395,0)},
   }
 
   local wave2 = {
@@ -327,14 +322,17 @@ function TestMissions.GangWarTest()
     title = "Wave 2"
   }
 
-  local warConfig = MDM_GangWarMission.GangWarConfiguration()
-  warConfig.waves = {wave1}
-  warConfig.carAssets = carAssets
-  warConfig.allyNpcs = allyNpcs
-  warConfig.initialPosition = MDM_Locations.SALIERIS_BAR_FRONTDOOR
-
-  local mission = MDM_GangWarMission:new(warConfig)
-  MDM_Core.missionManager:StartMission(mission)
+  local mission = MDM_GangWarMission:new({
+    carAssets = carAssets,
+    allyNpcs = allyNpcs,
+    startPosition = MDM_Locations.SALIERIS_BAR_FRONTDOOR,
+    waves = {
+      {
+        enemies = wave1Npcs,
+        title = "Wave 1"
+      }
+    }
+  })
 
   return mission
 end
@@ -530,4 +528,22 @@ function TestMissions.CivilWanderTest()
   mission:AddObjective(MDM_RestorePlayerObjective:new())
   return mission
 
+end
+
+function TestMissions.AssassinationMission()
+  local mission = MDM_AssassinationMission:new({
+    targets = {
+      MDM_NPC:new({npcId = "13604348442857333985", position = MDM_Utils.GetVector(-889.95587,-233.85648,2.8022108), direction = MDM_Utils.GetVector(-0.99879068,-0.049164772,0)})
+    },
+    bodyguards =  {
+      MDM_NPC:new({npcId = "13604348442857333985", position = MDM_Utils.GetVector(-885.94452,-235.28236,2.8107185), direction = MDM_Utils.GetVector(-0.99366277,-0.11240196,0)}),
+      MDM_NPC:new({npcId = "13604348442857333985", position = MDM_Utils.GetVector(-885.86884,-232.52312,2.8139303), direction = MDM_Utils.GetVector(-0.99984533,-0.017589808,0)})
+    },
+    carAssets = {
+      MDM_Car:new({carId = "bolt_v8", position = MDM_Utils.GetVector(-893.50861,-232.69691,3.008189), direction = MDM_Utils.GetVector(-0.05430891,0.99852246,0.0018321915)})
+    },
+    radius = 100
+  })
+
+  return mission
 end

@@ -46,7 +46,6 @@ function MDM_KillTargetsObjective.Update(self)
   if not self.indicator then
     for _,t in ipairs(self.targets) do
       if t:IsSpawned() then
-        print(t:GetGameEntity())
         game.navigation:SetIconShowByEntity(t:GetGameEntity(), true)
         game.hud:AddEntityIndicator(t:GetGameEntity(), "objective_primary", Math:newVector(0,0,0))
         self.indicator = true

@@ -8,7 +8,7 @@ function MDM_SalieriMissions.M1_BackyardTrouble()
   local npc3 = MDM_NPC:new({npcId="13604348442857333985",position=MDM_Utils.GetVector(-684.01532,-21.848021,3.352128),direction=MDM_Utils.GetVector(0.9708972,0.23949677,0)})
   local npc4 = MDM_NPC:new({npcId="13604348442857333985",position=MDM_Utils.GetVector(-678.65411,-14.920903,3.2161522),direction=MDM_Utils.GetVector(-0.31570739,-0.94885659,0)})
 
-local assets = {car_schubert,npc1,npc2,npc3,npc4}
+  local assets = {car_schubert,npc1,npc2,npc3,npc4}
 
   local mission = MDM_Mission:new({
     title = "Salieri - Backyard Trouble",
@@ -160,131 +160,116 @@ end
 
 
 function MDM_SalieriMissions.M3_GangWar1()
-  local wave1Npcs = {
-    MDM_NPC:new({npcId="13604348442857333985", position = MDM_Utils.GetVector(-877.54053,-179.31276,2.8210607), direction=MDM_Utils.GetVector(-0.91717273,-0.39848995,0)}),
-    MDM_NPC:new({npcId="13604348442857333985", position = MDM_Utils.GetVector(-909.6463,-188.8774,2.8385715),direction= MDM_Utils.GetVector(0.51778549,-0.85551047,0)}),
-    MDM_NPC:new({npcId="13604348442857333985", position = MDM_Utils.GetVector(-898.08289,-183.80492,2.7595434),direction= MDM_Utils.GetVector(-0.23320645,-0.97242725,0)}),
-    MDM_NPC:new({npcId="13604348442857333985", position = MDM_Utils.GetVector(-892.63867,-181.422,2.7360954), direction=MDM_Utils.GetVector(-0.15583517,-0.98778307,0)}),
-    MDM_NPC:new({npcId="13604348442857333985", position = MDM_Utils.GetVector(-900.65839,-176.99596,2.7371385), direction=MDM_Utils.GetVector(-0.19901529,-0.97999644,0)}),
-    MDM_NPC:new({npcId="13604348442857333985", position = MDM_Utils.GetVector(-895.70215,-174.4108,2.7366309), direction=MDM_Utils.GetVector(-0.21996461,-0.97550786,0)})
-  }
+  local mission = MDM_GangWarMission:new({
+    title = "Little Italy Gang War",
+    startPosition = MDM_Locations.SALIERIS_BAR_FRONTDOOR,
+    carAssets = {
+      {carId = "falconer_classic", position = MDM_Utils.GetVector(-902.37054,-245.55942,3.0346258), direction = MDM_Utils.GetVector(0.96175694,-0.2737895,0.0079307277)},
+      {carId = "shubert_e_six", position = MDM_Utils.GetVector(-892.20801,-244.26845,2.9532924), direction = MDM_Utils.GetVector(-0.98323697,0.1810374,-0.021691686)},
+      {carId = "bolt_v8", position = MDM_Utils.GetVector(-896.96661,-243.3506,3.0347798), direction = MDM_Utils.GetVector(-0.99142301,0.13016272,0.011757697)},
+      {carId = "houston_coupe_bv01", position = MDM_Utils.GetVector(-905.63287,-214.83951,3.0663233), direction = MDM_Utils.GetVector(0.9260062,0.37677419,-0.023531549)},
+      {carId = "shubert_e_six", position = MDM_Utils.GetVector(-899.86102,-213.72401,2.9817023), direction = MDM_Utils.GetVector(-0.99989682,0.0066443244,-0.012744583)},
+      {carId = "bolt_delivery", position = MDM_Utils.GetVector(-893.70294,-213.1147,2.9461083), direction = MDM_Utils.GetVector(-0.99562818,0.093218289,0.0059474269)},
+      {carId = "bolt_pickup", position = MDM_Utils.GetVector(-905.54279,-214.16341,3.0409355), direction = MDM_Utils.GetVector(-0.96589297,-0.25770497,0.025275096)}
 
-  local wave2NPCs = {
-    MDM_NPC:new({npcId="13604348442857333985", position = MDM_Utils.GetVector(-912.276,-272.20651,2.7572498), direction=MDM_Utils.GetVector(0.77677119,0.62978292,0)}),
-    MDM_NPC:new({npcId="13604348442857333985", position = MDM_Utils.GetVector(-902.5733,-281.51898,2.6639752), direction=MDM_Utils.GetVector(-0.45808861,0.88890654,0)}),
-    MDM_NPC:new({npcId="13604348442857333985", position = MDM_Utils.GetVector(-890.86993,-274.1214,2.6641729),direction= MDM_Utils.GetVector(-0.39807889,0.91735119,0)}),
-    MDM_NPC:new({npcId="13604348442857333985", position = MDM_Utils.GetVector(-884.85193,-272.28378,2.7870576),direction= MDM_Utils.GetVector(-0.26791304,0.9634431,0)}),
-    MDM_NPC:new({npcId="13604348442857333985", position = MDM_Utils.GetVector(-882.34644,-270.70609,2.8150592),direction= MDM_Utils.GetVector(-0.1980121,0.98019958,0)}),
-    MDM_NPC:new({npcId="13604348442857333985", position = MDM_Utils.GetVector(-896.8877,-297.81766,2.793437),direction= MDM_Utils.GetVector(-0.051288676,0.99868387,0)})
-
-  }
-
-  local carAssets = {
-    MDM_Car:new("falconer_classic",MDM_Utils.GetVector(-902.37054,-245.55942,3.0346258),MDM_Utils.GetVector(0.96175694,-0.2737895,0.0079307277)),
-    MDM_Car:new("shubert_e_six",MDM_Utils.GetVector(-892.20801,-244.26845,2.9532924),MDM_Utils.GetVector(-0.98323697,0.1810374,-0.021691686)),
-    MDM_Car:new("bolt_v8",MDM_Utils.GetVector(-896.96661,-243.3506,3.0347798),MDM_Utils.GetVector(-0.99142301,0.13016272,0.011757697)),
-    MDM_Car:new("houston_coupe_bv01",MDM_Utils.GetVector(-905.63287,-214.83951,3.0663233),MDM_Utils.GetVector(0.9260062,0.37677419,-0.023531549)),
-    MDM_Car:new("shubert_e_six",MDM_Utils.GetVector(-899.86102,-213.72401,2.9817023),MDM_Utils.GetVector(-0.99989682,0.0066443244,-0.012744583)),
-    MDM_Car:new("bolt_delivery",MDM_Utils.GetVector(-893.70294,-213.1147,2.9461083),MDM_Utils.GetVector(-0.99562818,0.093218289,0.0059474269)),
-    MDM_Car:new("bolt_pickup", MDM_Utils.GetVector(-905.54279,-214.16341,3.0409355), MDM_Utils.GetVector(-0.96589297,-0.25770497,0.025275096))
-  }
-
-  local allyNpcs = {
-    MDM_NPC:newFriend({npcId="5874491335140879700",position=MDM_Utils.GetVector(-908.85223,-227.08142,2.808135),direction=MDM_Utils.GetVector(0.99617749,0.087352395,0)}),
-  }
-
-  local wave1 = {
-    enemies = wave1Npcs,
-    title = "Wave 1 - They are coming from the North",
-    restorePlayer = true,
-    preparationTime = 10,
-  }
-
-  local wave2 = {
-    enemies = wave2NPCs,
-    title = "Wave 2 - They are coming from the South",
-    restorePlayer = true,
-    preparationTime = 10,
-  }
-
-  local warConfig = MDM_GangWarMission.GangWarConfiguration()
-  warConfig.title = "Little Italy Gang War"
-  warConfig.waves = {wave1,wave2}
-  warConfig.carAssets = carAssets
-  warConfig.allyNpcs = allyNpcs
-  warConfig.initialPosition = MDM_Locations.SALIERIS_BAR_FRONTDOOR
-
-  local mission = MDM_GangWarMission:new(warConfig)
-  MDM_Core.missionManager:StartMission(mission)
+    },
+    allyNpcs = {
+      {npcId="5874491335140879700",position=MDM_Utils.GetVector(-908.85223,-227.08142,2.808135),direction=MDM_Utils.GetVector(0.99617749,0.087352395,0)},
+    },
+    waves = {
+      {
+        title = "Wave 1 - They are coming from the North",
+        restorePlayer = true,
+        preparationTime = 10,
+        enemies = {
+          {npcId="13604348442857333985", position = MDM_Utils.GetVector(-877.54053,-179.31276,2.8210607), direction=MDM_Utils.GetVector(-0.91717273,-0.39848995,0)},
+          {npcId="13604348442857333985", position = MDM_Utils.GetVector(-909.6463,-188.8774,2.8385715),direction= MDM_Utils.GetVector(0.51778549,-0.85551047,0)},
+          {npcId="13604348442857333985", position = MDM_Utils.GetVector(-898.08289,-183.80492,2.7595434),direction= MDM_Utils.GetVector(-0.23320645,-0.97242725,0)},
+          {npcId="13604348442857333985", position = MDM_Utils.GetVector(-892.63867,-181.422,2.7360954), direction=MDM_Utils.GetVector(-0.15583517,-0.98778307,0)},
+          {npcId="13604348442857333985", position = MDM_Utils.GetVector(-900.65839,-176.99596,2.7371385), direction=MDM_Utils.GetVector(-0.19901529,-0.97999644,0)},
+          {npcId="13604348442857333985", position = MDM_Utils.GetVector(-895.70215,-174.4108,2.7366309), direction=MDM_Utils.GetVector(-0.21996461,-0.97550786,0)}
+        }
+      },
+      {
+        title = "Wave 2 - They are coming from the South",
+        restorePlayer = true,
+        preparationTime = 10,
+        enemies = {
+          {npcId="13604348442857333985", position = MDM_Utils.GetVector(-912.276,-272.20651,2.7572498), direction=MDM_Utils.GetVector(0.77677119,0.62978292,0)},
+          {npcId="13604348442857333985", position = MDM_Utils.GetVector(-902.5733,-281.51898,2.6639752), direction=MDM_Utils.GetVector(-0.45808861,0.88890654,0)},
+          {npcId="13604348442857333985", position = MDM_Utils.GetVector(-890.86993,-274.1214,2.6641729),direction= MDM_Utils.GetVector(-0.39807889,0.91735119,0)},
+          {npcId="13604348442857333985", position = MDM_Utils.GetVector(-884.85193,-272.28378,2.7870576),direction= MDM_Utils.GetVector(-0.26791304,0.9634431,0)},
+          {npcId="13604348442857333985", position = MDM_Utils.GetVector(-882.34644,-270.70609,2.8150592),direction= MDM_Utils.GetVector(-0.1980121,0.98019958,0)},
+          {npcId="13604348442857333985", position = MDM_Utils.GetVector(-896.8877,-297.81766,2.793437),direction= MDM_Utils.GetVector(-0.051288676,0.99868387,0)}
+        }
+      }
+    }
+  })
 
   return mission
 end
 
 function MDM_SalieriMissions.M4_GangWar2()
   local wave1Npcs = {
-    MDM_NPC:new({npcId="13604348442857333985", position= MDM_Utils.GetVector(-1341.6405,60.678833,3.3377147), direction = MDM_Utils.GetVector(0.057904456,-0.99832207,0)}),
-    MDM_NPC:new({npcId="13604348442857333985", position= MDM_Utils.GetVector(-1338.4283,61.330421,3.4274106), direction = MDM_Utils.GetVector(-0.1250236,-0.9921537,0)}),
-    MDM_NPC:new({npcId="13604348442857333985", position= MDM_Utils.GetVector(-1333.8378,60.914726,3.4938006), direction = MDM_Utils.GetVector(0.83252376,-0.55398923,0)}),
-    MDM_NPC:new({npcId="13604348442857333985", position= MDM_Utils.GetVector(-1336.9178,64.083038,3.4031191), direction = MDM_Utils.GetVector(-0.029945441,-0.99955148,0)})
+    {npcId="13604348442857333985", position= MDM_Utils.GetVector(-1341.6405,60.678833,3.3377147), direction = MDM_Utils.GetVector(0.057904456,-0.99832207,0)},
+    {npcId="13604348442857333985", position= MDM_Utils.GetVector(-1338.4283,61.330421,3.4274106), direction = MDM_Utils.GetVector(-0.1250236,-0.9921537,0)},
+    {npcId="13604348442857333985", position= MDM_Utils.GetVector(-1333.8378,60.914726,3.4938006), direction = MDM_Utils.GetVector(0.83252376,-0.55398923,0)},
+    {npcId="13604348442857333985", position= MDM_Utils.GetVector(-1336.9178,64.083038,3.4031191), direction = MDM_Utils.GetVector(-0.029945441,-0.99955148,0)}
   }
 
   local wave2NPCs = {
-    MDM_NPC:new({npcId="13604348442857333985", position= MDM_Utils.GetVector(-1379.2908,20.443228,3.3324304), direction = MDM_Utils.GetVector(0.99984968,0.017331241,0)}),
-    MDM_NPC:new({npcId="13604348442857333985", position= MDM_Utils.GetVector(-1378.7825,23.249542,3.3157849), direction = MDM_Utils.GetVector(0.8313151,0.55580127,0)}),
-    MDM_NPC:new({npcId="13604348442857333985", position= MDM_Utils.GetVector(-1378.5864,25.967979,3.2988653), direction = MDM_Utils.GetVector(0.9989906,-0.044919487,0)})
+    {npcId="13604348442857333985", position= MDM_Utils.GetVector(-1379.2908,20.443228,3.3324304), direction = MDM_Utils.GetVector(0.99984968,0.017331241,0)},
+    {npcId="13604348442857333985", position= MDM_Utils.GetVector(-1378.7825,23.249542,3.3157849), direction = MDM_Utils.GetVector(0.8313151,0.55580127,0)},
+    {npcId="13604348442857333985", position= MDM_Utils.GetVector(-1378.5864,25.967979,3.2988653), direction = MDM_Utils.GetVector(0.9989906,-0.044919487,0)}
   }
 
   local wave3NPCs = {
-    MDM_NPC:new({npcId="13604348442857333985", position= MDM_Utils.GetVector(-1339.7012,-24.598413,4.0049219), direction = MDM_Utils.GetVector(-0.030802596,0.99952543,0)}),
-    MDM_NPC:new({npcId="13604348442857333985", position= MDM_Utils.GetVector(-1335.7605,-24.900768,4.0430508), direction = MDM_Utils.GetVector(-0.024835717,0.99969149,0)}),
-    MDM_NPC:new({npcId="13604348442857333985", position= MDM_Utils.GetVector(-1332.0574,-24.968515,4.0788627), direction = MDM_Utils.GetVector(-0.013719424,0.99990582,0)}),
-    MDM_NPC:new({npcId="13604348442857333985", position= MDM_Utils.GetVector(-1328.6531,-25.033279,4.1118484), direction = MDM_Utils.GetVector(-0.01357092,0.99990785,0)}),
-    MDM_NPC:new({npcId="13604348442857333985", position= MDM_Utils.GetVector(-1331.3779,-20.022778,4.0834484), direction = MDM_Utils.GetVector(-0.16082166,0.98698342,0)}),
-    MDM_NPC:new({npcId="13604348442857333985", position= MDM_Utils.GetVector(-1336.2496,-19.2791,4.05158), direction = MDM_Utils.GetVector(-0.61400998,0.78929818,0)}),
+    {npcId="13604348442857333985", position= MDM_Utils.GetVector(-1339.7012,-24.598413,4.0049219), direction = MDM_Utils.GetVector(-0.030802596,0.99952543,0)},
+    {npcId="13604348442857333985", position= MDM_Utils.GetVector(-1335.7605,-24.900768,4.0430508), direction = MDM_Utils.GetVector(-0.024835717,0.99969149,0)},
+    {npcId="13604348442857333985", position= MDM_Utils.GetVector(-1332.0574,-24.968515,4.0788627), direction = MDM_Utils.GetVector(-0.013719424,0.99990582,0)},
+    {npcId="13604348442857333985", position= MDM_Utils.GetVector(-1328.6531,-25.033279,4.1118484), direction = MDM_Utils.GetVector(-0.01357092,0.99990785,0)},
+    {npcId="13604348442857333985", position= MDM_Utils.GetVector(-1331.3779,-20.022778,4.0834484), direction = MDM_Utils.GetVector(-0.16082166,0.98698342,0)},
+    {npcId="13604348442857333985", position= MDM_Utils.GetVector(-1336.2496,-19.2791,4.05158), direction = MDM_Utils.GetVector(-0.61400998,0.78929818,0)},
   }
 
   local carAssets = {
-    MDM_Car:new({carId = "shubert_e_six", position = MDM_Utils.GetVector(-1332.9858,9.4035025,4.2480459), direction = MDM_Utils.GetVector(-0.95426929,-0.29860383,0.014352869)}),
-    MDM_Car:new({carId = "shubert_e_six", position = MDM_Utils.GetVector(-1339.9849,10.249894,4.169414), direction = MDM_Utils.GetVector(0.94146079,-0.33535159,0.03451445)}),
-    MDM_Car:new({carId = "shubert_e_six", position = MDM_Utils.GetVector(-1335.6543,24.85214,4.0719504), direction = MDM_Utils.GetVector(-0.9127509,0.40821823,-0.015609706)}),
-    MDM_Car:new({carId = "bolt_delivery", position = MDM_Utils.GetVector(-1341.9893,26.62381,3.9106264), direction = MDM_Utils.GetVector(0.99264538,-0.11264583,0.044340719)}),
-    MDM_Car:new({carId = "shubert_six", position = MDM_Utils.GetVector(-1349.9421,22.056082,3.5512807), direction = MDM_Utils.GetVector(0.046726886,-0.99883455,0.012112266)})
+    {carId = "shubert_e_six", position = MDM_Utils.GetVector(-1332.9858,9.4035025,4.2480459), direction = MDM_Utils.GetVector(-0.95426929,-0.29860383,0.014352869)},
+    {carId = "shubert_e_six", position = MDM_Utils.GetVector(-1339.9849,10.249894,4.169414), direction = MDM_Utils.GetVector(0.94146079,-0.33535159,0.03451445)},
+    {carId = "shubert_e_six", position = MDM_Utils.GetVector(-1335.6543,24.85214,4.0719504), direction = MDM_Utils.GetVector(-0.9127509,0.40821823,-0.015609706)},
+    {carId = "bolt_delivery", position = MDM_Utils.GetVector(-1341.9893,26.62381,3.9106264), direction = MDM_Utils.GetVector(0.99264538,-0.11264583,0.044340719)},
+    {carId = "shubert_six", position = MDM_Utils.GetVector(-1349.9421,22.056082,3.5512807), direction = MDM_Utils.GetVector(0.046726886,-0.99883455,0.012112266)}
   }
 
   local allyNpcs = {
-    MDM_NPC:newFriend({npcId= "5874491335140879700", position= MDM_Utils.GetVector(-1330.4849,16.178551,3.9502649), direction = MDM_Utils.GetVector(-0.95933074,0.28228405,0)})
+    {npcId= "5874491335140879700", position= MDM_Utils.GetVector(-1330.4849,16.178551,3.9502649), direction = MDM_Utils.GetVector(-0.95933074,0.28228405,0)}
   }
 
-  local wave1 = {
-    enemies = wave1Npcs,
-    title = "Wave 1 - Attack from the north",
-    restorePlayer = true,
-    preparationTime = 10,
-  }
-
-  local wave2 = {
-    enemies = wave2NPCs,
-    title = "Wave 2 - Attack from the west",
-    restorePlayer = true,
-    preparationTime = 10,
-  }
-
-  local wave3 = {
-    enemies = wave3NPCs,
-    title = "Wave 3 - Attack from the south",
-    restorePlayer = true,
-    preparationTime = 10,
-  }
-
-  local warConfig = MDM_GangWarMission.GangWarConfiguration()
-  warConfig.title = "Little Italy Gang War 2"
-  warConfig.waves = {wave1,wave2,wave3}
-  warConfig.carAssets = carAssets
-  warConfig.allyNpcs = allyNpcs
-  warConfig.initialPosition = MDM_Utils.GetVector(-1330.4849,15.178551,3.9502649)
-
-  local mission = MDM_GangWarMission:new(warConfig)
-  MDM_Core.missionManager:StartMission(mission)
+  local mission = MDM_GangWarMission:new({
+    title = "Little Italy Gang War 2",
+    startPosition = MDM_Utils.GetVector(-1330.4849,15.178551,3.9502649),
+    carAssets = carAssets,
+    allyNpcs = allyNpcs,
+    waves = {
+      {
+        enemies = wave1Npcs,
+        title = "Wave 1 - Attack from the north",
+        restorePlayer = true,
+        preparationTime = 10,
+      },
+      {
+        enemies = wave2NPCs,
+        title = "Wave 2 - Attack from the west",
+        restorePlayer = true,
+        preparationTime = 10,
+      },
+      {
+        enemies = wave3NPCs,
+        title = "Wave 3 - Attack from the south",
+        restorePlayer = true,
+        preparationTime = 10,
+      }
+    }
+  })
 
   return mission
 end

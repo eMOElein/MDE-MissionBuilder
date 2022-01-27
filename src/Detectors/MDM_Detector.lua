@@ -1,19 +1,25 @@
 MDM_Detector = {}
 
 function MDM_Detector:class()
-  local director =  {}
-  setmetatable(director, self)
+  local detector =  {}
+  setmetatable(detector, self)
   self.__index = self
-  return director
+  return detector
 end
 
-function MDM_Detector:new ()
-  local director =  MDM_Detector:class()
-  director.enabled = false
-  director.onEnabledCallbacks = {}
-  director.onDisabledCallbacks = {}
-  
-  return director
+function MDM_Detector:new (args)
+  local detector =  MDM_Detector:class()
+  detector.enabled = false
+  detector.onEnabledCallbacks = {}
+  detector.onDisabledCallbacks = {}
+  detector.callbacks = {}
+
+
+  if args~= nil and args.callback ~= nil then
+    MDM_Detector.AddCallback(detector,args.callback)
+  end
+
+  return detector
 end
 
 function MDM_Detector.OnDisabled(self,callbacks)
@@ -35,6 +41,18 @@ end
 
 function MDM_Detector.Test(self)
   return false
+end
+
+function MDM_Detector.AddCallback(self,callback)
+  table.insert(self.callbacks,callback)
+end
+
+function MDM_Detector.NotifyCallbacks(self,args)
+  args.detector = self
+
+  for _,callback in ipairs(self.callbacks) do
+    callback(args)
+  end
 end
 
 function MDM_Detector.Disable(self)

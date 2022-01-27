@@ -352,7 +352,6 @@ function MDM_LucasBertone.M5_1_CremeDeLaCreme()
     car = car_shubert,
     title = "Get in the car",
     onObjectiveStart = function() MDM_Utils.SpawnAll(car_assets) end,
-    onObjectiveEnd = function() MDM_PoliceUtils.SetWantedLevel(2) MDM_PoliceUtils.LockWantedLevel() end
   })
   mission:AddObjective(objective2)
 
@@ -360,6 +359,7 @@ function MDM_LucasBertone.M5_1_CremeDeLaCreme()
     position = pos_lighthouse,
     radius = 40,
     title = "Destroy the car at the lighthouse",
+    onObjectiveStart = function() MDM_PoliceUtils.SetWantedLevel(2) MDM_PoliceUtils.LockWantedLevel() end,
     onObjectiveEnd = function() MDM_PoliceUtils.SetWantedLevel(0) MDM_PoliceUtils.UnlockWantedLevel() end
   })
   mission:AddObjective(objective3)

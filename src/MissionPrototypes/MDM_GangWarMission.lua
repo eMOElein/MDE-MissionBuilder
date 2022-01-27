@@ -1,40 +1,49 @@
 MDM_GangWarMission = {}
 
-function MDM_GangWarMission.GangWarConfiguration()
-  local configuration = {}
-  configuration.title = "Gang War"
-  configuration.carAssets = {}
-  configuration.allyNpcs = {} -- optional use MDM_NPC:newFriend for creation otherwise they might atack you
-  configuration.waves = {} -- OBLIGATORY
-  configuration.initialPosition = nil -- OBLIGATORY
+function MDM_GangWarMission:new(args)
+  if args.waves == nil then
+    error("waves not set",2)
+  end
 
-  return configuration
-end
-
-function MDM_GangWarMission:new(GangWarConfiguration)
-  local config = GangWarConfiguration
-
-  if  type(config.waves) ~= "table" then
+  if  type(args.waves) ~= "table" then
     error("waves is not of type table",2)
   end
 
-  if not config.initialPosition then
-    error("initial position not set",2)
+  if not args.startPosition then
+    error("startPosition not set",2)
   end
 
-  local mission = MDM_Mission:new(config)
-  mission:SetStartPos(config.initialPosition)
+  local mission = MDM_Mission:new(args)
+  local carAssets = {}
+  local allyNpcs = {}
 
-  for _,car in ipairs(config.carAssets) do
-    car:SetIndestructable(true)
+  if args.carAssets ~= nil then
+    for _,c in ipairs(args.carAssets) do
+      local car = MDM_Car:new(c)
+      car:SetIndestructable(true)
+      table.insert(carAssets,car)
+      mission:AddAsset(car)
+    end
   end
 
-  for _,npc in ipairs(config.allyNpcs) do
-    npc:Godmode(true)
+  if args.allyNpcs ~= nil then
+    for _,n in ipairs(args.allyNpcs) do
+      local npc = MDM_NPC:newFriend(n)
+      npc:Godmode(true)
+      table.insert(allyNpcs,npc)
+      mission:AddAsset(npc)
+    end
   end
 
-  for i,wave in ipairs(config.waves) do
-    wave.mission = mission
+  for _,wave in ipairs(args.waves) do
+    local waveEnemies = {}
+
+    for _,e in ipairs(wave.enemies) do
+      local enemy = MDM_NPC:new(e)
+      enemy:AttackPlayer()
+      table.insert(waveEnemies,enemy)
+      mission:AddAsset(enemy)
+    end
 
     if wave.restorePlayer then
       mission:AddObjective(MDM_RestorePlayerObjective:new())
@@ -47,18 +56,22 @@ function MDM_GangWarMission:new(GangWarConfiguration)
       }))
     end
 
-    mission:AddObjective(MDM_WaveObjective:new(wave))
+    mission:AddObjective(MDM_KillTargetsObjective:new({
+      targets = waveEnemies
+    }))
   end
+
+
 
   mission:OnMissionStart(function()
     MDM_PoliceUtils.DisablePolice()
 
-    for i,car in ipairs(config.carAssets) do
+    for i,car in ipairs(carAssets) do
       car:SetIndestructable(true)
       car:Spawn()
     end
 
-    for i,ally in ipairs(config.allyNpcs) do
+    for i,ally in ipairs(allyNpcs) do
       ally:OnSpawned(
         function()
           ally:MakeAlly(true)
@@ -70,18 +83,15 @@ function MDM_GangWarMission:new(GangWarConfiguration)
 
   mission:OnMissionEnd(function ()
     MDM_PoliceUtils.EnablePolice()
-    for i,ally in ipairs(config.allyNpcs) do
+    for i,ally in ipairs(allyNpcs) do
       ally:MakeAlly(false)
       ally:Godmode(false)
     end
   end)
 
-  mission:AddAssets(config.carAssets)
-  mission:AddAssets(config.allyNpcs)
   return mission
 end
 
 function MDM_GangWarMission.UnitTest()
-  local mission = TestMissions.GangWarTest()
-  mission:Start()
+
 end

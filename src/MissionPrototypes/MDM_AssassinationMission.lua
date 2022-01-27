@@ -15,10 +15,27 @@ function MDM_AssassinationMission:new(args)
   --    error("position not set",2)
   end
 
-  mission.targets = args.targets
-  mission.bodyguards = args.bodyguards or {}
-  mission.position = args.position or MDM_Utils.GetFirstElement(mission.targets):GetPos()
-  mission.carAssets = args.carAssets or {}
+  mission.targets = {}
+  mission.bodyguards = {}
+  mission.carAssets = {}
+
+  for _,t in ipairs(args.targets) do
+    table.insert(mission.targets,MDM_NPC:new(t))
+  end
+
+  if args.bodyguards ~= nil then
+    for _,b in ipairs(args.bodyguards) do
+      table.insert(mission.bodyguards, MDM_NPC:new(b))
+    end
+  end
+
+  if args.carAssets ~= nil then
+    for _,c in ipairs(args.carAssets) do
+      table.insert(mission.carAssets, MDM_Car:new(c))
+    end
+  end
+
+  mission.position = MDM_Utils.GetFirstElement(mission.targets):GetPos()
   mission.destinationPosition = args.destinationPosition
   mission.radius = args.radius or 100
 
@@ -73,8 +90,10 @@ end
 function MDM_AssassinationMission.UnitTest()
   print("---------------MDM_AssassinationMission")
   local mission = MDM_AssassinationMission:new({
-    targets = {MDM_NPC:new({npcId = "123", position = MDM_Utils.GetVector(1,2,3), direction = MDM_Utils.GetVector(1,1,1)})},
-    bodyguards = {MDM_NPC:new({npcId = "123", position = MDM_Utils.GetVector(1,2,3), direction = MDM_Utils.GetVector(1,1,1)})},
+    targets = {
+      {npcId = "1", position = MDM_Utils.GetVector(1,2,3), direction = MDM_Utils.GetVector(1,1,1)},
+      {npcId = "2", position = MDM_Utils.GetVector(1,2,3), direction = MDM_Utils.GetVector(1,1,1)}},
+    bodyguards = {{npcId = "123", position = MDM_Utils.GetVector(1,2,3), direction = MDM_Utils.GetVector(1,1,1)}},
   --    position = MDM_Utils.GetVector(1,1,1)
   })
   mission:Start()

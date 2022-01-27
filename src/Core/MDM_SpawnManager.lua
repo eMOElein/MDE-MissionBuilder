@@ -8,7 +8,11 @@ function MDM_SpawnManager.MarkForDistanceDespawn(spawnable, distance)
   end
 
   if not distance then
-    error("radius not set",2)
+    error("distance not set",2)
+  end
+
+  if not type(distance) == "number" then
+    error("distance is no number")
   end
 
   table.insert(despawns,{spawnable = spawnable, evaluator = function() return MDM_Utils.DistanceToPlayer(spawnable) > distance end})
