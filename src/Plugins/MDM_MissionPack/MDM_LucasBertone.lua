@@ -17,7 +17,8 @@ function MDM_LucasBertone.M1_1_Fairplay()
     initialOutfit = "7399986759921114297",
     initialWeather = "mm_050_race_cp_120",
     initialSeason = 2, --1932
-    startPosition = MDM_Locations.SALIERIS_BAR_FRONTDOOR
+    startPosition = MDM_Locations.SALIERIS_BAR_FRONTDOOR,
+    assets = {smithV12Car}
   })
 
   -- Objective 1: Visit Lucas Bertone.
@@ -152,7 +153,7 @@ function MDM_LucasBertone.M2_2_TripToTheCountry()
 end
 
 function MDM_LucasBertone.M3_1_Omerta()
-  local M3_1_introText = "A guy from Oakwod has beaten up one of my guys.\nA guy from the Black Cat bar. Someone needs to teach him a lesson.\nBut don't kill him. Just give him one or two good punches.\nAnd say him it's a lesson from Carlo."
+  local M3_1_introText = "A guy from Oakwod has beaten up one of my guys.\nA guy from the Black Cat bar. Someone needs to teach him a lesson.\nBut don't kill him. Just beat the shit out of him!.\nAnd say him it's a lesson from Carlo."
   local npc_big_stan = MDM_NPC:new({npcId = "2541916285709005291",position = MDM_Utils.GetVector(-1040.7507,-302.92154,4.3719287),direction = MDM_Utils.GetVector(-0.67485845,0.73794723,0)})
   local car_shubert = MDM_Car:new({
     carId = "shubert_e_six",
@@ -162,12 +163,12 @@ function MDM_LucasBertone.M3_1_Omerta()
 
   local mission = MDM_Mission:new({
     initialWeather = "mm_110_omerta_cp_050_cs_safehouse",
-    introText = M3_1_introtext,
+    introText = M3_1_introText,
     title = "Lucas Bertone 3-1 - Omerta",
     initialOutfit = "16117888644291730074", --Pinstripe and Hat
     startPosition = MDM_Locations.BERTONES_AUTOSERVICE_FRONTDOOR
   })
-  mission:AddAssets({car_shubert})
+  mission:AddAssets({car_shubert,npc_big_stan})
   mission:OnMissionStart(function() MDM_Utils.SpawnAll({car_shubert}) end)
 
 
@@ -180,15 +181,16 @@ function MDM_LucasBertone.M3_1_Omerta()
   })
   mission:AddObjective(objective1)
 
-  local spawnerObjective = MDM_SpawnerObjective:new({spawnables = {npc_big_stan}})
+  local spawnerObjective = MDM_SpawnerObjective:new({
+    spawnables = {npc_big_stan}
+  })
   mission:AddObjective(spawnerObjective)
 
   -- Teach Big Stan a lesson
   local objective2 = MDM_HurtNPCObjective:new({
     npc = npc_big_stan,
     threshold = 85,
-    title = "Teach Big Stan a lesson - He's at the former Black Cat bar",
-    onObjectiveEnd = function() end
+    title = "Teach Big Stan a lesson - He's at the former Black Cat bar"
   })
   mission:AddObjective(objective2)
 
@@ -196,7 +198,11 @@ function MDM_LucasBertone.M3_1_Omerta()
   local objective3 = MDM_GoToObjective:new({
     position = pos_BertonesAutoservice,
     title = "Go back to Lucas Bertone",
-    noPolice = true
+    noPolice = true,
+    introText = "You showed him!\nNow drive back to Lucas Bertone.",
+    onObjectiveStart = function()
+      npc_big_stan:GetGameEntity():SwitchBrain(enums.AI_TYPE.CIVILIAN)
+    end
   })
   mission:AddObjective(objective3)
 
@@ -375,7 +381,8 @@ function MDM_LucasBertone.M5_1_CremeDeLaCreme()
   local objective5 = MDM_GoToObjective:new({
     position = pos_BertonesAutoservice,
     radius = 2,
-    title = "Go back to Lucas Bertone"
+    title = "Go back to Lucas Bertone",
+    onObjectiveStart = function() car_shubert:Explode() end
   })
   mission:AddObjective(objective5)
 
@@ -468,7 +475,7 @@ function MDM_LucasBertone.M6_1_Election()
     position = pos_BertonesAutoservice,
     radius = 4,
     title = "Drive back to Lucas Bertone",
-    onObjectiveStop = function() npc_friend:MakeAlly(false) end,
+    onObjectiveStop = function() npc_friend:Despawn() end,
     noPolice = true
   })
   mission:AddObjective(objective3)
@@ -569,9 +576,12 @@ function MDM_LucasBertone.M7_1_Robbery()
 
   -- Disabling the police in the zone where the shooting is happening.
   -- We only activate it during the neccessary objectives.
-  local noPoliceZoneDirector = MDM_PoliceFreeZoneDirector:new({position = MDM_Utils.GetVector(506.13187,-711.24323,4.2604446),radius = 60})
+  local noPoliceZoneDirector = MDM_PoliceFreeZoneDirector:new({
+    mission = mission,
+    position = MDM_Utils.GetVector(506.13187,-711.24323,4.2604446),
+    radius = 60
+  })
   MDM_ActivatorUtils.RunWhileObjective(noPoliceZoneDirector,objective3)
-  mission:AddDirector(noPoliceZoneDirector)
 
   -- Visit Lucas Bertone
   local objective4 = MDM_GoToObjective:new({

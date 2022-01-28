@@ -8,7 +8,7 @@ function all()
   UnitTest.TestVectorDistance()
   MDM_Updateable.UnitTest()
   MDM_MapCircle.UnitTest()
-  ----------------
+  ---------------- 
   --- Entities ---
   ----------------
   MDM_NPC.UnitTest()

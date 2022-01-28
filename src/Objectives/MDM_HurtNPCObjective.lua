@@ -25,7 +25,7 @@ function MDM_HurtNPCObjective:new(args)
 end
 
 function MDM_HurtNPCObjective.OnThreshold(self)
-  self.npc:GetGameEntity():SwitchBrain(enums.AI_TYPE.CIVILIAN)
+
 end
 
 function MDM_HurtNPCObjective.Update(self)
@@ -34,11 +34,7 @@ function MDM_HurtNPCObjective.Update(self)
   end
 
   if self.npc:GetHealth() <= self.threshold then
-    local gameEntity =  self.npc:GetGameEntity()
-    if gameEntity ~= nil then
-      self.npc:GetGameEntity():SwitchBrain(enums.AI_TYPE.CIVILIAN)
-    end
-    self:SetOutcome(1)
+    self:Succeed()
   end
 
 end

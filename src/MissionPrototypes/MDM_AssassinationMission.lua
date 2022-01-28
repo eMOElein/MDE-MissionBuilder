@@ -67,9 +67,8 @@ function MDM_AssassinationMission:new(args)
 
   if mission.destinationPosition ~= nil then
     local objective_400_GoToDestination = MDM_GoToObjective:new({
-      title = "Go to your targets",
+      title = "Go to your destination",
       position = mission.destinationPosition,
-      radius = mission.radius
     })
     mission:AddObjective(objective_400_GoToDestination)
   end
