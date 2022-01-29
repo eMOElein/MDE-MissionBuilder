@@ -13,6 +13,11 @@ end
 
 function MDM_Director:new (args)
   local director = MDM_Director:class()
+
+  if not args then
+    error("args not set",2)
+  end
+
   director.enabled = false
   director.onEnabledCallbacks = {}
   director.onDisabledCallbacks = {}

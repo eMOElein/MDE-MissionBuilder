@@ -51,12 +51,14 @@ function MDM_GangWarMission:new(args)
 
     if wave.preparationTime ~= nil and wave.preparationTime > 0 then
       mission:AddObjective(MDM_WaitObjective:new({
+        title = wave.title,
         seconds = wave.preparationTime,
         bannerText = "Next wave in"
       }))
     end
 
     mission:AddObjective(MDM_KillTargetsObjective:new({
+      title = wave.title,
       targets = waveEnemies
     }))
   end

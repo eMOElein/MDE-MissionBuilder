@@ -7,7 +7,7 @@ function MDM_EntityInCircleDetector:new (args)
   end
 
   if not args.position then
-    error("pos not set",2)
+    error("position not set",2)
   end
 
   if not args.radius then

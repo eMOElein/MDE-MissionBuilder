@@ -28,10 +28,16 @@ end
 
 function MDM_SpawnManager.Update()
   for index,despawn in ipairs(despawns) do
+    if despawn.spawnable:GetGameEntity() == nil then
+      table.remove(despawn)
+      return
+    end
+
     local eval = despawn.evaluator()
     local spawnable = despawn.spawnable
     if eval and spawnable:IsSpawned() then
       spawnable:Despawn()
+      table.remove(despawn)
     end
   end
 end

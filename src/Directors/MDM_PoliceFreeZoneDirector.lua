@@ -11,6 +11,10 @@ local arguments = {
 -- Police is enabled again when the player leaves the area.
 --
 function MDM_PoliceFreeZoneDirector:new (args)
+  local director = MDM_Director:new(args)
+  setmetatable(director, self)
+  self.__index = self
+
   if not args.position then
     error("position not set",2)
   end
@@ -18,10 +22,6 @@ function MDM_PoliceFreeZoneDirector:new (args)
   if not args.radius then
     error("radius not set",2)
   end
-
-  local director = MDM_Director:new(args)
-  setmetatable(director, self)
-  self.__index = self
 
   director.args = args
   director.detector = MDM_EntityInCircleDetector:new({entity = MDM_PlayerUtils.GetPlayer(),position = args.position, radius = args.radius})

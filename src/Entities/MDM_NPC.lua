@@ -27,6 +27,7 @@ function MDM_NPC:new(args)
   npc.spawning = false
   npc.spawned = false
   npc.godmode = false
+  npc.battleArchetype = args.battleArchetype
   npc.health = 100
   npc.onSpawnedCallbacks = {}
 
@@ -185,6 +186,10 @@ local function _SpawnNPC(self,callback, spawnId, pos, dir)
 
     local npcGuid = object:GetGUID()
     local npcEntity = game.entitywrapper:GetEntityByGUID(npcGuid)
+
+    if self.battleArchetype ~= nil then
+      npcEntity:SetBattleArchetype(self.battleArchetype)
+    end
 
     local returnArgs = {
       guid = npcGuid,

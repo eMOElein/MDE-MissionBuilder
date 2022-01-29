@@ -113,6 +113,14 @@ function TestMissions.DuelTest()
     mission:AddObjective(objective100_KillTargets)
 
     mission:AddObjective(MDM_RestorePlayerObjective:new())
+
+    local noPoliceDirecotr = MDM_PoliceFreeZoneDirector:new({
+      mission = mission,
+      position = args.enemyNpcs[1]:GetPos(),
+      radius = 100
+    })
+    MDM_ActivatorUtils.RunBetweenObjectives(noPoliceDirecotr,objective1_startAttack,objective100_KillTargets)
+
     return mission
   end
 
@@ -133,6 +141,9 @@ function TestMissions.DuelTest()
     allyNpcs = {
       MDM_NPC:newFriend({npcId = "13604348442857333985", position = MDM_Utils.GetVector(-1447.3892,-468.7261,3.1898816), direction = MDM_Utils.GetVector(0.43327615,-0.90126121,0)}),
       MDM_NPC:newFriend({npcId = "13604348442857333985", position = MDM_Utils.GetVector(-1450.9735,-469.41238,3.1904457), direction = MDM_Utils.GetVector(0.16622388,-0.98608804,0)}),
+      MDM_NPC:newFriend({npcId = "13604348442857333985", position = MDM_Utils.GetVector(-1447.3892,-468.7261,3.1898816), direction = MDM_Utils.GetVector(0.43327615,-0.90126121,0)}),
+      MDM_NPC:newFriend({npcId = "13604348442857333985", position = MDM_Utils.GetVector(-1447.3892,-468.7261,3.1898816), direction = MDM_Utils.GetVector(0.43327615,-0.90126121,0)}),
+      MDM_NPC:newFriend({npcId = "13604348442857333985", position = MDM_Utils.GetVector(-1448.8175,-472.27847,3.1461122), direction = MDM_Utils.GetVector(0.59389323,-0.80454385,0)}),
       MDM_NPC:newFriend({npcId = "13604348442857333985", position = MDM_Utils.GetVector(-1448.8175,-472.27847,3.1461122), direction = MDM_Utils.GetVector(0.59389323,-0.80454385,0)}),
       MDM_NPC:newFriend({npcId = "13604348442857333985", position = MDM_Utils.GetVector(-1445.1748,-472.47644,3.1494639), direction = MDM_Utils.GetVector(0.11688796,-0.99314511,0)}),
       MDM_NPC:newFriend({npcId = "13604348442857333985", position = MDM_Utils.GetVector(-1453.8947,-466.51282,3.1729071), direction = MDM_Utils.GetVector(0.41520488,-0.90972793,0)})

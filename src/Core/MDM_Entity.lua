@@ -12,13 +12,13 @@ function MDM_Entity:new(spawnPos, spawnDir)
   setmetatable(entity, self)
   self.__index = self
 
---  if type(spawnPos) ~= "table" then
---    error("no spawnPos",2)
---  end
---  
---    if type(spawnDir) ~= "table" then
---    error("no spawnDir",2)
---  end
+  --  if type(spawnPos) ~= "table" then
+  --    error("no spawnPos",2)
+  --  end
+  --
+  --    if type(spawnDir) ~= "table" then
+  --    error("no spawnDir",2)
+  --  end
 
 
   entity.respawntime = -1
@@ -44,7 +44,7 @@ function MDM_Entity.GetPos(self)
     print("warning self should not be nil!!!")
   end
 
-  if game and self and self:GetGameEntity() and self:GetGameEntity():GetPos() then
+  if game and self and self:GetGameEntity() and self:GetGameEntity().GetPos ~= nil then
     return self:GetGameEntity():GetPos()
   else
     return self.spawnPos

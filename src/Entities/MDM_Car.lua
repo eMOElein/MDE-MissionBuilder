@@ -140,9 +140,13 @@ end
 
 function MDM_Car.Despawn(self)
   local entity = self:GetGameEntity()
-  if entity then
-    entity:SetPreventCleaning(false)
-    entity:Deactivate()
+  if entity  then
+    if entity.SetPreventCleaning ~= nil then
+      entity:SetPreventCleaning(false)
+    end
+    if entity.Deactivate ~= nil then
+      entity:Deactivate()
+    end
   end
 end
 

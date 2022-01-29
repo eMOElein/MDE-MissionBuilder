@@ -11,7 +11,7 @@ XXX_YourMissions = {
 MDM_Core.AddPlugin(XXX_YourMissions)
 
 -- When a plugin is successfully loaded it's Initialize() function is called.
--- Wrap your each of your missions in a mission provider and pass them to MDM_Core.missionManager:AddMissionProvider()
+-- Wrap each of your missions in a mission provider and pass them to MDM_Core.missionManager:AddMissionProvider()
 function XXX_YourMissions.Initialize()
   local M1_RunAroundTheBlock = {
     title = "Run Around The Block",

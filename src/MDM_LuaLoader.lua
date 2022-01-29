@@ -20,6 +20,7 @@ MDM_LuaLoader._luas = {
   "Detectors/MDM_NPCDeadDetector",
   "Detectors/MDM_NPCHealthDetector",
   "Detectors/MDM_PlayerInCarDetector",
+  "Detectors/MDM_InvertedDetector",
   "Directors/MDM_Director",
   "Directors/MDM_PlayerInCarBannerDirector",
   "Directors/MDM_PoliceFreeZoneDirector",

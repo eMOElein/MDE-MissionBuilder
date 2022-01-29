@@ -47,6 +47,9 @@ function MDM_AssassinationMission:new(args)
   -----------------------
   ------ Objectives -----
   -----------------------
+  local objective_000_restore = MDM_RestorePlayerObjective:new({})
+  mission:AddObjective(objective_000_restore)
+
   local objective_000_SpawnerObjective = MDM_SpawnerObjective:new({
     spawnables = spawnables
   })
@@ -65,6 +68,18 @@ function MDM_AssassinationMission:new(args)
   })
   mission:AddObjective(objective_200_KillTargets)
 
+  local objective_300_leave = MDM_DetectorObjective:new({
+    title = "Leave the area",
+    detector = MDM_InvertedDetector:new({
+      detector = MDM_EntityInCircleDetector:new ({
+        entity = MDM_PlayerUtils.GetPlayer(),
+        position = mission.position,
+        radius = mission.radius
+      })
+    })
+  })
+  mission:AddObjective(objective_300_leave)
+
   if mission.destinationPosition ~= nil then
     local objective_400_GoToDestination = MDM_GoToObjective:new({
       title = "Go to your destination",
@@ -81,7 +96,7 @@ function MDM_AssassinationMission:new(args)
     radius = mission.radius,
     showArea = true
   })
-  MDM_ActivatorUtils.RunWhileObjective(noPoliceZoneDirector,objective_200_KillTargets)
+  MDM_ActivatorUtils.RunBetweenObjectives(noPoliceZoneDirector,objective_200_KillTargets,objective_300_leave)
 
   return mission
 end

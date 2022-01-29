@@ -116,6 +116,13 @@ function MDM_MissionPack.InitializeLucasBertoneMissions()
   }
   MDM_Core.missionManager:AddMissionProvider(M6_1_Election)
 
+  local M6_2_Election = {
+    title = "Election 2-2",
+    client = client,
+    missionSupplier = MDM_LucasBertone.M6_2_Election
+  }
+  MDM_Core.missionManager:AddMissionProvider(M6_2_Election)
+
   local M7_1_Robbery ={
     title = "Moonlighting 1-2",
     client = client,
