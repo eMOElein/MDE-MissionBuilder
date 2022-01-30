@@ -1,7 +1,3 @@
---- MDM_InvertedDetector
--- A detector that returns the inverted result of the given detector
---
--- @param detector the detector that should be inverted
 MDM_NPCHealthDetector = {}
 MDM_NPCHealthDetector = MDM_Detector:class()
 

@@ -238,7 +238,8 @@ function MDM_LucasBertone.M3_2_Omerta()
 
   local objective1 = MDM_GetInCarObjective:new({
     car = car_berkley,
-    title = "Steal the Berkley 810 in Oak Hill"
+    title = "Steal the Berkley 810 in Oak Hill",
+    introText = "So he learned his lesson? Hehe, Carlo will be real happy!\nSo a guy in the millionaires quarter in Oak Hill has a car. It's a minor technical revolution. Great motor, drives real good. It's front-wheel drive, you see.\n"
   })
   mission:AddObjective(objective1)
 
@@ -275,6 +276,7 @@ function MDM_LucasBertone.M4_1_LuckyBastard()
     position = MDM_Utils.GetVector(-1045.6821,533.11432,17.960611),
     radius = 7,
     title = "Rescue Lucas's friend!",
+    introText = "A buddy of mine called. One of our friends was shot in Chinatown he's lying in a street near the square and needs help!\nYou need to get him and take him to the doctor in Oakwod. He's the one that you took Sam to once. So can you do it? But move it, he's dying out there.",
     onObjectiveStart = function() print("Spawn Feidns") MDM_Utils.SpawnAll({npcFriend1,npcFriend2,npdDead}) end,
     onObjectiveEnd = function() npcFriend1:MakeAlly(true)  npcFriend2:MakeAlly(true) end,
     noPolice = true
@@ -286,8 +288,8 @@ function MDM_LucasBertone.M4_1_LuckyBastard()
     position = MDM_Locations.OAKWOOD_DOCTOR_DRIVEWAY,
     radius = 7,
     title = "Drive to the doctor in Oakwood.",
-    introText = "Drive us to the doctor in Oakwood",
-    outroText = "You made it. Thanks mate!",
+    introText = "At last! Lucas sent you?\nHe's got hit by a 45. The second one's much worse off, so it ain't a good idea to ake him to the hospital. Take us to the doctor in Oakwood. Make it quick! If someone don't take a look at him, he won't make it.",
+    outroText = "Here it is! Stop here!\nThanks a lot.\nOkay let's go bud. The Doc'll take a look at you.",
     onObjectiveEnd = function() MDM_Utils.DespawnAll({npcFriend1,npcFriend2}) end,
     noPolice = true
   })
@@ -322,7 +324,8 @@ function MDM_LucasBertone.M4_2_LuckyBastard()
   local mission = MDM_Mission:new({
     title = "Lucas Bertone 4-2 Lucky Bastard",
     initialOutfit = "7399986759921114297",
-    initialWeather = "mm_160_harbor_cp_080_harbour_entrance_cutscene"
+    initialWeather = "mm_160_harbor_cp_080_harbour_entrance_cutscene",
+    introText = "Is he okay?nUff that's a load off my mind. He's my good buddy. I owe you one.\nI got a nice piece of work for you today and it's no big deal to get it. Near the multistory car lot on Central Island there's a beautiful sports car. You just go and lift it.\n Just be careful that the gatekepper don't call the cops on you."
   })
   mission:AddAssets({npc_Owner,car_Lassiter})
 
@@ -336,7 +339,7 @@ function MDM_LucasBertone.M4_2_LuckyBastard()
   local objective200_ToSalieri = MDM_GoToObjective:new({
     position = MDM_Locations.SALIERIS_BAR_GARAGE_FRONTDOOR,
     title = "Drive back to Salieri's bar",
-    onObjectiveStart = function() npc_Owner:AttackPlayer()end
+    onObjectiveStart = function() if not npc_Owner:IsDead() then npc_Owner:AttackPlayer() MDM_PoliceUtils.SetWantedLevel(2)end end
   })
   mission:AddObjective(objective200_ToSalieri)
 

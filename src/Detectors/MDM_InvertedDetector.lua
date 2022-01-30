@@ -1,10 +1,10 @@
 --- MDM_InvertedDetector
 -- A detector that returns the inverted result of the given detector
 --
--- @param detector the detector that should be inverted
 MDM_InvertedDetector = {}
 MDM_InvertedDirector = MDM_Detector:new()
 
+-- @param detector the detector that should be inverted
 function MDM_InvertedDetector:new (args)
   local invertedDetector =  {}
   setmetatable(invertedDetector, self)
