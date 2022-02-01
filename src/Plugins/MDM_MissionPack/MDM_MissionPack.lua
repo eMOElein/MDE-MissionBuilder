@@ -231,6 +231,13 @@ function MDM_MissionPack.InitializeTestMissions()
     missionSupplier = TestMissions.AssassinationMission
   }
   MDM_Core.missionManager:AddMissionProvider(assassinationMissionTest)
+
+  local simpleRaceMissionTest = {
+    title = "SimpleRace Test",
+    client = client,
+    missionSupplier =   TestMissions.SimpleRace
+  }
+  MDM_Core.missionManager:AddMissionProvider(simpleRaceMissionTest)
 end
 
 function MDM_MissionPack.InitializeVincenzoMissions()

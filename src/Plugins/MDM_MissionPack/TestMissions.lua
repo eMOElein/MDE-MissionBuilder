@@ -558,3 +558,21 @@ function TestMissions.AssassinationMission()
 
   return mission
 end
+
+function TestMissions.SimpleRace()
+  local mission = MDM_SimpleRaceMission:new({
+    startPosition = MDM_Utils.GetVector(-892.93268,-216.92448,2.9243827),
+    playerCar = {carId = "smith_v12", position = MDM_Utils.GetVector(-898.62866,-206.49626,2.9817207), direction = MDM_Utils.GetVector(-0.0094909342,0.99995327,-0.0018382519)},
+    rivalCars = {
+      {carId = "smith_v12", position = MDM_Utils.GetVector(-901.00354,-189.40616,2.9492006), direction = MDM_Utils.GetVector(0.019263864,0.99977261,-0.0091460701)},
+      {carId = "smith_v12", position = MDM_Utils.GetVector(-896.29266,-189.47711,2.9630671), direction = MDM_Utils.GetVector(-0.013393856,0.9998768,-0.0081892973)},
+      {carId = "smith_v12", position = MDM_Utils.GetVector(-896.17072,-198.3961,2.9792886), direction = MDM_Utils.GetVector(-0.00056744472,0.9999972,-0.0022861471)},
+      {carId = "smith_v12", position = MDM_Utils.GetVector(-900.65759,-198.55563,2.9772015), direction = MDM_Utils.GetVector(-0.019604612,0.99980384,-0.0028221593)}
+    },
+    waypoints = {
+      MDM_Utils.GetVector(1966.0057,-240.7205,114.784)
+    }
+  })
+
+  return mission
+end

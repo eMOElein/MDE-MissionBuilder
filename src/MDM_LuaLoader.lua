@@ -50,6 +50,7 @@ MDM_LuaLoader._luas = {
   "Objectives/MDM_DetectorObjective",
   "MissionPrototypes/MDM_GangWarMission",
   "MissionPrototypes/MDM_AssassinationMission",
+  "MissionPrototypes/MDM_SimpleRaceMission",
   "MissionPrototypes/Configurations/MDM_AssassinationMissionConfigurations",
   "Utils/MDM_VehicleUtils",
   "Utils/MDM_PlayerUtils",

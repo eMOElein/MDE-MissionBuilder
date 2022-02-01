@@ -28,6 +28,7 @@ function MDM_Objective:new(args)
 
   -- initializations
   args.title = args.title or arguments.title
+  self.title = args.title
   args.task = args.task or arguments.task
   args.description = args.description or arguments.description
 
@@ -107,7 +108,9 @@ function MDM_Objective.Start(self)
 
   if game then
     self.entity  = game.game:CreateCleanEntity(Math:newVector(-1225,-390,0), 0, false, false, true)
-    game.hud:UpdateSimpleObjective(self:GetTitle(), "param 2", true, true, "param 3")
+    if self.title then
+      game.hud:UpdateSimpleObjective(self:GetTitle(), "param 2", true, true, "param 3")
+    end
   end
 
   if self:GetIntroText() and game then

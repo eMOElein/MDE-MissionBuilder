@@ -72,8 +72,7 @@ function MDM_LucasBertone.M2_1_TripToTheCountry()
   local boltCar = MDM_Car:new({
     carId = "bolt_v8",
     position = MDM_Utils.GetVector(1710.9281,528.12469,3.0614924),
-    direction = MDM_Utils.GetVector(-0.27043605,-0.96266121,0.012160566),
-    startPosition = MDM_Utils.GetVector(1715.11,528.79181,2.7898962)
+    direction = MDM_Utils.GetVector(-0.27043605,-0.96266121,0.012160566)
   })
 
   local mission = MDM_Mission:new({
