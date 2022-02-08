@@ -635,7 +635,7 @@ function MDM_LucasBertone.M7_2_Robbery()
     direction = MDM_Utils.GetVector(-0.0058350917,0.99998069,-0.0021573838)
   })
 
-  local npc_Driver = MDM_NPC:newCivilian({npcId="18187434932497386406",position=MDM_Utils.GetVector(1585.3451,-514.1037,49.55558),direction=MDM_Utils.GetVector(-0.99988061,0.015445053,0)})
+  local npc_Driver = MDM_NPC:new({npcId="18187434932497386406",position=MDM_Utils.GetVector(1586.4181,-512.34558,49.556828),direction=MDM_Utils.GetVector(-0.99988061,0.015445053,0)})
 
   local mission = MDM_Mission:new({
     title = "Lucas Bertone 7-2 - Moonlighting",
@@ -665,6 +665,7 @@ function MDM_LucasBertone.M7_2_Robbery()
     car = car_trautenberg,
     title = "Steal the Trautenberg.",
     onObjectiveStart = function()
+      npc_Driver:GetGameEntity():SwitchBrain(enums.AI_TYPE.CIVILIAN)
       npc_Driver:GetGameEntity():GetInOutCar(car_trautenberg:GetGameEntity(),1,false,false)
       car_trautenberg:GetGameEntity():InitializeAIParams(enums.CarAIProfile.NORMAL,enums.CarAIProfile.NORMAL)
       car_trautenberg:GetGameEntity():SetMaxAISpeed(true,50)

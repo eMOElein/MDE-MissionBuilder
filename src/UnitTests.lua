@@ -6,6 +6,7 @@ UnitTest = {}
 function all()
   UnitTest.TestVector()
   UnitTest.TestVectorDistance()
+  MDM_DefaultCallbackSystem.UnitTest()
   MDM_Updateable.UnitTest()
   MDM_MapCircle.UnitTest()
   ----------------

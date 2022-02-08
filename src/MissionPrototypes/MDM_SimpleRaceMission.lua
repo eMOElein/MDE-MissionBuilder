@@ -32,7 +32,7 @@ function MDM_SimpleRaceMission:new(args)
   mission.rivals= {}
   mission.waypoints = {}
 
-  for i,c in pairs(args.rivalCars) do
+  for _,c in pairs(args.rivalCars) do
     local rival = {
       car = MDM_Car:new(c),
       npc = MDM_NPC:new({npcId = "13604348442857333985", position = MDM_Utils.GetVector(c.position.x,c.position.y,c.position.z+3)})
@@ -52,7 +52,7 @@ function MDM_SimpleRaceMission:new(args)
     table.insert(spawnables,r.car)
     table.insert(spawnables,r.npc)
   end
-  MDM_Utils.AddAll(spawnables,{mission.playerCar})
+  table.insert(spawnables,mission.playerCar)
 
   mission:AddAssets(spawnables)
 
@@ -68,7 +68,11 @@ function MDM_SimpleRaceMission:new(args)
   mission:AddObjective(objective_000_SpawnerObjective)
 
   local objective_100_PrepareOjective1 = MDM_CallbackObjective:new({
-    callback = function() return MDM_SimpleRaceMission._InstallDrivers(mission)end
+    callback = function()
+      MDM_SimpleRaceMission._InstallDrivers(mission)
+      --      game.traffic:SetEnableAmbientTrafficSpawning(true)
+      return true
+    end
   })
   mission:AddObjective(objective_100_PrepareOjective1)
 
@@ -85,11 +89,14 @@ end
 function MDM_SimpleRaceMission._InstallDrivers(self)
   if game then
     for _,r in ipairs(self.rivals)do
-      r.npc:GetGameEntity():GetInOutCar(r.car:GetGameEntity(),1,false,false)
-      r.car:GetGameEntity():InitializeAIParams(enums.CarAIProfile.PIRATE ,enums.CarAIProfile.PIRATE )
-      r.car:GetGameEntity():SetMaxAISpeed(true,150)
-      r.car:GetGameEntity():SetNavModeMoveTo(self.goal,100)
-      r.car:GetGameEntity():SetRubberBandingOn()
+      local carEntity = r.car:GetGameEntity()
+      local npcEntity = r.npc:GetGameEntity()
+
+      npcEntity:GetInOutCar(carEntity,1,false,false)
+      carEntity:InitializeAIParams(enums.CarAIProfile.PIRATE ,enums.CarAIProfile.PIRATE )
+      carEntity:SetMaxAISpeed(true,150)
+      carEntity:SetNavModeMoveTo(self.goal,1)
+      carEntity:SetRubberBandingOn()
     end
 
     getp():GetInOutCar(self.playerCar:GetGameEntity(),1,false,false)

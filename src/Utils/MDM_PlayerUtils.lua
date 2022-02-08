@@ -13,7 +13,7 @@ function MDM_PlayerUtils.PrintPosition()
 
   local pPos = "(" ..pos.x .."," ..pos.y .."," ..pos.z ..")"
   local pDir = "(" ..dir.x .."," ..dir.y .."," ..dir.z ..")"
-  local sCreate = "MDM_NPC:new(\"000000000000\", MDM_Utils.GetVector" ..pPos ..", MDM_Utils.GetVector" ..pDir ..")"
+  local sCreate = "MDM_NPC:new({npcId = \"000000000000\", position = MDM_Utils.GetVector" ..pPos ..", direction = MDM_Utils.GetVector" ..pDir .."})"
   print(sCreate)
   MDM_Utils.WriteDebug(sCreate)
 end

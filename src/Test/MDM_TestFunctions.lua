@@ -7,7 +7,7 @@ local smithCar
 
 function MDM_TestFunctions.Test()
 
-
+--  game.navigation:RegisterHideoutPos(MDM_Utils.GetVector(1966.0057,-240.7205,114.784),1, "BLIPSTRING2", 2,2,"aa","bbb",3,2,3,4)
 
 end
 

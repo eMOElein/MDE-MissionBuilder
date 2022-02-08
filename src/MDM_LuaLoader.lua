@@ -4,6 +4,7 @@ MDM_LuaLoader._luas = {
   "Utils/MDM_Utils",
   "Utils/MDM_Math",
   "Utils/MDM_SpawnUtils",
+  "Core/MDM_DefaultCallbackSystem",
   "Core/MDM_Core",
   "Core/MDM_MissionManager",
   "Enums/MDM_Locations",

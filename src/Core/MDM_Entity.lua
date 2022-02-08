@@ -40,10 +40,6 @@ function MDM_Entity.GetGameEntity(self)
 end
 
 function MDM_Entity.GetPos(self)
-  if not self then
-    print("warning self should not be nil!!!")
-  end
-
   if game and self and self:GetGameEntity() and self:GetGameEntity().GetPos ~= nil then
     return self:GetGameEntity():GetPos()
   else
@@ -76,7 +72,7 @@ function MDM_Entity.SetGameEntity(self,gameEntity)
 end
 
 --@Overwrite
-function MDM_Entity.Spawn()
+function MDM_Entity.Spawn(self)
   return false
 end
 

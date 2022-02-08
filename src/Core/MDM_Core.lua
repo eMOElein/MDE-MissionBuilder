@@ -1,12 +1,14 @@
 MDM_Core = {
   _plugins = {},
-  missionManager = nil
-
+  missionManager = nil,
+  callbackSystem = nil
 }
 
 function MDM_Core._Update()
   local LoadedMap = game.director:CityGetActiveName()
   if LoadedMap == "Lost Heaven" and not game.hud:IsLoadingScreenUp() then
+    MDM_Core.callbackSystem._Update()
+    MDM_Core.callbackSystem.NotifyCallbacks("on_update",{})
     MDM_Core.missionManager:Update()
   end
 end
@@ -17,7 +19,15 @@ end
 
 function MDM_Core._Initialize()
   MDM_Core.missionManager = MDM_MissionManager:new()
+  MDM_Core.callbackSystem = MDM_DefaultCallbackSystem
   MDM_Core._InitializePlugins()
+
+  local fe = function() print("entered") end
+  local le = function() print("left") end
+
+  MDM_Core.callbackSystem.RegisterCallback("on_player_vehicle_entered",fe)
+  MDM_Core.callbackSystem.RegisterCallback("on_player_vehicle_left",le)
+
 end
 
 function MDM_Core._InitializePlugins()
