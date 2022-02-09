@@ -1,5 +1,7 @@
 MDM_DefaultCallbackSystem = {
-  callbackGroups = {}
+  callbackGroups = {},
+  districtTextIdPrevious = "",
+  districtTextIdCurrent = ""
 }
 
 function MDM_DefaultCallbackSystem.NotifyCallbacks(name, args)
@@ -28,6 +30,16 @@ function MDM_DefaultCallbackSystem.RegisterCallback(name, callback)
   table.insert(MDM_DefaultCallbackSystem.callbackGroups[name],callback)
 end
 
+function MDM_DefaultCallbackSystem._FetchGroup(name)
+  local callbacks = MDM_DefaultCallbackSystem.callbackGroups[name]
+  if callbacks == nil then
+    callbacks = {}
+    MDM_DefaultCallbackSystem.callbackGroups[name] = callbacks
+  end
+
+  return callbacks
+end
+
 function MDM_DefaultCallbackSystem.UnregisterCallback(name, callback)
   if type(callback) ~= "function" then
     error("callback is not of type function",2)
@@ -52,34 +64,6 @@ function MDM_DefaultCallbackSystem.UnregisterCallback(name, callback)
   end
 
   return #toRemove
-end
-
-function MDM_DefaultCallbackSystem._FetchGroup(name)
-  local callbacks = MDM_DefaultCallbackSystem.callbackGroups[name]
-  if callbacks == nil then
-    callbacks = {}
-    MDM_DefaultCallbackSystem.callbackGroups[name] = callbacks
-  end
-
-  return callbacks
-end
-
-function MDM_DefaultCallbackSystem._Update()
-  local vehicle = MDM_VehicleUtils.GetPlayerCurrentVehicle()
-
-  if not MDM_DefaultCallbackSystem.playerVehicle and vehicle then
-    MDM_DefaultCallbackSystem.NotifyCallbacks("on_player_vehicle_entered",{
-      gameEntity = vehicle
-    })
-  end
-
-  if MDM_DefaultCallbackSystem.playerVehicle and not vehicle then
-    MDM_DefaultCallbackSystem.NotifyCallbacks("on_player_vehicle_left",{
-      gameEntity = MDM_DefaultCallbackSystem.playerVehicle
-    })
-  end
-
-  MDM_DefaultCallbackSystem.playerVehicle = vehicle
 end
 
 function MDM_DefaultCallbackSystem.UnitTest()

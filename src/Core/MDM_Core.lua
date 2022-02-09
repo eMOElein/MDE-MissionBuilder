@@ -7,7 +7,7 @@ MDM_Core = {
 function MDM_Core._Update()
   local LoadedMap = game.director:CityGetActiveName()
   if LoadedMap == "Lost Heaven" and not game.hud:IsLoadingScreenUp() then
-    MDM_Core.callbackSystem._Update()
+    MDM_DefaultCallbackMonitor._Update()
     MDM_Core.callbackSystem.NotifyCallbacks("on_update",{})
     MDM_Core.missionManager:Update()
   end
@@ -22,12 +22,9 @@ function MDM_Core._Initialize()
   MDM_Core.callbackSystem = MDM_DefaultCallbackSystem
   MDM_Core._InitializePlugins()
 
-  local fe = function() print("entered") end
-  local le = function() print("left") end
-
-  MDM_Core.callbackSystem.RegisterCallback("on_player_vehicle_entered",fe)
-  MDM_Core.callbackSystem.RegisterCallback("on_player_vehicle_left",le)
-
+  MDM_Core.callbackSystem.RegisterCallback("on_player_vehicle_entered",function() print(" vehicle entered") end)
+  MDM_Core.callbackSystem.RegisterCallback("on_player_vehicle_left",function() print("vehicle left") end)
+  MDM_Core.callbackSystem.RegisterCallback("on_player_district_changed",function(args) print("district changed from " ..args.districtOld.name .." to " .. args.districtNew.name) end)
 end
 
 function MDM_Core._InitializePlugins()
