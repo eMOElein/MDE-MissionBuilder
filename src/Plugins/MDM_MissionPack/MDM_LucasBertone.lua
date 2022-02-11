@@ -152,6 +152,7 @@ function MDM_LucasBertone.M2_2_TripToTheCountry()
   local objective2 = MDM_GoToObjective:new({
     mission = mission,
     position = MDM_Locations.SALIERIS_BAR_GARAGE_FRONTDOOR,
+    radius = 2,
     title = "Drive back to Salieri's bar",
     task = "Drive back to Salieri's bar",
     description = "Park the car behind Salieri's bar"
@@ -290,7 +291,7 @@ function MDM_LucasBertone.M4_1_LuckyBastard()
     radius = 7,
     title = "Rescue Lucas's friend!",
     introText = "A buddy of mine called. One of our friends was shot in Chinatown he's lying in a street near the square and needs help!\nYou need to get him and take him to the doctor in Oakwod. He's the one that you took Sam to once. So can you do it? But move it, he's dying out there.",
-    onObjectiveStart = function() print("Spawn Feidns") MDM_Utils.SpawnAll({npcFriend1,npcFriend2,npdDead}) end,
+    onObjectiveStart = function() MDM_Utils.SpawnAll({npcFriend1,npcFriend2,npdDead}) end,
     onObjectiveEnd = function() npcFriend1:MakeAlly(true)  npcFriend2:MakeAlly(true) end,
     noPolice = true
   })
@@ -355,6 +356,7 @@ function MDM_LucasBertone.M4_2_LuckyBastard()
   local objective200_ToSalieri = MDM_GoToObjective:new({
     mission = mission,
     position = MDM_Locations.SALIERIS_BAR_GARAGE_FRONTDOOR,
+    radius = 2,
     title = "Drive back to Salieri's bar",
     onObjectiveStart = function() if not npc_Owner:IsDead() then npc_Owner:AttackPlayer() MDM_PoliceUtils.SetWantedLevel(2)end end
   })
@@ -485,7 +487,8 @@ function MDM_LucasBertone.M5_2_CremeDeLaCreme()
 
   local objective2 = MDM_GoToObjective:new({
     mission = mission,
-    position = pos_SalierisBar,
+    position = MDM_Locations.SALIERIS_BAR_GARAGE_FRONTDOOR,
+    radius = 2,
     title = "Drive back to Salieri's bar"
   })
   mission:AddObjective(objective2)
@@ -572,7 +575,8 @@ function MDM_LucasBertone.M6_2_Election()
 
   local objective2 = MDM_GoToObjective:new({
     mission = mission,
-    position = pos_SalierisBar,
+    position = MDM_Locations.SALIERIS_BAR_GARAGE_FRONTDOOR,
+    radius = 2,
     title = "Drive back to Salieri's bar"
   })
   mission:AddObjective(objective2)
@@ -683,7 +687,7 @@ function MDM_LucasBertone.M7_2_Robbery()
   MDM_RestorePlayerObjective:new ({mission = mission})
 
   local objective50_waitForSpawns = MDM_SpawnerObjective:new ({
-   mission = mission,
+    mission = mission,
     spawnables = {npc_Driver,car_trautenberg}
   })
   mission:AddObjective(objective50_waitForSpawns)

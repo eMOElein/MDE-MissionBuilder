@@ -31,7 +31,7 @@ MDM_LuaLoader._luas = {
   "Directors/MDM_DetectorDirector",
   "Directors/MDM_BannerNotificationDirector",
   "Directors/MDM_HostileZoneDirector",
-  "Core/MDM_Entity",
+  "Entities/MDM_Entity",
   "Entities/MDM_Car",
   "Entities/MDM_NPC",
   "hud/MDM_ObjectivePosition",

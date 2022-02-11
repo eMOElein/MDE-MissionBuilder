@@ -9,16 +9,6 @@ function MDM_Mission:class()
   return mission
 end
 
-local args = {
-  introText = nil,
-  initialOutfit = nil,
-  initialWeather = nil,
-  initialSeason = nil,
-  outroText = nil,
-  startPosition = nil,
-  title = "New Mission",
-}
-
 function MDM_Mission:new (args)
   local mission = MDM_Updateable:new()
   setmetatable(mission, self)
@@ -30,7 +20,6 @@ function MDM_Mission:new (args)
 
   mission.args = args
   mission.objectives = {}
-  mission.directors = {}
   mission.OnActiveObjectiveChangedCallbacks = {}
   mission.OnMissionEndCallbacks = {}
   mission.OnMissionStartCallbacks = {}
@@ -77,10 +66,6 @@ function MDM_Mission.AddAssets(self, spawnable_assets)
     MDM_Mission.AddAsset(self,a)
   end
 end
-
---function MDM_Mission.AddDirector(self,director)
---  table.insert(self.directors,director)
---end
 
 function MDM_Mission.AddObjective(self,objective)
   table.insert(self.objectives,objective)
@@ -287,22 +272,11 @@ function MDM_Mission.Succeed(self)
   self:Stop()
 end
 
-function MDM_Mission.UpdateDirectors(self)
-  if not self.directors then
-    error ("directors not set",2)
-  end
-
-  for _,d in ipairs(self.directors) do
-    d:Update()
-  end
-end
-
 function MDM_Mission.Update(self)
   if not self.running then
     return
   end
 
-  self:UpdateDirectors()
   local cObj = MDM_Mission.GetCurrentObjective(self)
   local nextObj = MDM_Mission.GetNextObjective(self)
 

@@ -3,6 +3,7 @@
 -- on_player_vehicle_left
 -- on_player_district_changed
 -- on_before_mission_start
+-- on_update
 MDM_DefaultCallbackSystem = {
   _callbackGroups = {},
 }

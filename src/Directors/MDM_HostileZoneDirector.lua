@@ -79,7 +79,10 @@ end
 
 function MDM_HostileZoneDirector.Disable(self)
   MDM_Director.Disable(self)
-  self.mapCircle:Hide()
+
+  if self.mapCircle then
+    self.mapCircle:Hide()
+  end
 end
 
 
