@@ -1,13 +1,6 @@
 MDM_DestroyCarInAreaObjective = {}
 MDM_DestroyCarInAreaObjective = MDM_Objective:class()
 
-local args = {
-  car = nil,
-  position = nil,
-  radius = 20,
-  title = "go to the marked location",
-  description = "go to the marked location"
-}
 function MDM_DestroyCarInAreaObjective:new(args)
   if not args.car then
     error("car not set",2)
@@ -23,9 +16,6 @@ function MDM_DestroyCarInAreaObjective:new(args)
 
   objective.pos = args.position
   objective.radius = args.radius or 20
-  objective.title = "go to the location"
-  objective.task = "go to the location"
-  objective.description = "go to the location"
   objective.blip = MDM_ObjectivePosition:new(objective.title..":Testblip",objective.pos,objective.radius)
 
   objective.car = args.car

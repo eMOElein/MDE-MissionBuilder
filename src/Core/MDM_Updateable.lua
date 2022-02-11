@@ -27,8 +27,8 @@ function MDM_Updateable.UnitTest()
   local mission = MDM_Mission:new({title = ""});
   local counter = 0;
 
-  mission:AddObjective(MDM_RestorePlayerObjective:new(mission))
-  mission:Start(self)
+  mission:AddObjective(MDM_RestorePlayerObjective:new({mission = mission}))
+  mission:Start()
   mission:OnUpdate(function() counter = counter + 1 end)
   mission:Update();
   mission:Update();

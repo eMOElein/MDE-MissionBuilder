@@ -103,6 +103,10 @@ function MDM_MissionManager.StartMission(self, mission)
     error("mission has no objectives",2)
   end
 
+  MDM_Core.callbackSystem.NotifyCallbacks("on_before_mission_start",{
+    mission = mission
+  })
+
   activeMission = mission
   self.missionInitialized = false
   self.missionStarted = false

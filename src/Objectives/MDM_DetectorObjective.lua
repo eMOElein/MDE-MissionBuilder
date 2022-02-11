@@ -27,11 +27,12 @@ function MDM_DetectorObjective.Update(self)
 end
 
 function MDM_DetectorObjective.UnitTest()
-
+  print("--------MDM_DetectorObjective Unit Test")
   local detector = MDM_Detector:new({})
   detector.Test = function() return false end
 
-  local detectorObjective = MDM_DetectorObjective:new({detector = detector})
+  local mission = MDM_Mission:new({})
+  local detectorObjective = MDM_DetectorObjective:new({mission = mission, detector = detector})
   detectorObjective:Start()
 
   detectorObjective:Update()

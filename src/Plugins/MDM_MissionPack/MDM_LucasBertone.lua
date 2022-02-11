@@ -23,6 +23,7 @@ function MDM_LucasBertone.M1_1_Fairplay()
 
   -- Objective 1: Visit Lucas Bertone.
   local objective1 = MDM_GoToObjective:new({
+    mission = mission,
     position = pos_BertonesAutoservice,
     radius = 2,
     title = "Visit Lucas Bertone.",
@@ -36,6 +37,7 @@ function MDM_LucasBertone.M1_1_Fairplay()
   -- No need to spawn the car manually. The objective does that for us on start.
   -- If the car is already spawned it wont be spawned again.
   local objective2 = MDM_GetInCarObjective:new({
+    mission = mission,
     car = smithV12Car,
     title = "Steal the Smith V12",
     task = "Steal the Smith V12",
@@ -46,6 +48,7 @@ function MDM_LucasBertone.M1_1_Fairplay()
 
   -- Objective 3: Drive back to Salieris bar.
   local objective3 = MDM_GoToObjective:new({
+    mission = mission,
     position = MDM_Locations.SALIERIS_BAR_GARAGE_FRONTDOOR,
     title = "Drive back to Salieri's bar",
     task = "Drive back to Salieri's bar",
@@ -57,7 +60,6 @@ function MDM_LucasBertone.M1_1_Fairplay()
   -- Create the director that notifies the HUD when the player is not in the vehicle.
   -- Only active while objective2 is running.
   local director= MDM_PlayerInCarBannerDirector:new ({
-    mission = mission,
     car = smithV12Car
   })
   MDM_ActivatorUtils.RunWhileObjective(director,objective3)
@@ -89,6 +91,7 @@ function MDM_LucasBertone.M2_1_TripToTheCountry()
 
   --Objective1: Visit Lucas Bertone
   local objective1 = MDM_GoToObjective:new({
+    mission = mission,
     title = "Visit Lucas Bertone",
     position = pos_BertonesAutoservice,
     radius = 2,
@@ -98,6 +101,7 @@ function MDM_LucasBertone.M2_1_TripToTheCountry()
 
   --Objective2: Warn Lucas' friend
   local objective2 = MDM_GoToObjective:new({
+    mission = mission,
     introText = M2_1_introText,
     position = MDM_Utils.GetVector(1463.5498,210.33923,9.577445),
     radius = 2,
@@ -111,6 +115,7 @@ function MDM_LucasBertone.M2_1_TripToTheCountry()
 
   --Objective3: Drive back to Lucas Bertone
   local objective3 = MDM_GoToObjective:new({
+    mission = mission,
     position = pos_BertonesAutoservice,
     radius = 2,
     title = "Drive back to Lucas Bertone"
@@ -137,6 +142,7 @@ function MDM_LucasBertone.M2_2_TripToTheCountry()
   })
 
   local objective1 = MDM_GetInCarObjective:new({
+    mission = mission,
     car = car_culver,
     title = "Steal the Culver in Oakwood"
   })
@@ -144,6 +150,7 @@ function MDM_LucasBertone.M2_2_TripToTheCountry()
 
   -- Objective 2: Drive back to Salieris bar.
   local objective2 = MDM_GoToObjective:new({
+    mission = mission,
     position = MDM_Locations.SALIERIS_BAR_GARAGE_FRONTDOOR,
     title = "Drive back to Salieri's bar",
     task = "Drive back to Salieri's bar",
@@ -176,6 +183,7 @@ function MDM_LucasBertone.M3_1_Omerta()
 
   -- Visit Lucas Bertone
   local objective1 = MDM_GoToObjective:new({
+    mission = mission,
     position = pos_BertonesAutoservice,
     radius = 2,
     title = "Visit Lucas Bertone",
@@ -184,12 +192,14 @@ function MDM_LucasBertone.M3_1_Omerta()
   mission:AddObjective(objective1)
 
   local spawnerObjective = MDM_SpawnerObjective:new({
+    mission = mission,
     spawnables = {npc_big_stan}
   })
   mission:AddObjective(spawnerObjective)
 
   -- Teach Big Stan a lesson
   local objective2 = MDM_HurtNPCObjective:new({
+    mission = mission,
     npc = npc_big_stan,
     threshold = 78,
     title = "Teach Big Stan a lesson - He's at the former Black Cat bar"
@@ -198,6 +208,7 @@ function MDM_LucasBertone.M3_1_Omerta()
 
   -- Back to Lucas Bertone
   local objective3 = MDM_GoToObjective:new({
+    mission = mission,
     position = pos_BertonesAutoservice,
     title = "Go back to Lucas Bertone",
     noPolice = true,
@@ -209,7 +220,6 @@ function MDM_LucasBertone.M3_1_Omerta()
   mission:AddObjective(objective3)
 
   local bigStanAliveMonitor = MDM_DetectorDirector:new({
-    mission = mission,
     detector = MDM_NPCDeadDetector:new({
       npcs = {npc_big_stan},
     }),
@@ -236,6 +246,7 @@ function MDM_LucasBertone.M3_2_Omerta()
   })
 
   local objective1 = MDM_GetInCarObjective:new({
+    mission = mission,
     car = car_berkley,
     title = "Steal the Berkley 810 in Oak Hill",
     introText = "So he learned his lesson? Hehe, Carlo will be real happy!\nSo a guy in the millionaires quarter in Oak Hill has a car. It's a minor technical revolution. Great motor, drives real good. It's front-wheel drive, you see.\n"
@@ -243,6 +254,7 @@ function MDM_LucasBertone.M3_2_Omerta()
   mission:AddObjective(objective1)
 
   local objective2 = MDM_GoToObjective:new({
+    mission = mission,
     position = MDM_Locations.SALIERIS_BAR_GARAGE_FRONTDOOR,
     title = "Drive back to Salieri's Bar"
   })
@@ -264,6 +276,7 @@ function MDM_LucasBertone.M4_1_LuckyBastard()
   mission:AddAssets({npcFriend1,npcFriend2,npdDead})
 
   local objective_100_visitLucas = MDM_GoToObjective:new({
+    mission = mission,
     position = pos_BertonesAutoservice,
     radius = 2,
     title = "Visit Lucas Bertone",
@@ -272,6 +285,7 @@ function MDM_LucasBertone.M4_1_LuckyBastard()
   mission:AddObjective(objective_100_visitLucas)
 
   local objective_200_pickupFriends = MDM_GoToObjective:new({
+    mission = mission,
     position = MDM_Utils.GetVector(-1045.6821,533.11432,17.960611),
     radius = 7,
     title = "Rescue Lucas's friend!",
@@ -284,6 +298,7 @@ function MDM_LucasBertone.M4_1_LuckyBastard()
 
 
   local objective_300_toDoctor = MDM_GoToObjective:new({
+    mission = mission,
     position = MDM_Locations.OAKWOOD_DOCTOR_DRIVEWAY,
     radius = 7,
     title = "Drive to the doctor in Oakwood.",
@@ -295,6 +310,7 @@ function MDM_LucasBertone.M4_1_LuckyBastard()
   mission:AddObjective(objective_300_toDoctor)
 
   local objective_400_toLucas = MDM_GoToObjective:new({
+    mission = mission,
     position = MDM_Locations.BERTONES_AUTOSERVICE_FRONTDOOR,
     radius = 2,
     title = "Go to Lucas Bertone",
@@ -324,11 +340,12 @@ function MDM_LucasBertone.M4_2_LuckyBastard()
     title = "Lucas Bertone 4-2 Lucky Bastard",
     initialOutfit = "7399986759921114297",
     initialWeather = "mm_160_harbor_cp_080_harbour_entrance_cutscene",
-    introText = "Is he okay?nUff that's a load off my mind. He's my good buddy. I owe you one.\nI got a nice piece of work for you today and it's no big deal to get it. Near the multistory car lot on Central Island there's a beautiful sports car. You just go and lift it.\n Just be careful that the gatekepper don't call the cops on you."
+    introText = "Is he okay?\nUff that's a load off my mind. He's my good buddy. I owe you one.\nI got a nice piece of work for you today and it's no big deal to get it. Near the multistory car lot on Central Island there's a beautiful sports car. You just go and lift it.\n Just be careful that the gatekepper don't call the cops on you."
   })
   mission:AddAssets({npc_Owner,car_Lassiter})
 
   local objective100_GetInCar = MDM_GetInCarObjective:new({
+    mission = mission,
     car = car_Lassiter,
     title = "Steal the Bruno Speedster near the parking lot on Central Island.",
     onObjectiveStart = function() MDM_Utils.SpawnAll({npc_Owner,car_Lassiter})end
@@ -336,6 +353,7 @@ function MDM_LucasBertone.M4_2_LuckyBastard()
   mission:AddObjective(objective100_GetInCar)
 
   local objective200_ToSalieri = MDM_GoToObjective:new({
+    mission = mission,
     position = MDM_Locations.SALIERIS_BAR_GARAGE_FRONTDOOR,
     title = "Drive back to Salieri's bar",
     onObjectiveStart = function() if not npc_Owner:IsDead() then npc_Owner:AttackPlayer() MDM_PoliceUtils.SetWantedLevel(2)end end
@@ -373,9 +391,10 @@ function MDM_LucasBertone.M5_1_CremeDeLaCreme()
   })
   mission:OnMissionEnd(function() MDM_PoliceUtils.UnlockWantedLevel() end)
 
-  mission:AddObjective(MDM_RestorePlayerObjective:new())
+  mission:AddObjective(MDM_RestorePlayerObjective:new({ mission = mission}))
 
   local objective1 = MDM_GoToObjective:new({
+    mission = mission,
     outroText = "The car outside was used in a crime.\nI need you to drive it to the lighthouse and destroy it there.\nBut be careful. The police knows the vehicle.",
     position = pos_BertonesAutoservice,
     radius = 2,
@@ -384,6 +403,7 @@ function MDM_LucasBertone.M5_1_CremeDeLaCreme()
   mission:AddObjective(objective1)
 
   local objective2 = MDM_GetInCarObjective:new({
+    mission = mission,
     car = car_shubert,
     title = "Get in the car",
     onObjectiveStart = function() MDM_Utils.SpawnAll(car_assets) end,
@@ -391,6 +411,7 @@ function MDM_LucasBertone.M5_1_CremeDeLaCreme()
   mission:AddObjective(objective2)
 
   local objective3 = MDM_GoToObjective:new({
+    mission = mission,
     position = pos_lighthouse,
     radius = 40,
     title = "Destroy the car at the lighthouse",
@@ -400,6 +421,7 @@ function MDM_LucasBertone.M5_1_CremeDeLaCreme()
   mission:AddObjective(objective3)
 
   local objective4 = MDM_DestroyCarInAreaObjective:new({
+    mission = mission,
     car = car_shubert,
     position = pos_lighthouse,
     radius = 40,
@@ -408,6 +430,7 @@ function MDM_LucasBertone.M5_1_CremeDeLaCreme()
   mission:AddObjective(objective4)
 
   local objective5 = MDM_GoToObjective:new({
+    mission = mission,
     position = pos_BertonesAutoservice,
     radius = 2,
     title = "Go back to Lucas Bertone",
@@ -417,7 +440,6 @@ function MDM_LucasBertone.M5_1_CremeDeLaCreme()
 
   --We don't want the car to be destroyed before we are at the lighthouse.
   local damageDirector = MDM_DetectorDirector:new({
-    mission = mission,
     detector = MDM_CarDamageDetector:new({
       car = car_shubert,
       threshold = 100,
@@ -450,9 +472,10 @@ function MDM_LucasBertone.M5_2_CremeDeLaCreme()
   mission:AddAssets({car_celeste,npc_enemy1,npc_enemy2})
 
 
-  mission:AddObjective(MDM_RestorePlayerObjective:new())
+  mission:AddObjective(MDM_RestorePlayerObjective:new({mission = mission}))
 
   local objective1 = MDM_GetInCarObjective:new({
+    mission = mission,
     car = car_celeste,
     title = "Steal the Celeste Mark 5 from the diner.",
     onObjectiveStart = function() MDM_Utils.SpawnAll({car_celeste,npc_enemy1,npc_enemy2}) end,
@@ -461,6 +484,7 @@ function MDM_LucasBertone.M5_2_CremeDeLaCreme()
   mission:AddObjective(objective1)
 
   local objective2 = MDM_GoToObjective:new({
+    mission = mission,
     position = pos_SalierisBar,
     title = "Drive back to Salieri's bar"
   })
@@ -482,6 +506,7 @@ function MDM_LucasBertone.M6_1_Election()
   })
 
   local objective1 = MDM_GoToObjective:new({
+    mission = mission,
     position = pos_BertonesAutoservice,
     radius = 2,
     title = "Visit Lucas Bertone",
@@ -491,6 +516,7 @@ function MDM_LucasBertone.M6_1_Election()
   mission:AddObjective(objective1)
 
   local objective2 = MDM_GoToObjective:new({
+    mission = mission,
     position = MDM_Utils.GetVector(-1735.0616,-477.45865,2.6067872),
     radius = 8,
     title = "Pick up Lucas' friend.",
@@ -504,6 +530,7 @@ function MDM_LucasBertone.M6_1_Election()
   MDM_MissionUtils.RunTimerBetweenObjectives(mission,objective2, objective2, 300, function() mission:Fail() end)
 
   local objective3 = MDM_GoToObjective:new({
+    mission = mission,
     position = pos_BertonesAutoservice,
     radius = 4,
     title = "Drive back to Lucas Bertone",
@@ -531,17 +558,20 @@ function MDM_LucasBertone.M6_2_Election()
   })
 
   local spawnerObjective = MDM_SpawnerObjective:new({
+    mission = mission,
     spawnables = {car_apollon}
   })
   mission:AddObjective(spawnerObjective)
 
   local objective1 = MDM_GetInCarObjective:new({
+    mission = mission,
     car = car_apollon,
     title = "Steal the Lassiter V16 Apollon in Oak Hill."
   })
   mission:AddObjective(objective1)
 
   local objective2 = MDM_GoToObjective:new({
+    mission = mission,
     position = pos_SalierisBar,
     title = "Drive back to Salieri's bar"
   })
@@ -572,10 +602,11 @@ function MDM_LucasBertone.M7_1_Robbery()
   mission:AddAssets(enemy_assets)
   mission:AddAssets({npc_bigdick,car_schubert})
 
-  mission:AddObjective(MDM_RestorePlayerObjective:new())
+  mission:AddObjective(MDM_RestorePlayerObjective:new({ mission = mission}))
 
   -- Visit Lucas Bertone
   local objective1 = MDM_GoToObjective:new({
+    mission = mission,
     position = pos_BertonesAutoservice,
     radius = 2,
     title = "Visit Lucas Bertone",
@@ -585,6 +616,7 @@ function MDM_LucasBertone.M7_1_Robbery()
 
   -- Go to Big Dick
   local objective2 = MDM_GoToObjective:new({
+    mission = mission,
     position = MDM_Utils.GetVector(504.8013,-723.25311,4.2775931),
     radius = 2,
     title = "Find Big Dick",
@@ -597,6 +629,7 @@ function MDM_LucasBertone.M7_1_Robbery()
   -- Eliminate enemys
   -- Objective spawns the enemies on start if we haven't done it yet.
   local objective3 = MDM_KillTargetsObjective:new({
+    mission = mission,
     targets = enemy_assets,
     title = "Help Big Dick",
     outroText = "You're not as useless as you look.\nThanks for your help and greet Lucas from me.",
@@ -610,7 +643,6 @@ function MDM_LucasBertone.M7_1_Robbery()
   -- Disabling the police in the zone where the shooting is happening.
   -- We only activate it during the neccessary objectives.
   local noPoliceZoneDirector = MDM_PoliceFreeZoneDirector:new({
-    mission = mission,
     position = MDM_Utils.GetVector(506.13187,-711.24323,4.2604446),
     radius = 60
   })
@@ -618,6 +650,7 @@ function MDM_LucasBertone.M7_1_Robbery()
 
   -- Visit Lucas Bertone
   local objective4 = MDM_GoToObjective:new({
+    mission = mission,
     position = pos_BertonesAutoservice,
     radius = 2,
     title = "Go back to Lucas Bertone",
@@ -647,14 +680,16 @@ function MDM_LucasBertone.M7_2_Robbery()
   })
 
 
-  MDM_RestorePlayerObjective:new (mission)
+  MDM_RestorePlayerObjective:new ({mission = mission})
 
   local objective50_waitForSpawns = MDM_SpawnerObjective:new ({
+   mission = mission,
     spawnables = {npc_Driver,car_trautenberg}
   })
   mission:AddObjective(objective50_waitForSpawns)
 
   local objective1 = MDM_GoToObjective:new({
+    mission = mission,
     position = MDM_Utils.GetVector(1582.7761,-513.8941,49.780258),
     radius = 50,
     title = "Steal the Trautenberg from the Oak Wood Junior High-School."
@@ -662,6 +697,7 @@ function MDM_LucasBertone.M7_2_Robbery()
   mission:AddObjective(objective1)
 
   local objective3_GetInCar = MDM_GetInCarObjective:new({
+    mission = mission,
     car = car_trautenberg,
     title = "Steal the Trautenberg.",
     onObjectiveStart = function()
@@ -676,13 +712,13 @@ function MDM_LucasBertone.M7_2_Robbery()
 
 
   local objective400_ToPaulie = MDM_GoToObjective:new({
+    mission = mission,
     position = MDM_Locations.OG_PAULIES_APARTMENT,
     radius = 20,
     title = "Drive to Paulies apartment",
     noPolice = true
   })
   mission:AddObjective(objective400_ToPaulie)
-
 
   return mission
 end

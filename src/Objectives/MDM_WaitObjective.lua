@@ -76,6 +76,7 @@ end
 function MDM_WaitObjective.UnitTest()
   print("---------------MDM_WaitObjective UnitTest")
   MDM_WaitObjective:new({
+    mission = MDM_Mission:new({}),
     seconds = 10
   })
 

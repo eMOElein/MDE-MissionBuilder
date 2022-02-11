@@ -77,11 +77,13 @@ function TestMissions.DuelTest()
     mission:AddAssets(spawnables)
 
     local objective50_spawnerObjective = MDM_SpawnerObjective:new({
+      mission = mission,
       spawnables = spawnables
     })
     mission:AddObjective(objective50_spawnerObjective)
 
     local objective1_startAttack = MDM_CallbackObjective:new ({
+      mission = mission,
       title = "Attack",
       callback = function ()
         local targetIndex = 1
@@ -107,15 +109,15 @@ function TestMissions.DuelTest()
     mission:AddObjective(objective1_startAttack)
 
     local objective100_KillTargets = MDM_KillTargetsObjective:new({
+      mission = mission,
       title ="Take out your targets",
       targets = args.enemyNpcs
     })
     mission:AddObjective(objective100_KillTargets)
 
-    mission:AddObjective(MDM_RestorePlayerObjective:new())
+    mission:AddObjective(MDM_RestorePlayerObjective:new({mission = mission}))
 
     local noPoliceDirecotr = MDM_PoliceFreeZoneDirector:new({
-      mission = mission,
       position = args.enemyNpcs[1]:GetPos(),
       radius = 100
     })
@@ -172,11 +174,13 @@ function TestMissions.PursuitTest()
   mission:AddAssets(assets)
 
   local objective0_spawnerObjective = MDM_SpawnerObjective:new({
+    mission = mission,
     spawnables = assets
   })
   mission:AddObjective(objective0_spawnerObjective)
 
   local objective1_waitForSpawns = MDM_CallbackObjective:new ({
+    mission = mission,
     title = "Spawntime",
     callback = function ()
 
@@ -202,6 +206,7 @@ function TestMissions.PursuitTest()
   mission:AddObjective(objective1_waitForSpawns)
 
   local objective3_Killtarget = MDM_KillTargetsObjective:new({
+    mission = mission,
     title ="Take out your target",
     targets = {npc_target}
   })
@@ -224,6 +229,7 @@ function TestMissions.CarchaseTest()
   mission:OnMissionStart(function() MDM_Utils.SpawnAll({enemyCar,enemyNpc,playerCar})end)
 
   local objective1_waitForSpawns = MDM_CallbackObjective:new ({
+    mission = mission,
     title = "Spawntime",
     callback = function ()
       if enemyCar:IsSpawned() and playerCar:IsSpawned() and enemyNpc:IsSpawned()then
@@ -258,6 +264,7 @@ function TestMissions.CarchaseTest()
   --  mission:AddObjective(objective2_Teleports)
 
   local objective3_Killtarget = MDM_KillTargetsObjective:new({
+    mission = mission,
     title ="Take out your target",
     targets = {enemyNpc}
   })
@@ -288,26 +295,6 @@ function TestMissions.WaitObjectiveTest()
   --  MDM_Core.missionManager:StartMission(mission)
   return mission
 end
-
-function TestMissions.WaveTest()
-  local enemyNpcs = {
-    MDM_NPC:new({npcId = "13604348442857333985", position = MDM_Utils.GetVector(-887.94025,-228.11867,2.7994239),direction = MDM_Utils.GetVector(-0.99984133,0.017813683,0)}),
-    MDM_NPC:new({npcId = "13604348442857333985", position = MDM_Utils.GetVector(-887.56146,-233.41458,2.8025167),direction = MDM_Utils.GetVector(-0.97434926,0.22504109,0)})
-  }
-
-  local mission = MDM_Mission:new({title = "Wave Tesmission"})
-
-  local config = {enemies = enemyNpcs,
-    mission = mission
-  }
-
-  MDM_RestorePlayerObjective:new(mission)
-  local wave = MDM_WaveObjective:new(config)
-
-
-  return mission
-end
-
 
 function TestMissions.GangWarTest()
   local wave1Npcs = {
@@ -351,7 +338,7 @@ end
 function TestMissions.KillMission()
   local npc1 = MDM_NPC:new({npcId="13604348442857333985",position=MDM_Utils.GetVector(-907.94,-180.41,2),direction=MDM_Utils.GetVector(0,0,0)})
   local m = MDM_Mission:new({title = "TEST: Kill Targets"})
-  m:AddObjective(MDM_RestorePlayerObjective:new ())
+  m:AddObjective(MDM_RestorePlayerObjective:new ({mission = m}))
 
   m:AddObjective(MDM_KillTargetsObjective:new({mission = m, targets = {npc1}}))
   m:AddAssets(npc1)
@@ -436,17 +423,15 @@ function TestMissions.GetInCar()
   local mission = MDM_Mission:new({title = "Get in the Car"})
 
   -- Objective1: Get In The Car
-  local objective1 = MDM_GetInCarObjective:new({mission = mission, car = falconerCar})
-  objective1:SetInformation("Get in the car")
+  local objective1 = MDM_GetInCarObjective:new({mission = mission, car = falconerCar, title= "Get in the car"})
   mission:AddObjective(objective1)
 
   -- Objective2: Drive Back To Salieris
-  local objective2 = MDM_GoToObjective:new({mission = mission,position = MDM_Utils.GetVector(-907.94,-210.41,2)})
-  objective2:SetInformation("Drive back to Salieri's")
+  local objective2 = MDM_GoToObjective:new({mission = mission,position = MDM_Utils.GetVector(-907.94,-210.41,2), title = "Drive back to Salieri's" })
   mission:AddObjective(objective2)
 
   -- Create Player in Car Detector and Use it while Objective 2 is active
-  local detector= MDM_PlayerInCarBannerDirector:new ({mission = mission, car = falconerCar})
+  local detector= MDM_PlayerInCarBannerDirector:new ({car = falconerCar})
   MDM_ActivatorUtils.RunWhileObjective(detector,objective2)
 
   local onCarDestroyed = function()
@@ -456,7 +441,6 @@ function TestMissions.GetInCar()
 
   local damageMonitor = MDM_CarDamageDetector:new({car = falconerCar, threshold = 5, flagMotorDamage = true, flagCarDamage = true})
   local damageDetector = MDM_DetectorDirector:new({
-    mission = mission,
     detector = damageMonitor,
     callback = onCarDestroyed
   })
@@ -476,6 +460,7 @@ function TestMissions.HostileZoneTest()
   })
 
   local objective = MDM_KillTargetsObjective:new({
+    mission = mission,
     targets = {npc1}
   })
   mission:AddObjective(objective)
@@ -491,7 +476,6 @@ function TestMissions.HostileZoneTest()
 
   MDM_ActivatorUtils.RunBetweenObjectives(hostileZone,objective,objective)
 
-  mission:AddDirector(hostileZone)
   mission:AddAssets({npc1})
 
   return mission
@@ -513,11 +497,13 @@ function TestMissions.CivilWanderTest()
   })
 
   local objective50_spawnerObjective = MDM_SpawnerObjective:new({
+    mission = mission,
     spawnables = spawnables
   })
   mission:AddObjective(objective50_spawnerObjective)
 
   local objective1_Wander = MDM_CallbackObjective:new ({
+    mission = mission,
     title = "Civil Wander",
     callback = function ()
       npcTarget:GetGameEntity():WanderAway()
@@ -531,12 +517,13 @@ function TestMissions.CivilWanderTest()
   mission:AddObjective(objective1_Wander)
 
   local objective100_KillTargets = MDM_KillTargetsObjective:new({
+    mission = mission,
     title ="Take out your targets",
     targets = {npcTarget,npcBodyguard1,npcBodyguard2}
   })
   mission:AddObjective(objective100_KillTargets)
 
-  mission:AddObjective(MDM_RestorePlayerObjective:new())
+  mission:AddObjective(MDM_RestorePlayerObjective:new({mission = mission}))
   return mission
 
 end

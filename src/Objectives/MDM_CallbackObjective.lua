@@ -1,4 +1,4 @@
---- Exexutes a given callback on each update cycle and succeeds the objective if the callback returns true. 
+--- Exexutes a given callback on each update cycle and succeeds the objective if the callback returns true.
 MDM_CallbackObjective = {}
 MDM_CallbackObjective = MDM_Objective:class()
 
@@ -43,6 +43,10 @@ function MDM_CallbackObjective.UnitTest()
     mission = mission,
     callback = function()  return true end
   })
+
+  mission:AddObjective(obj)
+  mission:AddObjective(obj2)
+
 
   mission:Start()
   mission:Update()

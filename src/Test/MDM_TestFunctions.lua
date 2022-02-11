@@ -30,6 +30,23 @@ function MDM_TestFunctions.Test()
 
 end
 
+function MDM_TestFunctions.ShowDistrictBanner(args)
+  local district = args.district
+  local time = args.time
+
+  if game then
+    game.hud:SendMessageMovie("HUD", "OnShowFreerideNotification", "Entering: " ..district.name, "", 1)
+
+    if time > 0 then
+      StartThread(function ()
+        Sleep(time)
+        game.hud:SendMessageMovie("HUD", "OnHideFreerideNotification")
+      end)
+    end
+  end
+
+end
+
 function MDM_TestFunctions.Test1()
   local smithCar = MDM_Car:new("smith_v12",MDM_Utils.GetVector(-898.71429,-181.9543,4),MDM_Utils.GetVector(-0,000001,-0.000004,0.000150))
   local enemyNpc = MDM_NPC:new({npcId="13604348442857333985",position=MDM_Utils.GetVector(-907.94,-180.41,2),direction=MDM_Utils.GetVector(0,0,0)})

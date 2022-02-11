@@ -47,15 +47,17 @@ function MDM_AssassinationMission:new(args)
   -----------------------
   ------ Objectives -----
   -----------------------
-  local objective_000_restore = MDM_RestorePlayerObjective:new({})
+  local objective_000_restore = MDM_RestorePlayerObjective:new({mission = mission})
   mission:AddObjective(objective_000_restore)
 
   local objective_000_SpawnerObjective = MDM_SpawnerObjective:new({
+    mission = mission,
     spawnables = spawnables
   })
   mission:AddObjective(objective_000_SpawnerObjective)
 
   local objective_100_GoToLocation = MDM_GoToObjective:new({
+    mission = mission,
     title = "Go to your targets",
     position = mission.position,
     radius = mission.radius
@@ -63,12 +65,14 @@ function MDM_AssassinationMission:new(args)
   mission:AddObjective(objective_100_GoToLocation)
 
   local objective_200_KillTargets = MDM_KillTargetsObjective:new({
+    mission = mission,
     title = "Eliminate your targets",
     targets = mission.targets
   })
   mission:AddObjective(objective_200_KillTargets)
 
   local objective_300_leave = MDM_DetectorObjective:new({
+    mission = mission,
     title = "Leave the area",
     detector = MDM_InvertedDetector:new({
       detector = MDM_EntityInCircleDetector:new ({
@@ -82,6 +86,7 @@ function MDM_AssassinationMission:new(args)
 
   if mission.destinationPosition ~= nil then
     local objective_400_GoToDestination = MDM_GoToObjective:new({
+      mission = mission,
       title = "Go to your destination",
       position = mission.destinationPosition,
     })

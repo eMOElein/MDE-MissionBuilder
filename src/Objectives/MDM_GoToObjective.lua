@@ -18,11 +18,17 @@ function MDM_GoToObjective:new(args)
 
   objective.vector = args.position
   objective.radius = args.radius or 20
-  objective.title = "go to the location"
-  objective.task = "go to the location"
-  objective.description = "go to the location"
+  --  objective.title = "go to the location"
+  --  objective.task = "go to the location"
+  --  objective.description = "go to the location"
   objective.blip = MDM_ObjectivePosition:new(objective.title ,objective.vector,objective.radius)
-  objective.detector = MDM_EntityInCircleDetector:new({entity = MDM_PlayerUtils.GetPlayer(), position = objective.vector, radius = objective.radius})
+
+  objective.detector = MDM_EntityInCircleDetector:new({
+    entity = MDM_PlayerUtils.GetPlayer(),
+    position = objective.vector,
+    radius = objective.radius
+  })
+
   return objective
 end
 

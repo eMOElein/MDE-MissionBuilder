@@ -46,11 +46,12 @@ function MDM_GangWarMission:new(args)
     end
 
     if wave.restorePlayer then
-      mission:AddObjective(MDM_RestorePlayerObjective:new())
+      mission:AddObjective(MDM_RestorePlayerObjective:new({mission = mission}))
     end
 
     if wave.preparationTime ~= nil and wave.preparationTime > 0 then
       mission:AddObjective(MDM_WaitObjective:new({
+        mission = mission,
         title = wave.title,
         seconds = wave.preparationTime,
         bannerText = "Next wave in"
@@ -58,6 +59,7 @@ function MDM_GangWarMission:new(args)
     end
 
     mission:AddObjective(MDM_KillTargetsObjective:new({
+      mission = mission,
       title = wave.title,
       targets = waveEnemies
     }))

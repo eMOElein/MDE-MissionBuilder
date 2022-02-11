@@ -13,5 +13,5 @@ function MDM_MissionUtils.RunTimerBetweenObjectives(mission, objectiveFrom, obje
   local timerZeroDetector = MDM_HudTimerZeroDetector:new({callback = callback})
   MDM_ActivatorUtils.EnableOnObjectiveStart(timerZeroDetector,objectiveFrom)
   MDM_ActivatorUtils.DisableOnObjectiveStop(timerZeroDetector,objectiveTo)
-  mission:AddDirector(timerZeroDetector)
+--  mission:AddDirector(timerZeroDetector)
 end

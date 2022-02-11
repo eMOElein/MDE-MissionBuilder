@@ -22,9 +22,9 @@ function MDM_Director:new (args)
   director.onEnabledCallbacks = {}
   director.onDisabledCallbacks = {}
 
-  if args.mission then
-    args.mission:AddDirector(director)
-  end
+  --  if args.mission then
+  --    args.mission:AddDirector(director)
+  --  end
 
   return director
 end
@@ -35,6 +35,12 @@ function MDM_Director.Enable(self)
   end
 
   self.enabled = true
+
+  if not self._onUpdate then
+    self._onUpdate = function(args) self:Update() end
+    MDM_Core.callbackSystem.RegisterCallback("on_update", self._onUpdate)
+  end
+
   MDM_Utils.ForEach(self.onEnabledCallbacks,function(callback) callback() end)
 end
 
@@ -43,12 +49,21 @@ function MDM_Director.IsEnabled(self)
 end
 
 function MDM_Director.Disable(self)
+  if not self.enabled then
+    return
+  end
+
   self.enabled = false
+
+  if self._onUpdate then
+    MDM_Core.callbackSystem.UnregisterCallback("on_update", self._onUpdate)
+    self._onUpdate = nil
+  end
 
   for i,callback in ipairs(self.onDisabledCallbacks) do
     callback()
   end
-  --  MDM_Utils.CallbacksWith1Param(self.onDisabledCallbacks,nil)
+
 end
 
 function MDM_Director.OnDisabled(self,callbacks)

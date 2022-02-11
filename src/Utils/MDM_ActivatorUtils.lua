@@ -10,6 +10,7 @@ function MDM_ActivatorUtils.EnableOnObjectiveStart(activator, objective)
     error("objective not set",2)
   end
   objective:OnObjectiveStart(function() activator:Enable() end)
+  objective:GetMission():OnMissionEnd(function() activator:Disable() end)
 end
 
 -- Registers a callback to the given objective that disables the activator when the objective is stoped

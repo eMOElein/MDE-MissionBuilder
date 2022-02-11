@@ -18,23 +18,26 @@ function MDM_SalieriMissions.M1_BackyardTrouble()
   })
 
   local objective1 = MDM_KillTargetsObjective:new({
+    mission = mission,
     targets = {npc1,npc2,npc3,npc4},
     title = "Take out Morello's henchmen in a nearby backyard",
     task = "Take out Morello's henchmen in a nearby backyard",
     onObjectiveStart = function()
       MDM_PlayerUtils.RestorePlayer()
-      MDM_Utils.SpawnAll(mission.assets)
+      MDM_Utils.SpawnAll(assets)
     end
   })
   mission:AddObjective(objective1)
 
   local objective2 = MDM_PoliceEvadeObjective:new ({
+    mission = mission,
     initialLevel = 2,
     title = "The police is on the way - Escape!"
   })
   mission:AddObjective(objective2)
 
   local objective3 = MDM_GoToObjective:new({
+    mission = mission,
     position = MDM_Utils.GetVector(-907.94,-210.41,2),
     title = "Drive back to Salieri's Bar",
     noPolice = true
@@ -43,7 +46,6 @@ function MDM_SalieriMissions.M1_BackyardTrouble()
 
   -- police should not interfere during the shooting. only afterwards.
   local noPoliceZoneDirector = MDM_PoliceFreeZoneDirector:new({
-    mission = mission,
     position = MDM_Utils.GetVector(-671.66565,-10.197743,3.1811743), radius = 60
   })
   MDM_ActivatorUtils.RunWhileObjective(noPoliceZoneDirector,objective1)
@@ -94,6 +96,7 @@ function MDM_SalieriMissions.M2_WhiskyWhopper()
   --------------Objectives-------------
   -------------------------------------
   local objective1 = MDM_GoToObjective:new({
+    mission = mission,
     position = MDM_Utils.GetVector(-634.74359,-272.58469,2.9996707),
     radius = 10,
     title = "Pick up Paulie.",
@@ -103,6 +106,7 @@ function MDM_SalieriMissions.M2_WhiskyWhopper()
   mission:AddObjective(objective1)
 
   local objective2 = MDM_GoToObjective:new({
+    mission = mission,
     position = MDM_Utils.GetVector(-905.73865,-721.30676,3.1869726),
     title = "Find the truck.",
     radius = 40
@@ -110,12 +114,14 @@ function MDM_SalieriMissions.M2_WhiskyWhopper()
   mission:AddObjective(objective2)
 
   local objective3 = MDM_GetInCarObjective:new({
+    mission = mission,
     car = car_truck,
     title = "Get in the truck."
   })
   mission:AddObjective(objective3)
 
   local objective4 = MDM_GoToObjective:new({
+    mission = mission,
     position = MDM_Utils.GetVector(-1531.4517,-372.92609,2.9755383),
     title = "Drive to the meeting area.",
     onObjectiveEnd = function() npc_paulie:MakeAlly(false) end,
@@ -133,7 +139,6 @@ function MDM_SalieriMissions.M2_WhiskyWhopper()
     radius = zoneRadius
   })
   MDM_ActivatorUtils.RunBetweenObjectives(noPoliceZoneDirector,objective2,objective3)
-  mission:AddDirector(noPoliceZoneDirector)
 
   local hostileZoneDirector = MDM_HostileZoneDirector:new({
     position = zonePosition,
@@ -143,7 +148,6 @@ function MDM_SalieriMissions.M2_WhiskyWhopper()
     showArea = true
   })
   MDM_ActivatorUtils.RunBetweenObjectives(hostileZoneDirector,objective2,objective3)
-  mission:AddDirector(hostileZoneDirector)
 
   mission:AddAssets(enemyNpcs)
   mission:AddAssets(car_assets)

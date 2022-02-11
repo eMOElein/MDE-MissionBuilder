@@ -2,11 +2,11 @@ MDM_Mission = {}
 MDM_Mission = MDM_Updateable:new()
 
 function MDM_Mission:class()
-  local objective =  {}
-  setmetatable(objective, self)
+  local mission =  {}
+  setmetatable(mission, self)
   self.__index = self
 
-  return objective
+  return mission
 end
 
 local args = {
@@ -78,9 +78,9 @@ function MDM_Mission.AddAssets(self, spawnable_assets)
   end
 end
 
-function MDM_Mission.AddDirector(self,director)
-  table.insert(self.directors,director)
-end
+--function MDM_Mission.AddDirector(self,director)
+--  table.insert(self.directors,director)
+--end
 
 function MDM_Mission.AddObjective(self,objective)
   table.insert(self.objectives,objective)
@@ -251,10 +251,8 @@ function MDM_Mission.Stop(self)
   --game.audio:PlaySimpleEvent("ui_Store_Menu_Enter")
   --game.audio:PlaySimpleEvent("ui_Store_Menu_Exit")
 
-  if not self.flagFailed then
-    for _,callback in ipairs(self.OnMissionEndCallbacks) do
-      callback()
-    end
+  for _,callback in ipairs(self.OnMissionEndCallbacks) do
+    callback()
   end
 
   if game then
@@ -348,9 +346,7 @@ function MDM_Mission.UnitTest()
   local  m = MDM_Mission:new({title = "Missiontest"})
 
   local  o1 = MDM_MockObjective:new({mission = m})
-  MDM_Objective.SetInformation(o1,"M1","","")
   local  o2 = MDM_MockObjective:new({mission = m})
-  MDM_Objective.SetInformation(o2,"M2","","")
 
   m:AddObjective(o1)
   m:AddObjective(o2)

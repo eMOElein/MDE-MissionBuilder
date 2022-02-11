@@ -64,6 +64,7 @@ end
 function MDM_SpawnerObjective.UnitTest()
   print("---------------MDM_SpawnerObjective UnitTest")
   local spawnerObjective = MDM_SpawnerObjective:new({
+    mission = MDM_Mission:new({}),
     spawnables = {
       MDM_NPC:new({npcId="1",position=MDM_Utils.GetVector(1,2,3),direction=MDM_Utils.GetVector(1,2,3)}),
       MDM_NPC:new({npcId="1",position=MDM_Utils.GetVector(1,2,3),direction=MDM_Utils.GetVector(1,2,3)})

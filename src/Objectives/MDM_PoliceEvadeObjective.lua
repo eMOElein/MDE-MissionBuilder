@@ -11,9 +11,9 @@ function MDM_PoliceEvadeObjective:new (args)
   local objective = MDM_Objective:new(args)
   setmetatable(objective, self)
   self.__index = self
-  objective.title = "Evade the police"
-  objective.task = "Evade the police"
-  objective.description = "Evade the police"
+  objective.title = args.title or "Evade the police"
+  objective.task = args.task or "Evade the police"
+  objective.description = args.description or "Evade the police"
   objective.initLevel = args.initialLevel
   return objective
 end

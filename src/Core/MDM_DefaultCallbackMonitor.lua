@@ -1,6 +1,13 @@
 MDM_DefaultCallbackMonitor = {
-  districtTextIdPrevious = "",
-  districtTextIdCurrent = ""
+  current = {
+    playerDistrictTextId = "",
+    playerVehicle = nil
+  },
+  previous = {
+    playerDistrictTextId = "",
+    playerVehicle = nil,
+  }
+
 }
 
 function MDM_DefaultCallbackMonitor._Update()
@@ -13,26 +20,26 @@ function MDM_DefaultCallbackMonitor._Update()
 end
 
 function MDM_DefaultCallbackMonitor._CheckOnPlayerVehicleEntered()
-  if not MDM_DefaultCallbackMonitor.vehiclePrevious and MDM_DefaultCallbackMonitor.vehicleCurrent then
+  if not MDM_DefaultCallbackMonitor.previous.playerVehicle and MDM_DefaultCallbackMonitor.current.playerVehicle then
     MDM_Core.callbackSystem.NotifyCallbacks("on_player_vehicle_entered",{
-      gameEntity = MDM_DefaultCallbackMonitor.vehicleCurrent
+      gameEntity = MDM_DefaultCallbackMonitor.current.playerVehicle
     })
   end
 end
 
 function MDM_DefaultCallbackMonitor._CheckOnPlayerVehicleLeft()
-  if MDM_DefaultCallbackMonitor.vehiclePrevious and not MDM_DefaultCallbackMonitor.vehicleCurrent then
+  if MDM_DefaultCallbackMonitor.previous.playerVehicle and not MDM_DefaultCallbackMonitor.current.playerVehicle then
     MDM_Core.callbackSystem.NotifyCallbacks("on_player_vehicle_left",{
-      gameEntity = MDM_DefaultCallbackMonitor.vehiclePrevious
+      gameEntity = MDM_DefaultCallbackMonitor.previous.playerVehicle
     })
   end
 end
 
 function MDM_DefaultCallbackMonitor._CheckOnPlayerDistrictChanged()
-  if MDM_DefaultCallbackMonitor.districtTextIdPrevious ~= MDM_DefaultCallbackMonitor.districtTextIdCurrent then
+  if MDM_DefaultCallbackMonitor.previous.playerDistrictTextId ~= MDM_DefaultCallbackMonitor.current.playerDistrictTextId then
     MDM_Core.callbackSystem.NotifyCallbacks("on_player_district_changed",{
-      districtOld = MDM_Districts.DistrictForTextId(MDM_DefaultCallbackMonitor.districtTextIdPrevious),
-      districtNew = MDM_Districts.DistrictForTextId(MDM_DefaultCallbackMonitor.districtTextIdCurrent)
+      districtOld = MDM_Districts.DistrictForTextId(MDM_DefaultCallbackMonitor.previous.playerDistrictTextId),
+      districtNew = MDM_Districts.DistrictForTextId(MDM_DefaultCallbackMonitor.current.playerDistrictTextId)
     })
   end
 end
@@ -41,14 +48,14 @@ end
 function MDM_DefaultCallbackMonitor._Collect()
   ----- District
   local districtNameId = game.director:GetDistrict(getp():GetPos()):GetName()
-  MDM_DefaultCallbackMonitor.districtNameIdPrevious = MDM_DefaultCallbackMonitor.districtNameIdCurrent
-  MDM_DefaultCallbackMonitor.districtNameIdCurrent = districtNameId
+  MDM_DefaultCallbackMonitor.previous.playerDistrictTextId = MDM_DefaultCallbackMonitor.current.districtNameId
+  MDM_DefaultCallbackMonitor.current.districtNameId = districtNameId
   local districtTextId  = game.director:GetDistrict(getp():GetPos()):GetTextId()
-  MDM_DefaultCallbackMonitor.districtTextIdPrevious = MDM_DefaultCallbackMonitor.districtTextIdCurrent
-  MDM_DefaultCallbackMonitor.districtTextIdCurrent = districtTextId
+  MDM_DefaultCallbackMonitor.previous.playerDistrictTextId = MDM_DefaultCallbackMonitor.current.playerDistrictTextId
+  MDM_DefaultCallbackMonitor.current.playerDistrictTextId = districtTextId
 
   ----- Vehicle
   local vehicle = MDM_VehicleUtils.GetPlayerCurrentVehicle()
-  MDM_DefaultCallbackMonitor.vehiclePrevious = MDM_DefaultCallbackMonitor.vehicleCurrent
-  MDM_DefaultCallbackMonitor.vehicleCurrent = vehicle
+  MDM_DefaultCallbackMonitor.previous.playerVehicle = MDM_DefaultCallbackMonitor.current.playerVehicle
+  MDM_DefaultCallbackMonitor.current.playerVehicle = vehicle
 end

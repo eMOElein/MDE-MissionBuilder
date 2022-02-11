@@ -1,8 +1,8 @@
 MDM_RestorePlayerObjective = {}
 MDM_RestorePlayerObjective = MDM_Objective:class()
 
-function MDM_RestorePlayerObjective:new ()
-  local objective = MDM_Objective:new({})
+function MDM_RestorePlayerObjective:new (args)
+  local objective = MDM_Objective:new(args)
   setmetatable(objective, self)
   self.__index = self
 

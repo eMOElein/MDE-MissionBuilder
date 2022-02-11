@@ -59,15 +59,17 @@ function MDM_SimpleRaceMission:new(args)
   -----------------------
   ------ Objectives -----
   -----------------------
-  local objective_000_restore = MDM_RestorePlayerObjective:new({})
+  local objective_000_restore = MDM_RestorePlayerObjective:new({mission = mission})
   mission:AddObjective(objective_000_restore)
 
   local objective_000_SpawnerObjective = MDM_SpawnerObjective:new({
+    mission = mission,
     spawnables = spawnables
   })
   mission:AddObjective(objective_000_SpawnerObjective)
 
   local objective_100_PrepareOjective1 = MDM_CallbackObjective:new({
+    mission = mission,
     callback = function()
       MDM_SimpleRaceMission._InstallDrivers(mission)
       --      game.traffic:SetEnableAmbientTrafficSpawning(true)
@@ -77,6 +79,7 @@ function MDM_SimpleRaceMission:new(args)
   mission:AddObjective(objective_100_PrepareOjective1)
 
   local objective_000_GoToLocation = MDM_GoToObjective:new({
+    mission = mission,
     title = "Race to your goal!",
     position = mission.goal,
     radius = 20

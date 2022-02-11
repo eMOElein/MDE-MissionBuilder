@@ -1,14 +1,5 @@
 MDM_Objective = {}
 
-local arguments = {
-  description = "",
-  introText = nil,
-  outroText = nil,
-  task = "",
-  title = "New Objective",
-  onObjectiveStart = nil,
-  onObjectiveEnd = nil
-}
 function MDM_Objective:class()
   local objective =  {}
   setmetatable(objective, self)
@@ -26,11 +17,17 @@ function MDM_Objective:new(args)
   if args == nil then error("args not set",2) end
   if type(args) ~= "table" then error("args is not of type table",2) end
 
+  if not args.mission then
+    error("mission not set",2)
+  end
+
   -- initializations
-  args.title = args.title or arguments.title
-  self.title = args.title
-  args.task = args.task or arguments.task
-  args.description = args.description or arguments.description
+  objective.mission = args.mission
+  objective.title = args.title or "New Objective"
+  objective.introText = args.introText
+  objective.outroText = args.outroText
+  objective.task = args.task or ""
+  objective.description = args.description or ""
 
   objective.args = args
   objective.mission = args.mission
@@ -43,7 +40,7 @@ function MDM_Objective:new(args)
 
   if args.onObjectiveStart then objective:OnObjectiveStart(args.onObjectiveStart) end
   if args.onObjectiveEnd then objective:OnObjectiveEnd(args.onObjectiveEnd) end
-  if args.mission then args.mission:AddObjective(objective) end
+  --  if args.mission then objective.mission:AddObjective(objective) end
   return objective
 end
 
@@ -73,27 +70,27 @@ function MDM_Objective.OnUpdate(self,callbacks)
 end
 
 function MDM_Objective.GetDescription(self)
-  return self.args.description
+  return self.description
 end
 
 function MDM_Objective.GetTask(self)
-  return self.args.task
+  return self.task
 end
 
 function MDM_Objective.GetTitle(self)
-  return self.args.title
+  return self.title
 end
 
 function MDM_Objective.SetDescription(self,description)
-  self.args.description = description
+  self.description = description
 end
 
 function MDM_Objective.SetTask(self,task)
-  self.args.task = task
+  self.task = task
 end
 
 function MDM_Objective.SetTitle(self,title)
-  self.args.title = title
+  self.title = title
 end
 
 function MDM_Objective:RemoveQuest()
@@ -143,15 +140,15 @@ function MDM_Objective.Update(self)
 end
 
 function MDM_Objective.GetIntroText(self)
-  return self.args.introText
+  return self.introText
 end
 
 function MDM_Objective.GetOutroText(self)
-  return self.args.outroText
+  return self.outroText
 end
 
 function MDM_Objective.SetIntroText(self, introText)
-  self.args.introText = introText
+  self.introText = introText
 end
 
 function MDM_Objective.SetOutrotext(self, outroText)
@@ -186,24 +183,6 @@ function MDM_Objective.Succeed(self)
   self:SetOutcome(1)
 end
 
-function MDM_Objective.SetInformation(self,title, task, description)
-  if not title then
-    error("title not set",2)
-  end
-
-  if not task then
-    task = title
-  end
-
-  if not description then
-    description = task
-  end
-
-  self:SetTitle(title)
-  self:SetDescription(description)
-  self:SetTask(task)
-end
-
 function MDM_Objective.UnitTest()
   print("---------------MDM_Objective UnitTest")
   local cnt = 0
@@ -212,6 +191,9 @@ function MDM_Objective.UnitTest()
 
   local o2 = MDM_MockObjective:new({mission = m, ttl = 1})
   o2:OnObjectiveStart(function() cnt = cnt+1 end)
+
+  m:AddObjective(o1)
+  m:AddObjective(o2)
 
   m:Start()
   m:Update()

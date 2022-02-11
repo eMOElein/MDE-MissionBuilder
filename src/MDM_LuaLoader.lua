@@ -48,7 +48,6 @@ MDM_LuaLoader._luas = {
   "Objectives/Functional/MDM_SpawnerObjective",
   "Objectives/MDM_CallbackObjective",
   "Objectives/MDM_DestroyCarInAreaObjective",
-  "Objectives/MDM_WaveObjective",
   "Objectives/MDM_WaitObjective",
   "Objectives/MDM_DetectorObjective",
   "MissionPrototypes/MDM_GangWarMission",

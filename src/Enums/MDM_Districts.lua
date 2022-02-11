@@ -27,7 +27,7 @@ MDM_Districts = {
     },
     DISTRICT_05_NEW_ARK = {
       name = "North Park",
-      ogName = "North Ark",
+      ogName = "New Ark",
       textId = "741176917989761654"
     },
     DISTRICT_06_DOWNTOWN = {

@@ -33,30 +33,35 @@ function XXX_YourMissions.M1_RunAroundTheBlock()
   })
 
   local objective1 = MDM_GoToObjective:new({
+    mission = mission,
     position = MDM_Utils.GetVector(-908.02795,-270.76718,2.7738907),
     radius = 10,
     title = "Run to the first location"
   })
 
   local objective2 = MDM_GoToObjective:new({
+    mission = mission,
     position = MDM_Utils.GetVector(-1050.2584,-272.37515,1.8958902),
     radius = 10,
     title = "Run to the second location"
   })
 
   local objective3 = MDM_GoToObjective:new({
+    mission = mission,
     position = MDM_Utils.GetVector(-1051.5273,-96.92054,2.78895),
     radius = 10,
     title = "Run to the third location"
   })
 
   local objective4 = MDM_GoToObjective:new({
+    mission = mission,
     position = MDM_Utils.GetVector(-910.51318,-99.115875,4.0460014),
     radius = 10,
     title = "Run to the fourth location"
   })
 
   local objective5 = MDM_GoToObjective:new({
+    mission = mission,
     position = MDM_Utils.GetVector(-908.99677,-230.64401,2.800674),
     radius = 10,
     title = "Run to the last location"
@@ -65,7 +70,6 @@ function XXX_YourMissions.M1_RunAroundTheBlock()
   -- we create a director that fails the mission if the player enters a car.
   -- we run it while objective1 - objective5 are active.
   local carDirector = MDM_DetectorDirector:new({
-    mission = mission, -- we assign the mission to the director so that the director gets updated on each update cycle of the mission.
     detector = MDM_PlayerInCarDetector:new({}),
     callback = function() mission:Fail("Mission Failed: You cheated!!!") end
   })

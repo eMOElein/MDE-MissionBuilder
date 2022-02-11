@@ -47,7 +47,6 @@ end
 
 function MDM_HurtNPCObjective.Stop(self)
   --  self.hurtDirector:Disable()
-  print("Stop")
   self.blip:Hide()
   MDM_Objective.Stop(self)
 end
