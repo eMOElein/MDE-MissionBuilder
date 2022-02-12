@@ -34,6 +34,7 @@ function all()
   MDM_PoliceFreeZoneDirector.UnitTest()
   MDM_BannerNotificationDirector.UnitTest()
   MDM_HostileZoneDirector.UnitTest()
+  MDM_NPCGoToDirector.UnitTest()
   ----------------
   -- Objectives --
   ----------------
@@ -84,7 +85,6 @@ end
 
 
 all()
-MDM_TestFunctions.Test()
 MDM_CallbackObjective.UnitTest()
 
 MDM_AssassinationMissionConfigurations.PickRandomAssassination()

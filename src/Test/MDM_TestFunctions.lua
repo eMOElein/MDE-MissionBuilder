@@ -5,29 +5,10 @@ local banner
 local npc
 local smithCar
 
+local boo = true
 function MDM_TestFunctions.Test()
-  if game then
-    local district = game.director:GetDistrict(getp():GetPos())
-    local districtName = district:GetName()
-    local districtTextId = district:GetTextId()
-
-    print("District: " ..tostring(district))
-    print("DistrictName: "..tostring(districtName))
-    print("DistrictTextId: "..tostring(districtTextId))
-    --    print(enums.districts.district_03_works_quarter)
-
-    for key,value in pairs(getmetatable(district)) do
-      print("found member " .. key .." value: " ..tostring(value));
-      if(key == "__index" or key == "__cindex") then
-        for keyi,valuei in pairs(value) do
-          print("        found inner member " .. keyi .." value: " ..tostring(valuei));
-        end
-      end
-    end
-  end
-
-  --  game.navigation:RegisterHideoutPos(MDM_Utils.GetVector(1966.0057,-240.7205,114.784),1, "BLIPSTRING2", 2,2,"aa","bbb",3,2,3,4)
-
+  boo = not boo
+  game.traffic:SetEnableAmbientTrafficSpawning(boo)
 end
 
 function MDM_TestFunctions.ShowDistrictBanner(args)

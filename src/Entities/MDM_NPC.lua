@@ -34,6 +34,7 @@ function MDM_NPC:new(args)
   --attributes
   npc.pos = args.position
   npc.dir = args.direction or MDM_Utils.GetVector(0,0,0)
+  npc.ally = args.ally
 
   return npc
 end
@@ -79,6 +80,13 @@ function MDM_NPC:newCivilian(args)
   if game then
     npc.aitype = enums.AI_TYPE.CIVILIAN
   end
+
+  return npc
+end
+
+function MDM_NPC:newAlly(args)
+  local npc = MDM_NPC:newFriend(args)
+  npc.ally = true
 
   return npc
 end
@@ -278,6 +286,10 @@ function MDM_NPC.Spawn(self)
 
     MDM_NPC.Godmode(self,self.godmode)
     self:Godmode()
+
+    if self.ally then
+      self:MakeAlly(true)
+    end
 
     for _,callback in ipairs(self.onSpawnedCallbacks) do
       callback()

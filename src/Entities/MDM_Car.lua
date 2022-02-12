@@ -41,7 +41,7 @@ function MDM_Car:new(args, dummyPos, dummyDir)
   car.spawned = false
   car.spawnPos = args.position
   car.spawnDir = args.direction
-  car.indestructableFlag = false
+  car.indestructable = args.indestructable
 
   return car
 end
@@ -94,7 +94,7 @@ function MDM_Car.OnGameEntitySpawned(self,args)
     if self.primaryColor then
       self:SetPrimaryColorRGB(self.primaryColor.r, self.primaryColor.g, self.primaryColor.b)
     end
-    self:SetIndestructable(self.indestructableFlag)
+    self:SetIndestructable(self.indestructable)
   end
 end
 
@@ -185,7 +185,9 @@ function MDM_Car.IsSpawned(self)
 end
 
 function MDM_Car.SetIndestructable(self,bool)
-  self.indestructableFlag = bool
+  if not bool then bool = false end
+
+  self.indestructable = bool
 
   local gameEntity = self:GetGameEntity()
   if gameEntity then

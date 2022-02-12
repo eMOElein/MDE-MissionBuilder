@@ -40,6 +40,7 @@ function MDM_Objective:new(args)
 
   if args.onObjectiveStart then objective:OnObjectiveStart(args.onObjectiveStart) end
   if args.onObjectiveEnd then objective:OnObjectiveEnd(args.onObjectiveEnd) end
+  if args.onUpdate then objective:OnUpdate(args.onUpdate) end
   --  if args.mission then objective.mission:AddObjective(objective) end
   return objective
 end
@@ -65,8 +66,16 @@ function MDM_Objective.IsRunning(self)
   return self.running
 end
 
-function MDM_Objective.OnUpdate(self,callbacks)
-  MDM_Utils.AddAll(self.onUpdateCallbacks,callbacks)
+function MDM_Objective.OnUpdate(self,callback)
+  if callback == nil then
+    error("callback not set",2)
+  end
+
+  if type(callback) ~= "function" then
+    error("callback is not of type function",2)
+  end
+
+  table.insert(self.onUpdateCallbacks,callback)
 end
 
 function MDM_Objective.GetDescription(self)

@@ -28,6 +28,7 @@ MDM_LuaLoader._luas = {
   "Directors/MDM_PlayerInCarBannerDirector",
   "Directors/MDM_PoliceFreeZoneDirector",
   "Directors/MDM_HurtNPCDirector",
+  "Directors/MDM_NPCGoToDirector",
   "Directors/MDM_DetectorDirector",
   "Directors/MDM_BannerNotificationDirector",
   "Directors/MDM_HostileZoneDirector",

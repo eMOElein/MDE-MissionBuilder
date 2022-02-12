@@ -41,6 +41,13 @@ function MDM_MissionPack.InitializeSalieriMissions()
     missionSupplier = MDM_SalieriMissions.M4_GangWar2
   }
   MDM_Core.missionManager:AddMissionProvider(M3_GangWar2)
+
+  local M5_Escalation = {
+    title = "Escalation",
+    client = client,
+    missionSupplier = MDM_SalieriMissions.M5_Escalation
+  }
+  MDM_Core.missionManager:AddMissionProvider(M5_Escalation)
 end
 
 function MDM_MissionPack.InitializeLucasBertoneMissions()
@@ -238,6 +245,13 @@ function MDM_MissionPack.InitializeTestMissions()
     missionSupplier =   TestMissions.SimpleRace
   }
   MDM_Core.missionManager:AddMissionProvider(simpleRaceMissionTest)
+
+  local walkToTest = {
+    title = "Walk To Test",
+    client = client,
+    missionSupplier =   TestMissions.WalkToTest
+  }
+  MDM_Core.missionManager:AddMissionProvider(walkToTest)
 end
 
 function MDM_MissionPack.InitializeVincenzoMissions()

@@ -57,6 +57,7 @@ function MDM_SalieriMissions.M2_WhiskyWhopper()
   local M2_introText = "Bottles of an exclusive Whisky were smuggled to Lost Heaven on a ship today\nOne of our men at the harbour stored it in a truck on a nearby compound.\nHe was supposed to meet Sam a few hours ago but he didn't show up.\nThat smells like Morello.\nI want you and Paulie to go to the compound, find out what happened and bring the truck to the meetingpoint."
 
   local npc_paulie = MDM_NPC:newFriend({npcId="5874491335140879700",position=MDM_Utils.GetVector(-634.74359,-272.58469,2.9996707),direction=MDM_Utils.GetVector (-0.22052898,-0.97538036,0)})
+  local npc_sam = MDM_NPC:newFriend({npcId = "17582426933065501070", position = MDM_Utils.GetVector(-1521.0383,-378.9501,3.4498563), direction = MDM_Utils.GetVector(-0.95369244,0.30078357,0)})
 
   local npc1 = MDM_NPC:new({npcId="18187434932497386406",position=MDM_Utils.GetVector(-918.92773,-706.95239,3.146647),direction=MDM_Utils.GetVector(0.43737864,-0.89927745,0), battleArchetype = "archetype_triggerman_base_pol"})
   local npc2 = MDM_NPC:new({npcId="18187434932497386406",position=MDM_Utils.GetVector(-921.99921,-711.38287,3.1582365),direction=MDM_Utils.GetVector(0.70571977,-0.70849109,0), battleArchetype = "archetype_triggerman_base_pol"})
@@ -151,12 +152,12 @@ function MDM_SalieriMissions.M2_WhiskyWhopper()
 
   mission:AddAssets(enemyNpcs)
   mission:AddAssets(car_assets)
-  mission:AddAssets({npc_paulie})
+  mission:AddAssets({npc_paulie,npc_sam})
 
   mission:OnMissionStart(function()
     MDM_Utils.SpawnAll(car_assets)
     MDM_Utils.SpawnAll(enemyNpcs)
-    MDM_Utils.SpawnAll({npc_paulie}) -- Important to put single objects in brackets!!!
+    MDM_Utils.SpawnAll({npc_paulie,npc_sam}) -- Important to put single objects in brackets!!!
   end)
 
   return mission
@@ -275,5 +276,105 @@ function MDM_SalieriMissions.M4_GangWar2()
     }
   })
 
+  return mission
+end
+
+function MDM_SalieriMissions.M5_Escalation()
+  local enemyCarsGroup1_back = {
+    MDM_Car:new({carId = "shubert_e_six", position = MDM_Utils.GetVector(-891.53961,-175.98308,2.9105735), direction = MDM_Utils.GetVector(-0.42457402,-0.90538579,-0.0036094198),indestructable = true}),
+    MDM_Car:new({carId = "bolt_truck", position = MDM_Utils.GetVector(-896.28357,-173.75388,3.1058621), direction = MDM_Utils.GetVector(-0.13210587,-0.99119651,-0.0088297259), indestructable = true}),
+    MDM_Car:new({carId = "shubert_six", position = MDM_Utils.GetVector(-900.11688,-174.43999,2.8915193), direction = MDM_Utils.GetVector(-0.079025052,-0.99687004,0.0023694881), indestructable = true}),
+    MDM_Car:new({carId = "falconer_classic", position = MDM_Utils.GetVector(-904.13879,-174.84245,3.0141106), direction = MDM_Utils.GetVector(0.34974024,-0.93684578,-0.0015406765), indestructable = true})
+  }
+
+  local enemyCarsGroup1_front = {
+    MDM_Car:new({carId = "smith_v12", position = MDM_Utils.GetVector(-892.47552,-187.95558,2.9261396), direction = MDM_Utils.GetVector(-0.88356274,-0.46824974,-0.0077114701), indestructable = true}),
+    MDM_Car:new({carId = "shubert_e_six", position = MDM_Utils.GetVector(-892.69537,-192.82971,2.9417343), direction = MDM_Utils.GetVector(-0.9915787,-0.12913372,0.0098076146), indestructable = true}),
+    MDM_Car:new({carId = "shubert_e_six", position = MDM_Utils.GetVector(-903.54724,-188.91106,2.9339561), direction = MDM_Utils.GetVector(0.95047498,-0.3107619,0.0049449285), indestructable = true}),
+    MDM_Car:new({carId = "bolt_model_b", position = MDM_Utils.GetVector(-906.65942,-183.04655,2.975781), direction = MDM_Utils.GetVector(0.92824286,-0.37086901,-0.028661601), indestructable = true})
+
+  }
+
+  local salieriCarsGroup1 = {
+    MDM_Car:new({carId = "shubert_e_six", position = MDM_Utils.GetVector(-898.6781,-206.9682,2.9882104), direction = MDM_Utils.GetVector(-0.99834269,0.057258766,-0.0057688723), indestructable = true}),
+    MDM_Car:new({carId = "smith_v12", position = MDM_Utils.GetVector(-903.03925,-202.60851,2.9235554), direction = MDM_Utils.GetVector(0.97159564,0.23641084,0.010577699), indestructable = true}),
+    MDM_Car:new({carId = "lassiter_v16_roadster", position = MDM_Utils.GetVector(-894.45197,-202.98668,2.9466419), direction = MDM_Utils.GetVector(-0.94317025,0.33142328,0.024261482), indestructable = true})
+  }
+
+  local enemyMachinegunners_1 = {
+    MDM_NPC:new({npcId = "13296154699591050027", position = MDM_Utils.GetVector(-894.04907,-174.84938,2.7366309), direction = MDM_Utils.GetVector(-0.1944367,-0.98091507,0)}),
+    MDM_NPC:new({npcId = "13296154699591050027", position = MDM_Utils.GetVector(-902.12329,-175.76057,2.7373047), direction = MDM_Utils.GetVector(-0.1944367,-0.98091507,0)})
+  }
+
+  local enemyShotgunners_1 = {
+    MDM_NPC:new({npcId = "2624519215596331124", position = MDM_Utils.GetVector(-898.56555,-174.58881,2.7366204), direction = MDM_Utils.GetVector(0.41528636,-0.90969074,0)}),
+    MDM_NPC:new({npcId = "2624519215596331124", position = MDM_Utils.GetVector(-907.46515,-180.68529,2.8499207), direction = MDM_Utils.GetVector(0.22172351,-0.97510958,0)})
+  }
+
+  local enemyGunners_1 = {
+    MDM_NPC:new({npcId = "18187434932497386406", position = MDM_Utils.GetVector(-909.88092,-181.22871,2.8536987), direction = MDM_Utils.GetVector(0.18648589,-0.98245764,0), battleArchetype = "archetype_triggerman_base_pol"}),
+    MDM_NPC:new({npcId = "18187434932497386406", position = MDM_Utils.GetVector(-905.64447,-181.34718,2.736156), direction = MDM_Utils.GetVector(0.18581454,-0.98258483,0), battleArchetype = "archetype_triggerman_base_pol"}),
+    MDM_NPC:new({npcId = "18187434932497386406", position = MDM_Utils.GetVector(-902.89764,-187.10097,2.7580409), direction = MDM_Utils.GetVector(0.35274372,-0.93571997,0), battleArchetype = "archetype_triggerman_base_pol"}),
+    MDM_NPC:new({npcId = "18187434932497386406", position = MDM_Utils.GetVector(-893.53784,-191.03168,2.7702768), direction = MDM_Utils.GetVector(-0.23014002,-0.97315753,0), battleArchetype = "archetype_triggerman_base_pol"}),
+    MDM_NPC:new({npcId = "18187434932497386406", position = MDM_Utils.GetVector(-892.18762,-185.425,2.7367439), direction = MDM_Utils.GetVector(-0.28345007,-0.958987,0), battleArchetype = "archetype_triggerman_base_pol"}),
+    MDM_NPC:new({npcId = "18187434932497386406", position = MDM_Utils.GetVector(-889.97803,-176.84952,2.7367396), direction = MDM_Utils.GetVector(-0.38724083,-0.92197859,0), battleArchetype = "archetype_triggerman_base_pol"}),
+    MDM_NPC:new({npcId = "18187434932497386406", position = MDM_Utils.GetVector(-905.47607,-171.23624,2.7371027), direction = MDM_Utils.GetVector(0.39135718,-0.92023885,0), battleArchetype = "archetype_triggerman_base_pol"}),
+    MDM_NPC:new({npcId = "18187434932497386406", position = MDM_Utils.GetVector(-890.77386,-172.79179,2.7366362), direction = MDM_Utils.GetVector(-0.90468264,-0.42608595,0), battleArchetype = "archetype_triggerman_base_pol"}),
+    MDM_NPC:new({npcId = "18187434932497386406", position = MDM_Utils.GetVector(-899.83588,-171.56589,2.7373915), direction = MDM_Utils.GetVector(0.7722798,-0.63528252,0), battleArchetype = "archetype_triggerman_base_pol"})
+
+  }
+
+  local allyNpcs1 = {
+    MDM_NPC:newAlly({npcId = "17582426933065501070", position = MDM_Utils.GetVector(-903.9118,-204.3454,2.7654061), direction = MDM_Utils.GetVector(0.95016724,0.31174058,0)}),
+    MDM_NPC:newAlly({npcId = "5874491335140879700", position = MDM_Utils.GetVector(-893.06909,-205.6087,2.7583747), direction = MDM_Utils.GetVector(-0.27516028,0.96139836,0)})
+  }
+
+  local cars1All = {}
+  MDM_Utils.AddAll(cars1All,enemyCarsGroup1_back)
+  MDM_Utils.AddAll(cars1All,enemyCarsGroup1_front)
+  MDM_Utils.AddAll(cars1All,salieriCarsGroup1)
+
+  local enemyNpcs1 = {}
+  MDM_Utils.AddAll(enemyNpcs1,enemyMachinegunners_1)
+  MDM_Utils.AddAll(enemyNpcs1,enemyShotgunners_1)
+  MDM_Utils.AddAll(enemyNpcs1,enemyGunners_1)
+
+  local npcs1All = {}
+  MDM_Utils.AddAll(npcs1All,enemyNpcs1)
+  MDM_Utils.AddAll(npcs1All,allyNpcs1)
+
+  local All1 = {}
+  MDM_Utils.AddAll(All1,npcs1All)
+  MDM_Utils.AddAll(All1,cars1All)
+
+  local assets = {}
+  MDM_Utils.AddAll(assets,All1)
+
+  local mission = MDM_Mission:new({
+    title = "Escalation",
+    initialWeather = "mm_160_harbor_cp_000_cinematic_night",
+    startPosition = MDM_Utils.GetVector(-898.15344,-209.46974,2.8157277),
+    assets = assets,
+    onMissionStart = function() game.traffic:SetEnableAmbientTrafficSpawning(false)
+      MDM_PlayerUtils.RestorePlayer()
+    end,
+    onMissionEnd = function() game.traffic:SetEnableAmbientTrafficSpawning(true) end
+  })
+
+  local objective_100_CarSpawnerObjective = MDM_SpawnerObjective:new({
+    mission = mission,
+    spawnables = All1
+  })
+
+  local objective_200_KillGroup1 = MDM_KillTargetsObjective:new({
+    mission = mission,
+    targets = enemyNpcs1,
+    onObjectiveStart = function() for _,e in ipairs(enemyNpcs1) do e:AttackPlayer() end end
+  })
+
+  mission:AddObjectives({
+    objective_100_CarSpawnerObjective,
+    objective_200_KillGroup1
+  })
   return mission
 end

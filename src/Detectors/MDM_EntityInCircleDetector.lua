@@ -6,8 +6,8 @@ function MDM_EntityInCircleDetector:new (args)
     error("entity not set",2)
   end
 
-  if not args.position then
-    error("position not set",2)
+  if args.position == nil then
+    error("position is nil",2)
   end
 
   if not args.radius then

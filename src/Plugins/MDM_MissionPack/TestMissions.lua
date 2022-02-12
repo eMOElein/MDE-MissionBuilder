@@ -481,6 +481,43 @@ function TestMissions.HostileZoneTest()
   return mission
 end
 
+function TestMissions.WalkToTest()
+  local npcTarget = MDM_NPC:new({npcId = "13604348442857333985", position = MDM_Utils.GetVector(-908.67175,-185.3815,2.833797), direction = MDM_Utils.GetVector(0.011134353,0.99993801,0)})
+
+  local mover = MDM_NPCGoToDirector:new({
+    npc = npcTarget,
+    position = MDM_Utils.GetVector(-907.95496,-217.03046,2.8169303)
+  })
+
+  local mission = MDM_Mission:new({
+    title = "Walk To test",
+    startPosition = MDM_Utils.GetVector(-907.95496,-217.03046,2.8169303),
+    assets = {npcTarget}
+  })
+
+  local objective50_spawnerObjective = MDM_SpawnerObjective:new({
+    mission = mission,
+    spawnables = {npcTarget}
+  })
+
+
+
+  local objective100_KillTargets = MDM_KillTargetsObjective:new({
+    mission = mission,
+    title ="Take out your targets",
+    targets = {npcTarget},
+    onObjectiveStart = function() mover:Enable() end
+  })
+
+
+  mission:AddObjective(MDM_RestorePlayerObjective:new({mission = mission}))
+  mission:AddObjective(objective50_spawnerObjective)
+  mission:AddObjective(objective100_KillTargets)
+
+
+  return mission
+end
+
 function TestMissions.CivilWanderTest()
 
   local npcTarget = MDM_NPC:newCivilian({npcId = "13604348442857333985", position = MDM_Utils.GetVector(-908.67175,-185.3815,2.833797), direction = MDM_Utils.GetVector(0.011134353,0.99993801,0)})

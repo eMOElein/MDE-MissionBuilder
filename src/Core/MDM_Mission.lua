@@ -33,6 +33,14 @@ function MDM_Mission:new (args)
   mission.introductionShown = false
   mission.assets = {}
 
+  if args.onMissionStart then
+    mission:OnMissionStart(args.onMissionStart)
+  end
+
+  if args.onMissionEnd then
+    mission:OnMissionEnd(args.onMissionEnd)
+  end
+
   if args.assets ~= nil then
     MDM_Mission.AddAssets(mission,args.assets)
   end
