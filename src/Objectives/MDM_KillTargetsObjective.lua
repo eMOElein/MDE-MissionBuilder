@@ -5,6 +5,8 @@ local args = {
   targets = nil
 }
 function MDM_KillTargetsObjective:new (args)
+  args.title = args.title or "Eliminate the targets"
+
   local objective = MDM_Objective:new(args)
   setmetatable(objective, self)
   self.__index = self

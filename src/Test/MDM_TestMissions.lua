@@ -10,7 +10,7 @@ function MDM_TestMissions.MDM_SalieriMissions()
   print("---------------Salieri Missions M4_GangWar2")
   MDM_SalieriMissions.M4_GangWar2()
   print("---------------Salieri Missions M5_Escalation")
-  MDM_SalieriMissions.M5_Escalation()
+  MDM_SalieriMissions.M5_The_Camino_Escalation()
 end
 
 function MDM_TestMissions.MDM_LucasBertone()

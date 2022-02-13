@@ -42,6 +42,7 @@ function MDM_Car:new(args, dummyPos, dummyDir)
   car.spawnPos = args.position
   car.spawnDir = args.direction
   car.indestructable = args.indestructable
+  car.lightsOn = args.lightsOn
 
   return car
 end
@@ -95,6 +96,16 @@ function MDM_Car.OnGameEntitySpawned(self,args)
       self:SetPrimaryColorRGB(self.primaryColor.r, self.primaryColor.g, self.primaryColor.b)
     end
     self:SetIndestructable(self.indestructable)
+    self:SetLightsOn(self.lightsOn)
+  end
+end
+
+function MDM_Car.SetLightsOn(self, bool)
+  self.lightsOn = bool
+
+  local gameEntity = self:GetGameEntity()
+  if gameEntity then
+    gameEntity:SetLightState(true, self.lightsOn)
   end
 end
 

@@ -65,6 +65,11 @@ local function _InitializeMission(mission)
       game.outfits:SetCurrentOutfit(initialOutfit)
     end
 
+    if mission.startDirection and game then
+      print("STARTDIR!!!")
+      getp():SetDir(mission.startDirection)
+    end
+
     if mission:GetStartPos() and game then
       getp():Teleport(mission:GetStartPos(), getp():GetDir(), true)
     end

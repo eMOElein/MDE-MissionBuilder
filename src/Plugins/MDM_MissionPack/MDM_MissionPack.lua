@@ -45,7 +45,7 @@ function MDM_MissionPack.InitializeSalieriMissions()
   local M5_Escalation = {
     title = "Escalation",
     client = client,
-    missionSupplier = MDM_SalieriMissions.M5_Escalation
+    missionSupplier = MDM_SalieriMissions.M5_The_Camino_Escalation
   }
   MDM_Core.missionManager:AddMissionProvider(M5_Escalation)
 end

@@ -31,6 +31,7 @@ function MDM_Mission:new (args)
   mission.failDescription = nil
   mission.flagFailed = false
   mission.introductionShown = false
+  mission.startDirection = args.startDirection
   mission.assets = {}
 
   if args.onMissionStart then
