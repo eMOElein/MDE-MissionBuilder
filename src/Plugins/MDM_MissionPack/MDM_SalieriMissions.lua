@@ -59,7 +59,7 @@ function MDM_SalieriMissions.M2_WhiskyWhopper()
   local npc_paulie = MDM_NPC:newFriend({npcId="5874491335140879700",position=MDM_Utils.GetVector(-634.74359,-272.58469,2.9996707),direction=MDM_Utils.GetVector (-0.22052898,-0.97538036,0)})
   local npc_sam = MDM_NPC:newFriend({npcId = "17582426933065501070", position = MDM_Utils.GetVector(-1521.0383,-378.9501,3.4498563), direction = MDM_Utils.GetVector(-0.95369244,0.30078357,0)})
 
-  -- We set the battleArchetype to "archetype_triggerman_base_pol" as we do not want the triggermen to spam us constantly with molotovs.
+  -- We set the battleArchetype to "archetype_triggerman_base_pol" as we do not want the triggermen to constantly spam us with molotovs.
   local npc1 = MDM_NPC:new({npcId="18187434932497386406",position=MDM_Utils.GetVector(-918.92773,-706.95239,3.146647),direction=MDM_Utils.GetVector(0.43737864,-0.89927745,0), battleArchetype = "archetype_triggerman_base_pol"})
   local npc2 = MDM_NPC:new({npcId="18187434932497386406",position=MDM_Utils.GetVector(-921.99921,-711.38287,3.1582365),direction=MDM_Utils.GetVector(0.70571977,-0.70849109,0), battleArchetype = "archetype_triggerman_base_pol"})
   local npc3 = MDM_NPC:new({npcId="18187434932497386406",position=MDM_Utils.GetVector(-928.05493,-690.15259,3.061234),direction=MDM_Utils.GetVector(-0.96647418,-0.2567637,0), battleArchetype = "archetype_triggerman_base_pol"})
@@ -312,7 +312,7 @@ function MDM_SalieriMissions.M5_The_Camino_Escalation()
     MDM_NPC:new({npcId = "2624519215596331124", position = MDM_Utils.GetVector(-907.46515,-180.68529,2.8499207), direction = MDM_Utils.GetVector(0.22172351,-0.97510958,0)})
   }
 
-  -- We set the battleArchetype to "archetype_triggerman_base_pol" as we do not want the triggermen to spam us constantly with molotovs.
+  -- We set the battleArchetype to "archetype_triggerman_base_pol" as we do not want the triggermen to constantly spam us with molotovs.
   local enemyGunners_1 = {
     MDM_NPC:new({npcId = "18187434932497386406", position = MDM_Utils.GetVector(-909.88092,-181.22871,2.8536987), direction = MDM_Utils.GetVector(0.18648589,-0.98245764,0), battleArchetype = "archetype_triggerman_base_pol"}),
     MDM_NPC:new({npcId = "18187434932497386406", position = MDM_Utils.GetVector(-905.64447,-181.34718,2.736156), direction = MDM_Utils.GetVector(0.18581454,-0.98258483,0), battleArchetype = "archetype_triggerman_base_pol"}),
@@ -354,7 +354,7 @@ function MDM_SalieriMissions.M5_The_Camino_Escalation()
   MDM_Utils.AddAll(assets,All1)
 
   local mission = MDM_Mission:new({
-    title = "Escalation",
+    title = "The Camino Escalation",
     initialWeather = "temp_teaser_trailer",
     initialOutfit = "9354636703565519112", --Trenchcoat and hat
     startPosition = MDM_Utils.GetVector(-898.15344,-209.46974,2.8157277),
@@ -387,3 +387,9 @@ function MDM_SalieriMissions.M5_The_Camino_Escalation()
   })
   return mission
 end
+
+MDM_UnitTest.RegisterTest({name = "MDM_SalieriMissions.M1_BackyardTrouble", func = MDM_SalieriMissions.M1_BackyardTrouble})
+MDM_UnitTest.RegisterTest({name = "MDM_SalieriMissions.M2_WhiskyWhopper", func = MDM_SalieriMissions.M2_WhiskyWhopper})
+MDM_UnitTest.RegisterTest({name = "MDM_SalieriMissions.M3_GangWar1", func = MDM_SalieriMissions.M3_GangWar1})
+MDM_UnitTest.RegisterTest({name = "MDM_SalieriMissions.M4_GangWar2", func = MDM_SalieriMissions.M4_GangWar2})
+MDM_UnitTest.RegisterTest({name = "MDM_SalieriMissions.M5_The_Camino_Escalation", func = MDM_SalieriMissions.M5_The_Camino_Escalation})

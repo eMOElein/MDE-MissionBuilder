@@ -1,11 +1,32 @@
 require("MDM_LuaLoader")
 
-MDM_LuaLoader.ImportLuas(MDM_LuaLoader._luas)
+MDM_UnitTest = {
+  _tests = {}
+}
 
-UnitTest = {}
+function MDM_UnitTest.RegisterTest(args)
+  if args.name == nil then
+    error("name not set",2)
+  end
+
+  if not args.func then
+    error("func not set",2)
+  end
+
+  if type(args.func) ~= "function" then
+    error("args is not of type function",2)
+  end
+
+  local test = {}
+  test.name = args.name
+  test.func = args.func
+
+  table.insert(MDM_UnitTest._tests,test)
+end
+
 function all()
-  UnitTest.TestVector()
-  UnitTest.TestVectorDistance()
+  MDM_UnitTest.TestVector()
+  MDM_UnitTest.TestVectorDistance()
   MDM_DefaultCallbackSystem.UnitTest()
   MDM_Updateable.UnitTest()
   MDM_MapCircle.UnitTest()
@@ -46,6 +67,7 @@ function all()
   MDM_CallbackObjective.UnitTest()
   MDM_WaitObjective.UnitTest()
   MDM_SpawnerObjective.UnitTest()
+  MDM_CallbackObjective.UnitTest()
   ----------------
   --Initialize Plugins
   ----------------
@@ -55,16 +77,20 @@ function all()
   --- Missions ---
   ----------------
   MDM_Mission.UnitTest()
-  MDM_TestMissions.MDM_LucasBertone()
-  MDM_TestMissions.MDM_SalieriMissions()
   MDM_TestMissions.TestMissions()
   MDM_GangWarMission.UnitTest()
   MDM_SimpleRaceMission.UnitTest()
   MDM_ActivatorUtils.UnitTest()
-  print("OK!")
+
+  for _,test in ipairs(MDM_UnitTest._tests) do
+    print("------------------:"..test.name)
+    test.func()
+    print("OK")
+  end
+  print("ALL OK!")
 end
 
-function UnitTest.TestVector()
+function MDM_UnitTest.TestVector()
   print("---------------Unit Test Vector")
   local vec = MDM_Utils.GetVector(1,2,3)
   if vec.x ~= 1 or vec.y ~= 2 or vec.z ~= 3 then
@@ -72,7 +98,7 @@ function UnitTest.TestVector()
   end
 end
 
-function UnitTest.TestVectorDistance()
+function MDM_UnitTest.TestVectorDistance()
   print("---------------Unit Test VectorDistance")
   local vec = MDM_Utils.GetVector(2,0,0)
   local vec2 = MDM_Utils.GetVector(5,0,0)
@@ -83,9 +109,10 @@ function UnitTest.TestVectorDistance()
   end
 end
 
+MDM_LuaLoader.ImportLuas(MDM_LuaLoader._luas)
+MDM_Core._Initialize()
 
 all()
-MDM_CallbackObjective.UnitTest()
 
 MDM_AssassinationMissionConfigurations.PickRandomAssassination()
 MDM_AssassinationMissionConfigurations.CreateRandomAssassinationMission()

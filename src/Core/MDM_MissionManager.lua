@@ -66,7 +66,6 @@ local function _InitializeMission(mission)
     end
 
     if mission.startDirection and game then
-      print("STARTDIR!!!")
       getp():SetDir(mission.startDirection)
     end
 

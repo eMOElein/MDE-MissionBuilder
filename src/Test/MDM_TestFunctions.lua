@@ -5,6 +5,19 @@ local banner
 local npc
 local smithCar
 
+--local function ShowTitleCard() -- guess n check timing
+--  if game.hud:IsLoadingScreenUp() == false then return end
+--  StartThread(function ()
+--    Sleep(3000)
+--    local Time = GetTime()
+--    Wait(game.hud:FaderFadeOut(500))
+--    game.hud:ShowTitleCard(CurrentSafehouse, Time, true)
+--    game.hud:FaderFadeIn(500)
+--    repeat Sleep(0) until getp():HasTag("player_tag") or game.hud:IsLoadingScreenUp() == false
+--    game.hud:HideTitleCard(false)
+--  end)
+--end
+
 local boo = true
 function MDM_TestFunctions.Test()
   boo = not boo

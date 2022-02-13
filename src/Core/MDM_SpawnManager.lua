@@ -15,7 +15,12 @@ function MDM_SpawnManager.MarkForDistanceDespawn(spawnable, distance)
     error("distance is no number")
   end
 
-  table.insert(despawns,{spawnable = spawnable, evaluator = function() return MDM_Utils.DistanceToPlayer(spawnable) > distance end})
+  -- Some entitys can get dirty under certain circumstances and are missing their methods. If they are dirty they get despawned immediately.
+  if spawnable:GetGameEntity() and spawnable:GetGameEntity().GetPos  then
+    table.insert(despawns,{spawnable = spawnable, evaluator = function() return MDM_Utils.DistanceToPlayer(spawnable) > distance end})
+  else
+    spawnable:Despawn()
+  end
 end
 
 function MDM_SpawnManager.MarkForFunctionDespawn(spawnable, evaluator)

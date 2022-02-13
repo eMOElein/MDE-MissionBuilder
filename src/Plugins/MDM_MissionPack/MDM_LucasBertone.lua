@@ -726,3 +726,17 @@ function MDM_LucasBertone.M7_2_Robbery()
 
   return mission
 end
+
+MDM_UnitTest.RegisterTest({name = "MDM_LucasBertone.M1_1_Fairplay", func = MDM_LucasBertone.M1_1_Fairplay})
+MDM_UnitTest.RegisterTest({name = "MDM_LucasBertone.M2_1_TripToTheCountry", func = MDM_LucasBertone.M2_1_TripToTheCountry})
+MDM_UnitTest.RegisterTest({name = "MDM_LucasBertone.M2_2_TripToTheCountry", func = MDM_LucasBertone.M2_2_TripToTheCountry})
+MDM_UnitTest.RegisterTest({name = "MDM_LucasBertone.M3_1_Omerta", func = MDM_LucasBertone.M3_1_Omerta})
+MDM_UnitTest.RegisterTest({name = "MDM_LucasBertone.M3_2_Omerta", func = MDM_LucasBertone.M3_2_Omerta})
+MDM_UnitTest.RegisterTest({name = "MDM_LucasBertone.M4_1_LuckyBastard", func = MDM_LucasBertone.M4_1_LuckyBastard})
+MDM_UnitTest.RegisterTest({name = "MDM_LucasBertone.M4_2_LuckyBastard", func = MDM_LucasBertone.M4_2_LuckyBastard})
+MDM_UnitTest.RegisterTest({name = "MDM_LucasBertone.M5_1_CremeDeLaCreme", func = MDM_LucasBertone.M5_1_CremeDeLaCreme})
+MDM_UnitTest.RegisterTest({name = "MDM_LucasBertone.M5_2_CremeDeLaCreme", func = MDM_LucasBertone.M5_2_CremeDeLaCreme})
+MDM_UnitTest.RegisterTest({name = "MDM_LucasBertone.M6_1_Election", func = MDM_LucasBertone.M6_1_Election})
+MDM_UnitTest.RegisterTest({name = "MDM_LucasBertone.M6_2_Election", func = MDM_LucasBertone.M6_2_Election})
+MDM_UnitTest.RegisterTest({name = "MDM_LucasBertone.M7_1_Robbery", func = MDM_LucasBertone.M7_1_Robbery})
+MDM_UnitTest.RegisterTest({name = "MDM_LucasBertone.M7_2_Robbery", func = MDM_LucasBertone.M7_2_Robbery})
