@@ -325,7 +325,6 @@ function MDM_Mission.Update(self)
 end
 
 function MDM_Mission.UnitTest()
-  print("---------------MDM_Mission Unit Test")
   local  m = MDM_Mission:new({title = "Missiontest"})
 
   local  o1 = MDM_MockObjective:new({mission = m})

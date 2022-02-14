@@ -63,7 +63,6 @@ MDM_LuaLoader._luas = {
   "Utils/MDM_Missionutils",
   "Utils/MDM_IOUtils",
   "Test/MDM_TestFunctions",
-  "Test/MDM_TestMissions",
   "Plugins/MDM_Plugins",
 }
 

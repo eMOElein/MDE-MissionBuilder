@@ -49,7 +49,6 @@ function MDM_PlayerInCarBannerDirector.Destroy(self)
 end
 
 function MDM_PlayerInCarBannerDirector.UnitTest()
-  print("---------------PlayerInCarBannerDirector Unit Test")
   local m = MDM_Mission:new({title = ""})
 
   local value = false

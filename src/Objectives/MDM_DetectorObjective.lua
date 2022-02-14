@@ -27,7 +27,6 @@ function MDM_DetectorObjective.Update(self)
 end
 
 function MDM_DetectorObjective.UnitTest()
-  print("--------MDM_DetectorObjective Unit Test")
   local detector = MDM_Detector:new({})
   detector.Test = function() return false end
 
@@ -45,5 +44,4 @@ function MDM_DetectorObjective.UnitTest()
   if detectorObjective:GetOutcome() ~= 1 then
     error("outcome should be 1 but was "..detectorObjective:GetOutcome(),2)
   end
-
 end

@@ -31,7 +31,15 @@ function MDM_MissionManager.HideMenu()
 end
 
 function MDM_MissionManager.AddMissionProvider(self,missionProvider)
-  --  print("Adding Mission: " ..missionProvider.title)
+  if not missionProvider.missionSupplier then
+    error("mission supplier not set",2)
+  end
+
+
+  if type(missionProvider.missionSupplier) ~= "function" then
+    error("mission supplier not of type function",2)
+  end
+
   table.insert(self.missionProviders, missionProvider)
 end
 

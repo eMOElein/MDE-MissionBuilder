@@ -73,8 +73,6 @@ function MDM_NPCGoToDirector.Disable(self)
 end
 
 function MDM_NPCGoToDirector.UnitTest()
-  print("------------MDM_NPCGoToDirecto Test")
-
   local npc = MDM_NPC:new({ npcId = "123", position = MDM_Utils.GetVector(1,1,1)})
   local director = MDM_NPCGoToDirector:new ({npc = npc, position = MDM_Utils.GetVector(5,5,5)})
   director:Enable()

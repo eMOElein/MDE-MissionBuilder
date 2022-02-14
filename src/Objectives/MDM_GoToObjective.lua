@@ -68,7 +68,6 @@ function MDM_GoToObjective.Update(self)
 end
 
 function MDM_GoToObjective.UnitTest()
-  print("---------------MDM_GoToObjective UnitTest")
   local vec = MDM_Utils.GetVector(-907.94,-160.41,2)
 
   local m = MDM_Mission:new({title = "Test"})

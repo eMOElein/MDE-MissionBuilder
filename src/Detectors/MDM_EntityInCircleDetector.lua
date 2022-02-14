@@ -46,8 +46,6 @@ function MDM_EntityInCircleDetector.Test(self)
 end
 
 function MDM_EntityInCircleDetector.UnitTest()
-  print("---------------MDM_EntityInCircle: UnitTest")
-
   local pos1 = MDM_Utils.GetVector(0,0,0)
   local pos2 = MDM_Utils.GetVector(500,500,500)
 

@@ -25,69 +25,75 @@ function MDM_UnitTest.RegisterTest(args)
 end
 
 function all()
-  MDM_UnitTest.TestVector()
-  MDM_UnitTest.TestVectorDistance()
-  MDM_DefaultCallbackSystem.UnitTest()
-  MDM_Updateable.UnitTest()
-  MDM_MapCircle.UnitTest()
+  ----------------
+  ----- Core -----
+  ----------------
+  MDM_UnitTest.RegisterTest({name = "MDM_Mission.UnitTest", func = MDM_Mission.UnitTest})
+  MDM_UnitTest.RegisterTest({name = "MDM_DefaultCallbackSystem.UnitTest", func = MDM_DefaultCallbackSystem.UnitTest})
+  MDM_UnitTest.RegisterTest({name = "MDM_Updateable.UnitTest", func = MDM_Updateable.UnitTest})
   ----------------
   --- Entities ---
   ----------------
-  MDM_NPC.UnitTest()
-  MDM_Car.UnitTest()
-  ----------------
-  ----- HUD ------
-  MDM_Banner.UnitTest()
+  MDM_UnitTest.RegisterTest({name = "MDM_NPC.UnitTest", func = MDM_NPC.UnitTest})
+  MDM_UnitTest.RegisterTest({name = "MDM_Car.UnitTest", func = MDM_Car.UnitTest})
   ----------------
   --- Detectors --
   ----------------
-  MDM_EntityInCircleDetector.UnitTest()
-  MDM_TargetsDeadDetector.UnitTest()
-  MDM_CarDamageDetector.UnitTest()
-  MDM_PlayerInCarDetector.UnitTest()
-  MDM_NPCHealthDetector.UnitTest()
-  MDM_DetectorObjective.UnitTest()
+  MDM_UnitTest.RegisterTest({name = "MDM_EntityInCircleDetector.UnitTest", func = MDM_EntityInCircleDetector.UnitTest})
+  MDM_UnitTest.RegisterTest({name = "MDM_TargetsDeadDetector.UnitTest", func = MDM_TargetsDeadDetector.UnitTest})
+  MDM_UnitTest.RegisterTest({name = "MDM_CarDamageDetector.UnitTes", func = MDM_CarDamageDetector.UnitTest})
+  MDM_UnitTest.RegisterTest({name = "MDM_NPCHealthDetector.UnitTest", func = MDM_NPCHealthDetector.UnitTest})
+  MDM_UnitTest.RegisterTest({name = "MDM_DetectorObjective.UnitTest", func = MDM_DetectorObjective.UnitTest})
   ----------------
   --- Directors --
   ----------------
-  MDM_Director.UnitTest()
-  MDM_PlayerInCarBannerDirector.UnitTest()
-  MDM_PoliceFreeZoneDirector.UnitTest()
-  MDM_BannerNotificationDirector.UnitTest()
-  MDM_HostileZoneDirector.UnitTest()
-  MDM_NPCGoToDirector.UnitTest()
+  MDM_UnitTest.RegisterTest({name = "MDM_Director.UnitTest", func = MDM_Director.UnitTest})
+  MDM_UnitTest.RegisterTest({name = "MDM_PlayerInCarBannerDirector.UnitTest", func = MDM_PlayerInCarBannerDirector.UnitTest})
+  MDM_UnitTest.RegisterTest({name = "MDM_PoliceFreeZoneDirector.UnitTest", func = MDM_PoliceFreeZoneDirector.UnitTest})
+  MDM_UnitTest.RegisterTest({name = "MDM_BannerNotificationDirector.UnitTest", func = MDM_BannerNotificationDirector.UnitTest})
+  MDM_UnitTest.RegisterTest({name = "MDM_HostileZoneDirector.UnitTest", func = MDM_HostileZoneDirector.UnitTest})
+  MDM_UnitTest.RegisterTest({name = "MDM_NPCGoToDirector.UnitTest", func = MDM_NPCGoToDirector.UnitTest})
   ----------------
   -- Objectives --
   ----------------
-  MDM_Objective.UnitTest()
-  MDM_GoToObjective.UnitTest()
-  MDM_DestroyCarInAreaObjective.UnitTest()
-  MDM_KillTargetsObjective.UnitTest()
-  MDM_HurtNPCObjective.UnitTest()
-  MDM_CallbackObjective.UnitTest()
-  MDM_WaitObjective.UnitTest()
-  MDM_SpawnerObjective.UnitTest()
-  MDM_CallbackObjective.UnitTest()
-  ----------------
-  --Initialize Plugins
-  ----------------
-  MDM_Core._Initialize()
-  MDM_MainMenu.UnitTest()
+  MDM_UnitTest.RegisterTest({name = "MDM_Objective.UnitTest", func = MDM_Objective.UnitTest})
+  MDM_UnitTest.RegisterTest({name = "MDM_GoToObjective.UnitTest", func = MDM_GoToObjective.UnitTest})
+  MDM_UnitTest.RegisterTest({name = "MDM_DestroyCarInAreaObjective.UnitTest", func = MDM_DestroyCarInAreaObjective.UnitTest})
+  MDM_UnitTest.RegisterTest({name = "MDM_KillTargetsObjective.UnitTest", func = MDM_KillTargetsObjective.UnitTest})
+  MDM_UnitTest.RegisterTest({name = "MDM_HurtNPCObjective.UnitTest", func = MDM_HurtNPCObjective.UnitTest})
+  MDM_UnitTest.RegisterTest({name = "MDM_CallbackObjective.UnitTest", func = MDM_CallbackObjective.UnitTest})
+  MDM_UnitTest.RegisterTest({name = "MDM_WaitObjective.UnitTest", func = MDM_WaitObjective.UnitTest})
+  MDM_UnitTest.RegisterTest({name = "MDM_SpawnerObjective.UnitTest", func = MDM_SpawnerObjective.UnitTest})
+  MDM_UnitTest.RegisterTest({name = "MDM_CallbackObjective.UnitTest", func = MDM_CallbackObjective.UnitTest})
   ----------------
   --- Missions ---
   ----------------
-  MDM_Mission.UnitTest()
-  MDM_TestMissions.TestMissions()
-  MDM_GangWarMission.UnitTest()
-  MDM_SimpleRaceMission.UnitTest()
-  MDM_ActivatorUtils.UnitTest()
+  MDM_UnitTest.RegisterTest({name = "MDM_Mission.UnitTest", func = MDM_Mission.UnitTest})
+  MDM_UnitTest.RegisterTest({name = "MDM_GangWarMission.UnitTest", func = MDM_GangWarMission.UnitTest})
+  MDM_UnitTest.RegisterTest({name = "MDM_SimpleRaceMission.UnitTest", func = MDM_SimpleRaceMission.UnitTest})
+  MDM_UnitTest.RegisterTest({name = "MDM_ActivatorUtils.UnitTest", func = MDM_ActivatorUtils.UnitTest})
+  MDM_UnitTest.RegisterTest({name = "MDM_AssassinationMissionConfigurations.PickRandomAssassination", func = MDM_AssassinationMissionConfigurations.PickRandomAssassination})
+  MDM_UnitTest.RegisterTest({name = "MDM_AssassinationMissionConfigurations.CreateRandomAssassinationMission", func = MDM_AssassinationMissionConfigurations.CreateRandomAssassinationMission})
+  ----------------
+  ----- HUD ------
+  MDM_UnitTest.RegisterTest({name = "MDM_Banner.UnitTest", func = MDM_Banner.UnitTest})
+  MDM_UnitTest.RegisterTest({name = "MDM_MapCircle.UnitTest", func = MDM_MapCircle.UnitTest})
+  -----------------
+  ----- Utils -----
+  -----------------
+  MDM_UnitTest.RegisterTest({name = "MDM_UnitTest.TestVector", func = MDM_UnitTest.TestVector})
+  MDM_UnitTest.RegisterTest({name = "MDM_UnitTest.TestVectorDistance", func = MDM_UnitTest.TestVectorDistance})
+
+  --Initialize Plugins
+  MDM_Core._Initialize()
+
+  MDM_UnitTest.RegisterTest({name = "MDM_MainMenu.UnitTest", func = MDM_MainMenu.UnitTest})
 
   for _,test in ipairs(MDM_UnitTest._tests) do
     print("------------------:"..test.name)
     test.func()
     print("OK")
   end
-  print("ALL OK!")
 end
 
 function MDM_UnitTest.TestVector()
@@ -110,9 +116,5 @@ function MDM_UnitTest.TestVectorDistance()
 end
 
 MDM_LuaLoader.ImportLuas(MDM_LuaLoader._luas)
-MDM_Core._Initialize()
-
 all()
-
-MDM_AssassinationMissionConfigurations.PickRandomAssassination()
-MDM_AssassinationMissionConfigurations.CreateRandomAssassinationMission()
+print("ALL OK!")

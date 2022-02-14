@@ -23,7 +23,6 @@ end
 
 
 function MDM_Updateable.UnitTest()
-  print("---------------MDM_Updateable: Unit Test")
   local mission = MDM_Mission:new({title = ""});
   local counter = 0;
 

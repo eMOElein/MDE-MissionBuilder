@@ -121,11 +121,7 @@ function MDM_MainMenu._DebugMenu()
 end
 
 function MDM_MainMenu.UnitTest()
-  print("---------------MDM_MainMenu UnitTest")
-
   MDM_MainMenu.Initialize(MDM_Core.missionManager.missionProviders)
 
   MDM_MainMenu._ClientSelectionMenuFactory()
-
-  print("passed")
 end

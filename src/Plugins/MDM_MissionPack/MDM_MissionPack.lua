@@ -169,13 +169,6 @@ function MDM_MissionPack.InitializeTestMissions()
   }
   MDM_Core.missionManager:AddMissionProvider(WaypointMission)
 
-  local WaveTest = {
-    title = "Wave Mission",
-    client = client,
-    missionSupplier = TestMissions.WaveTest
-  }
-  MDM_Core.missionManager:AddMissionProvider(WaveTest)
-
   local GangWarTest = {
     title = "Gang War Mission",
     client = client,

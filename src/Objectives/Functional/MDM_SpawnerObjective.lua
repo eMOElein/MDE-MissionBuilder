@@ -62,7 +62,6 @@ function MDM_SpawnerObjective.Update(self)
 end
 
 function MDM_SpawnerObjective.UnitTest()
-  print("---------------MDM_SpawnerObjective UnitTest")
   local spawnerObjective = MDM_SpawnerObjective:new({
     mission = MDM_Mission:new({}),
     spawnables = {
@@ -73,6 +72,4 @@ function MDM_SpawnerObjective.UnitTest()
 
   spawnerObjective:Update()
   spawnerObjective:Update()
-
-  print("OK")
 end

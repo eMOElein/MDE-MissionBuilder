@@ -84,7 +84,6 @@ function MDM_Director.Destroy(self)
 end
 
 function MDM_Director.UnitTest()
-  print("---------------MDM_Director Unit Test")
   local m = MDM_Mission:new({title = "Director Testmission"})
 
   local o1 = MDM_MockObjective:new({mission = m, ttl = 1})

@@ -62,7 +62,6 @@ function MDM_HurtNPCDirector.Update(self)
 end
 
 function MDM_HurtNPCDirector.UnitTest()
-  print("_________________MDM_HurtNPCDirector:Unittest__________________")
   local npc1 = MDM_NPC:new("id",Utils_GetVector(-907.94,-210.41,2))
   local hurtDirector = MDM_HurtNPCDirector:new(MDM_Mission:new(),npc1,50)
 end

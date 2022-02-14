@@ -600,3 +600,15 @@ function TestMissions.SimpleRace()
 
   return mission
 end
+
+MDM_UnitTest.RegisterTest({name = "TestMissions.GetInCar", func = TestMissions.GetInCar})
+MDM_UnitTest.RegisterTest({name = "TestMissions.KillMission", func = TestMissions.KillMission})
+MDM_UnitTest.RegisterTest({name = "TestMissions.WaypointMission", func = TestMissions.WaypointMission})
+MDM_UnitTest.RegisterTest({name = "TestMissions.GangWarTest", func = TestMissions.GangWarTest})
+MDM_UnitTest.RegisterTest({name = "TestMissions.DestroyCarInAreaTest", func = TestMissions.DestroyCarInAreaTest})
+MDM_UnitTest.RegisterTest({name = "TestMissions.HostileZoneTest", func = TestMissions.HostileZoneTest})
+MDM_UnitTest.RegisterTest({name = "TestMissions.DuelTest", func = TestMissions.DuelTest})
+MDM_UnitTest.RegisterTest({name = "TestMissions.CivilWanderTest", func = TestMissions.CivilWanderTest})
+MDM_UnitTest.RegisterTest({name = "TestMissions.PursuitTest", func = TestMissions.PursuitTest})
+MDM_UnitTest.RegisterTest({name = "TestMissions.CarchaseTest", func = TestMissions.CarchaseTest})
+

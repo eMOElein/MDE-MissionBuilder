@@ -193,7 +193,6 @@ function MDM_Objective.Succeed(self)
 end
 
 function MDM_Objective.UnitTest()
-  print("---------------MDM_Objective UnitTest")
   local cnt = 0
   local m = MDM_Mission:new({title = "test"})
   local o1 = MDM_MockObjective:new({mission = m, ttl = 1})

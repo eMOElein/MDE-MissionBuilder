@@ -114,7 +114,6 @@ function MDM_SimpleRaceMission.Update(self)
 end
 
 function MDM_SimpleRaceMission.UnitTest()
-  print("---------------MDM_SimpleRaceMission")
   local mission = MDM_SimpleRaceMission:new({
     playerCar = {carId = "smith_v12", position = MDM_Utils.GetVector(-898.62866,-206.49626,2.9617207), direction = MDM_Utils.GetVector(-0.0094909342,0.99995327,-0.0018382519)},
     rivalCars = {

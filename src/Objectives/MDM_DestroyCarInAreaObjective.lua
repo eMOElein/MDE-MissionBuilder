@@ -57,7 +57,6 @@ function MDM_DestroyCarInAreaObjective.Update(self)
 end
 
 function MDM_DestroyCarInAreaObjective.UnitTest()
-  print("---------------MDM_DestroyCarInAreaObjective:UnitTest")
   local mission = MDM_Mission:new({title = "Test"})
   local car = MDM_Car:new("smith_v12",MDM_Utils.GetVector(-180.402725,-897.841553,2.624493),MDM_Utils.GetVector(-0.021050,0.999603,-0.018721))
 

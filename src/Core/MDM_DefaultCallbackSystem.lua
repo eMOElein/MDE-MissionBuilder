@@ -100,7 +100,6 @@ function MDM_DefaultCallbackSystem._FetchGroup(name)
 end
 
 function MDM_DefaultCallbackSystem.UnitTest()
-  print("---------------MDM_DefaultCallbackSystem UnitTest")
   local cnt1 = 0
   local cnt1_1 = 0
   local name_1 = "c_1"
@@ -138,6 +137,4 @@ function MDM_DefaultCallbackSystem.UnitTest()
   if cnt2 ~= 1 then
     error("cnt2 should be 1 but was " ..cnt2)
   end
-
-  print("OK")
 end

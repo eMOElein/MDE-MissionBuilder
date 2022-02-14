@@ -27,8 +27,6 @@ function MDM_NPCHealthDetector.Test(self)
 end
 
 function MDM_NPCHealthDetector.UnitTest()
-  print("---------------MDM_NPCHealthDetector")
-
   local counter = 0
   local npc = MDM_NPC:new({npcId="1",position=MDM_Utils.GetVector(1,1,1),direction=MDM_Utils.GetVector(1,1,1)})
 
@@ -62,8 +60,6 @@ function MDM_NPCHealthDetector.UnitTest()
   if counter ~= 2 then
     error("counter should be 2 but was " ..counter)
   end
-
-  print("OK")
 end
 
 

@@ -87,7 +87,6 @@ end
 
 
 function MDM_HostileZoneDirector.UnitTest()
-  print("--------------- MDM_HostileZoneDirector Unit Test")
   local director = MDM_HostileZoneDirector:new({
     position = MDM_Utils.GetVector(0,0,0),
     radius = 50,
@@ -107,5 +106,4 @@ function MDM_HostileZoneDirector.UnitTest()
   director:Update()
   director:Update()
   director:Update()
-  print("OK")
 end

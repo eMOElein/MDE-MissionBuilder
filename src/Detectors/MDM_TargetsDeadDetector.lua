@@ -36,8 +36,6 @@ function MDM_TargetsDeadDetector.Test(self)
 end
 
 function MDM_TargetsDeadDetector.UnitTest()
-  print("---------------MDM_TargetsDeadDetector UnitTest")
-
   local deadCounter = 0
   local npc1 = MDM_NPC:new({npcId="1234",position = {1,1,1}, direction = {1,1,1}})
   local npc2 = MDM_NPC:new({npcId="1234",position = {1,1,1}, direction = {1,1,1}})

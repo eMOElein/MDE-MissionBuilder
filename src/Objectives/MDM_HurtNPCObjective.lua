@@ -52,8 +52,6 @@ function MDM_HurtNPCObjective.Stop(self)
 end
 
 function MDM_HurtNPCObjective.UnitTest()
-  print("---------------MDM_HurtNPCObjective UnitTest")
-
   local npc = MDM_NPC:new({npcId="12345",position=MDM_Utils.GetVector(1,2,3),direction=MDM_Utils.GetVector(4,5,6)})
 
   local mission = MDM_Mission:new({title = "test"})
@@ -75,5 +73,4 @@ function MDM_HurtNPCObjective.UnitTest()
   if objective:GetOutcome() ~= 1 then
     error("outcome 1 expected but was: " ..objective:GetOutcome(),1)
   end
-  print("OK")
 end

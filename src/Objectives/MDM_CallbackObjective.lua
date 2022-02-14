@@ -29,7 +29,6 @@ function MDM_CallbackObjective.Update(self)
 end
 
 function MDM_CallbackObjective.UnitTest()
-  print("---------------MDM_CallbackObjective UnitTest")
   local mission = MDM_Mission:new({
     title = "m"
   })
@@ -56,5 +55,4 @@ function MDM_CallbackObjective.UnitTest()
   mission:Update()
   mission:Update()
   mission:Update()
-  print("OK")
 end
