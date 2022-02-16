@@ -9,7 +9,7 @@ function MDM_Objective:class()
 end
 
 function MDM_Objective:new(args)
-  local objective =  MDM_Objective:class()
+  local objective = MDM_Objective:class()
   setmetatable(objective, self)
   self.__index = self
 

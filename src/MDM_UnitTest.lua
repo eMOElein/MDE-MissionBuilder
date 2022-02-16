@@ -84,8 +84,7 @@ function all()
   MDM_UnitTest.RegisterTest({name = "MDM_UnitTest.TestVector", func = MDM_UnitTest.TestVector})
   MDM_UnitTest.RegisterTest({name = "MDM_UnitTest.TestVectorDistance", func = MDM_UnitTest.TestVectorDistance})
 
-  --Initialize Plugins
-  MDM_Core._Initialize()
+  MDM_UnitTest.RegisterTest({name = "MDM_Core._Initialize", func = MDM_Core._Initialize})
 
   MDM_UnitTest.RegisterTest({name = "MDM_MainMenu.UnitTest", func = MDM_MainMenu.UnitTest})
 
@@ -97,7 +96,6 @@ function all()
 end
 
 function MDM_UnitTest.TestVector()
-  print("---------------Unit Test Vector")
   local vec = MDM_Utils.GetVector(1,2,3)
   if vec.x ~= 1 or vec.y ~= 2 or vec.z ~= 3 then
     error("vector test failed",2)
@@ -105,7 +103,6 @@ function MDM_UnitTest.TestVector()
 end
 
 function MDM_UnitTest.TestVectorDistance()
-  print("---------------Unit Test VectorDistance")
   local vec = MDM_Utils.GetVector(2,0,0)
   local vec2 = MDM_Utils.GetVector(5,0,0)
   local distance = MDM_Utils.VectorDistance(vec,vec2)

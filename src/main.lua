@@ -6,6 +6,8 @@ local script = ScriptHook.CurrentScript()
 script.Entities = {}
 
 function script:OnLoad()
+  MDM_UnitTest = {}
+  MDM_UnitTest.RegisterTest = function() end
   MDM_LuaLoader.ImportLuas(MDM_LuaLoader._luas)
   MDM_Core._Initialize()
 
@@ -21,9 +23,12 @@ end
 function script:OnRender()
 end
 
-function main.IncludeLuas()
-  for _,value in ipairs(MDM_Utils.luas) do
-    local lua = value ..".lua"
-    include(lua)
-  end
-end
+--function main.IncludeLuas()
+--  MDM_UnitTest = {}
+--  MDM_UnitTest.RegisterTest = function() end
+--
+--  for _,value in ipairs(MDM_Utils.luas) do
+--    local lua = value ..".lua"
+--    include(lua)
+--  end
+--end

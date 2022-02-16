@@ -49,7 +49,6 @@ function MDM_Banner.Hide(self)
 end
 
 function MDM_Banner.UnitTest()
-  print("---------------MDM_Banner Unit Test")
   local banner = MDM_Banner:new("MyBanner")
   banner.time = 2000
 

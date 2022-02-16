@@ -18,10 +18,9 @@ local smithCar
 --  end)
 --end
 
-local boo = true
+
 function MDM_TestFunctions.Test()
-  boo = not boo
-  game.traffic:SetEnableAmbientTrafficSpawning(boo)
+
 end
 
 function MDM_TestFunctions.ShowDistrictBanner(args)

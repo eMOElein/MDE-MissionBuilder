@@ -459,9 +459,16 @@ function TestMissions.HostileZoneTest()
     title = "Hostile AreaTest"
   })
 
+  local objective_spawner = MDM_SpawnerObjective:new({
+    mission = mission,
+    spawnables = {npc1}
+  })
+  mission:AddObjective(objective_spawner)
+
   local objective = MDM_KillTargetsObjective:new({
     mission = mission,
-    targets = {npc1}
+    targets = {npc1},
+  --   onObjectiveStart = function() print("Injury") npc1:GetGameEntity():EnableInjury(true) end
   })
   mission:AddObjective(objective)
 
@@ -611,4 +618,58 @@ MDM_UnitTest.RegisterTest({name = "TestMissions.DuelTest", func = TestMissions.D
 MDM_UnitTest.RegisterTest({name = "TestMissions.CivilWanderTest", func = TestMissions.CivilWanderTest})
 MDM_UnitTest.RegisterTest({name = "TestMissions.PursuitTest", func = TestMissions.PursuitTest})
 MDM_UnitTest.RegisterTest({name = "TestMissions.CarchaseTest", func = TestMissions.CarchaseTest})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

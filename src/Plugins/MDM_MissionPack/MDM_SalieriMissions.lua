@@ -54,7 +54,7 @@ function MDM_SalieriMissions.M1_BackyardTrouble()
 end
 
 function MDM_SalieriMissions.M2_WhiskyWhopper()
-  local M2_introText = "Bottles of an exclusive Whisky were smuggled to Lost Heaven on a ship today\nOne of our men at the harbour stored it in a truck on a nearby compound.\nHe was supposed to meet Sam a few hours ago but he didn't show up.\nThat smells like Morello.\nI want you and Paulie to go to the compound, find out what happened and bring the truck to the meetingpoint."
+  local M2_introText = "Barrels of an exclusive Whisky were smuggled to Lost Heaven on a ship today\nOne of our men at the harbour stored them in a truck on a nearby compound.\nHe was supposed to meet Sam a few hours ago but he didn't show up.\nThat smells like Morello.\nI want you and Paulie to go to the compound, find out what happened and bring the truck to the meetingpoint."
 
   local npc_paulie = MDM_NPC:newFriend({npcId="5874491335140879700",position=MDM_Utils.GetVector(-634.74359,-272.58469,2.9996707),direction=MDM_Utils.GetVector (-0.22052898,-0.97538036,0)})
   local npc_sam = MDM_NPC:newFriend({npcId = "17582426933065501070", position = MDM_Utils.GetVector(-1521.0383,-378.9501,3.4498563), direction = MDM_Utils.GetVector(-0.95369244,0.30078357,0)})
@@ -150,6 +150,12 @@ function MDM_SalieriMissions.M2_WhiskyWhopper()
     showArea = true
   })
   MDM_ActivatorUtils.RunBetweenObjectives(hostileZoneDirector,objective2,objective3)
+
+  local playerInTruckBannerDetector= MDM_PlayerInCarBannerDirector:new ({
+    car = car_truck,
+    text = "Get back in the truck"
+  })
+  MDM_ActivatorUtils.RunWhileObjective(playerInTruckBannerDetector,objective4)
 
   mission:AddAssets(enemyNpcs)
   mission:AddAssets(car_assets)

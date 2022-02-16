@@ -175,7 +175,7 @@ function MDM_LucasBertone.M3_1_Omerta()
     initialWeather = "mm_110_omerta_cp_050_cs_safehouse",
     introText = M3_1_introText,
     title = "Lucas Bertone 3-1 - Omerta",
-    initialOutfit = "16117888644291730074", --Pinstripe and Hat
+    initialOutfit = "16544970924538872801", --Pinstripe and Hat
     startPosition = MDM_Locations.BERTONES_AUTOSERVICE_FRONTDOOR,
     assets = {car_shubert,npc_big_stan}
   })
@@ -243,6 +243,7 @@ function MDM_LucasBertone.M3_2_Omerta()
   local mission = MDM_Mission:new({
     initialWeather = "mm_110_omerta_cp_050_cs_safehouse",
     title = "Lucas Bertone 3-2 - Omerta",
+    initialOutfit = "16544970924538872801",
     assets = {car_berkley}
   })
 
@@ -271,7 +272,7 @@ function MDM_LucasBertone.M4_1_LuckyBastard()
 
   local mission = MDM_Mission:new({
     title = "Lucas Bertone 4-1 Lucky Bastard",
-    initialOutfit = "7399986759921114297",
+    initialOutfit = "16544970924538872801",
     initialWeather = "mm_160_harbor_cp_080_harbour_entrance_cutscene"
   })
   mission:AddAssets({npcFriend1,npcFriend2,npdDead})
@@ -339,7 +340,7 @@ function MDM_LucasBertone.M4_2_LuckyBastard()
 
   local mission = MDM_Mission:new({
     title = "Lucas Bertone 4-2 Lucky Bastard",
-    initialOutfit = "7399986759921114297",
+    initialOutfit = "16544970924538872801",
     initialWeather = "mm_160_harbor_cp_080_harbour_entrance_cutscene",
     introText = "Is he okay?\nUff that's a load off my mind. He's my good buddy. I owe you one.\nI got a nice piece of work for you today and it's no big deal to get it. Near the multistory car lot on Central Island there's a beautiful sports car. You just go and lift it.\n Just be careful that the gatekepper don't call the cops on you."
   })
@@ -606,8 +607,6 @@ function MDM_LucasBertone.M7_1_Robbery()
   mission:AddAssets(enemy_assets)
   mission:AddAssets({npc_bigdick,car_schubert})
 
-  mission:AddObjective(MDM_RestorePlayerObjective:new({ mission = mission}))
-
   -- Visit Lucas Bertone
   local objective1 = MDM_GoToObjective:new({
     mission = mission,
@@ -616,7 +615,6 @@ function MDM_LucasBertone.M7_1_Robbery()
     title = "Visit Lucas Bertone",
     outroText = "There's a dude called big dick.\nI need you to deliver a package to him."
   })
-  mission:AddObjective(objective1)
 
   -- Go to Big Dick
   local objective2 = MDM_GoToObjective:new({
@@ -625,10 +623,12 @@ function MDM_LucasBertone.M7_1_Robbery()
     radius = 2,
     title = "Find Big Dick",
     outroText = "Did Lucas send you?\nI am waiting for a special delivery.\nYou tell me you were not followed?\nThen who are these guys.\nThey don't look very friendly.",
-    onObjectiveStart = function() npc_bigdick:Spawn(); car_schubert:Spawn()end,
+    onObjectiveStart = function()
+      npc_bigdick:Spawn()
+      car_schubert:Spawn()
+    end,
     noPolice = true
   })
-  mission:AddObjective(objective2)
 
   -- Eliminate enemys
   -- Objective spawns the enemies on start if we haven't done it yet.
@@ -637,12 +637,14 @@ function MDM_LucasBertone.M7_1_Robbery()
     targets = enemy_assets,
     title = "Help Big Dick",
     outroText = "You're not as useless as you look.\nThanks for your help and greet Lucas from me.",
-    onObjectiveStart = function() npc_bigdick:MakeAlly(true) end,
-    onObjectiveEnd = function() npc_bigdick:MakeAlly(false) end
+    onObjectiveStart = function()
+      npc_bigdick:MakeAlly(true)
+      for _,e in ipairs(enemy_assets) do e:AttackPlayer() end
+    end,
+    onObjectiveEnd = function()
+      npc_bigdick:MakeAlly(false)
+    end
   })
-  mission:AddObjective(objective3)
-
-  for _,e in ipairs(enemy_assets) do e:AttackPlayer() end
 
   -- Disabling the police in the zone where the shooting is happening.
   -- We only activate it during the neccessary objectives.
@@ -660,6 +662,11 @@ function MDM_LucasBertone.M7_1_Robbery()
     title = "Go back to Lucas Bertone",
     noPolice = true
   })
+
+  mission:AddObjective(MDM_RestorePlayerObjective:new({ mission = mission}))
+  mission:AddObjective(objective1)
+  mission:AddObjective(objective2)
+  mission:AddObjective(objective3)
   mission:AddObjective(objective4)
 
   return mission
@@ -682,9 +689,6 @@ function MDM_LucasBertone.M7_2_Robbery()
     startPosition = MDM_Locations.BERTONES_AUTOSERVICE_FRONTDOOR,
     assets = {car_trautenberg,npc_Driver}
   })
-
-
-  MDM_RestorePlayerObjective:new ({mission = mission})
 
   local objective50_waitForSpawns = MDM_SpawnerObjective:new ({
     mission = mission,

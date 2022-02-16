@@ -18,8 +18,9 @@ function MDM_PlayerInCarBannerDirector:new (config)
   self.__index = self
 
   director.carEntity = config.car
+  director.text = config.text or "Get Back In The Car"
   director.detector = MDM_PlayerInCarDetector:new(config)
-  director.banner = MDM_Banner:new("Get Back In The Car", "Get Back To Your Vehicle")
+  director.banner = MDM_Banner:new(director.text)
   director.banner.color = 0
   director.showing = false
   return director

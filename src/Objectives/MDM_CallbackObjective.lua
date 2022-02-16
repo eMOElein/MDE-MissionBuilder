@@ -2,10 +2,6 @@
 MDM_CallbackObjective = {}
 MDM_CallbackObjective = MDM_Objective:class()
 
-local args = {
-  callback = nil
-}
-
 function MDM_CallbackObjective:new (args)
   local objective = MDM_Objective:new(args)
   setmetatable(objective, self)

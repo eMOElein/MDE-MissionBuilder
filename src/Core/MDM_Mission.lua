@@ -18,7 +18,6 @@ function MDM_Mission:new (args)
     error("args not set",2)
   end
 
-  mission.args = args
   mission.objectives = {}
   mission.OnActiveObjectiveChangedCallbacks = {}
   mission.OnMissionEndCallbacks = {}
@@ -27,11 +26,18 @@ function MDM_Mission:new (args)
   mission.currentObjective = 0
   mission.description = ""
   mission.Outcome = 0
+  mission.title = args.title
+  mission.introText = args.introText
+  mission.outroText = args.outroText
   mission.failText = "Mission Failed"
   mission.failDescription = nil
   mission.flagFailed = false
   mission.introductionShown = false
+  mission.startPosition = args.startPosition
   mission.startDirection = args.startDirection
+  mission.initialOutfit = args.initialOutfit
+  mission.initialSeason = args.initialSeason
+  mission.initialWeather = args.initialWeather
   mission.assets = {}
 
   if args.onMissionStart then
@@ -46,7 +52,7 @@ function MDM_Mission:new (args)
     MDM_Mission.AddAssets(mission,args.assets)
   end
 
-  if args.title then
+  if mission.title then
     mission.titleBanner = MDM_Banner:new(mission:GetTitle())
   end
 
@@ -68,11 +74,9 @@ function MDM_Mission.AddAssets(self, spawnable_assets)
   end
 
   for _,a in ipairs(spawnable_assets) do
-    if a == nil then
-      error("at least one asset is nil",2)
+    if a ~= nil then
+      MDM_Mission.AddAsset(self,a)
     end
-
-    MDM_Mission.AddAsset(self,a)
   end
 end
 
@@ -119,43 +123,39 @@ function MDM_Mission.OnActiveObjectiveChanged(self,callback)
 end
 
 function MDM_Mission.SetInitialOutfit(self,outfitId)
-  self.args.initialOutfit = outfitId
+  self.initialOutfit = outfitId
 end
 
 function MDM_Mission.GetInitialOutfit(self)
-  return self.args.initialOutfit
+  return self.initialOutfit
 end
 
 function MDM_Mission.GetIntroText(self)
-  return self.args.introText
+  return self.introText
 end
 
 function MDM_Mission.GetStartPos(self)
-  return self.args.startPosition
+  return self.startPosition
 end
 
 function MDM_Mission.SetStartPos(self, startPos)
-  self.args.startPosition = startPos
+  self.startPosition = startPos
 end
 
 function MDM_Mission.SetIntroText(self,introText)
-  self.args.introText = introText
+  self.introText = introText
 end
 
 function MDM_Mission.SetOutcome(self,outcome)
   self.outcome = outcome
 end
 
-function MDM_Mission.SetStartPos(self,pos)
-  self.args.startPosition = pos
-end
-
 function MDM_Mission.GetTitle(self)
-  return self.args.title
+  return self.title
 end
 
 function MDM_Mission.SetTitle(self,title)
-  self.args.title = title
+  self.title = title
 end
 
 function MDM_Mission.OnMissionEnd(self, callback)
@@ -167,19 +167,19 @@ function MDM_Mission.IsRunning(self)
 end
 
 function MDM_Mission.GetInitialSeason(self,seasonNumber)
-  return self.args.initialSeason
+  return self.initialSeason
 end
 
 function MDM_Mission.SetInitialSeason(self,seasonNumber)
-  self.args.initialSeason = seasonNumber
+  self.initialSeason = seasonNumber
 end
 
 function MDM_Mission.GetInitialWeather(self,weatherId)
-  return self.args.initialWeather
+  return self.initialWeather
 end
 
 function MDM_Mission.SetInitialWeather(self,weatherId)
-  self.args.initialWeather = weatherId
+  self.initialWeather = weatherId
 end
 
 function MDM_Mission.Start(self)
@@ -222,11 +222,11 @@ function MDM_Mission.SetFailDescription(self,text)
 end
 
 function MDM_Mission.GetOutroText(self)
-  return self.args.outroText
+  return self.outroText
 end
 
 function MDM_Mission.SetOutroText(self,outroText)
-  self.args.outroText = outroText
+  self.outroText = outroText
 end
 
 function MDM_Mission.Stop(self)
