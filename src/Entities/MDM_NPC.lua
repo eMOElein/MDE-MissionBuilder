@@ -74,6 +74,10 @@ function MDM_NPC.GetPos(self)
   end
 end
 
+function MDM_NPC.SetPos(self,position)
+  self.pos = position
+end
+
 function MDM_NPC:newCivilian(args)
   local npc = MDM_NPC:new(args)
 

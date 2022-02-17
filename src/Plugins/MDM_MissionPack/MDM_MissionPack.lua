@@ -245,6 +245,13 @@ function MDM_MissionPack.InitializeTestMissions()
     missionSupplier =   TestMissions.WalkToTest
   }
   MDM_Core.missionManager:AddMissionProvider(walkToTest)
+
+  local distanceDirectorTest = {
+    title = "Distance Director Test",
+    client = client,
+    missionSupplier = TestMissions.DistanceDiretorTest
+  }
+  MDM_Core.missionManager:AddMissionProvider(distanceDirectorTest)
 end
 
 function MDM_MissionPack.InitializeVincenzoMissions()

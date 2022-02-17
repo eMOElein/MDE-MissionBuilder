@@ -23,9 +23,10 @@ function MDM_PlayerUtils.GetPlayer()
     return getp()
   else
     local p = {
-      pos = MDM_Utils.GetVector(100,100,100),
-      dir = MDM_Utils.GetVector(100,100,100)
+      pos = MDM_Utils.GetVector(0,0,0),
+      dir = MDM_Utils.GetVector(0,0,0)
     }
+    p.SetPos = function (pos) p.pos = pos end
     p.GetPos = function () return p.pos end
     p.GetDir = function () return p.dir end
 

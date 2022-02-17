@@ -53,6 +53,7 @@ function all()
   MDM_UnitTest.RegisterTest({name = "MDM_BannerNotificationDirector.UnitTest", func = MDM_BannerNotificationDirector.UnitTest})
   MDM_UnitTest.RegisterTest({name = "MDM_HostileZoneDirector.UnitTest", func = MDM_HostileZoneDirector.UnitTest})
   MDM_UnitTest.RegisterTest({name = "MDM_NPCGoToDirector.UnitTest", func = MDM_NPCGoToDirector.UnitTest})
+  MDM_UnitTest.RegisterTest({name = "MDM_EntityDistanceDirector.UnitTest", func = MDM_EntityDistanceDirector.UnitTest})
   ----------------
   -- Objectives --
   ----------------
@@ -104,7 +105,7 @@ end
 
 function MDM_UnitTest.TestVectorDistance()
   local vec = MDM_Utils.GetVector(2,0,0)
-  local vec2 = MDM_Utils.GetVector(5,0,0)
+  local vec2 = MDM_Utils.GetVector(2,3,0)
   local distance = MDM_Utils.VectorDistance(vec,vec2)
 
   if distance ~= 3 then

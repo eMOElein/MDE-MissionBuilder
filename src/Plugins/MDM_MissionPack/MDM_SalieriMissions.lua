@@ -157,6 +157,15 @@ function MDM_SalieriMissions.M2_WhiskyWhopper()
   })
   MDM_ActivatorUtils.RunWhileObjective(playerInTruckBannerDetector,objective4)
 
+  local distanceDirector = MDM_EntityDistanceDirector:new({
+    entity = npc_paulie,
+    distance = 60,
+    warningDistance = 40,
+    warningText = "Get back to Paulie",
+    callback = function() mission:Fail("You lost Paulie") end
+  })
+  MDM_ActivatorUtils.RunBetweenObjectives(distanceDirector,objective2,objective4)
+
   mission:AddAssets(enemyNpcs)
   mission:AddAssets(car_assets)
   mission:AddAssets({npc_paulie,npc_sam})

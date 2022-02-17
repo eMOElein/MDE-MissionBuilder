@@ -43,6 +43,14 @@ function MDM_Utils.GetFirstElement(table)
 end
 
 function MDM_Utils.VectorDistance(vector1,vector2)
+  if vector1 == nil then
+    error("vector1 not set",2)
+  end
+
+  if vector2 == nil  then
+    error("vector2 not set",2)
+  end
+
   local distance = ((vector1.x - vector2.x)^2 + (vector1.y - vector2.y)^2 + (vector1.z - vector2.z)^2)^0.5
   return distance
 end

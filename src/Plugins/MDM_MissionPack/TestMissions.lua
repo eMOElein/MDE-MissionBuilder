@@ -608,6 +608,39 @@ function TestMissions.SimpleRace()
   return mission
 end
 
+function TestMissions.DistanceDiretorTest()
+  local npcTarget = MDM_NPC:newCivilian({npcId = "13604348442857333985", position = MDM_Utils.GetVector(-908.67175,-185.3815,2.833797), direction = MDM_Utils.GetVector(0.011134353,0.99993801,0)})
+
+  local mission = MDM_Mission:new({
+    --    title = "Distance Director Test",
+    startPosition = MDM_Locations.SALIERIS_BAR_FRONTDOOR,
+    assets = {npcTarget}
+  })
+
+  local objective_100_spawner = MDM_SpawnerObjective:new({
+    mission = mission,
+    spawnables = {npcTarget}
+  })
+
+  local objective_200_killTarget = MDM_KillTargetsObjective:new({
+    mission = mission,
+    targets = {npcTarget}
+  })
+
+  local distanceDirector = MDM_EntityDistanceDirector:new({
+    entity = npcTarget,
+    distance = 50,
+    warningDistance = 30,
+    warningText = "Get back to your target",
+    callback = function() mission:Fail("You lost your target") end
+  })
+  MDM_ActivatorUtils.RunWhileObjective(distanceDirector,objective_200_killTarget)
+
+  mission:AddObjective(objective_200_killTarget)
+  mission:AddObjective(objective_100_spawner)
+  return mission
+end
+
 MDM_UnitTest.RegisterTest({name = "TestMissions.GetInCar", func = TestMissions.GetInCar})
 MDM_UnitTest.RegisterTest({name = "TestMissions.KillMission", func = TestMissions.KillMission})
 MDM_UnitTest.RegisterTest({name = "TestMissions.WaypointMission", func = TestMissions.WaypointMission})
@@ -618,58 +651,4 @@ MDM_UnitTest.RegisterTest({name = "TestMissions.DuelTest", func = TestMissions.D
 MDM_UnitTest.RegisterTest({name = "TestMissions.CivilWanderTest", func = TestMissions.CivilWanderTest})
 MDM_UnitTest.RegisterTest({name = "TestMissions.PursuitTest", func = TestMissions.PursuitTest})
 MDM_UnitTest.RegisterTest({name = "TestMissions.CarchaseTest", func = TestMissions.CarchaseTest})
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+MDM_UnitTest.RegisterTest({name = "TestMissions.DistanceDiretorTest", func = TestMissions.DistanceDiretorTest})
