@@ -517,7 +517,6 @@ function MDM_LucasBertone.M6_1_Election()
     noPolice = true,
     onObjectiveStart = function() MDM_Utils.SpawnAll({car_houston}) end
   })
-  mission:AddObjective(objective1)
 
   local objective2 = MDM_GoToObjective:new({
     mission = mission,
@@ -529,19 +528,31 @@ function MDM_LucasBertone.M6_1_Election()
     onObjectiveEnd = function() npc_friend:MakeAlly(true) end,
     noPolice = true
   })
-  mission:AddObjective(objective2)
-
-  MDM_MissionUtils.RunTimerBetweenObjectives(mission,objective2, objective2, 300, function() mission:Fail() end)
 
   local objective3 = MDM_GoToObjective:new({
     mission = mission,
     position = pos_BertonesAutoservice,
-    radius = 4,
+    radius = 2,
     title = "Drive back to Lucas Bertone",
     onObjectiveEnd = function() npc_friend:Despawn() end,
     noPolice = true
   })
+
+  mission:AddObjective(objective1)
+  mission:AddObjective(objective2)
   mission:AddObjective(objective3)
+
+  MDM_MissionUtils.RunTimerBetweenObjectives(mission,objective2, objective2, 300, function() mission:Fail("You did not make it in time") end)
+
+  -- Fail the mission if the distance to Paulie is too high but print a warning to give the player the chance to get back to Paulie.
+  local friendDistanceDirector = MDM_EntityDistanceDirector:new({
+    entity = npc_friend,
+    distance = 50,
+    warningDistance = 25,
+    warningText = "Get back to Lucas' friend",
+    callback = function() mission:Fail("You lost Lucas' friend") end
+  })
+  MDM_ActivatorUtils.RunWhileObjective(friendDistanceDirector,objective3)
 
   return mission
 end

@@ -93,8 +93,8 @@ function MDM_EntityDistanceDirector.Update(self)
   local warning = self.warningDetector and not self.warningDetector:Test()
 
   if warning and not self.warningPrevious then
-    if game then
-      game.hud:SendMessageMovie("HUD", "OnShowFreerideNotification", self.warningText, "param2", 1)
+    if game and self.warningText then
+      game.hud:SendMessageMovie("HUD", "OnShowFreerideNotification", self.warningText, "", 1)
     end
 
     if  self.warningCallback  then

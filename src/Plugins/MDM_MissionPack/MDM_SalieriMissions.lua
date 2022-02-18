@@ -88,83 +88,14 @@ function MDM_SalieriMissions.M2_WhiskyWhopper()
   local car_truck = MDM_Car:new("bolt_truck",MDM_Utils.GetVector(-903.20862,-692.28986,3.88734),MDM_Utils.GetVector(-0.96103084,-0.27643755,-0.0014791912))
   local car_assets = {car_bolt_pickup_1,car_bolt_pickup_2,car_bolt_pickup_3,car_bolt_delivery_1,car_bolt_delivery_2,car_bolt_delivery_2,car_bolt_delivery_3,car_bolt_delivery_4,car_culvery_1,
     car_shubert_1, car_shubert_2,car_shubert_3,car_shubert_4,car_lassiter_1,car_truck}
-
+  -------------------------------------
+  ---------------Mission---------------
+  -------------------------------------
   local mission = MDM_Mission:new({
     title = "Salieri - Whisky Whopper",
     introText = M2_introText,
     startPosition = MDM_Locations.SALIERIS_BAR_FRONTDOOR
   })
-  -------------------------------------
-  --------------Objectives-------------
-  -------------------------------------
-  local objective1 = MDM_GoToObjective:new({
-    mission = mission,
-    position = MDM_Utils.GetVector(-634.74359,-272.58469,2.9996707),
-    radius = 10,
-    title = "Pick up Paulie.",
-    onObjectiveStart = function() MDM_PlayerUtils.RestorePlayer() end,
-    onObjectiveEnd = function() npc_paulie:MakeAlly(true) end
-  })
-  mission:AddObjective(objective1)
-
-  local objective2 = MDM_GoToObjective:new({
-    mission = mission,
-    position = MDM_Utils.GetVector(-905.73865,-721.30676,3.1869726),
-    title = "Find the truck.",
-    radius = 40
-  })
-  mission:AddObjective(objective2)
-
-  local objective3 = MDM_GetInCarObjective:new({
-    mission = mission,
-    car = car_truck,
-    title = "Get in the truck."
-  })
-  mission:AddObjective(objective3)
-
-  local objective4 = MDM_GoToObjective:new({
-    mission = mission,
-    position = MDM_Utils.GetVector(-1531.4517,-372.92609,2.9755383),
-    title = "Drive to the meeting area.",
-    onObjectiveEnd = function() npc_paulie:MakeAlly(false) end,
-    noPolice = true
-  })
-  mission:AddObjective(objective4)
-  -------------------------------------
-  --------------Directors--------------
-  -------------------------------------
-  local zonePosition = MDM_Utils.GetVector(-903.87787,-729.97449,3.1465139)
-  local zoneRadius = 60
-
-  local noPoliceZoneDirector = MDM_PoliceFreeZoneDirector:new({
-    position = zonePosition,
-    radius = zoneRadius
-  })
-  MDM_ActivatorUtils.RunBetweenObjectives(noPoliceZoneDirector,objective2,objective3)
-
-  local hostileZoneDirector = MDM_HostileZoneDirector:new({
-    position = zonePosition,
-    radius = zoneRadius,
-    detectionRadius = 15,
-    enemies = enemyNpcs,
-    showArea = true
-  })
-  MDM_ActivatorUtils.RunBetweenObjectives(hostileZoneDirector,objective2,objective3)
-
-  local playerInTruckBannerDetector= MDM_PlayerInCarBannerDirector:new ({
-    car = car_truck,
-    text = "Get back in the truck"
-  })
-  MDM_ActivatorUtils.RunWhileObjective(playerInTruckBannerDetector,objective4)
-
-  local distanceDirector = MDM_EntityDistanceDirector:new({
-    entity = npc_paulie,
-    distance = 60,
-    warningDistance = 40,
-    warningText = "Get back to Paulie",
-    callback = function() mission:Fail("You lost Paulie") end
-  })
-  MDM_ActivatorUtils.RunBetweenObjectives(distanceDirector,objective2,objective4)
 
   mission:AddAssets(enemyNpcs)
   mission:AddAssets(car_assets)
@@ -175,6 +106,83 @@ function MDM_SalieriMissions.M2_WhiskyWhopper()
     MDM_Utils.SpawnAll(enemyNpcs)
     MDM_Utils.SpawnAll({npc_paulie,npc_sam}) -- Important to put single objects in brackets!!!
   end)
+  -------------------------------------
+  --------------Objectives-------------
+  -------------------------------------
+  local objective_100_PickupPaulie = MDM_GoToObjective:new({
+    mission = mission,
+    position = MDM_Utils.GetVector(-634.74359,-272.58469,2.9996707),
+    radius = 10,
+    title = "Pick up Paulie.",
+    onObjectiveStart = function() MDM_PlayerUtils.RestorePlayer() end,
+    onObjectiveEnd = function() npc_paulie:MakeAlly(true) end
+  })
+
+  local objective_200_FindTruck = MDM_GoToObjective:new({
+    mission = mission,
+    position = MDM_Utils.GetVector(-905.73865,-721.30676,3.1869726),
+    title = "Find the truck.",
+    radius = 40
+  })
+
+  local objective_300_GetInTruck = MDM_GetInCarObjective:new({
+    mission = mission,
+    car = car_truck,
+    title = "Get in the truck."
+  })
+
+  local objective_400_GotoMeetingpoint = MDM_GoToObjective:new({
+    mission = mission,
+    position = MDM_Utils.GetVector(-1531.4517,-372.92609,2.9755383),
+    title = "Drive to the meeting area.",
+    onObjectiveEnd = function() npc_paulie:MakeAlly(false) end,
+    noPolice = true
+  })
+
+  mission:AddObjective(objective_100_PickupPaulie)
+  mission:AddObjective(objective_200_FindTruck)
+  mission:AddObjective(objective_300_GetInTruck)
+  mission:AddObjective(objective_400_GotoMeetingpoint)
+  -------------------------------------
+  --------------Directors--------------
+  -------------------------------------
+  local compoundZone = {
+    position = MDM_Utils.GetVector(-903.87787,-729.97449,3.1465139) ,
+    radius = 60
+  }
+
+  -- Deactivate the police during the shooting
+  local noPoliceZoneDirector = MDM_PoliceFreeZoneDirector:new({
+    position = compoundZone.position,
+    radius = compoundZone.radius
+  })
+  MDM_ActivatorUtils.RunBetweenObjectives(noPoliceZoneDirector,objective_200_FindTruck,objective_300_GetInTruck)
+
+  -- Make the enemies on the compound attack the player on sight if close enough
+  local hostileZoneDirector = MDM_HostileZoneDirector:new({
+    position = compoundZone.position,
+    radius = compoundZone.radius,
+    detectionRadius = 15,
+    enemies = enemyNpcs,
+    showArea = true
+  })
+  MDM_ActivatorUtils.RunBetweenObjectives(hostileZoneDirector,objective_200_FindTruck,objective_300_GetInTruck)
+
+  local playerInTruckBannerDetector= MDM_PlayerInCarBannerDirector:new ({
+    car = car_truck,
+    text = "Get back in the truck"
+  })
+  MDM_ActivatorUtils.RunWhileObjective(playerInTruckBannerDetector,objective_400_GotoMeetingpoint)
+
+  -- Fail the mission if the distance to Paulie is too high but print a warning to give the player the chance to get back to Paulie.
+  local paulieDistanceDirector = MDM_EntityDistanceDirector:new({
+    entity = npc_paulie,
+    distance = 60,
+    warningDistance = 40,
+    warningText = "Get back to Paulie",
+    callback = function() mission:Fail("You lost Paulie") end
+  })
+  MDM_ActivatorUtils.RunBetweenObjectives(paulieDistanceDirector,objective_200_FindTruck,objective_400_GotoMeetingpoint)
 
   return mission
 end
@@ -400,6 +408,7 @@ function MDM_SalieriMissions.M5_The_Camino_Escalation()
     objective_100_spawnerObjective,
     objective_200_KillGroup1
   })
+  
   return mission
 end
 
