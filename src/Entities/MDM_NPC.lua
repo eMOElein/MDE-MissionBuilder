@@ -95,6 +95,16 @@ function MDM_NPC:newAlly(args)
   return npc
 end
 
+function MDM_NPC:newEnemy(args)
+  local npc = MDM_NPC:newFriend(args)
+
+  if game then
+    npc.aitype = enums.AI_TYPE.ENEMY
+  end
+
+  return npc
+end
+
 --Human:Patrol
 --Human:PatrolWayPoints
 
@@ -188,6 +198,7 @@ local function _SpawnNPC(self,callback, spawnId, pos, dir)
   StartThread(function ()
     local runtimeSpawner = self.spawner:GetComponent("C_RuntimeSpawnerComponent")
 
+    --spawnId =
     runtimeSpawner:SetSpawnProfile(spawnId)
     Wait(runtimeSpawner:GetSpawnProfileLoadSyncObject())
 

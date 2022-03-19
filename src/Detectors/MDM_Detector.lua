@@ -22,12 +22,12 @@ function MDM_Detector:new (args)
   return detector
 end
 
-function MDM_Detector.OnDisabled(self,callbacks)
-  MDM_Utils.AddAll(self.onDisabledCallbacks,callbacks)
+function MDM_Detector.OnDisabled(self,callback)
+  table.insert(self.onDisabledCallbacks,callback)
 end
 
-function MDM_Detector.OnEnabled(self,callbacks)
-  MDM_Utils.AddAll(self.onEnabledCallbacks,callbacks)
+function MDM_Detector.OnEnabled(self,callback)
+  table.insert(self.onEnabledCallbacks,callback)
 end
 
 function MDM_Detector.IsEnabled(self)

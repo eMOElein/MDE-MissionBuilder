@@ -336,8 +336,8 @@ function TestMissions.GangWarTest()
 end
 
 function TestMissions.KillMission()
-  local npc1 = MDM_NPC:new({npcId="13604348442857333985",position=MDM_Utils.GetVector(-907.94,-180.41,2),direction=MDM_Utils.GetVector(0,0,0)})
-  local m = MDM_Mission:new({title = "TEST: Kill Targets"})
+  local npc1 = MDM_NPC:newEnemy({npcId="16002116250561961955",position=MDM_Utils.GetVector(-907.94,-180.41,2),direction=MDM_Utils.GetVector(0,0,0), battleArchetype = "archetype_shotgunner_t1"})
+  local m = MDM_Mission:new({title = "TEST: Kill Targets", assets = {npc1}})
   m:AddObjective(MDM_RestorePlayerObjective:new ({mission = m}))
 
   m:AddObjective(MDM_KillTargetsObjective:new({mission = m, targets = {npc1}}))

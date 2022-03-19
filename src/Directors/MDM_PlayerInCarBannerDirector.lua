@@ -7,7 +7,7 @@ MDM_PlayerInCarBannerDirector = MDM_Director:class()
 -- The constructor configuration  table must contain the following fields
 --
 -- @param mission an instance of MDM_Mission that this director is attached to.
--- @param an instance of MDM_Car
+-- @param car an instance of MDM_Car
 function MDM_PlayerInCarBannerDirector:new (config)
   if not config.car then
     error("carEntity not set",2)

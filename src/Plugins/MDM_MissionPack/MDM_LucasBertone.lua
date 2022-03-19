@@ -419,7 +419,7 @@ function MDM_LucasBertone.M5_1_CremeDeLaCreme()
     radius = 40,
     title = "Destroy the car at the lighthouse",
     onObjectiveStart = function() MDM_PoliceUtils.SetWantedLevel(2) MDM_PoliceUtils.LockWantedLevel() end,
-    onObjectiveEnd = function() MDM_PoliceUtils.SetWantedLevel(0) MDM_PoliceUtils.UnlockWantedLevel() end
+    onObjectiveEnd = function() MDM_PoliceUtils.UnlockWantedLevel() end
   })
   mission:AddObjective(objective3)
 

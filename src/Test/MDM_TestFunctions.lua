@@ -20,7 +20,61 @@ local smithCar
 
 
 function MDM_TestFunctions.Test()
+  print("Testfunction")
+  MDM_TestFunctions.AssetSpawnTest()
+end
 
+function MDM_TestFunctions.AssetSpawnTest()
+  local pos = getp():GetPos()
+  pos.x = pos.x+2
+  pos.y = pos.y+2
+
+  local entity = game.game:CreateCleanEntity(pos, 0, false, false, true)
+  entity:SetPos(pos)
+  entity:SetDir(getp():GetDir())
+  local entityWrapper = entity:GetComponent("C_EntityWrapperComponent")
+  -- entityWrapper:SetGameEntityType(enums.EntityType.ITEM_NAVDUMMY)
+  entityWrapper:SetGameEntityType(enums.EntityType.ENTITY )
+  -- entityWrapper:SetModelName("spawn_special")
+  entityWrapper:SetModelName("lh_roadblock_concrete_a_v1")
+  entity:AddComponent("C_RuntimeSpawnerComponent")
+  entity:AddComponent("C_CollisionComponent")
+  entity:AddComponent("C_DynamicComponent")
+  entity:AddComponent("C_ModelComponent")
+  entity:AddComponent("C_SkeletonComponent")
+  entity:Activate()
+
+  print("Before1")
+  StartThread(function ()
+    local runtimeSpawner = entity:GetComponent("C_RuntimeSpawnerComponent")
+
+    --spawnId =
+    runtimeSpawner:SetSpawnProfile("lh_roadblock_concrete_a_v1")
+    print("Before")
+    Wait(runtimeSpawner:GetSpawnProfileLoadSyncObject())
+    print("After")
+
+    local object = runtimeSpawner:CreateObject()
+    object:SetPos(pos)
+    object:SetDir(getp():GetDir())
+    object:Activate()
+
+    local npcGuid = object:GetGUID()
+    local npcEntity = game.entitywrapper:GetEntityByGUID(npcGuid)
+    print("GUID: " ..tostring(npcGuid))
+  end)
+
+
+end
+
+function MDM_TestFunctions.BannerTest()
+  if not MDM_TestFunctions.banner then
+    game.hud:SendMessageMovie("HUD", "OnShowFreerideNotification", "22222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222", "22222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222", 1)
+  else
+    game.hud:SendMessageMovie("HUD", "OnHideFreerideNotification")
+  end
+
+  MDM_TestFunctions.banner = not MDM_TestFunctions.banner
 end
 
 function MDM_TestFunctions.ShowDistrictBanner(args)

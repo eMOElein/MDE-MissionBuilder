@@ -42,12 +42,12 @@ function MDM_MissionPack.InitializeSalieriMissions()
   }
   MDM_Core.missionManager:AddMissionProvider(M3_GangWar2)
 
---  local M5_Escalation = {
---    title = "The Camino Escalation",
---    client = client,
---    missionSupplier = MDM_SalieriMissions.M5_The_Camino_Escalation
---  }
---  MDM_Core.missionManager:AddMissionProvider(M5_Escalation)
+  local M5_Escalation = {
+    title = "The Camino Escalation",
+    client = client,
+    missionSupplier = MDM_SalieriMissions.M5_The_Camino_Escalation
+  }
+  MDM_Core.missionManager:AddMissionProvider(M5_Escalation)
 end
 
 function MDM_MissionPack.InitializeLucasBertoneMissions()
