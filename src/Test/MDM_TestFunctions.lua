@@ -21,7 +21,16 @@ local smithCar
 
 function MDM_TestFunctions.Test()
   print("Testfunction")
-  MDM_TestFunctions.AssetSpawnTest()
+  --  MDM_TestFunctions.AssetSpawnTest()
+  MDM_TestFunctions.BlipTest()
+end
+
+function MDM_TestFunctions.BlipTest()
+  local npc = MDM_NPC:new({npcId = "13604348442857333985", position = MDM_Vector:new(-907.94,-180.41,2),MDM_Vector:new(0,0,0)})
+
+  local blip = MDM_Blip.ForNPC({npc = npc})
+  npc:Spawn()
+  blip:Show()
 end
 
 function MDM_TestFunctions.AssetSpawnTest()

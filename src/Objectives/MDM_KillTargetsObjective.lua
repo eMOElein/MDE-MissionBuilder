@@ -23,6 +23,7 @@ function MDM_KillTargetsObjective:new (args)
   objective.targetsDeadDetector = MDM_TargetsDeadDetector:new({targets = objective.targets,onTargetsDead = function()  end})
 
   objective.blip = MDM_ObjectivePosition:new(objective:GetTitle() ..":TestMDM_ObjectivePosition",objective.targets[1]:GetPos())
+
   return objective
 end
 
@@ -31,6 +32,11 @@ function MDM_KillTargetsObjective.Start(self)
   self.blip:Show()
 
   MDM_Utils.SpawnAll(self.targets)
+
+  for _,t in ipairs(self.targets) do
+    MDM_Blip.ForNPC({npc = t})
+  end
+
 end
 
 function MDM_KillTargetsObjective.Update(self)
@@ -47,15 +53,12 @@ function MDM_KillTargetsObjective.Update(self)
 
   local iconType = "objective_primary"
 
-  if not self.indicator then
-    for _,t in ipairs(self.targets) do
-      if t:IsSpawned() then
-        game.navigation:SetIconShowByEntity(t:GetGameEntity(), true)
-        game.hud:AddEntityIndicator(t:GetGameEntity(), iconType, Math:newVector(0,0,0))
-        self.indicator = true
-      end
-    end
-  end
+  --  if not self.indicator then
+  --    for _,t in ipairs(self.targets) do
+  --      MDM_Blip.ForNPC({npc = t})
+  --    end
+  --    self.indicator = true
+  --  end
 
 
   if self.targetsDeadDetector:Test() then
@@ -66,7 +69,6 @@ function MDM_KillTargetsObjective.Update(self)
         if t:IsSpawned() then
           game.navigation:SetIconShowByEntity(t:GetGameEntity(), false)
           game.hud:RemoveEntityIndicator(t:GetGameEntity(), iconType, Math:newVector(3,3,3))
-          self.indicator = true
         end
       end
     end

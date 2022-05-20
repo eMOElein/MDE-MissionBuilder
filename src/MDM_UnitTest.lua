@@ -75,11 +75,13 @@ function all()
   MDM_UnitTest.RegisterTest({name = "MDM_ActivatorUtils.UnitTest", func = MDM_ActivatorUtils.UnitTest})
   MDM_UnitTest.RegisterTest({name = "MDM_AssassinationMissionConfigurations.PickRandomAssassination", func = MDM_AssassinationMissionConfigurations.PickRandomAssassination})
   MDM_UnitTest.RegisterTest({name = "MDM_AssassinationMissionConfigurations.CreateRandomAssassinationMission", func = MDM_AssassinationMissionConfigurations.CreateRandomAssassinationMission})
+  MDM_UnitTest.RegisterTest({name = "MDM_CarTheftMissionConfigurations.UnitTest" , func = MDM_CarTheftMissionConfigurations.UnitTest})
   ----------------
   ----- HUD ------
   ----------------
   MDM_UnitTest.RegisterTest({name = "MDM_Banner.UnitTest", func = MDM_Banner.UnitTest})
   MDM_UnitTest.RegisterTest({name = "MDM_MapCircle.UnitTest", func = MDM_MapCircle.UnitTest})
+  MDM_UnitTest.RegisterTest({name = "MDM_Blip.UnitTest",func = MDM_Blip.UnitTest})
   -----------------
   ----- Utils -----
   -----------------
@@ -115,5 +117,7 @@ function MDM_UnitTest.TestVectorDistance()
 end
 
 MDM_LuaLoader.ImportLuas(MDM_LuaLoader._luas)
-all()
+--all()
+MDM_Blip.UnitTest()
+MDM_GoToObjective.UnitTest()
 print("ALL OK!")

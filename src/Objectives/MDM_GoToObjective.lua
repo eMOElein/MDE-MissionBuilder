@@ -21,7 +21,7 @@ function MDM_GoToObjective:new(args)
   --  objective.title = "go to the location"
   --  objective.task = "go to the location"
   --  objective.description = "go to the location"
-  objective.blip = MDM_ObjectivePosition:new(objective.title ,objective.vector,objective.radius)
+  --  objective.blip = MDM_ObjectivePosition:new(objective.title ,objective.vector,objective.radius)
 
   objective.detector = MDM_EntityInCircleDetector:new({
     entity = MDM_PlayerUtils.GetPlayer(),
@@ -44,15 +44,21 @@ end
 function MDM_GoToObjective.Start(self)
   MDM_Objective.Start(self)
 
-  if self.blip then
-    self.blip:AddToMap()
+  if not self.blip then
+    self.blip = MDM_Blip.ForVector({vector = self.vector})
   end
+
+  self.blip:Show()
+  --  if self.blip then
+  --    self.blip:AddToMap()
+  --  end
 end
 
 function MDM_GoToObjective.Stop(self)
-  if self.blip then
-    self.blip:RemoveFromMap()
-  end
+  self.blip:Hide()
+  --  if self.blip then
+  --    self.blip:RemoveFromMap()
+  --  end
   MDM_Objective.Stop(self)
 end
 
@@ -83,4 +89,6 @@ function MDM_GoToObjective.UnitTest()
   if not objective.vector then
     error("objective vector is nil",2)
   end
+  
+  objective:Start()
 end

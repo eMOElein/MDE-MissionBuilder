@@ -262,5 +262,6 @@ function MDM_MissionPack.InitializeVincenzoMissions()
     client = client,
     missionSupplier = MDM_AssassinationMissionConfigurations.CreateRandomAssassinationMission
   }
+  
   MDM_Core.missionManager:AddMissionProvider(assassinationMissionTest)
 end

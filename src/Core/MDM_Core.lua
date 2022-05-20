@@ -19,9 +19,8 @@ end
 
 function MDM_Core._Initialize()
   MDM_Core.missionManager = MDM_MissionManager:new()
-  --  MDM_Core.callbackSystem = MDM_DefaultCallbackSystem
-  MDM_Core._InitializePlugins()
 
+ MDM_Core._InitializePlugins()
   --  MDM_Core.callbackSystem.RegisterCallback("on_player_vehicle_entered",function() print(" vehicle entered") end)
   --  MDM_Core.callbackSystem.RegisterCallback("on_player_vehicle_left",function() print("vehicle left") end)
   -- MDM_Core.callbackSystem.RegisterCallback("on_player_district_changed",function(args) MDM_TestFunctions.ShowDistrictBanner({district = args.districtNew, time = 3500}) end)

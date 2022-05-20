@@ -89,19 +89,7 @@ function MDM_Entity.Despawn(self)
   return
 end
 
-function MDM_Entity.Spawn(self)
-  return
-end
-
 --@Overwrite
 function MDM_Entity.IsSpawned(self)
   return self.spawned
-end
-
-function MDM_Entity.SetRespawnTime(self,respawntime)
-  self.respawntime = respawntime
-end
-
-function MDM_Entity.GetRespawnTime(self)
-  return self.respawntime
 end

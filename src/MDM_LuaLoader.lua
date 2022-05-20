@@ -1,6 +1,8 @@
 MDM_LuaLoader = {}
 
 MDM_LuaLoader._luas = {
+  "Core/MDM_List",
+  "Core/MDM_Vector",
   "Utils/MDM_Utils",
   "Utils/MDM_Math",
   "Utils/MDM_SpawnUtils",
@@ -15,6 +17,7 @@ MDM_LuaLoader._luas = {
   "Core/MDM_SpawnManager",
   "Core/MDM_Mission",
   "Hud/MDM_Banner",
+  "Hud/MDM_Blip",
   "Detectors/MDM_Detector",
   "Detectors/MDM_CarDamageDetector",
   "Detectors/MDM_EntityInCircleDetector",
@@ -56,6 +59,7 @@ MDM_LuaLoader._luas = {
   "MissionPrototypes/MDM_AssassinationMission",
   "MissionPrototypes/MDM_SimpleRaceMission",
   "MissionPrototypes/Configurations/MDM_AssassinationMissionConfigurations",
+  "MissionPrototypes/Configurations/MDM_CarTheftMissionConfigurations",
   "Utils/MDM_VehicleUtils",
   "Utils/MDM_PlayerUtils",
   "Utils/MDM_PoliceUtils",

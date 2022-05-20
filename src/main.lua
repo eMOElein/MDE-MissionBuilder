@@ -10,6 +10,7 @@ function script:OnLoad()
   MDM_UnitTest.RegisterTest = function() end
   MDM_LuaLoader.ImportLuas(MDM_LuaLoader._luas)
   MDM_Core._Initialize()
+  MDM_Core._InitializePlugins()
 
   ScriptHook.RegisterKeyHandler("toggle", function()
     MDM_Core.missionManager:ToggleMissionMenu()
