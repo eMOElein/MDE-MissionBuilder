@@ -1,6 +1,10 @@
 MDM_VehicleUtils = {}
 
 function MDM_VehicleUtils.GetPlayerCurrentVehicle()
+  if not game then
+    return nil
+  end
+
   local Player = game.game:GetActivePlayer()
 
   if not Player then
@@ -55,7 +59,7 @@ function MDM_VehicleUtils.Info()
 
     local cPos = "(" ..pos.x .."," .. pos.y .. "," .. pos.z .. ")"
     local cDir = "(" ..dir.x .."," .. dir.y .. "," .. dir.z .. ")"
-    local sCreate = "MDM_Car:new({carId = \"" ..name .."\", position = MDM_Utils.GetVector" ..cPos ..", direction = MDM_Utils.GetVector" ..cDir .."})"
+    local sCreate = "{carId = \"" ..name .."\", position = MDM_Vector:new" ..cPos ..", direction = MDM_Vector:new" ..cDir .."}"
     print(sCreate)
     MDM_Utils.WriteDebug(sCreate)
   end

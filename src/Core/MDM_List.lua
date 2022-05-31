@@ -1,12 +1,49 @@
 MDM_List = {}
 
+--function MDM_List.CreateObject(class)
+--  local object = {}
+--  setmetatable(object,class)
+--  class.__index = class
+--  return object
+--end
+
+function MDM_List:new(table)
+  local list =  {}
+  setmetatable(list, self)
+  self.__index = self
+
+  if table then
+    list:AddAll(table)
+  end
+
+  return list
+end
+
 function MDM_List.Add(self, element)
   table.insert(self,element)
+  return self
 end
 
 function MDM_List.AddAll(self, elements)
-  for _,e in elements do
+  for _,e in ipairs(elements) do
     MDM_List.Add(self,e)
+  end
+
+  return self
+end
+
+function MDM_List.Contains(self, object)
+  for _,o in ipairs(self) do
+    if o == object then
+      return true
+    end
+  end
+  return false
+end
+
+function MDM_List.ForEach(self, consumer)
+  for _,e in ipairs(self) do
+    consumer(e)
   end
 end
 
@@ -16,6 +53,20 @@ function MDM_List.Get(self, index)
       return e
     end
   end
+end
+
+function MDM_List.Map(self, mapper)
+  local newList = MDM_List:new()
+
+  for _,o in ipairs(self) do
+    newList:Add(mapper(o))
+  end
+
+  return newList
+end
+
+function MDM_List.Size(self)
+  return #self
 end
 
 function MDM_List.GetRandom(self)

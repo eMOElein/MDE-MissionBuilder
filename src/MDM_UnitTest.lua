@@ -31,6 +31,8 @@ function all()
   MDM_UnitTest.RegisterTest({name = "MDM_Mission.UnitTest", func = MDM_Mission.UnitTest})
   MDM_UnitTest.RegisterTest({name = "MDM_DefaultCallbackSystem.UnitTest", func = MDM_DefaultCallbackSystem.UnitTest})
   MDM_UnitTest.RegisterTest({name = "MDM_Updateable.UnitTest", func = MDM_Updateable.UnitTest})
+  MDM_UnitTest.RegisterTest({name = "MDM_Area.UnitTest", func = MDM_Area.UnitTest})
+  MDM_UnitTest.RegisterTest({name = "MDM_SphereArea.UnitTest", func =  MDM_SphereArea.UnitTest})
   ----------------
   --- Entities ---
   ----------------
@@ -66,6 +68,8 @@ function all()
   MDM_UnitTest.RegisterTest({name = "MDM_WaitObjective.UnitTest", func = MDM_WaitObjective.UnitTest})
   MDM_UnitTest.RegisterTest({name = "MDM_SpawnerObjective.UnitTest", func = MDM_SpawnerObjective.UnitTest})
   MDM_UnitTest.RegisterTest({name = "MDM_CallbackObjective.UnitTest", func = MDM_CallbackObjective.UnitTest})
+  MDM_UnitTest.RegisterTest({name = "MDM_GetInCarObjective.UnitTest", func = MDM_GetInCarObjective.UnitTest})
+  MDM_UnitTest.RegisterTest({name = "MDM_DriveToObjective.UnitTest", func = MDM_DriveToObjective.UnitTest})
   ----------------
   --- Missions ---
   ----------------
@@ -73,9 +77,9 @@ function all()
   MDM_UnitTest.RegisterTest({name = "MDM_GangWarMission.UnitTest", func = MDM_GangWarMission.UnitTest})
   MDM_UnitTest.RegisterTest({name = "MDM_SimpleRaceMission.UnitTest", func = MDM_SimpleRaceMission.UnitTest})
   MDM_UnitTest.RegisterTest({name = "MDM_ActivatorUtils.UnitTest", func = MDM_ActivatorUtils.UnitTest})
-  MDM_UnitTest.RegisterTest({name = "MDM_AssassinationMissionConfigurations.PickRandomAssassination", func = MDM_AssassinationMissionConfigurations.PickRandomAssassination})
   MDM_UnitTest.RegisterTest({name = "MDM_AssassinationMissionConfigurations.CreateRandomAssassinationMission", func = MDM_AssassinationMissionConfigurations.CreateRandomAssassinationMission})
-  MDM_UnitTest.RegisterTest({name = "MDM_CarTheftMissionConfigurations.UnitTest" , func = MDM_CarTheftMissionConfigurations.UnitTest})
+  MDM_UnitTest.RegisterTest({name = "MDM_CarTheftMission.UnitTest" , func = MDM_CarTheftMission.UnitTest})
+  MDM_UnitTest.RegisterTest({name = "MDM_ShootoutMission.UnitTest" , func = MDM_ShootoutMission.UnitTest})
   ----------------
   ----- HUD ------
   ----------------
@@ -89,6 +93,7 @@ function all()
   MDM_UnitTest.RegisterTest({name = "MDM_UnitTest.TestVectorDistance", func = MDM_UnitTest.TestVectorDistance})
 
   MDM_UnitTest.RegisterTest({name = "MDM_Core._Initialize", func = MDM_Core._Initialize})
+  MDM_UnitTest.RegisterTest({name = "MDM_Core._InitializePlugins", func = MDM_Core._InitializePlugins})
 
   MDM_UnitTest.RegisterTest({name = "MDM_MainMenu.UnitTest", func = MDM_MainMenu.UnitTest})
 
@@ -117,7 +122,6 @@ function MDM_UnitTest.TestVectorDistance()
 end
 
 MDM_LuaLoader.ImportLuas(MDM_LuaLoader._luas)
---all()
-MDM_Blip.UnitTest()
-MDM_GoToObjective.UnitTest()
+all()
+MDM_ShootoutMission.UnitTest()
 print("ALL OK!")

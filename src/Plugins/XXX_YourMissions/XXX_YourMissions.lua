@@ -21,7 +21,7 @@ function XXX_YourMissions.Initialize()
   MDM_Core.missionManager:AddMissionProvider(M1_RunAroundTheBlock)
 end
 
--- We build a function that returns a mission and use it in the mission provider above as missionSupplier.
+-- We build a function that builds and returns a mission and use it in the mission provider above as missionSupplier.
 function XXX_YourMissions.M1_RunAroundTheBlock()
   local mission = MDM_Mission:new({
     title = "Run Around The Block",

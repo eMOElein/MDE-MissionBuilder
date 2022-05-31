@@ -98,23 +98,6 @@ MDM_AssassinationMissionConfigurations.assassinations = {
 }
 
 function MDM_AssassinationMissionConfigurations.CreateRandomAssassinationMission()
-  local config = MDM_AssassinationMissionConfigurations.PickRandomAssassination()
+  local config = MDM_List:new(MDM_AssassinationMissionConfigurations.assassinations):GetRandom()
   return MDM_AssassinationMission:new(config)
-end
-
-function MDM_AssassinationMissionConfigurations.PickRandomAssassination()
-  local count = #MDM_AssassinationMissionConfigurations.assassinations
-
-  local random = math.random(1,count)
-
-  -- create 100 randoms as the first random numbers don't seem to be that random at all
-  for i=1,100 do
-    random = math.random(1,count)
-  end
-
-  for index,assassination in ipairs(MDM_AssassinationMissionConfigurations.assassinations) do
-    if index == random then
-      return assassination
-    end
-  end
 end

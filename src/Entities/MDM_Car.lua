@@ -22,8 +22,12 @@ function MDM_Car:new(args, dummyPos, dummyDir)
   setmetatable(car, self)
   self.__index = self
 
-  if args.carId == nil or type(args.carId) ~= "string" then
-    error("no carId",2)
+  if not args.carId then
+    error("carId not set",2)
+  end
+
+  if type(args.carId) ~= "string" then
+    error("carId not of type string",2)
   end
 
   if args.position == nil then
@@ -45,6 +49,10 @@ function MDM_Car:new(args, dummyPos, dummyDir)
   car.lightsOn = args.lightsOn
 
   return car
+end
+
+function MDM_Car.CanDrive(self)
+  return self:GetCarDamage() < 100 and self:GetMotorDamage() < 100
 end
 
 function MDM_Car.GetCarDamage(self)
@@ -117,16 +125,16 @@ function MDM_Car.Spawn(self)
   self.spawning = true
 
 
-  local callback = function (self, id, so, veh)
-    self.game_id = id
-    self.spawning = false
-    self.spawned = true
-    self:SetGameEntity(veh)
-
-    if veh and self.self.primaryColor then
-      self:SetPrimaryColorRGB(self.primaryColor.r, self.primaryColor.g, self.primaryColor.b)
-    end
-  end
+--  local callback = function (self, id, so, veh)
+--    self.game_id = id
+--    self.spawning = false
+--    self.spawned = true
+--    self:SetGameEntity(veh)
+--
+--    if veh and self.self.primaryColor then
+--      self:SetPrimaryColorRGB(self.primaryColor.r, self.primaryColor.g, self.primaryColor.b)
+--    end
+--  end
 
   if game then
     StartThread(function()

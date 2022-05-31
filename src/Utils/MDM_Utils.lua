@@ -1,26 +1,6 @@
 MDM_Utils = {}
-
-function MDM_Utils.AddAll(tab, objects)
-  if not tab then
-    error("tab not set", 2)
-  end
-
-  if not type(tab) == "table" then
-    error("tab is not of type table")
-  end
-
-  if not objects then
-    return
-  end
-
-  if not type(objects) == "table" then
-    error("objects is not of type table")
-  end
-
-  for _,object in ipairs(objects) do
-    table.insert(tab,object)
-  end
-end
+MDM_Utils.Player = MDM_PlayerUtils
+MDM_Utils.Vehicle = MDM_VehicleUtils
 
 function MDM_Utils.ForEach(table, consumer)
   if type(table) == "table" then
@@ -94,8 +74,9 @@ function MDM_Utils.DistanceToPlayer(entity)
   local distance = 0
   if game then
     distance = getp():GetPos():DistanceToPoint(entity:GetPos())
-    return distance
   end
+
+  return distance
 end
 
 function Utils_tprint (tbl, indent)

@@ -1,6 +1,7 @@
 MDM_GoToObjective = {}
 MDM_GoToObjective = MDM_Objective:class()
 
+
 local args = {
   position = nil,
   radius = nil,
@@ -18,10 +19,10 @@ function MDM_GoToObjective:new(args)
 
   objective.vector = args.position
   objective.radius = args.radius or 20
-  --  objective.title = "go to the location"
-  --  objective.task = "go to the location"
-  --  objective.description = "go to the location"
-  --  objective.blip = MDM_ObjectivePosition:new(objective.title ,objective.vector,objective.radius)
+  objective.area = MDM_Area.ForSphere({
+    position = objective.vector,
+    radius = objective.radius
+  })
 
   objective.detector = MDM_EntityInCircleDetector:new({
     entity = MDM_PlayerUtils.GetPlayer(),
@@ -49,16 +50,12 @@ function MDM_GoToObjective.Start(self)
   end
 
   self.blip:Show()
-  --  if self.blip then
-  --    self.blip:AddToMap()
-  --  end
+  self.area:Show()
 end
 
 function MDM_GoToObjective.Stop(self)
+  self.area:Hide()
   self.blip:Hide()
-  --  if self.blip then
-  --    self.blip:RemoveFromMap()
-  --  end
   MDM_Objective.Stop(self)
 end
 
@@ -68,7 +65,7 @@ function MDM_GoToObjective.Update(self)
     return
   end
 
-  if self.detector:Test() then
+  if self.area:IsInside(MDM_PlayerUtils.GetPlayer():GetPos()) then
     self:Succeed()
   end
 end
@@ -89,6 +86,6 @@ function MDM_GoToObjective.UnitTest()
   if not objective.vector then
     error("objective vector is nil",2)
   end
-  
+
   objective:Start()
 end

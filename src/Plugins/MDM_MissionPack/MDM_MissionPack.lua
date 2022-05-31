@@ -16,6 +16,7 @@ function MDM_MissionPack.Initialize()
   MDM_MissionPack.InitializeLucasBertoneMissions()
   MDM_MissionPack.InitializeVincenzoMissions()
   MDM_MissionPack.InitializeTestMissions()
+  MDM_MissionPack.InitializeRalphMissions()
 end
 
 function MDM_MissionPack.InitializeSalieriMissions()
@@ -262,6 +263,31 @@ function MDM_MissionPack.InitializeVincenzoMissions()
     client = client,
     missionSupplier = MDM_AssassinationMissionConfigurations.CreateRandomAssassinationMission
   }
-  
+
+  local shootoutMission = {
+    title = "Random Shootout",
+    client = client,
+    missionSupplier = MDM_ShootoutMissionConfigurations.CreateRandomShootoutMission
+  }
+
   MDM_Core.missionManager:AddMissionProvider(assassinationMissionTest)
+  MDM_Core.missionManager:AddMissionProvider(shootoutMission)
+end
+
+function MDM_MissionPack.InitializeRalphMissions()
+  local client = "Ralph"
+
+
+
+  local cartheftMissionTest = {
+    title = "Random Car Theft",
+    client = client,
+    missionSupplier = function()
+      local config = MDM_List.GetRandom(MDM_CarTheftMissionConfigurations.carThefts)
+      local mission = MDM_CarTheftMission:new(config)
+      return mission
+    end
+  }
+
+  MDM_Core.missionManager:AddMissionProvider(cartheftMissionTest)
 end

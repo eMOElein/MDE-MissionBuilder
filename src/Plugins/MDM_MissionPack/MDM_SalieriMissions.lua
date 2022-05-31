@@ -354,27 +354,27 @@ function MDM_SalieriMissions.M5_The_Camino_Escalation()
     MDM_NPC:newAlly({npcId = "5874491335140879700", position = MDM_Utils.GetVector(-893.06909,-205.6087,2.7583747), direction = MDM_Utils.GetVector(-0.27516028,0.96139836,0)})
   }
 
-  local enemyNpcs1 = {}
-  MDM_Utils.AddAll(enemyNpcs1,enemyMachinegunners_1)
-  MDM_Utils.AddAll(enemyNpcs1,enemyShotgunners_1)
-  MDM_Utils.AddAll(enemyNpcs1,enemyGunners_1)
+  local enemyNpcs1 = MDM_List:new()
+  enemyNpcs1:AddAll(enemyMachinegunners_1)
+  enemyNpcs1:AddAll(enemyShotgunners_1)
+  enemyNpcs1:AddAll(enemyGunners_1)
 
-  local cars1All = {}
-  MDM_Utils.AddAll(cars1All,enemyCars1_light)
-  MDM_Utils.AddAll(cars1All,enemyCars1_nolight)
-  MDM_Utils.AddAll(cars1All,allyCars1)
+  local cars1All = MDM_List:new()
+  cars1All:AddAll(enemyCars1_light)
+  cars1All:AddAll(enemyCars1_nolight)
+  cars1All:AddAll(allyCars1)
 
 
-  local npcs1All = {}
-  MDM_Utils.AddAll(npcs1All,enemyNpcs1)
-  MDM_Utils.AddAll(npcs1All,allyNpcs1)
+  local npcs1All = MDM_List:new()
+  npcs1All:AddAll(enemyNpcs1)
+  npcs1All:AddAll(allyNpcs1)
+  
+  local All1 = MDM_List:new()
+  All1:AddAll(npcs1All)
+  All1:AddAll(cars1All)
 
-  local All1 = {}
-  MDM_Utils.AddAll(All1,npcs1All)
-  MDM_Utils.AddAll(All1,cars1All)
-
-  local assets = {}
-  MDM_Utils.AddAll(assets,All1)
+  local assets = MDM_List:new()
+  assets:AddAll(All1)
 
   local mission = MDM_Mission:new({
     title = "The Camino Escalation",
@@ -396,6 +396,8 @@ function MDM_SalieriMissions.M5_The_Camino_Escalation()
     mission = mission,
     spawnables = All1
   })
+  
+  print(#enemyNpcs1)
 
   local objective_200_KillGroup1 = MDM_KillTargetsObjective:new({
     mission = mission,

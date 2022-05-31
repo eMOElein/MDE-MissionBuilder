@@ -14,8 +14,13 @@ function MDM_Objective:new(args)
   self.__index = self
 
   -- args consinstency checks
-  if args == nil then error("args not set",2) end
-  if type(args) ~= "table" then error("args is not of type table",2) end
+  if args == nil then
+    error("args not set",2)
+  end
+
+  if type(args) ~= "table" then
+    error("args is not of type table",2)
+  end
 
   if not args.mission then
     error("mission not set",2)
@@ -145,7 +150,9 @@ function MDM_Objective.Update(self)
     return
   end
 
-  MDM_Utils.Callbacks(self.onUpdateCallbacks)
+  for _,c in ipairs(self.onUpdateCallbacks) do
+    c()
+  end
 end
 
 function MDM_Objective.GetIntroText(self)

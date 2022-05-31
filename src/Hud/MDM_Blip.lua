@@ -1,6 +1,25 @@
 MDM_Blip = {}
 MDM_Blip.instances = 0
 
+function MDM_Blip.ForCar(config)
+  if not config.car then
+    error("car not set",2)
+  end
+
+  if type(config.car) ~= "table" then
+    error("car must be of type MDM_NPC",2)
+  end
+
+  local blip =  MDM_Blip:_new({
+    entity = config.car
+  })
+
+  blip.car = config.car
+
+  blip:Show()
+  return blip
+end
+
 function MDM_Blip.ForNPC(config)
   if not config.npc then
     error("npc not set",2)
@@ -29,7 +48,6 @@ function MDM_Blip.ForVector(config)
 end
 
 function MDM_Blip:_new(config)
-  print("NEWBLIP")
   if not config.entity then
     error("entity not set",2)
   end
@@ -61,7 +79,57 @@ function MDM_Blip._OnUpdate(self)
 
     if game then
       self.marker = game.navigation:RegisterObjectiveEntityDirect(self.entity:GetGameEntity(), "Unknown 1", "Unknown 2", true)
-      game.hud:AddEntityIndicator(self.entity:GetGameEntity(), "objective_primary", MDM_Vector:new(0,0,0))
+      game.hud:AddEntityIndicator(self.entity:GetGameEntity(),"objective_primary", MDM_Vector:new(0,0,0))
+      --    game.hud:AddEntityIndicator(self.entity:GetGameEntity(), "melee_charge", MDM_Vector:new(0,0,0))
+      --   game.hud:AddEntityIndicator(self.entity:GetGameEntity(),"district_objective", MDM_Vector:new(0,0,0))
+      --     game.hud:AddEntityIndicator(self.entity:GetGameEntity(),"squealer", MDM_Vector:new(0,0,0))
+      -- game.hud:AddEntityIndicator(self.entity:GetGameEntity(),"bagman", MDM_Vector:new(0,0,0))
+      --   game.hud:AddEntityIndicator(self.entity:GetGameEntity(),"vehicle_delivery", MDM_Vector:new(0,0,0))
+      --    game.hud:AddEntityIndicator(self.entity:GetGameEntity(),"melee_finisher", MDM_Vector:new(0,0,0))
+      --  game.hud:AddEntityIndicator(self.entity:GetGameEntity(),"hideout_bonus", MDM_Vector:new(0,0,0))
+      --   game.hud:AddEntityIndicator(self.entity:GetGameEntity(),"hideout_health_station", MDM_Vector:new(0,0,0))
+      --    game.hud:AddEntityIndicator(self.entity:GetGameEntity(),"hideout_weapon_locker", MDM_Vector:new(0,0,0))
+      --  game.hud:AddEntityIndicator(self.entity:GetGameEntity(),"hideout_flak_vest", MDM_Vector:new(0,0,0))
+      --    game.hud:AddEntityIndicator(self.entity:GetGameEntity(),"money", MDM_Vector:new(0,0,0))
+      --    game.hud:AddEntityIndicator(self.entity:GetGameEntity(),"entrance_interact", MDM_Vector:new(0,0,0))
+      --     game.hud:AddEntityIndicator(self.entity:GetGameEntity(),"entrance_advertise", MDM_Vector:new(0,0,0))
+      --     game.hud:AddEntityIndicator(self.entity:GetGameEntity(),"relay_interact", MDM_Vector:new(0,0,0))
+
+      --     Q - Tastatursymbol
+      --     game.hud:AddEntityIndicator(self.entity:GetGameEntity(),"melee_attack", MDM_Vector:new(0,0,0))
+
+      --     game.hud:AddEntityIndicator(self.entity:GetGameEntity(),"relay_collectable", MDM_Vector:new(0,0,0))
+      --     game.hud:AddEntityIndicator(self.entity:GetGameEntity(),"vehicle_locked_target", MDM_Vector:new(0,0,0))
+      --     game.hud:AddEntityIndicator(self.entity:GetGameEntity(),"phone", MDM_Vector:new(0,0,0))
+
+      -- Rotes Icon mit Zielfadenkreuz ---
+      --      game.hud:AddEntityIndicator(self.entity:GetGameEntity(),"hitman", MDM_Vector:new(0,0,0))
+
+      -- Offenes Auge weiﬂ ???
+      --          game.hud:AddEntityIndicator(self.entity:GetGameEntity(),"binoculars", MDM_Vector:new(0,0,0))
+
+      --     game.hud:AddEntityIndicator(self.entity:GetGameEntity(),"lock_advertise", MDM_Vector:new(0,0,0))
+      --    game.hud:AddEntityIndicator(self.entity:GetGameEntity(),"alarm_advertise", MDM_Vector:new(0,0,0))
+
+      -- weiﬂer truck
+      --      game.hud:AddEntityIndicator(self.entity:GetGameEntity(),"contraband_truck", MDM_Vector:new(0,0,0))
+
+      -- schlagring
+      --     game.hud:AddEntityIndicator(self.entity:GetGameEntity(),"muscle_vito", MDM_Vector:new(0,0,0))
+
+
+      --    game.hud:AddEntityIndicator(self.entity:GetGameEntity(),"muscle_burke", MDM_Vector:new(0,0,0))
+
+      -- Q auf tastatur
+      --      game.hud:AddEntityIndicator(self.entity:GetGameEntity(),"melee_stealth_kill", MDM_Vector:new(0,0,0))
+
+      --    game.hud:AddEntityIndicator(self.entity:GetGameEntity(),"gate_crash_advertise", MDM_Vector:new(0,0,0))
+      --    game.hud:AddEntityIndicator(self.entity:GetGameEntity(),"gate", MDM_Vector:new(0,0,0))
+      --     game.hud:AddEntityIndicator(self.entity:GetGameEntity(),"alarm", MDM_Vector:new(0,0,0))
+      --      game.hud:AddEntityIndicator(self.entity:GetGameEntity(),"deposit", MDM_Vector:new(0,0,0))
+      --      game.hud:AddEntityIndicator(self.entity:GetGameEntity(),"mobile_store", MDM_Vector:new(0,0,0))
+
+
     end
     MDM_Core.callbackSystem.UnregisterCallback("on_update",self.onupdate)
   end
@@ -94,27 +162,35 @@ MDM_Blip.MDM_VectorBlip = {
         error("vector not set",2)
       end
 
-      local entity = {}
-      if(game) then
-        entity = game.game:CreateCleanEntity(config.vector, 0, false, false, true)
-        entity:SetPos(config.vector)
-        entity:Activate()
-      end
+      -- mocking and MDM_Entity object
+      local entity = {GetGameEntity = function()  return nil end}
 
-      local blip = MDM_Blip:_new({entity = {
-        GetGameEntity = function ()
-          return entity
+      local blip = MDM_Blip:_new({entity = entity})
+
+      blip.Show = function(blip)
+        if not blip.entity:GetGameEntity() then
+          local gameEntity = nil
+          if(game) then
+            gameEntity = game.game:CreateCleanEntity(config.vector, 0, false, false, true)
+            gameEntity:SetPos(config.vector)
+            gameEntity:Activate()
+            blip.entity.GetGameEntity = function()  return gameEntity end
+          end
         end
-      }})
 
+        MDM_Blip.Show(blip)
+      end
 
       blip.hide = function()
-        blip.entity:SetPreventCleaning(false)
-        blip.entity:DespawnImmunity(false)
-        blip.entity:Deactivate()
-
+        local gameEntity = blip.entity:GetGameEntity()
+        if gameEntity then
+          gameEntity:SetPreventCleaning(false)
+          gameEntity:DespawnImmunity(false)
+          gameEntity:Deactivate()
+        end
         MDM_Blip.Hide(blip)
       end
+
       return blip
     end
 
@@ -126,7 +202,7 @@ function MDM_Blip.UnitTest()
 
 
   local counter = 0
-  blip.onupdate = function() counter = counter + 1 print("IncC")end
+  blip.onupdate = function() counter = counter + 1 end
   blip:Show()
   MDM_Core.callbackSystem.NotifyCallbacks("on_update",{})
   blip:Show()

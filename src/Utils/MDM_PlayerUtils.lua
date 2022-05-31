@@ -13,7 +13,7 @@ function MDM_PlayerUtils.PrintPosition()
 
   local pPos = "(" ..pos.x .."," ..pos.y .."," ..pos.z ..")"
   local pDir = "(" ..dir.x .."," ..dir.y .."," ..dir.z ..")"
-  local sCreate = "MDM_NPC:new({npcId = \"000000000000\", position = MDM_Utils.GetVector" ..pPos ..", direction = MDM_Utils.GetVector" ..pDir .."})"
+  local sCreate = "{npcId = \"000000000000\", position = MDM_Vector:new" ..pPos ..", direction = MDM_Vector:new" ..pDir .."}"
   print(sCreate)
   MDM_Utils.WriteDebug(sCreate)
 end
@@ -32,6 +32,22 @@ function MDM_PlayerUtils.GetPlayer()
 
     return p
   end
+end
+
+function MDM_PlayerUtils.GetPos()
+  if game then
+    return MDM_PlayerUtils.GetPlayer():GetPos()
+  else
+    return MDM_Vector:new(0,0,0)
+  end
+end
+
+function MDM_PlayerUtils.IsInArea(area)
+  area:IsInside(MDM_PlayerUtils.GetPlayer():GetPos())
+end
+
+function MDM_PlayerUtils.IsInCar()
+  return MDM_VehicleUtils.GetPlayerCurrentVehicle() ~= nil
 end
 
 function MDM_PlayerUtils.RestorePlayer()

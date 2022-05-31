@@ -287,7 +287,6 @@ function MDM_Mission.Update(self)
   end
 
   local cObj = MDM_Mission.GetCurrentObjective(self)
-  local nextObj = MDM_Mission.GetNextObjective(self)
 
   MDM_Updateable.Update(self)
 
@@ -300,38 +299,50 @@ function MDM_Mission.Update(self)
     end
   end
 
+  cObj:Update()
+
   if cObj:GetOutcome() < 0 then
     self:Fail()
     return
   end
 
+  if cObj:GetOutcome() ~= 0 then
+    cObj:Stop()
+  end
+
+  local nextObj = MDM_Mission.GetNextObjective(self)
+
   -- Last Objective
   if cObj:GetOutcome() ~= 0 and not nextObj then
-    cObj:Stop()
     self:Stop()
   end
 
   -- Next Objective
   if cObj:GetOutcome() ~= 0 and nextObj then
-    cObj:Stop()
 
 
     nextObj:Start()
     self.currentObjective = self.currentObjective +1
     return
   end
-
-  cObj:Update()
 end
 
 function MDM_Mission.UnitTest()
-  local  m = MDM_Mission:new({title = "Missiontest"})
+  local onMissionEndCalled = 0
+
+  local  m = MDM_Mission:new({title = "Missiontest",
+    onMissionEnd = function() onMissionEndCalled = onMissionEndCalled +1 end
+  })
 
   local  o1 = MDM_MockObjective:new({mission = m})
   local  o2 = MDM_MockObjective:new({mission = m})
 
   m:AddObjective(o1)
   m:AddObjective(o2)
+
+
+  m:OnMissionEnd(function() onMissionEndCalled = onMissionEndCalled +1 end)
+
 
   m:Start()
   m:Update()
@@ -343,4 +354,12 @@ function MDM_Mission.UnitTest()
   m:Update()
   m:Update()
   if m:IsRunning() then error("mission should not be running anymore") end
+
+  m:OnMissionEnd(function() onMissionEndCalled = true end)
+
+  m:Stop()
+
+  if onMissionEndCalled ~= 2 then
+    error("onMissionEnd should have been called 2 times")
+  end
 end

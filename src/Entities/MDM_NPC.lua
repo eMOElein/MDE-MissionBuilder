@@ -54,6 +54,7 @@ function MDM_NPC.AttackPlayer(self)
     local ent = self:GetGameEntity()
     if ent then
       ent:Attack(getp())
+      ent:NeverLoseTrackOfPlayer(true)
     end
   end
 
@@ -82,7 +83,7 @@ function MDM_NPC:newCivilian(args)
   local npc = MDM_NPC:new(args)
 
   if game then
-    npc.aitype = enums.AI_TYPE.CIVILIAN
+    npc.aiType = enums.AI_TYPE.CIVILIAN
   end
 
   return npc
@@ -99,7 +100,7 @@ function MDM_NPC:newEnemy(args)
   local npc = MDM_NPC:newFriend(args)
 
   if game then
-    npc.aitype = enums.AI_TYPE.ENEMY
+    npc.aiType = enums.AI_TYPE.ENEMY
   end
 
   return npc
@@ -113,7 +114,7 @@ function MDM_NPC:newFriend(args)
   local npc = MDM_NPC:new(args)
 
   if game then
-    npc.aitype = enums.AI_TYPE.FRIEND
+    npc.aiType = enums.AI_TYPE.FRIEND
   end
 
   return npc
@@ -152,7 +153,7 @@ end
 function MDM_NPC.GetPos(self)
   local gameEntity = self:GetGameEntity()
 
-  if gameEntity then
+  if gameEntity and gameEntity.GetPos then
     return gameEntity:GetPos()
   else
     return self.pos
@@ -249,7 +250,7 @@ function MDM_NPC.MakeAlly(self,bool)
       npc:Follow(getp(), "RUN", 1, 2)
       npc:NeverLoseTrackOfPlayer(true)
       npc:DbgTesting_HelperInventory_AddWeapon("smg_trench_a_v1", 500) -- needed for battlearchetye to work if model is not equipped with thompson.
-      npc.aitype = enums.AI_TYPE.FRIEND
+      npc.aiType = enums.AI_TYPE.FRIEND
     end
   else
     self:Godmode(false)
@@ -295,8 +296,8 @@ function MDM_NPC.Spawn(self)
     self.game_GUID = args.guid
     self:SetGameEntity(args.entity)
 
-    if self.aitype then
-      game_npc:SwitchBrain(self.aitype)
+    if self.aiType then
+      game_npc:SwitchBrain(self.aiType)
     end
 
     MDM_NPC.Godmode(self,self.godmode)
@@ -312,6 +313,19 @@ function MDM_NPC.Spawn(self)
   end
 
   _SpawnNPC(self,callback, self.npcId,self.pos,self.dir)
+end
+
+function MDM_NPC.MakeEnemy(self)
+  self:_SetAiType(enums.AI_TYPE.ENEMY)
+end
+
+function MDM_NPC._SetAiType(self,aiType)
+  if self.aiType ~= aiType then
+    self.aiType = aiType
+    if self.aiType and self:GetGameEntity() then
+      self:GetGameEntity():SwitchBrain(self.aiType)
+    end
+  end
 end
 
 function MDM_NPC.UnitTest ()

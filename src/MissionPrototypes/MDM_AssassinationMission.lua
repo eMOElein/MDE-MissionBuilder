@@ -39,10 +39,10 @@ function MDM_AssassinationMission:new(args)
   mission.destinationPosition = args.destinationPosition
   mission.radius = args.radius or 100
 
-  local spawnables = {}
-  MDM_Utils.AddAll(spawnables,mission.targets)
-  MDM_Utils.AddAll(spawnables,mission.bodyguards)
-  MDM_Utils.AddAll(spawnables,mission.carAssets)
+  local spawnables = MDM_List:new()
+  spawnables:AddAll(mission.targets)
+  spawnables:AddAll(mission.bodyguards)
+  spawnables:AddAll(mission.carAssets)
   mission:AddAssets(spawnables)
   -----------------------
   ------ Objectives -----

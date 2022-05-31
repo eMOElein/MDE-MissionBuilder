@@ -69,9 +69,9 @@ function TestMissions.DuelTest()
       error("allyNpcs is empty",2)
     end
 
-    local spawnables = {}
-    MDM_Utils.AddAll(spawnables,args.allyNpcs)
-    MDM_Utils.AddAll(spawnables,args.enemyNpcs)
+    local spawnables = MDM_List:new()
+    spawnables:AddAll(args.allyNpcs)
+    spawnables:AddAll(args.enemyNpcs)
 
     local mission = MDM_Mission:new(args)
     mission:AddAssets(spawnables)
