@@ -19,7 +19,7 @@ function MDM_CarTheftMission:new(config)
 
   mission.cars = MDM_List:new()
   mission.bodyguards = MDM_List:new()
-  mission.bodyguardsDetectionRange = config.bodyguardsDetectionRange or 50
+  mission.bodyguardsDetectionRange = config.bodyguardsDetectionRange or 20
 
   mission.destinationArea = MDM_Area.ForSphere({
     position = config.destination.position,

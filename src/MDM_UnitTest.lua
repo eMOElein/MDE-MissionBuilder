@@ -70,6 +70,7 @@ function all()
   MDM_UnitTest.RegisterTest({name = "MDM_CallbackObjective.UnitTest", func = MDM_CallbackObjective.UnitTest})
   MDM_UnitTest.RegisterTest({name = "MDM_GetInCarObjective.UnitTest", func = MDM_GetInCarObjective.UnitTest})
   MDM_UnitTest.RegisterTest({name = "MDM_DriveToObjective.UnitTest", func = MDM_DriveToObjective.UnitTest})
+  MDM_UnitTest.RegisterTest({name = "MDM_SpeakToObjective.UnitTest", func = MDM_SpeakToObjective.UnitTest})
   ----------------
   --- Missions ---
   ----------------

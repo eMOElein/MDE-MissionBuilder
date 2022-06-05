@@ -1,5 +1,13 @@
 MDM_LucasBertone = {}
 
+MDM_LucasBertone.assets = {
+  M4_1_LuckyBastard = {
+    deadGangsters = {
+      {npcId = "18187434932497386406", position = MDM_Vector:new(-1052.4084,532.39056,17.947693), direction = MDM_Vector:new(0.95664889,0.29124328,0)}
+    }
+  }
+}
+
 local pos_SalierisBar = MDM_Locations.SALIERIS_BAR_GARAGE_FRONTDOOR
 local pos_BertonesAutoservice = MDM_Locations.BERTONES_AUTOSERVICE_FRONTDOOR --real location
 
@@ -268,14 +276,14 @@ end
 function MDM_LucasBertone.M4_1_LuckyBastard()
   local npcFriend1 = MDM_NPC:newFriend({npcId="18187434932497386406",position=MDM_Utils.GetVector(-1047.1255,533.90619,17.958805),direction=MDM_Utils.GetVector(-0.36978897,-0.92911577,0)})
   local npcFriend2 = MDM_NPC:newFriend({npcId="18187434932497386406",position=MDM_Utils.GetVector(-1045.6821,533.11432,17.960611),direction=MDM_Utils.GetVector(-0.80718642,-0.59029663,0)})
-  local npdDead = MDM_NPC:new({npcId="18187434932497386406",position=MDM_Utils.GetVector(-1048.6772,530.96112,17.956875),direction=MDM_Utils.GetVector(-0.70304906,-0.71114135,0)})
+  local npcDead = MDM_NPC:new({npcId="18187434932497386406",position=MDM_Utils.GetVector(-1048.6772,530.96112,17.956875),direction=MDM_Utils.GetVector(-0.70304906,-0.71114135,0)})
 
   local mission = MDM_Mission:new({
     title = "Lucas Bertone 4-1 Lucky Bastard",
     initialOutfit = "16544970924538872801",
     initialWeather = "mm_160_harbor_cp_080_harbour_entrance_cutscene"
   })
-  mission:AddAssets({npcFriend1,npcFriend2,npdDead})
+  mission:AddAssets({npcFriend1,npcFriend2})
 
   local objective_100_visitLucas = MDM_GoToObjective:new({
     mission = mission,
@@ -292,7 +300,7 @@ function MDM_LucasBertone.M4_1_LuckyBastard()
     radius = 7,
     title = "Rescue Lucas's friend!",
     introText = "A buddy of mine called. One of our friends was shot in Chinatown he's lying in a street near the square and needs help!\nYou need to get him and take him to the doctor in Oakwod. He's the one that you took Sam to once. So can you do it? But move it, he's dying out there.",
-    onObjectiveStart = function() MDM_Utils.SpawnAll({npcFriend1,npcFriend2,npdDead}) end,
+    onObjectiveStart = function() MDM_Utils.SpawnAll({npcFriend1,npcFriend2}) end,
     onObjectiveEnd = function() npcFriend1:MakeAlly(true)  npcFriend2:MakeAlly(true) end,
     noPolice = true
   })
@@ -367,6 +375,7 @@ function MDM_LucasBertone.M4_2_LuckyBastard()
 end
 
 function MDM_LucasBertone.M5_1_CremeDeLaCreme()
+  local assets = MDM_LucasBertone.assets.M4_1_LuckyBastard
   -- We prepare all cars that we need during the mission
   -- We need a local variable for the shubert as we need to access it directly later.
   local car_shubert = MDM_Car:new({
@@ -459,12 +468,12 @@ end
 function MDM_LucasBertone.M5_2_CremeDeLaCreme()
   local car_celeste = MDM_Car:new({
     carId =  "celeste_mark_5",
-    position = MDM_Utils.GetVector(534.76263,414.78525,19.954273),
-    direction = MDM_Utils.GetVector(0.022378264,-0.99973452,0.005499539)
+    position = MDM_Vector:new(534.76263,414.78525,19.954273),
+    direction = MDM_Vector:new(0.022378264,-0.99973452,0.005499539)
   })
 
-  local npc_enemy1 = MDM_NPC:new({npcId="18187434932497386406",position=MDM_Utils.GetVector(545.29333,423.88425,19.781425),direction=MDM_Utils.GetVector(-0.5477711,-0.83662814,0)})
-  local npc_enemy2 = MDM_NPC:new({npcId="18187434932497386406",position=MDM_Utils.GetVector(519.13971,426.54214,19.845762),direction=MDM_Utils.GetVector(-0.5401746,-0.84155297,0)})
+  local npc_enemy1 = MDM_NPC:new({npcId="18187434932497386406", position = MDM_Vector:new(545.29333,423.88425,19.781425), direction= MDM_Vector:new(-0.5477711,-0.83662814,0)})
+  local npc_enemy2 = MDM_NPC:new({npcId="18187434932497386406", position = MDM_Vector:new(519.13971,426.54214,19.845762), direction= MDM_Vector:new(-0.5401746,-0.84155297,0)})
 
 
   local mission = MDM_Mission:new({
@@ -481,7 +490,7 @@ function MDM_LucasBertone.M5_2_CremeDeLaCreme()
     mission = mission,
     car = car_celeste,
     title = "Steal the Celeste Mark 5 from the diner.",
-    onObjectiveStart = function() MDM_Utils.SpawnAll({car_celeste,npc_enemy1,npc_enemy2}) end,
+    onObjectiveStart = function() print("Spawning") MDM_Utils.SpawnAll({car_celeste,npc_enemy1,npc_enemy2}) end,
     onObjectiveEnd = function() npc_enemy1:AttackPlayer() npc_enemy2:AttackPlayer() end
   })
   mission:AddObjective(objective1)

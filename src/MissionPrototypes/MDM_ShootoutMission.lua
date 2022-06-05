@@ -73,7 +73,6 @@ function MDM_ShootoutMission._InitiateShootout(mission)
 
   MDM_ShootoutMission._AttackRoundRobin(allies, enemies)
   MDM_ShootoutMission._AttackRoundRobin(enemies, allies)
-
   MDM_ShootoutMission._AttackPlayer(enemies, 50)
 end
 
@@ -116,5 +115,4 @@ function MDM_ShootoutMission.UnitTest()
   mission:Update()
   mission:Update()
   mission:Update()
-
 end

@@ -106,6 +106,10 @@ function MDM_Mission.Fail(self,message)
   self:Stop(self)
 end
 
+function MDM_Mission.GetAssets(self)
+  return self.assets
+end
+
 function MDM_Mission.GetCurrentObjective(self)
   return self.objectives[self.currentObjective]
 end
@@ -266,7 +270,6 @@ function MDM_Mission.Stop(self)
   end
 
 
-  MDM_Utils.DespawnAll(self.assets,50)
   for _,a in ipairs(self.assets) do
     if self.flagFailed then
       a:Despawn()

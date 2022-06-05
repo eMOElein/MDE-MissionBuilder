@@ -25,21 +25,7 @@ function MDM_DriveToObjective:new(args)
     radius = objective.radius
   })
 
-  objective.detector = MDM_EntityInCircleDetector:new({
-    entity = MDM_PlayerUtils.GetPlayer(),
-    position = objective.vector,
-    radius = objective.radius
-  })
-
   return objective
-end
-
-function MDM_DriveToObjective:PlayerDistanceToObjective(vector)
-  local Distance = 0
-  if game then
-    Distance = getp():GetPos():DistanceToPoint(vector)
-  end
-  return Distance
 end
 
 function MDM_DriveToObjective.Start(self)
@@ -73,22 +59,34 @@ function MDM_DriveToObjective.Update(self)
 end
 
 function MDM_DriveToObjective._IsSuccessful(self)
-  -- Don't continue if we are not in the destination area
   if not self.area:IsInside(MDM_Utils.Player.GetPos()) then
     return false
   end
 
-  local playerInCar = MDM_Utils.Player.IsInCar()
-
-  if not playerInCar then
-    return
+  if not MDM_Utils.Player.IsInCar() then
+    return false
   end
 
-  local correctCar = false
-  correctCar = correctCar or self.car == nil and playerInCar
-  correctCar = correctCar or self.car:GetGameEntity() == MDM_Utils.Vehicle.GetPlayerCurrentVehicle()
+  if not MDM_DriveToObjective._IsCorrectCar(self,self.car) then
+    return false
+  end
 
-  return correctCar
+  --  local correctCar = false
+  --  correctCar = correctCar or self.car == nil and MDM_Utils.Player.IsInCar()
+  --  correctCar = correctCar or self.car:GetGameEntity() == MDM_Utils.Vehicle.GetPlayerCurrentVehicle()
+  return true
+end
+
+function MDM_DriveToObjective._IsCorrectCar(self)
+  if self.car == nil and MDM_Utils.Player.IsInCar() then
+    return true
+  end
+
+  if self.car:GetGameEntity() == MDM_Utils.Vehicle.GetPlayerCurrentVehicle() then
+    return true
+  end
+
+  return false
 end
 
 function MDM_DriveToObjective.UnitTest()

@@ -31,8 +31,8 @@ MDM_ShootoutMissionConfigurations.shootouts = {
       {npcId = "2624519215596331124", position = MDM_Vector:new(-358.44565,486.82159,3.8884668), direction = MDM_Vector:new(-0.89483333,-0.4464004,0)},
       {npcId = "2624519215596331124", position = MDM_Vector:new(-351.21591,477.30969,3.8884668), direction = MDM_Vector:new(-0.98277205,0.18482189,0)},
       -- machinegunners
-      {npcId = "13296154699591050027", position = MDM_Vector:new(-355.13467,475.11234,3.8884668), direction = MDM_Vector:new(-0.99063963,0.13650352,0)},
-      {npcId = "13296154699591050027", position = MDM_Vector:new(-355.77206,484.4603,3.8884668), direction = MDM_Vector:new(-0.94384283,-0.33039472,0)},
+      {npcId = "8866396308432925397", position = MDM_Vector:new(-355.13467,475.11234,3.8884668), direction = MDM_Vector:new(-0.99063963,0.13650352,0)},
+      {npcId = "8866396308432925397", position = MDM_Vector:new(-355.77206,484.4603,3.8884668), direction = MDM_Vector:new(-0.94384283,-0.33039472,0)},
       -- Colt
       {npcId = "18187434932497386406", position = MDM_Vector:new(-352.32721,486.45822,3.8884668), direction = MDM_Vector:new(-0.96145165,-0.2749736,0), battleArchetype = "archetype_triggerman_base_pol"},
       {npcId = "18187434932497386406", position = MDM_Vector:new(-352.32721,486.45822,3.8884668), direction = MDM_Vector:new(-0.96145165,-0.2749736,0), battleArchetype = "archetype_triggerman_base_pol"},

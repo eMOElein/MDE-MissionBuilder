@@ -58,6 +58,7 @@ MDM_LuaLoader._luas = {
   "Objectives/MDM_HurtNPCObjective",
   "Objectives/MDM_KillTargetsObjective",
   "Objectives/MDM_MockObjective",
+  "Objectives/MDM_SpeakToObjective",
   "Objectives/Functional/MDM_RestorePlayerObjective",
   "Objectives/Functional/MDM_SpawnerObjective",
   "Objectives/MDM_CallbackObjective",

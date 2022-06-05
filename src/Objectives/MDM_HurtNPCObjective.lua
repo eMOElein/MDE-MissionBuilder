@@ -1,6 +1,6 @@
----------------------------------------
------- DEPRECATED DO NOT USE !!! ------
----------------------------------------
+-----------------------------------
+-- DEPRECATED DO NOT USE !!! ------
+-----------------------------------
 MDM_HurtNPCObjective = {}
 MDM_HurtNPCObjective = MDM_Objective:class()
 

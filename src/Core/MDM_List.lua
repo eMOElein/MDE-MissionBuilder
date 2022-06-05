@@ -20,13 +20,13 @@ function MDM_List:new(table)
 end
 
 function MDM_List.Add(self, element)
-  table.insert(self,element)
+  MDM_List.AddAll(self,{element})
   return self
 end
 
 function MDM_List.AddAll(self, elements)
   for _,e in ipairs(elements) do
-    MDM_List.Add(self,e)
+    table.insert(self,e)
   end
 
   return self
@@ -55,6 +55,14 @@ function MDM_List.Get(self, index)
   end
 end
 
+function MDM_List.IndexOf(self,object)
+  for index,element in ipairs(self) do
+    if element == object then
+      return index
+    end
+  end
+end
+
 function MDM_List.Map(self, mapper)
   local newList = MDM_List:new()
 
@@ -63,6 +71,13 @@ function MDM_List.Map(self, mapper)
   end
 
   return newList
+end
+
+function MDM_List.Remove(self,toRemove)
+  local index = MDM_List.IndexOf(self,toRemove)
+  if (index) then
+    table.remove(self,index)
+  end
 end
 
 function MDM_List.Size(self)

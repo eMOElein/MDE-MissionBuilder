@@ -39,13 +39,13 @@ function MDM_GetInCarObjective.AddCar(self,car)
 end
 
 function MDM_GetInCarObjective.Start(self)
+  MDM_Objective.Start(self)
+
   for _,c in ipairs(self.cars) do
     if not c:IsSpawned() then
       c:Spawn()
     end
   end
-
-  MDM_Objective.Start(self)
 end
 
 function MDM_GetInCarObjective.Stop(self)

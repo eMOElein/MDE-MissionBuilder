@@ -3,9 +3,7 @@
 MDM_PlayerInCarBannerDirector = {}
 MDM_PlayerInCarBannerDirector = MDM_Director:class()
 
---- MDM_PlayerInCarBannerDirector:new
--- The constructor configuration  table must contain the following fields
---
+--- The constructor configuration table must contain the following fields.
 -- @param mission an instance of MDM_Mission that this director is attached to.
 -- @param car an instance of MDM_Car
 function MDM_PlayerInCarBannerDirector:new (config)

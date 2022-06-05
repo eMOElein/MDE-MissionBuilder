@@ -1,6 +1,6 @@
 MDM_SpawnManager = {}
 
-local despawns = {}
+local despawns = MDM_List:new()
 
 function MDM_SpawnManager.MarkForDistanceDespawn(spawnable, distance)
   if not spawnable then
@@ -34,15 +34,27 @@ end
 function MDM_SpawnManager.Update()
   for index,despawn in ipairs(despawns) do
     if despawn.spawnable:GetGameEntity() == nil then
-      table.remove(despawn)
+      despawns:Remove(despawn)
       return
     end
 
     local eval = despawn.evaluator()
     local spawnable = despawn.spawnable
-    if eval and spawnable:IsSpawned() then
-      spawnable:Despawn()
-      table.remove(despawn)
+    if eval then
+      despawns:Remove(despawn)
+      if spawnable:IsSpawned() and not MDM_SpawnManager._IsEntityDirty(spawnable) then
+        spawnable:Despawn()
+      end
     end
+  end
+end
+
+function MDM_SpawnManager._IsEntityDirty(entity)
+  if entity:IsSpawned() and not entity:GetGameEntity() then
+    return true
+  end
+
+  if not entity:GetGameEntity().GetPos then
+    return true
   end
 end

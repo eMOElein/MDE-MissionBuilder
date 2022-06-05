@@ -38,15 +38,14 @@ function MDM_Objective:new(args)
   objective.mission = args.mission
   objective.running = false
   objective.outcome = 0
-  objective.onObjectiveEndCallbacks = {}
-  objective.onObjectiveStartCallbacks = {}
-  objective.onUpdateCallbacks = {}
+  objective.onObjectiveEndCallbacks = MDM_List:new()
+  objective.onObjectiveStartCallbacks = MDM_List:new()
+  objective.onUpdateCallbacks = MDM_List:new()
   objective.flagFailed = false
 
   if args.onObjectiveStart then objective:OnObjectiveStart(args.onObjectiveStart) end
   if args.onObjectiveEnd then objective:OnObjectiveEnd(args.onObjectiveEnd) end
   if args.onUpdate then objective:OnUpdate(args.onUpdate) end
-  --  if args.mission then objective.mission:AddObjective(objective) end
   return objective
 end
 
@@ -118,7 +117,7 @@ function MDM_Objective.Start(self)
   self.running = true
 
   if game then
-    self.entity  = game.game:CreateCleanEntity(Math:newVector(-1225,-390,0), 0, false, false, true)
+    --    self.entity  = game.game:CreateCleanEntity(Math:newVector(-1225,-390,0), 0, false, false, true)
     if self.title then
       game.hud:UpdateSimpleObjective(self:GetTitle(), "param 2", true, true, "param 3")
     end
@@ -138,6 +137,10 @@ function MDM_Objective.OnObjectiveStop(self,callback)
 end
 
 function MDM_Objective.OnObjectiveEnd(self,callback)
+  if not callback or type(callback) ~= "function" then
+    error("callback not set or not of type table")
+  end
+
   table.insert(self.onObjectiveEndCallbacks,callback)
 end
 
@@ -150,9 +153,7 @@ function MDM_Objective.Update(self)
     return
   end
 
-  for _,c in ipairs(self.onUpdateCallbacks) do
-    c()
-  end
+  self.onUpdateCallbacks:ForEach(function(callback) callback() end)
 end
 
 function MDM_Objective.GetIntroText(self)

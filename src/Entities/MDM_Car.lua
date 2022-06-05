@@ -7,6 +7,10 @@ local arguments = {
   position = nil
 }
 
+function MDM_Car.ForConfigs(configs)
+  return MDM_List:new(configs):Map(function(config) return MDM_Car:new(config) end)
+end
+
 function MDM_Car:new(args, dummyPos, dummyDir)
   -- convert old constructor parameters into argument table
   if type(args) == "string" then
@@ -125,16 +129,16 @@ function MDM_Car.Spawn(self)
   self.spawning = true
 
 
---  local callback = function (self, id, so, veh)
---    self.game_id = id
---    self.spawning = false
---    self.spawned = true
---    self:SetGameEntity(veh)
---
---    if veh and self.self.primaryColor then
---      self:SetPrimaryColorRGB(self.primaryColor.r, self.primaryColor.g, self.primaryColor.b)
---    end
---  end
+  --  local callback = function (self, id, so, veh)
+  --    self.game_id = id
+  --    self.spawning = false
+  --    self.spawned = true
+  --    self:SetGameEntity(veh)
+  --
+  --    if veh and self.self.primaryColor then
+  --      self:SetPrimaryColorRGB(self.primaryColor.r, self.primaryColor.g, self.primaryColor.b)
+  --    end
+  --  end
 
   if game then
     StartThread(function()

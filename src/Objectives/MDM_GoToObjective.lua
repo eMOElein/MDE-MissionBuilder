@@ -24,6 +24,13 @@ function MDM_GoToObjective:new(args)
     radius = objective.radius
   })
 
+  if args.onUpdate  then
+    if type(args.onUpdae) ~= "function" then
+      error("onUpdate is not of type function",2)
+    end
+    objective:OnUpdate(args.onUpdate)
+  end
+
   objective.detector = MDM_EntityInCircleDetector:new({
     entity = MDM_PlayerUtils.GetPlayer(),
     position = objective.vector,

@@ -33,10 +33,15 @@ function MDM_HostileZoneDirector:new (args)
   director.args = args
   director.mapCircle = MDM_MapCircle:new(args.posistion,args.radius,4)
   director.index = 1
+  director.radius = args.radius or 50
+  director.area = MDM_Area.ForSphere({
+    position = args.position,
+    radius = director.radius
+  })
   director.inAreaDetector = MDM_EntityInCircleDetector:new({
     entity = MDM_PlayerUtils.GetPlayer(),
     position = args.position,
-    radius = args.radius
+    radius = director.radius
   })
   return director
 end

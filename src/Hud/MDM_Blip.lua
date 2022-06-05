@@ -105,13 +105,13 @@ function MDM_Blip._OnUpdate(self)
       -- Rotes Icon mit Zielfadenkreuz ---
       --      game.hud:AddEntityIndicator(self.entity:GetGameEntity(),"hitman", MDM_Vector:new(0,0,0))
 
-      -- Offenes Auge weiß ???
+      -- Offenes Auge weiï¿½ ???
       --          game.hud:AddEntityIndicator(self.entity:GetGameEntity(),"binoculars", MDM_Vector:new(0,0,0))
 
       --     game.hud:AddEntityIndicator(self.entity:GetGameEntity(),"lock_advertise", MDM_Vector:new(0,0,0))
       --    game.hud:AddEntityIndicator(self.entity:GetGameEntity(),"alarm_advertise", MDM_Vector:new(0,0,0))
 
-      -- weißer truck
+      -- weiï¿½er truck
       --      game.hud:AddEntityIndicator(self.entity:GetGameEntity(),"contraband_truck", MDM_Vector:new(0,0,0))
 
       -- schlagring

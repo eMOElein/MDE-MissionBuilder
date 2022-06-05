@@ -1,6 +1,10 @@
 MDM_NPC = {}
 MDM_NPC = MDM_Entity:class()
 
+function MDM_NPC.ForConfigs(configs)
+  return MDM_List:new(configs):Map(function(config) return MDM_NPC:new(config) end)
+end
+
 function MDM_NPC:new(args)
   local npc = MDM_Entity:new(args.position,args.direction)
   setmetatable(npc, self)
@@ -27,9 +31,10 @@ function MDM_NPC:new(args)
   npc.spawning = false
   npc.spawned = false
   npc.godmode = false
+  npc.health = args.health or 100
   npc.battleArchetype = args.battleArchetype
-  npc.health = 100
   npc.onSpawnedCallbacks = {}
+  npc.initialAnimation = args.initialAnimation
 
   --attributes
   npc.pos = args.position
@@ -213,6 +218,14 @@ local function _SpawnNPC(self,callback, spawnId, pos, dir)
 
     if self.battleArchetype ~= nil then
       npcEntity:SetBattleArchetype(self.battleArchetype)
+    end
+
+    if self.initialAnimation ~= nil and type(self.initialAnimation) == "string" then
+      npcEntity:PlayAnimation(self.initialAnimation, true)
+    end
+
+    if self.health and type(self.health) == "number" then
+      npcEntity.health = self.health
     end
 
     local returnArgs = {
