@@ -27,6 +27,8 @@ function MDM_Entity:new(spawnPos, spawnDir)
   entity.spawnPos = spawnPos
   entity.spawnDir = spawnDir
   entity.gameEntity = nil
+  entity.onSpawnedCallbacks = MDM_List:new()
+  entity.onDespawnedCallbacks = MDM_List:new()
 
   return entity
 end
@@ -92,4 +94,12 @@ end
 --@Overwrite
 function MDM_Entity.IsSpawned(self)
   return self.spawned
+end
+
+function MDM_Entity.OnSpawned(self, callback)
+  self.onSpawnedCallbacks:Add(callback)
+end
+
+function MDM_Entity.OnDespawned(self, callback)
+  self.onDespawnedCallbacks:Add(callback)
 end

@@ -241,14 +241,16 @@ function MDM_CarTheftMission._OnVehicleLeft(mission,args)
 end
 
 function MDM_CarTheftMission.UnitTest()
-  local config = MDM_List.GetRandom(MDM_CarTheftMissionConfigurations.carThefts)
-  local mission = MDM_CarTheftMission:new(config)
+  MDM_List:new(MDM_CarTheftMissionConfigurations.carThefts):ForEach(function(carTheft)
+    local mission = MDM_CarTheftMission:new(carTheft)
 
-  MDM_CarTheftMission._EvaluateSuccess(mission, mission.cars,mission.destinationArea.position,mission.destinationArea.radius)
+    MDM_CarTheftMission._EvaluateSuccess(mission, mission.cars,mission.destinationArea.position,mission.destinationArea.radius)
 
-  mission:Start()
+    mission:Start()
 
-  MDM_Core.callbackSystem.NotifyCallbacks("on_update",{})
+    MDM_Core.callbackSystem.NotifyCallbacks("on_update",{})
 
-  mission:Stop()
+    mission:Stop()
+  end)
+
 end

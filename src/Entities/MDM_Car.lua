@@ -8,7 +8,21 @@ local arguments = {
 }
 
 function MDM_Car.ForConfigs(configs)
-  return MDM_List:new(configs):Map(function(config) return MDM_Car:new(config) end)
+  if not configs then
+    error("confifgs not set",2)
+  end
+
+  if #configs == 0 then
+    error("configs has no elements",2)
+  end
+
+  local list = MDM_List:new(configs):Map(function(config) return MDM_Car:new(config) end)
+
+  if not list then
+    error("internal error list should not be nil",2)
+  end
+
+  return list
 end
 
 function MDM_Car:new(args, dummyPos, dummyDir)

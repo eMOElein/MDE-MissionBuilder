@@ -33,24 +33,21 @@ function MDM_NPC:new(args)
   npc.godmode = false
   npc.health = args.health or 100
   npc.battleArchetype = args.battleArchetype
-  npc.onSpawnedCallbacks = {}
-  npc.initialAnimation = args.initialAnimation
 
   --attributes
   npc.pos = args.position
   npc.dir = args.direction or MDM_Utils.GetVector(0,0,0)
   npc.ally = args.ally
 
+  if args.idleAnimation then
+    self.idleAnimation = MDM_NPCIdleAnimationDirector:new({
+      npc = npc,
+      animation = args.idleAnimation
+    })
+  end
+
   return npc
 end
-
---function MDM_NPC:new(npcId,pos,dir)
---  return MDM_NPC:fromArgs({
---    npcId = npcId,
---    position = pos,
---    direction = dir
---  })
---end
 
 function MDM_NPC.AttackPlayer(self)
   local ent = self:GetGameEntity()
@@ -138,11 +135,22 @@ local function _CreateSpawner(pos,dir)
 end
 
 function MDM_NPC.Despawn(self)
-  local entity = self:GetGameEntity()
-  if entity then
-    entity:SetPreventCleaning(false)
-    entity:DespawnImmunity(false)
-    entity:Deactivate()
+  if not self:IsSpawned() then
+    return
+  end
+
+  if  not self:_IsDirty() then
+    local entity = self:GetGameEntity()
+    if entity then
+      entity:SetPreventCleaning(false)
+      entity:DespawnImmunity(false)
+      entity:Deactivate()
+      self.spawner:Deactivate()
+    end
+  end
+
+  for _,callback in ipairs(self.onDespawnedCallbacks) do
+    callback()
   end
 end
 
@@ -187,10 +195,6 @@ function MDM_NPC.Godmode(self,bool)
   end
 end
 
-function MDM_NPC.OnSpawned(self,callback)
-  table.insert(self.onSpawnedCallbacks,callback)
-end
-
 local function _SpawnNPC(self,callback, spawnId, pos, dir)
   if not game then
     return
@@ -220,10 +224,6 @@ local function _SpawnNPC(self,callback, spawnId, pos, dir)
       npcEntity:SetBattleArchetype(self.battleArchetype)
     end
 
-    if self.initialAnimation ~= nil and type(self.initialAnimation) == "string" then
-      npcEntity:PlayAnimation(self.initialAnimation, true)
-    end
-
     if self.health and type(self.health) == "number" then
       npcEntity.health = self.health
     end
@@ -246,6 +246,17 @@ function MDM_NPC.IsDead(self)
 
   return self:GetHealth() == 0
 end
+
+function MDM_NPC._IsDirty(self)
+  if self:IsSpawned() and not self:GetGameEntity() then
+    return true
+  end
+
+  if self:GetGameEntity() and not self:GetGameEntity().GetPos then
+    return true
+  end
+end
+
 
 
 function MDM_NPC.MakeAlly(self,bool)

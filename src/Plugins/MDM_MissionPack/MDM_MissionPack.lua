@@ -5,7 +5,8 @@ MDM_MissionPack = {
   luas = {
     "Plugins/MDM_Missionpack/MDM_LucasBertone",
     "Plugins/MDM_Missionpack/MDM_SalieriMissions",
-    "Plugins/MDM_Missionpack/TestMissions"
+    "Plugins/MDM_Missionpack/TestMissions",
+    "Plugins/MDM_Missionpack/MDM_FrankMissions"
   }
 }
 
@@ -14,9 +15,22 @@ MDM_Core.AddPlugin(MDM_MissionPack)
 function MDM_MissionPack.Initialize()
   MDM_MissionPack.InitializeSalieriMissions()
   MDM_MissionPack.InitializeLucasBertoneMissions()
+  MDM_MissionPack.InitializeFrankMissions()
   MDM_MissionPack.InitializeVincenzoMissions()
-  MDM_MissionPack.InitializeTestMissions()
   MDM_MissionPack.InitializeRalphMissions()
+  MDM_MissionPack.InitializeTestMissions()
+
+end
+
+function MDM_MissionPack.InitializeFrankMissions()
+  local client = "Frank Colletti"
+
+  local M1_Test = {
+    title = "M1_Test",
+    client = client,
+    missionSupplier = MDM_FrankMissions.M1_Test
+  }
+  MDM_Core.missionManager:AddMissionProvider(M1_Test)
 end
 
 function MDM_MissionPack.InitializeSalieriMissions()

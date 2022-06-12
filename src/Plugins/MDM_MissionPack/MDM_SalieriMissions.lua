@@ -32,16 +32,16 @@ MDM_SalieriMissions.assets = {
     },
     compoundEnemies = {
       -- We set the battleArchetype to "archetype_triggerman_base_pol" as we do not want the triggermen to constantly spam us with molotovs.
-      {npcId="18187434932497386406",position=MDM_Vector:new(-918.92773,-706.95239,3.146647),direction=MDM_Vector:new(0.43737864,-0.89927745,0), battleArchetype = "archetype_triggerman_base_pol"},
-      {npcId="18187434932497386406",position=MDM_Vector:new(-921.99921,-711.38287,3.1582365),direction=MDM_Vector:new(0.70571977,-0.70849109,0), battleArchetype = "archetype_triggerman_base_pol"},
-      {npcId="18187434932497386406",position=MDM_Vector:new(-928.05493,-690.15259,3.061234),direction=MDM_Vector:new(-0.96647418,-0.2567637,0), battleArchetype = "archetype_triggerman_base_pol"},
-      {npcId="18187434932497386406",position=MDM_Vector:new(-913.62866,-690.31207,3.1151304),direction=MDM_Vector:new(-0.10116922,-0.99486923,0), battleArchetype = "archetype_triggerman_base_pol"},
-      {npcId="18187434932497386406",position=MDM_Vector:new(-909.53839,-699.11597,3.1243472),direction=MDM_Vector:new(-0.1667802,-0.9859941,0), battleArchetype = "archetype_triggerman_base_pol"},
-      {npcId="18187434932497386406",position=MDM_Vector:new(-922.41571,-744.79175,3.0986309),direction=MDM_Vector:new(-0.90848875,0.4179092,0), battleArchetype = "archetype_triggerman_base_pol"},
-      {npcId="18187434932497386406",position=MDM_Vector:new(-923.88202,-740.05048,3.093822),direction=MDM_Vector:new(-0.99298406,-0.11824846,0), battleArchetype = "archetype_triggerman_base_pol"},
-      {npcId="9024609446539980771",position=MDM_Vector:new(-922.49371,-728.50079,3.1785531),direction=MDM_Vector:new(0.60751921,-0.79430497,0), battleArchetype = "archetype_triggerman_base_pol"},
-      {npcId="18187434932497386406",position=MDM_Vector:new(-899.25873,-723.43848,3.1321092),direction=MDM_Vector:new(0.21112774,-0.97745848,0), battleArchetype = "archetype_triggerman_base_pol"},
-      {npcId="18187434932497386406",position=MDM_Vector:new(-915.8587,-745.17853,3.0953269),direction=MDM_Vector:new(0.70855165,-0.70565885,0), battleArchetype = "archetype_triggerman_base_pol"}
+      {npcId="18187434932497386406", position=MDM_Vector:new(-918.92773,-706.95239,3.146647), direction=MDM_Vector:new(0.43737864,-0.89927745,0), battleArchetype = "archetype_triggerman_base_pol"},
+      {npcId="18187434932497386406", position=MDM_Vector:new(-921.99921,-711.38287,3.1582365), direction=MDM_Vector:new(0.70571977,-0.70849109,0), battleArchetype = "archetype_triggerman_base_pol"},
+      {npcId="18187434932497386406", position=MDM_Vector:new(-928.05493,-690.15259,3.061234), direction=MDM_Vector:new(-0.96647418,-0.2567637,0), battleArchetype = "archetype_triggerman_base_pol"},
+      {npcId="18187434932497386406", position=MDM_Vector:new(-913.62866,-690.31207,3.1151304), direction=MDM_Vector:new(-0.10116922,-0.99486923,0), battleArchetype = "archetype_triggerman_base_pol"},
+      {npcId="18187434932497386406", position=MDM_Vector:new(-909.53839,-699.11597,3.1243472), direction=MDM_Vector:new(-0.1667802,-0.9859941,0), battleArchetype = "archetype_triggerman_base_pol"},
+      {npcId="18187434932497386406", position=MDM_Vector:new(-922.41571,-744.79175,3.0986309), direction=MDM_Vector:new(-0.90848875,0.4179092,0), battleArchetype = "archetype_triggerman_base_pol"},
+      {npcId="18187434932497386406", position=MDM_Vector:new(-923.88202,-740.05048,3.093822), direction=MDM_Vector:new(-0.99298406,-0.11824846,0), battleArchetype = "archetype_triggerman_base_pol"},
+      {npcId="9024609446539980771", position=MDM_Vector:new(-922.49371,-728.50079,3.1785531), direction=MDM_Vector:new(0.60751921,-0.79430497,0), battleArchetype = "archetype_triggerman_base_pol"},
+      {npcId="18187434932497386406", position=MDM_Vector:new(-899.25873,-723.43848,3.1321092), direction=MDM_Vector:new(0.21112774,-0.97745848,0), battleArchetype = "archetype_triggerman_base_pol"},
+      {npcId="18187434932497386406", position=MDM_Vector:new(-915.8587,-745.17853,3.0953269), direction=MDM_Vector:new(0.70855165,-0.70565885,0), battleArchetype = "archetype_triggerman_base_pol"}
     },
     paulie_appartment = {npcId="5874491335140879700",position=MDM_Vector:new(-634.74359,-272.58469,2.9996707),direction=MDM_Vector:new (-0.22052898,-0.97538036,0)},
     sam_compound = {npcId = "17582426933065501070", position = MDM_Vector:new(-1521.0383,-378.9501,3.4498563), direction = MDM_Vector:new(-0.95369244,0.30078357,0)}
@@ -95,24 +95,26 @@ MDM_SalieriMissions.assets = {
 }
 
 function MDM_SalieriMissions.M1_BackyardTrouble()
-  local cars = MDM_List:new(MDM_SalieriMissions.assets.M1_BackyardTrouble.cars):Map(function(e)  return MDM_Car:new(e) end)
-  local npcs = MDM_List:new(MDM_SalieriMissions.assets.M1_BackyardTrouble.enemies):Map(function(e)  return MDM_NPC:new(e) end)
-  local donSalieri = MDM_NPC:new(MDM_SalieriMissions.assets.M1_BackyardTrouble.donSalieri)
+  local assets = MDM_SalieriMissions.assets.M1_BackyardTrouble
 
-  local assets = MDM_List:new()
-  assets:AddAll(cars)
-  assets:Add(donSalieri)
-  assets:AddAll(npcs)
+  local cars = MDM_Car.ForConfigs(assets.cars)
+  local npcs = MDM_List:new(assets.enemies):Map(function(e)  return MDM_NPC:new(e) end)
+  local donSalieri = MDM_NPC:new(assets.donSalieri)
+
+  local missionAssets = MDM_List:new()
+  missionAssets:AddAll(cars)
+  missionAssets:Add(donSalieri)
+  missionAssets:AddAll(npcs)
 
   local mission = MDM_Mission:new({
     title = "Salieri - Backyard Trouble",
     startPosition = MDM_Locations.SALIERIS_BAR_FRONTDOOR,
-    assets = assets
+    assets = missionAssets
   })
 
-  local objective_500_Spawner = MDM_SpawnerObjective:new({
+  local objective_0500_Spawner = MDM_SpawnerObjective:new({
     mission = mission,
-    spawnables = assets
+    spawnables = missionAssets
   })
 
   local objective_1000_SpeakToSalieri = MDM_SpeakToObjective:new({
@@ -122,7 +124,7 @@ function MDM_SalieriMissions.M1_BackyardTrouble()
     outroText = "Some of Morello's gunmen were reported hanging around in our neighbourhood harassing our people.\nThis can not be tolerated.\nSend Morello a message and take them out.",
   })
 
-  local objective1 = MDM_KillTargetsObjective:new({
+  local objective_2000_killTargest = MDM_KillTargetsObjective:new({
     mission = mission,
     targets = npcs,
     title = "Take out Morello's henchmen in a nearby backyard",
@@ -130,14 +132,14 @@ function MDM_SalieriMissions.M1_BackyardTrouble()
   })
 
 
-  local objective2 = MDM_PoliceEvadeObjective:new ({
+  local objective_3000_evadePolice = MDM_PoliceEvadeObjective:new ({
     mission = mission,
     initialLevel = 2,
     title = "The police is on the way - Escape!"
   })
 
 
-  local objective3 = MDM_GoToObjective:new({
+  local objective_4000_driveBack = MDM_GoToObjective:new({
     mission = mission,
     position = MDM_Vector:new(-933.99438,-236.87489,3.7424583),
     radius = 2,
@@ -156,14 +158,17 @@ function MDM_SalieriMissions.M1_BackyardTrouble()
   local noPoliceZoneDirector = MDM_PoliceFreeZoneDirector:new({
     position = MDM_Vector:new(-671.66565,-10.197743,3.1811743), radius = 60
   })
-  MDM_ActivatorUtils.RunWhileObjective(noPoliceZoneDirector,objective1)
+  MDM_ActivatorUtils.RunWhileObjective(noPoliceZoneDirector,objective_2000_killTargest)
 
-  mission:AddObjective(objective_500_Spawner)
-  mission:AddObjective(objective_1000_SpeakToSalieri)
-  mission:AddObjective(objective1)
-  mission:AddObjective(objective2)
-  mission:AddObjective(objective3)
-  mission:AddObjective(objective_5000_SpeakToSalieri)
+  mission:AddObjectives({
+    objective_0500_Spawner,
+    objective_1000_SpeakToSalieri,
+    objective_2000_killTargest,
+    objective_3000_evadePolice,
+    objective_4000_driveBack,
+    objective_5000_SpeakToSalieri
+  })
+
   return mission
 end
 

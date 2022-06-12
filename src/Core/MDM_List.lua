@@ -20,11 +20,19 @@ function MDM_List:new(table)
 end
 
 function MDM_List.Add(self, element)
+  if not element then
+    error("element not set",2)
+  end
+
   MDM_List.AddAll(self,{element})
   return self
 end
 
 function MDM_List.AddAll(self, elements)
+  if not elements then
+    error("elements not set",2)
+  end
+
   for _,e in ipairs(elements) do
     table.insert(self,e)
   end

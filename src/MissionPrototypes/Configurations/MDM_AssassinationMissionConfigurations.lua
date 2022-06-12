@@ -95,6 +95,27 @@ MDM_AssassinationMissionConfigurations.assassinations = {
     },
     radius = 100
   },
+  {
+    title = "Park Assassination",
+    targets = {
+      {npcId = "18187434932497386406", position = MDM_Vector:new(-194.13007,312.06201,0.9450953), direction = MDM_Vector:new(0.99703133,0.076995902,0), battleArchetype = "archetype_triggerman_base_pol",idleAnimation = "Enemy_Hb_Calm_Idle"},
+    },
+    bodyguards = {
+      {npcId = "18187434932497386406", position = MDM_Vector:new(-244.38326,305.58328,3.897696), direction = MDM_Vector:new(-0.83262402,0.55383861,0), battleArchetype = "archetype_triggerman_base_pol", idleAnimation = "Enemy_Hb_Calm_Idle"},
+      {npcId = "18187434932497386406", position = MDM_Vector:new(-253.43889,309.94141,3.8716526), direction = MDM_Vector:new(0.92972571,-0.36825287,0), battleArchetype = "archetype_triggerman_base_pol", idleAnimation = "Enemy_Hb_Calm_Idle"},
+      {npcId = "18187434932497386406", position = MDM_Vector:new(-251.30437,335.45587,3.9417167), direction = MDM_Vector:new(0.99291825,0.11879957,0), battleArchetype = "archetype_triggerman_base_pol", idleAnimation = "Enemy_Hb_Calm_Idle"},
+      {npcId = "18187434932497386406", position = MDM_Vector:new(-248.59431,344.97662,3.9416795), direction = MDM_Vector:new(0.78333467,-0.62160015,0), battleArchetype = "archetype_triggerman_base_pol", idleAnimation = "Enemy_Hb_Calm_Idle"},
+      {npcId = "18187434932497386406", position = MDM_Vector:new(-231.51442,330.76373,5.6235695), direction = MDM_Vector:new(-0.91771865,0.39723092,0), battleArchetype = "archetype_triggerman_base_pol", idleAnimation = "Enemy_Hb_Calm_Idle"},
+      {npcId = "18187434932497386406", position = MDM_Vector:new(-219.02,363.12555,3.9389625), direction = MDM_Vector:new(0.47110531,0.88207698,0), battleArchetype = "archetype_triggerman_base_pol", idleAnimation = "Enemy_Hb_Calm_Idle"},
+      --versuch
+      {npcId = "18187434932497386406", position = MDM_Vector:new(-217.09352,326.8718,3.9431076), direction = MDM_Vector:new(-0.950064,-0.31205496,0), battleArchetype = "archetype_triggerman_base_pol", idleAnimation = "Enemy_Hb_Calm_Idle"},
+      {npcId = "18187434932497386406", position = MDM_Vector:new(-193.00963,332.24875,1.1126561), direction = MDM_Vector:new(-0.34178293,0.93977886,0), battleArchetype = "archetype_triggerman_base_pol", idleAnimation = "Enemy_Hb_Calm_Idle"},
+      {npcId = "18187434932497386406", position = MDM_Vector:new(-208.99831,294.00226,1.0423079), direction = MDM_Vector:new(-0.94839704,-0.317085,0), battleArchetype = "archetype_triggerman_base_pol", idleAnimation = "Enemy_Hb_Calm_Idle"}
+    },
+    carAssets = {
+    },
+    radius = 100
+  }
 }
 
 function MDM_AssassinationMissionConfigurations.CreateRandomAssassinationMission()

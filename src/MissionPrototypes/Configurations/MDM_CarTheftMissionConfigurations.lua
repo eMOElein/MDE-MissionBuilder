@@ -38,7 +38,7 @@ MDM_CarTheftMissionConfigurations.carThefts = {
       {carId = "berkley_810", position = MDM_Vector:new(-1471.0004,143.31783,4.1282439), direction = MDM_Vector:new(0.0047399029,-0.99761862,-0.068815365)}
     },
     bodyguards = {
-      {npcId = "18187434932497386406", position = MDM_Vector:new(-1465.2771,145.98138,3.9586792), direction = MDM_Vector:new(-0.73416042,-0.67897606,0)} --, initialAnimation = "Enemy_Hb_Calm_Idle"}
+      {npcId = "18187434932497386406", position = MDM_Vector:new(-1465.2771,145.98138,3.9586792), direction = MDM_Vector:new(-0.73416042,-0.67897606,0), idleAnimation = "Enemy_Hb_Calm_Idle"}
     },
     destination = {
       position = MDM_Vector:new(-966.93677,-234.86322,4.0429807),
