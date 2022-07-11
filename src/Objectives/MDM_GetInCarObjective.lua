@@ -5,7 +5,7 @@ function MDM_GetInCarObjective:new (args)
   local objective = MDM_Objective:new(args)
   setmetatable(objective, self)
   self.__index = self
-
+  
   objective.cars = MDM_List:new()
 
   if args.car then

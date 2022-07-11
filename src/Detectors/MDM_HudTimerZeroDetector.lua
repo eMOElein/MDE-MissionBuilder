@@ -5,6 +5,11 @@ function MDM_HudTimerZeroDetector:new(args)
   setmetatable(detector, self)
   self.__index = self
   detector.enabled = false
+
+  if not args.callback then
+    error("callback not set",2)
+  end
+
   detector.callback = args.callback
   return detector
 end

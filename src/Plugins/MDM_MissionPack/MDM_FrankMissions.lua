@@ -2,19 +2,19 @@ MDM_FrankMissions = {}
 
 MDM_FrankMissions.assets = {
   M1_Test = {
-    frank = {npcId = "3294909036990047762", position = MDM_Vector:new(-923.15936,-245.3199,2.7747059), direction = MDM_Vector:new(-0.99971199,0.023997903,0), initialAnimation = "hero_nw_calm_idle_fidget_rain_a"},
+    frank = {npcId = "16508991153834901104", position = MDM_Vector:new(-923.15936,-245.3199,2.7747059), direction = MDM_Vector:new(-0.99971199,0.023997903,0), initialAnimation = "hero_nw_calm_idle_fidget_rain_a"},
     compoundAllies = {
       {npcId = "18187434932497386406", position = MDM_Vector:new(-379.7298,480.71155,3.8913431), direction = MDM_Vector:new(0.99649781,0.083619177,0), battleArchetype = "archetype_triggerman_base_pol"},
       {npcId = "18187434932497386406", position = MDM_Vector:new(-373.87668,476.0126,3.8754921), direction = MDM_Vector:new(0.99515307,0.098338425,0), battleArchetype = "archetype_triggerman_base_pol"}
     },
     compoundEnemies = {
-      -- shotgunners
+      -- shotgun
       {npcId = "2624519215596331124", position = MDM_Vector:new(-358.44565,486.82159,3.8884668), direction = MDM_Vector:new(-0.89483333,-0.4464004,0)},
       {npcId = "2624519215596331124", position = MDM_Vector:new(-351.21591,477.30969,3.8884668), direction = MDM_Vector:new(-0.98277205,0.18482189,0)},
-      -- machinegunners
+      -- thompson
       {npcId = "8866396308432925397", position = MDM_Vector:new(-355.13467,475.11234,3.8884668), direction = MDM_Vector:new(-0.99063963,0.13650352,0)},
       {npcId = "8866396308432925397", position = MDM_Vector:new(-355.77206,484.4603,3.8884668), direction = MDM_Vector:new(-0.94384283,-0.33039472,0)},
-      -- Colt
+      -- colt
       {npcId = "18187434932497386406", position = MDM_Vector:new(-352.32721,486.45822,3.8884668), direction = MDM_Vector:new(-0.96145165,-0.2749736,0), battleArchetype = "archetype_triggerman_base_pol"},
       {npcId = "18187434932497386406", position = MDM_Vector:new(-352.32721,486.45822,3.8884668), direction = MDM_Vector:new(-0.96145165,-0.2749736,0), battleArchetype = "archetype_triggerman_base_pol"},
       {npcId = "18187434932497386406", position = MDM_Vector:new(-348.13992,477.85095,3.8884668), direction = MDM_Vector:new(-0.9883216,-0.15238188,0), battleArchetype = "archetype_triggerman_base_pol"},
@@ -30,7 +30,7 @@ MDM_FrankMissions.assets = {
 
     },
     mission_truck = {carId = "bolt_truck", position = MDM_Vector:new(-354.36224,480.75027,4.3814688), direction = MDM_Vector:new(-0.95393491,0.29989064,-0.0085874526)},
-
+    truck_destination = MDM_Vector:new(-970.55292,-234.52809,3.2840595)
   }
 }
 
@@ -41,27 +41,29 @@ function MDM_FrankMissions.M1_Test()
   local mission_truck = MDM_Car:new(assets.mission_truck)
   local compoundEnemies = MDM_List:new(assets.compoundEnemies):Map(function(ally) return MDM_NPC:newFriend(ally) end)
   local compoundAllies =   MDM_List:new(assets.compoundAllies):Map(function(ally) return MDM_NPC:newFriend(ally) end)
-  local compoundCars = MDM_Car.ForConfigs(assets.compoundCars)
+  local compoundCars = MDM_List:new(assets.compoundCars):Map(function(car) return MDM_Car:new(car) end)
 
-  local assets = MDM_List:new()
-  assets:AddAll(compoundEnemies)
-  assets:AddAll(compoundAllies)
-  assets:AddAll(compoundCars)
-  assets:Add(frank)
-  assets:Add(mission_truck)
+  local missionAssets = MDM_List:new()
+  missionAssets:AddAll(compoundEnemies)
+  missionAssets:AddAll(compoundAllies)
+  missionAssets:AddAll(compoundCars)
+  missionAssets:Add(frank)
+  missionAssets:Add(mission_truck)
 
   local mission = MDM_Mission:new({
     title = "Frank Test 1",
-    assets = assets
+    assets = missionAssets
   })
 
   local objective_0000_SpawnerObjective = MDM_SpawnerObjective:new({
     mission = mission,
-    spawnables = assets
+    spawnables = missionAssets
   })
+
   local objective_1000_SpeakToFrank = MDM_SpeakToObjective:new({
     mission = mission,
-    npc = frank
+    npc = frank,
+    outroText = "FRANK_TASK_1_START"
   })
 
   local objective_2000_GoToCompound = MDM_GoToObjective:new({
@@ -74,7 +76,7 @@ function MDM_FrankMissions.M1_Test()
     mission = mission,
     targets = compoundEnemies,
     onObjectiveStart = function()
-      MDM_List:new(compoundEnemies):ForEach(function(enemie) enemie:MakeEnemy() end)
+      MDM_List:new(compoundEnemies):ForEach(function(npc) npc:MakeEnemy() end)
       MDM_ShootoutMission._AttackRoundRobin(compoundAllies,compoundEnemies)
     end
   })
@@ -86,8 +88,14 @@ function MDM_FrankMissions.M1_Test()
 
   local objective_5000_DeliverTruck = MDM_DriveToObjective:new({
     mission = mission,
-    position = MDM_Locations.SALIERIS_BAR_GARAGE_FRONTDOOR,
+    position = assets.truck_destination,
     car = mission_truck
+  })
+
+  local objective_6000_SpeakToFrank = MDM_SpeakToObjective:new({
+    mission = mission,
+    npc = frank,
+    outroText = "FRANK_TASK_1_END"
   })
 
 
@@ -97,7 +105,8 @@ function MDM_FrankMissions.M1_Test()
     objective_2000_GoToCompound,
     objective_3000_KillCompoundEnemies,
     objective_4000_GetInTrucks,
-    objective_5000_DeliverTruck
+    objective_5000_DeliverTruck,
+    objective_6000_SpeakToFrank
   })
   --------------------------------------
   --------------Directors---------------

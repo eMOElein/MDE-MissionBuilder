@@ -22,13 +22,14 @@ MDM_SalieriMissions.assets = {
       {carId = "bolt_delivery", position = MDM_Vector:new(-908.26495,-740.39478,3.7478696), direction = MDM_Vector:new(-0.67092276,-0.74139231,-0.014146926)},
       {carId = "bolt_delivery", position = MDM_Vector:new(-912.86163,-761.5907,3.7518097), direction = MDM_Vector:new(-0.56397796,0.8257395,-0.0091202371)},
       {carId = "bolt_delivery", position = MDM_Vector:new(-911.30109,-725.61053,3.7402503), direction = MDM_Vector:new(-0.0078235492,0.99992293,-0.0096368138)},
-      {carId = "bolt_delivery", position = MDM_Vector:new(-1509.3436,-376.85468,3.6807584), direction = MDM_Vector:new(0.91617841,-0.40075919,0.0031141266)},
       {carId = "culver_airmaster", position = MDM_Vector:new(-910.1109,-735.37524,3.777604), direction = MDM_Vector:new(-0.99961263,0.02770582,-0.0026414304)},
       {carId = "shubert_e_six", position = MDM_Vector:new(-925.31885,-742.49475,3.6757897), direction = MDM_Vector:new(0.31558034,-0.94889647,-0.0022272428)},
       {carId = "shubert_e_six", position = MDM_Vector:new(-930.09686,-691.34521,3.614205), direction = MDM_Vector:new(-0.57875252,0.81542385,-0.011381509)},
       {carId = "shubert_e_six", position = MDM_Vector:new(-919.50708,-711.02771,3.7303878), direction = MDM_Vector:new(0.61881775,0.78550607,-0.0067021623)},
-      {carId = "shubert_six", position = MDM_Vector:new(-1534.4438,-407.91177,2.7442001), direction = MDM_Vector:new(0.9161188,-0.4007743,0.010295066)},
-      {carId = "lassiter_v16", position = MDM_Vector:new(-913.54755,-745.96582,3.7011901), direction = MDM_Vector:new(-0.90786278,-0.4191981,0.0076475153)}
+      {carId = "lassiter_v16", position = MDM_Vector:new(-913.54755,-745.96582,3.7011901), direction = MDM_Vector:new(-0.90786278,-0.4191981,0.0076475153)},
+      -- destination area cars
+      {carId = "shubert_six", position = MDM_Vector:new(-1533.4163,-408.33746,2.3574228), direction = MDM_Vector:new(0.91624779,-0.40051475,0.0088161454)},
+      {carId = "bolt_delivery", position = MDM_Vector:new(-1509.3436,-376.85468,3.6807584), direction = MDM_Vector:new(0.91617841,-0.40075919,0.0031141266)},
     },
     compoundEnemies = {
       -- We set the battleArchetype to "archetype_triggerman_base_pol" as we do not want the triggermen to constantly spam us with molotovs.

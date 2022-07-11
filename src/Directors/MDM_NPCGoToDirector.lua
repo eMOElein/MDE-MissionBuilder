@@ -16,7 +16,10 @@ function MDM_NPCGoToDirector:new (args)
 
   director.npc = args.npc
   director.position = args.position
-  director.detector = MDM_EntityInCircleDetector:new({entity = director.npc, position =  director.position, radius = 1})
+  director.area = MDM_Area.ForSphere({
+    position = director.position,
+    radius = 1
+  })
   self.previousPerception = nil
   return director
 end
@@ -37,7 +40,7 @@ function MDM_NPCGoToDirector.Update(self)
     return true
   end
 
-  if self.detector:Test() then
+  if self.area:IsInside(self.npc:GetPos()) then
     self:Disable()
     return true
   end

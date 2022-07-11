@@ -38,11 +38,11 @@ function MDM_HostileZoneDirector:new (args)
     position = args.position,
     radius = director.radius
   })
-  director.inAreaDetector = MDM_EntityInCircleDetector:new({
-    entity = MDM_PlayerUtils.GetPlayer(),
+  director.area = MDM_Area.ForSphere({
     position = args.position,
     radius = director.radius
   })
+
   return director
 end
 
@@ -51,7 +51,7 @@ function MDM_HostileZoneDirector.Update(self)
     return
   end
 
-  if not self.inAreaDetector:Test() then
+  if not MDM_Utils.Player.IsInArea(self.area) then
     return
   end
 

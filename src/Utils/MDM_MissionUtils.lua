@@ -8,7 +8,7 @@ MDM_MissionUtils = {}
 -- @param callback function that gets called when the timer reaches 0
 function MDM_MissionUtils.RunTimerBetweenObjectives(mission, objectiveFrom, objectiveTo, timerValue, callback)
   objectiveFrom:OnObjectiveStart(function() MDM_HUDUtils.StartTimer(timerValue) end)
-  objectiveTo:OnObjectiveStop(function() MDM_HUDUtils.StopTimer() end)
+  objectiveTo:OnObjectiveEnd(function() MDM_HUDUtils.StopTimer() end)
 
   local timerZeroDetector = MDM_HudTimerZeroDetector:new({callback = callback})
   MDM_ActivatorUtils.EnableOnObjectiveStart(timerZeroDetector,objectiveFrom)

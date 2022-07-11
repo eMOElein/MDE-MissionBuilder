@@ -28,17 +28,6 @@ function MDM_NPCUtils.RemoveMelee(npc)
 
 end
 
-function MDM_NPCUtils.MakeHostileIfInRadius(npcPlayer, npcEnemy, radius)
-  if not MDM_Entity.IsSpawned(npcPlayer) or not MDM_Entity.IsSpawned(npdPlayer)then
-    return
-  end
-
-  local distance = MDM_Utils.GetDistance(npcPlayer:GetPos(), npcEnemy:GetPos())
-  if distance <= radius then
-    npcEnemy:AttackPlayer()
-  end
-end
-
 function MDM_NPCUtils.EquipTommygun(npc)
   local weapon = "smg_trench_a_v1"
   local ent = npc:GetGameEntity()

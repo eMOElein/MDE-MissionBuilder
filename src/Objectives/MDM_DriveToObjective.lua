@@ -1,5 +1,4 @@
 MDM_DriveToObjective = {}
-MDM_DriveToObjective = MDM_Objective:class()
 
 function MDM_DriveToObjective:new(args)
   if not args.position then
@@ -11,14 +10,16 @@ function MDM_DriveToObjective:new(args)
   end
 
   local objective = MDM_Objective:new(args)
-  setmetatable(objective, self)
-  self.__index = self
-
 
   objective.vector = args.position
   objective.radius = args.radius or 20
   objective.car = args.car
   objective.onFoot = true
+
+  objective:OnObjectiveStart(function() MDM_DriveToObjective._OnObjectiveStart(objective) end)
+  objective:OnObjectiveEnd(function() MDM_DriveToObjective._OnObjectiveEnd(objective) end)
+  objective:OnUpdate(function() MDM_DriveToObjective._OnUpdate(objective) end)
+
 
   objective.area = MDM_Area.ForSphere({
     position = objective.vector,
@@ -28,9 +29,7 @@ function MDM_DriveToObjective:new(args)
   return objective
 end
 
-function MDM_DriveToObjective.Start(self)
-  MDM_Objective.Start(self)
-
+function MDM_DriveToObjective._OnObjectiveStart(self)
   if not self.blip then
     self.blip = MDM_Blip.ForVector({vector = self.vector})
   end
@@ -39,21 +38,15 @@ function MDM_DriveToObjective.Start(self)
   self.area:Show()
 end
 
-function MDM_DriveToObjective.Stop(self)
+function MDM_DriveToObjective._OnObjectiveEnd(self)
   self.area:Hide()
   self.blip:Hide()
-  MDM_Objective.Stop(self)
 end
 
-function MDM_DriveToObjective.Update(self)
-  MDM_Objective.Update(self)
-  if not self.running then
-    return
-  end
+function MDM_DriveToObjective._OnUpdate(self)
+  local successful = MDM_DriveToObjective._IsSuccessful(self)
 
-  local successful = self:_IsSuccessful()
-
-  if self:_IsSuccessful() then
+  if MDM_DriveToObjective._IsSuccessful(self) then
     self:Succeed()
   end
 end
@@ -71,9 +64,6 @@ function MDM_DriveToObjective._IsSuccessful(self)
     return false
   end
 
-  --  local correctCar = false
-  --  correctCar = correctCar or self.car == nil and MDM_Utils.Player.IsInCar()
-  --  correctCar = correctCar or self.car:GetGameEntity() == MDM_Utils.Vehicle.GetPlayerCurrentVehicle()
   return true
 end
 

@@ -41,17 +41,17 @@ function MDM_EntityDistanceDirector:new (args)
   director.warningText = args.warningText
   director.warningCallback = args.warningCallback
 
-  director.distanceDetector = MDM_EntityInCircleDetector:new({
-    entity = MDM_PlayerUtils.GetPlayer(),
+  director.distanceArea = MDM_Area.ForSphere({
     position = director.entity:GetPos(),
     radius = director.distance
   })
 
+
   if director.warningDistance then
-    director.warningDetector = MDM_EntityInCircleDetector:new({
-      entity = MDM_PlayerUtils.GetPlayer(),
+    director.warningArea = MDM_Area.ForSphere({
       position = director.entity:GetPos(),
-      radius = director.warningDistance})
+      radius = director.warningDistance
+    })
   end
 
   return director
@@ -87,10 +87,13 @@ function MDM_EntityDistanceDirector.Update(self)
     return
   end
 
-  self.distanceDetector:SetPosition(self.entity:GetPos())
-  self.warningDetector:SetPosition(self.entity:GetPos())
+  self.distanceArea.position = self.entity:GetPos()
 
-  local warning = self.warningDetector and not self.warningDetector:Test()
+  if self.warningArea then
+    self.warningArea.position = self.entity:GetPos()
+  end
+
+  local warning = self.warningArea and not MDM_Utils.Player.IsInArea(self.warningArea)
 
   if warning and not self.warningPrevious then
     if game and self.warningText then
@@ -111,7 +114,7 @@ function MDM_EntityDistanceDirector.Update(self)
   self.warningPrevious  = warning
 
 
-  if not self.distanceDetector:Test() then
+  if not MDM_Utils.Player.IsInArea(self.distanceArea) then
     if self.callback then
       self.callback()
     end

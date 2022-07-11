@@ -16,13 +16,15 @@ end
 
 function MDM_Property.Set(self, value)
   if self.value ~= value then
-  local old = self.value
+    local old = self.value
     self.value = value
-    self.onPropertyChangedCallbacks:ForEach(function(callback) callback({
-	source = self,
-	old = old,
-	new = self.value
-	}) end)
+    self.onPropertyChangedCallbacks:ForEach(
+      function(callback) callback({
+        source = self,
+        old = old,
+        new = self.value
+      })
+      end)
   end
 end
 

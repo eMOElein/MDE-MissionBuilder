@@ -7,7 +7,7 @@ function MDM_DestroyCarInAreaObjective:new(args)
   end
 
   if not args.position then
-    error("vector not set",2)
+    error("position not set",2)
   end
 
   local objective = MDM_Objective:new(args)
@@ -18,8 +18,12 @@ function MDM_DestroyCarInAreaObjective:new(args)
   objective.radius = args.radius or 20
   objective.blip = MDM_ObjectivePosition:new(objective.title..":Testblip",objective.pos,objective.radius)
 
+  objective.area = MDM_Area.ForSphere({
+    position = objective.pos,
+    radius = objective.radius
+  })
+
   objective.car = args.car
-  objective.positiondetector = MDM_EntityInCircleDetector:new({entity = objective.car, position = objective.pos, radius = objective.radius})
   objective.damagedetector = MDM_CarDamageDetector:new({car = objective.car, threshold = 100, flagMotorDamage = false, flagCarDamage = true})
 
   return objective
@@ -44,7 +48,7 @@ function MDM_DestroyCarInAreaObjective.Update(self)
   MDM_Objective.Update(self)
 
   local damage = self.damagedetector:Test()
-  local position = self.positiondetector:Test()
+  local position = self.area.IsInside(self,self.car:GetPos())
 
   if damage and position then
     self:Succeed()

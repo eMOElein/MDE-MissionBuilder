@@ -1,38 +1,18 @@
 MDM_GoToObjective = {}
-MDM_GoToObjective = MDM_Objective:class()
 
-
-local args = {
-  position = nil,
-  radius = nil,
-  outroText = nil,
-  introText = nil
-}
 function MDM_GoToObjective:new(args)
   if not args.position then
-    error("vector not set",2)
+    error("position not set",2)
   end
 
   local objective = MDM_Objective:new(args)
-  setmetatable(objective, self)
-  self.__index = self
-
   objective.vector = args.position
   objective.radius = args.radius or 20
+  objective:OnObjectiveStart(function() MDM_GoToObjective._OnObjectiveStart(objective) end)
+  objective:OnObjectiveEnd(function() MDM_GoToObjective._OnObjectiveEnd(objective) end)
+  objective:OnUpdate(function() MDM_GoToObjective._OnUpdate(objective) end)
+
   objective.area = MDM_Area.ForSphere({
-    position = objective.vector,
-    radius = objective.radius
-  })
-
-  if args.onUpdate  then
-    if type(args.onUpdae) ~= "function" then
-      error("onUpdate is not of type function",2)
-    end
-    objective:OnUpdate(args.onUpdate)
-  end
-
-  objective.detector = MDM_EntityInCircleDetector:new({
-    entity = MDM_PlayerUtils.GetPlayer(),
     position = objective.vector,
     radius = objective.radius
   })
@@ -40,18 +20,12 @@ function MDM_GoToObjective:new(args)
   return objective
 end
 
-
-function MDM_GoToObjective:PlayerDistanceToObjective(vector)
-  local Distance = 0
-  if game then
-    Distance = getp():GetPos():DistanceToPoint(vector)
-  end
-  return Distance
+function MDM_GoToObjective._OnObjectiveEnd(self)
+  self.area:Hide()
+  self.blip:Hide()
 end
 
-function MDM_GoToObjective.Start(self)
-  MDM_Objective.Start(self)
-
+function MDM_GoToObjective._OnObjectiveStart(self)
   if not self.blip then
     self.blip = MDM_Blip.ForVector({vector = self.vector})
   end
@@ -60,18 +34,7 @@ function MDM_GoToObjective.Start(self)
   self.area:Show()
 end
 
-function MDM_GoToObjective.Stop(self)
-  self.area:Hide()
-  self.blip:Hide()
-  MDM_Objective.Stop(self)
-end
-
-function MDM_GoToObjective.Update(self)
-  MDM_Objective.Update(self)
-  if not self.running then
-    return
-  end
-
+function MDM_GoToObjective._OnUpdate(self)
   if self.area:IsInside(MDM_PlayerUtils.GetPlayer():GetPos()) then
     self:Succeed()
   end

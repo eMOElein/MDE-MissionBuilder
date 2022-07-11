@@ -241,13 +241,6 @@ function MDM_Car.SetPrimaryColorRGB(self,r,g,b)
   end
 end
 
-function MDM_Car.UnitTest()
-  local car = MDM_Car:new("falconer_classic", MDM_Utils.GetVector(-907.94,-210.41,2),MDM_Utils.GetVector(-907.94,-210.41,2))
-  car:Spawn()
-  car:Despawn()
-
-end
-
 function MDM_Car.IsPlayerInCar(self)
   if not self.spawned or self.spawning then
     return false

@@ -15,23 +15,23 @@ function MDM_AssassinationMission:new(args)
   --    error("position not set",2)
   end
 
-  mission.targets = {}
-  mission.bodyguards = {}
-  mission.carAssets = {}
+  mission.targets = MDM_List:new()
+  mission.bodyguards = MDM_List:new()
+  mission.carAssets = MDM_List:new()
 
   for _,t in ipairs(args.targets) do
-    table.insert(mission.targets,MDM_NPC:new(t))
+    mission.targets:Add(MDM_NPC:new(t))
   end
 
   if args.bodyguards ~= nil then
     for _,b in ipairs(args.bodyguards) do
-      table.insert(mission.bodyguards, MDM_NPC:new(b))
+      mission.bodyguards:Add(MDM_NPC:new(b))
     end
   end
 
   if args.carAssets ~= nil then
     for _,c in ipairs(args.carAssets) do
-      table.insert(mission.carAssets, MDM_Car:new(c))
+      mission.carAssets:Add(MDM_Car:new(c))
     end
   end
 
@@ -71,15 +71,12 @@ function MDM_AssassinationMission:new(args)
   })
   mission:AddObjective(objective_200_KillTargets)
 
-  local objective_300_leave = MDM_DetectorObjective:new({
+  local objective_300_leave = MDM_LeaveAreaObjective:new({
     mission = mission,
     title = "Leave the area",
-    detector = MDM_InvertedDetector:new({
-      detector = MDM_EntityInCircleDetector:new ({
-        entity = MDM_PlayerUtils.GetPlayer(),
-        position = mission.position,
-        radius = mission.radius
-      })
+    area = MDM_Area.ForSphere({
+      position = mission.position,
+      radius = mission.radius
     })
   })
   mission:AddObjective(objective_300_leave)

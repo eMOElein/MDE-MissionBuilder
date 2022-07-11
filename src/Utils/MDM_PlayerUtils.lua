@@ -43,7 +43,7 @@ function MDM_PlayerUtils.GetPos()
 end
 
 function MDM_PlayerUtils.IsInArea(area)
-  area:IsInside(MDM_PlayerUtils.GetPlayer():GetPos())
+  return area:IsInside(MDM_PlayerUtils.GetPlayer():GetPos())
 end
 
 function MDM_PlayerUtils.IsInCar()

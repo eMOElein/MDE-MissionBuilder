@@ -3,10 +3,10 @@ MDM_MissionPack = {
   author = "eMOElein",
   version = "0.1",
   luas = {
-    "Plugins/MDM_Missionpack/MDM_LucasBertone",
-    "Plugins/MDM_Missionpack/MDM_SalieriMissions",
-    "Plugins/MDM_Missionpack/TestMissions",
-    "Plugins/MDM_Missionpack/MDM_FrankMissions"
+    "Plugins/MDM_MissionPack/MDM_LucasBertone",
+    "Plugins/MDM_MissionPack/MDM_SalieriMissions",
+    "Plugins/MDM_MissionPack/TestMissions",
+    "Plugins/MDM_MissionPack/MDM_FrankMissions"
   }
 }
 
@@ -290,8 +290,6 @@ end
 
 function MDM_MissionPack.InitializeRalphMissions()
   local client = "Ralph"
-
-
 
   local cartheftMissionTest = {
     title = "Random Car Theft",

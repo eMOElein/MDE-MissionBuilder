@@ -24,8 +24,10 @@ function MDM_PoliceFreeZoneDirector:new (args)
   end
 
   director.args = args
-  director.detector = MDM_EntityInCircleDetector:new({entity = MDM_PlayerUtils.GetPlayer(),position = args.position, radius = args.radius})
-  director.area = MDM_MapCircle:new (args.position,args.radius,1)
+  director.area = MDM_Area.ForSphere({
+    position = args.position,
+    radius = args.radius
+  })
   director.showArea = false
 
   if args.showArea ~= nil then
@@ -40,15 +42,18 @@ function MDM_PoliceFreeZoneDirector.Update(self)
     return
   end
 
-  self.detector:Test()
-
-  if self.detector:HasEntered() then
+  --entered area
+  local isInArea =  MDM_Utils.Player.IsInArea(self.area)
+  if isInArea and not self.previousInArea then
     MDM_PoliceUtils.DisablePolice()
   end
 
-  if self.detector:HasLeft() then
+  --left area
+  if not isInArea and self.previousInArea then
     MDM_PoliceUtils.EnablePolice()
   end
+
+  self.previousInArea = isInArea
 
   MDM_Director.Update(self)
 end
@@ -60,6 +65,7 @@ end
 
 function MDM_PoliceFreeZoneDirector.Disable(self)
   self:ShowArea(false)
+  self.previousInArea = false
   MDM_PoliceUtils.EnablePolice()
   MDM_Director.Disable(self)
 end

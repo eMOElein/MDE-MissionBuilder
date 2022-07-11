@@ -12,14 +12,6 @@ function MDM_Entity:new(spawnPos, spawnDir)
   setmetatable(entity, self)
   self.__index = self
 
-  --  if type(spawnPos) ~= "table" then
-  --    error("no spawnPos",2)
-  --  end
-  --
-  --    if type(spawnDir) ~= "table" then
-  --    error("no spawnDir",2)
-  --  end
-
 
   entity.respawntime = -1
   entity.isactive = false

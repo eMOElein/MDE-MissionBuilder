@@ -1,15 +1,7 @@
-MDM_KillTargetsObjective = {} -- Unneccessary but IDE needs it to isplay Methods
-MDM_KillTargetsObjective = MDM_Objective:class()
+MDM_KillTargetsObjective = {}
 
-local args = {
-  targets = nil
-}
 function MDM_KillTargetsObjective:new (args)
-  args.title = args.title or "Eliminate the targets"
-
   local objective = MDM_Objective:new(args)
-  setmetatable(objective, self)
-  self.__index = self
 
   if args.targets == nil then
     error("targets not set",2)
@@ -19,65 +11,56 @@ function MDM_KillTargetsObjective:new (args)
     error("targets is empty",2)
   end
 
-  objective.targets = args.targets
-  objective.targetsDeadDetector = MDM_TargetsDeadDetector:new({targets = objective.targets,onTargetsDead = function()  end})
-
-  objective.blip = MDM_ObjectivePosition:new(objective:GetTitle() ..":TestMDM_ObjectivePosition",objective.targets[1]:GetPos())
+  objective.targets = MDM_List:new(args.targets)
+  objective:OnObjectiveStart(function() MDM_KillTargetsObjective._OnObjectiveStart(objective) end)
+  objective:OnObjectiveEnd(function()  MDM_KillTargetsObjective._OnObjectiveEnd(objective) end)
+  objective:OnUpdate(function() MDM_KillTargetsObjective._OnUpdate(objective) end)
 
   return objective
 end
 
-function MDM_KillTargetsObjective.Start(self)
-  MDM_Objective.Start(self)
+function MDM_KillTargetsObjective._OnObjectiveStart(self)
+  self.blip = MDM_Blip.ForVector({vector = self.targets[1]:GetPos()})
   self.blip:Show()
 
   MDM_Utils.SpawnAll(self.targets)
 
-  for _,t in ipairs(self.targets) do
-    MDM_Blip.ForNPC({npc = t})
+  if not self.targetBlips then
+    self.targetBlips = MDM_List:new()
   end
 
+  for _,t in ipairs(self.targets) do
+    local  targetBlip = MDM_Blip.ForNPC({npc = t})
+    self.targetBlips:Add(targetBlip)
+  end
 end
 
-function MDM_KillTargetsObjective.Update(self)
-  if not self.running then
+function MDM_KillTargetsObjective._TargetsDead(self)
+  for _,t in ipairs(self.targets) do
+    if not t:IsDead() then
+      return false
+    end
+  end
+
+  return true
+end
+
+function MDM_KillTargetsObjective._OnUpdate(self)
+  if not MDM_KillTargetsObjective._TargetsDead(self) then
     return
   end
 
-
-  MDM_Objective.Update(self)
-
-  if self.targets == nil then
-    error("targets nil")
-  end
-
-  local iconType = "objective_primary"
-
-  --  if not self.indicator then
-  --    for _,t in ipairs(self.targets) do
-  --      MDM_Blip.ForNPC({npc = t})
-  --    end
-  --    self.indicator = true
-  --  end
-
-
-  if self.targetsDeadDetector:Test() then
-    MDM_Objective.Succeed(self)
-
-    if self.indicator then
-      for _,t in ipairs(self.targets) do
-        if t:IsSpawned() then
-          game.navigation:SetIconShowByEntity(t:GetGameEntity(), false)
-          game.hud:RemoveEntityIndicator(t:GetGameEntity(), iconType, Math:newVector(3,3,3))
-        end
-      end
-    end
-  end
+  self:Succeed()
 end
 
-function MDM_KillTargetsObjective.Stop(self)
-  self.blip:Hide()
-  MDM_Objective.Stop(self)
+function MDM_KillTargetsObjective._OnObjectiveEnd(self)
+  if self.blip then
+    self.blip:Hide()
+  end
+
+  if self.targetBlips then
+    self.targetBlips:ForEach(function(blip) blip:Hide() end)
+  end
 end
 
 function MDM_KillTargetsObjective.UnitTest()
