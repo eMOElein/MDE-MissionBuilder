@@ -14,8 +14,8 @@ local pos_BertonesAutoservice = MDM_Locations.BERTONES_AUTOSERVICE_FRONTDOOR --r
 function MDM_LucasBertone.M1_1_Fairplay()
   local smithV12Car = MDM_Car:new({
     carId = "smith_v12",
-    position = MDM_Utils.GetVector(-180.402725,-897.841553,2.624493),
-    direction = MDM_Utils.GetVector(-0.021050,0.999603,-0.018721)
+    position = MDM_Vector:new(-180.42198,-897.6167,2.6228838),
+    direction = MDM_Vector:new(-0.020389061,0.99960119,-0.019538959)
   })
   smithV12Car:SetPrimaryColorRGB(150,100,0)
 
@@ -228,15 +228,14 @@ function MDM_LucasBertone.M3_1_Omerta()
   })
   mission:AddObjective(objective3)
 
-  local bigStanAliveMonitor = MDM_DetectorDirector:new({
-    detector = MDM_NPCDeadDetector:new({
-      npcs = {npc_big_stan},
-    }),
-    callback = function() mission:Fail("You killed Big Stan") end
+  local bigStanAliveDirector = MDM_CallbackDirector:new({
+    callback = function ()
+      if npc_big_stan:IsDead() then
+        mission:Fail("You killed Big Stan")
+      end
+    end
   })
-  MDM_ActivatorUtils.RunBetweenObjectives(bigStanAliveMonitor,objective2,objective3)
-
-
+  MDM_ActivatorUtils.RunBetweenObjectives(bigStanAliveDirector,objective2,objective3)
   return mission
 end
 
@@ -391,7 +390,7 @@ function MDM_LucasBertone.M5_1_CremeDeLaCreme()
     MDM_Car:new({ carId = "bolt_truck", position = MDM_Utils.GetVector(2085.188,-911.09637,34.2), direction = MDM_Utils.GetVector(0.83328521,0.55257672,-0.017171353)})
   }
 
-  local pos_lighthouse = MDM_Utils.GetVector(2128.7178,-912.16492,30.68644)
+  local pos_lighthouse = MDM_Vector:new(2128.7178,-912.16492,30.68644)
 
   local mission = MDM_Mission:new({
     initialWeather = "mm_170_plane_cp_060_cine_1750_plane_airport",
@@ -451,14 +450,12 @@ function MDM_LucasBertone.M5_1_CremeDeLaCreme()
   mission:AddObjective(objective5)
 
   --We don't want the car to be destroyed before we are at the lighthouse.
-  local damageDirector = MDM_DetectorDirector:new({
-    detector = MDM_CarDamageDetector:new({
-      car = car_shubert,
-      threshold = 100,
-      flagMotorDamage = true,
-      flagCarDamage = true
-    }),
-    callback = function () mission:Fail("You did not destroy the car in the right location!") end
+  local damageDirector = MDM_CallbackDirector:new({
+    callback = function ()
+      if not car_shubert:CanDrive() then
+        mission:Fail("You did not destroy the car in the right location!")
+      end
+    end
   })
   MDM_ActivatorUtils.RunBetweenObjectives(damageDirector,objective2,objective3)
 

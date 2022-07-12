@@ -116,7 +116,6 @@ function MDM_Objective.Start(self)
   self.running = true
 
   if game then
-    --    self.entity  = game.game:CreateCleanEntity(Math:newVector(-1225,-390,0), 0, false, false, true)
     if self.title then
       game.hud:UpdateSimpleObjective(self:GetTitle(), "param 2", true, true, "param 3")
     end

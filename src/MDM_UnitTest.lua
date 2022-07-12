@@ -47,11 +47,6 @@ function all()
   MDM_UnitTest.RegisterTest({name = "MDM_NPCTest.UnitTest", func = MDM_NPCTest.UnitTest})
   MDM_UnitTest.RegisterTest({name = "MDM_CarTest.UnitTest", func = MDM_CarTest.UnitTest})
   ----------------
-  --- Detectors --
-  ----------------
-  MDM_UnitTest.RegisterTest({name = "MDM_CarDamageDetector.UnitTes", func = MDM_CarDamageDetector.UnitTest})
-  MDM_UnitTest.RegisterTest({name = "MDM_DetectorObjective.UnitTest", func = MDM_DetectorObjective.UnitTest})
-  ----------------
   --- Directors --
   ----------------
   MDM_UnitTest.RegisterTest({name = "MDM_Director.UnitTest", func = MDM_Director.UnitTest})

@@ -46,8 +46,18 @@ function MDM_PlayerUtils.IsInArea(area)
   return area:IsInside(MDM_PlayerUtils.GetPlayer():GetPos())
 end
 
-function MDM_PlayerUtils.IsInCar()
-  return MDM_VehicleUtils.GetPlayerCurrentVehicle() ~= nil
+function MDM_PlayerUtils.IsInCar(car)
+  local currentVehicle =  MDM_VehicleUtils.GetPlayerCurrentVehicle()
+
+  if not car and currentVehicle ~= nil then
+    return true
+  end
+
+  if car and car:GetGameEntity() == currentVehicle then
+    return true
+  end
+
+  return false
 end
 
 function MDM_PlayerUtils.RestorePlayer()

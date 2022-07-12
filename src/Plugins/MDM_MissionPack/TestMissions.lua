@@ -3,7 +3,7 @@ TestMissions = {}
 local objBlip = nil
 function TestMissions.Test()
 
-  --game.hud:TemperatureGaugeShow(true) Überhitzungsanzeige und Wert setzen
+  --game.hud:TemperatureGaugeShow(true) ï¿½berhitzungsanzeige und Wert setzen
   --game.hud:SetTemperatureGaugeValue(20)
 
   -- Movie ????===? "cine_0400_motel_intro"
@@ -43,7 +43,7 @@ function TestMissions.Test()
   --game.hud:SetTailingGaugeValue(50) -- Abstandsanzeige Wert setzen
 
   --game.hud:DamageGaugeShow(true) --Anzeige Fahrzeugschaden
-  --game.hud:SetDamageGaugeValue(50) -- Wert für Anzeige Fahrzeugschaden
+  --game.hud:SetDamageGaugeValue(50) -- Wert fï¿½r Anzeige Fahrzeugschaden
 
   --game.hud:StartCountDown(20) Countdown vom Rennen
 end
@@ -439,12 +439,14 @@ function TestMissions.GetInCar()
     mission:Fail()
   end
 
-  local damageMonitor = MDM_CarDamageDetector:new({car = falconerCar, threshold = 5, flagMotorDamage = true, flagCarDamage = true})
-  local damageDetector = MDM_DetectorDirector:new({
-    detector = damageMonitor,
-    callback = onCarDestroyed
+  local damageDirector = MDM_CallbackDirector:new({
+    callback = function()
+      if not falconerCar:CanDrive() then
+        onCarDestroyed()
+      end
+    end
   })
-  MDM_ActivatorUtils.RunWhileObjective(damageDetector,objective2)
+  MDM_ActivatorUtils.RunWhileObjective(damageDirector,objective2)
 
   mission:AddAssets({falconerCar})
 

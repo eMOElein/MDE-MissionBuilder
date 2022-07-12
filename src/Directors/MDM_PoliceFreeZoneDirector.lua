@@ -1,11 +1,6 @@
 MDM_PoliceFreeZoneDirector = {}
 MDM_PoliceFreeZoneDirector = MDM_Director:class()
 
-local arguments = {
-  position = nil,
-  radius = nil,
-  showArea = false
-}
 --- MDM_PoliceFreeZoneDirector
 -- Creates an area around a point in which the police is disabled when the player enters it.
 -- Police is enabled again when the player leaves the area.

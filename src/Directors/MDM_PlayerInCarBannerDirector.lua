@@ -17,7 +17,6 @@ function MDM_PlayerInCarBannerDirector:new (config)
 
   director.carEntity = config.car
   director.text = config.text or "Get Back In The Car"
-  director.detector = MDM_PlayerInCarDetector:new(config)
   director.banner = MDM_Banner:new(director.text)
   director.banner.color = 0
   director.showing = false
@@ -30,11 +29,11 @@ function MDM_PlayerInCarBannerDirector.Update(self)
     return
   end
 
-  if not self.detector:Test() and not self.banner:IsShowing() then
+  if not MDM_Utils.Player.IsInCar(self.car) and not self.banner:IsShowing() then
     self.banner:Show()
   end
 
-  if self.detector:Test() and self.banner:IsShowing() then
+  if MDM_Utils.Player.IsInCar(self.car) and self.banner:IsShowing() then
     self.banner:Hide()
   end
 
@@ -50,23 +49,9 @@ end
 function MDM_PlayerInCarBannerDirector.UnitTest()
   local m = MDM_Mission:new({title = ""})
 
-  local value = false
-  local director = MDM_PlayerInCarBannerDirector:new({mission = m,car = {IsPlayerInCar = function() return value end, IsSpawned = function() return true end}})
+  local director = MDM_PlayerInCarBannerDirector:new({mission = m,car = {}})
   director:Enable()
   director:Update()
-  if not director.banner:IsShowing() then
-    error("banner should be showing")
-  end
 
-  value = true
-  director:Update()
-  if director.banner:IsShowing() then
-    error("banner not be showing")
-  end
 
-  value = false
-  director:Update()
-  if not director.banner:IsShowing() then
-    error("banner should  be showing")
-  end
 end

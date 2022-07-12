@@ -24,7 +24,6 @@ function MDM_DestroyCarInAreaObjective:new(args)
   })
 
   objective.car = args.car
-  objective.damagedetector = MDM_CarDamageDetector:new({car = objective.car, threshold = 100, flagMotorDamage = false, flagCarDamage = true})
 
   return objective
 end
@@ -47,8 +46,8 @@ end
 function MDM_DestroyCarInAreaObjective.Update(self)
   MDM_Objective.Update(self)
 
-  local damage = self.damagedetector:Test()
-  local position = self.area.IsInside(self,self.car:GetPos())
+  local damage = not self.car:CanDrive()
+  local position = self.area:IsInside(self.car:GetPos())
 
   if damage and position then
     self:Succeed()

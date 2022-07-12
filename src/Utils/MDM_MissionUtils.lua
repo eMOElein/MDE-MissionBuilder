@@ -7,11 +7,23 @@ MDM_MissionUtils = {}
 -- @param timerValue timer value im seconds
 -- @param callback function that gets called when the timer reaches 0
 function MDM_MissionUtils.RunTimerBetweenObjectives(mission, objectiveFrom, objectiveTo, timerValue, callback)
-  objectiveFrom:OnObjectiveStart(function() MDM_HUDUtils.StartTimer(timerValue) end)
-  objectiveTo:OnObjectiveEnd(function() MDM_HUDUtils.StopTimer() end)
+  objectiveFrom:OnObjectiveStart(function()
+    MDM_HUDUtils.StartTimer(timerValue)
+  end)
 
-  local timerZeroDetector = MDM_HudTimerZeroDetector:new({callback = callback})
+  objectiveTo:OnObjectiveEnd(function()
+    MDM_HUDUtils.StopTimer()
+    MDM_HUDUtils.HideTimer()
+  end)
+
+  local timerZeroDetector = MDM_CallbackDirector:new({
+    callback = function()
+      local time = game.hud:TimerGetTime()
+      if time and time == 0 then
+        callback()
+      end
+    end
+  })
   MDM_ActivatorUtils.EnableOnObjectiveStart(timerZeroDetector,objectiveFrom)
   MDM_ActivatorUtils.DisableOnObjectiveStop(timerZeroDetector,objectiveTo)
---  mission:AddDirector(timerZeroDetector)
 end

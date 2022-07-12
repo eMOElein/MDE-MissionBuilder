@@ -78,7 +78,7 @@ function MDM_Car.GetCarDamage(self)
   if veh then
     return veh:GetDamage()
   end
-  return
+  return 0
 end
 
 function MDM_Car.GetMotorDamage(self)
@@ -86,7 +86,7 @@ function MDM_Car.GetMotorDamage(self)
   if veh then
     return veh:GetMotorDamage()
   end
-  return
+  return 0
 end
 
 local function _SpawnCar(self,args)
@@ -172,8 +172,6 @@ function MDM_Car.Spawn(self)
     self.spawned = true
   end
 end
-
-
 
 function MDM_Car.Despawn(self)
   local entity = self:GetGameEntity()
