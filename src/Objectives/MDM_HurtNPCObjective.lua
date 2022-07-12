@@ -19,7 +19,7 @@ function MDM_HurtNPCObjective:new(args)
 
   objective.npc = args.npc
   objective.threshold = args.threshold
-  objective.blip = MDM_ObjectivePosition:new(objective:GetTitle(),objective.npc:GetPos())
+  --objective.blip = MDM_ObjectivePosition:new(objective:GetTitle(),objective.npc:GetPos())
   objective.onThresholdCallbacks = {}
   return objective
 end
@@ -40,7 +40,10 @@ function MDM_HurtNPCObjective.Update(self)
 end
 
 function MDM_HurtNPCObjective.Start(self)
-  --  self.hurtDirector:Enable()
+  if not self.blip then
+    self.blip = MDM_Blip.ForNPC({npc=self.npc})
+  end
+
   self.blip:Show()
   MDM_Objective.Start(self)
 end

@@ -1,5 +1,4 @@
 MDM_DestroyCarInAreaObjective = {}
-MDM_DestroyCarInAreaObjective = MDM_Objective:class()
 
 function MDM_DestroyCarInAreaObjective:new(args)
   if not args.car then
@@ -11,12 +10,12 @@ function MDM_DestroyCarInAreaObjective:new(args)
   end
 
   local objective = MDM_Objective:new(args)
-  setmetatable(objective, self)
-  self.__index = self
 
   objective.pos = args.position
   objective.radius = args.radius or 20
-  objective.blip = MDM_ObjectivePosition:new(objective.title..":Testblip",objective.pos,objective.radius)
+  objective.blip = MDM_Blip.ForVector({vector = objective.pos})
+  objective.blip:Hide()
+  --objective.blip = MDM_ObjectivePosition:new(objective.title..":Testblip",objective.pos,objective.radius)
 
   objective.area = MDM_Area.ForSphere({
     position = objective.pos,
@@ -25,27 +24,26 @@ function MDM_DestroyCarInAreaObjective:new(args)
 
   objective.car = args.car
 
+  objective:OnObjectiveStart(MDM_DestroyCarInAreaObjective._OnObjectiveStart)
+  objective:OnObjectiveEnd(MDM_DestroyCarInAreaObjective._OnObjectiveEnd)
+  objective:OnUpdate(MDM_DestroyCarInAreaObjective._OnUpdate)
+
   return objective
 end
 
-function MDM_DestroyCarInAreaObjective.Start(self)
-  MDM_Objective.Start(self)
-
+function MDM_DestroyCarInAreaObjective._OnObjectiveStart(self)
   if self.blip then
-    self.blip:AddToMap()
+    self.blip:Show()
   end
 end
 
-function MDM_DestroyCarInAreaObjective.Stop(self)
+function MDM_DestroyCarInAreaObjective._OnObjectiveEnd(self)
   if self.blip then
-    self.blip:RemoveFromMap()
+    self.blip:Hide()
   end
-  MDM_Objective.Stop(self)
 end
 
-function MDM_DestroyCarInAreaObjective.Update(self)
-  MDM_Objective.Update(self)
-
+function MDM_DestroyCarInAreaObjective._OnUpdate(self)
   local damage = not self.car:CanDrive()
   local position = self.area:IsInside(self.car:GetPos())
 

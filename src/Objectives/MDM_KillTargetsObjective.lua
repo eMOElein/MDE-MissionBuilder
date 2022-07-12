@@ -12,9 +12,9 @@ function MDM_KillTargetsObjective:new (args)
   end
 
   objective.targets = MDM_List:new(args.targets)
-  objective:OnObjectiveStart(function() MDM_KillTargetsObjective._OnObjectiveStart(objective) end)
-  objective:OnObjectiveEnd(function()  MDM_KillTargetsObjective._OnObjectiveEnd(objective) end)
-  objective:OnUpdate(function() MDM_KillTargetsObjective._OnUpdate(objective) end)
+  objective:OnObjectiveStart(MDM_KillTargetsObjective._OnObjectiveStart)
+  objective:OnObjectiveEnd(MDM_KillTargetsObjective._OnObjectiveEnd)
+  objective:OnUpdate(MDM_KillTargetsObjective._OnUpdate)
 
   return objective
 end

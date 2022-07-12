@@ -1,13 +1,4 @@
 MDM_HostileZoneDirector = {}
-MDM_HostileZoneDirector = MDM_Director:class()
-
-local arguments = {
-  position = nil,
-  radius = 50,
-  detectionRadius = 10,
-  enemies = {},
-  showArea = false
-}
 
 function MDM_HostileZoneDirector:new (args)
   if not args then
@@ -27,30 +18,23 @@ function MDM_HostileZoneDirector:new (args)
   end
 
   local director = MDM_Director:new(args)
-  setmetatable(director, self)
-  self.__index = self
 
   director.args = args
-  director.mapCircle = MDM_MapCircle:new(args.posistion,args.radius,4)
   director.index = 1
   director.radius = args.radius or 50
   director.area = MDM_Area.ForSphere({
     position = args.position,
     radius = director.radius
   })
-  director.area = MDM_Area.ForSphere({
-    position = args.position,
-    radius = director.radius
-  })
+
+  director:OnEnabled(function() MDM_HostileZoneDirector._OnEnabled(director) end)
+  director:OnDisabled(function() MDM_HostileZoneDirector._OnDisabled(director) end)
+  director:OnUpdate(function() MDM_HostileZoneDirector._OnUpdate(director) end)
 
   return director
 end
 
-function MDM_HostileZoneDirector.Update(self)
-  if not self:IsEnabled() then
-    return
-  end
-
+function MDM_HostileZoneDirector._OnUpdate(self)
   if not MDM_Utils.Player.IsInArea(self.area) then
     return
   end
@@ -71,22 +55,19 @@ function MDM_HostileZoneDirector.Update(self)
   if self.index > #self.args.enemies then
     self.index = 1
   end
-
-  MDM_Director.Update(self)
 end
 
-function MDM_HostileZoneDirector.Enable(self)
-  MDM_Director.Enable(self)
-  if self.showArea then
-    self.mapCircle:Show()
+function MDM_HostileZoneDirector._OnEnabled(self)
+  if self.showArea and self.area then
+    self.area:Show()
   end
 end
 
-function MDM_HostileZoneDirector.Disable(self)
+function MDM_HostileZoneDirector._OnDisabled(self)
   MDM_Director.Disable(self)
 
-  if self.mapCircle then
-    self.mapCircle:Hide()
+  if self.area then
+    self.area:Hide()
   end
 end
 

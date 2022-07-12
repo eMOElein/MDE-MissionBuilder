@@ -31,10 +31,6 @@ function MDM_Director:new (args)
     director:OnDisabled(args.onDisabled)
   end
 
-  --  if args.mission then
-  --    args.mission:AddDirector(director)
-  --  end
-
   return director
 end
 
@@ -58,7 +54,7 @@ function MDM_Director.IsEnabled(self)
 end
 
 function MDM_Director.Disable(self)
-  if not self.enabled then
+  if not self:IsEnabled() then
     return
   end
 

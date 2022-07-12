@@ -126,7 +126,7 @@ function MDM_Objective.Start(self)
   end
 
   for _,callback in ipairs(self.onObjectiveStartCallbacks) do
-    callback()
+    callback(self)
   end
 end
 
@@ -151,7 +151,7 @@ function MDM_Objective.Update(self)
     return
   end
 
-  self.onUpdateCallbacks:ForEach(function(callback) callback() end)
+  self.onUpdateCallbacks:ForEach(function(callback) callback(self) end)
 end
 
 function MDM_Objective.GetIntroText(self)

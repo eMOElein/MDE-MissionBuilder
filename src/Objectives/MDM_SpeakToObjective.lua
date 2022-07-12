@@ -1,13 +1,6 @@
 MDM_SpeakToObjective = {}
 MDM_SpeakToObjective = MDM_Objective:class()
 
-
-local args = {
-  position = nil,
-  radius = nil,
-  outroText = nil,
-  introText = nil
-}
 function MDM_SpeakToObjective:new(args)
   if not args.npc then
     error("npc not set",2)

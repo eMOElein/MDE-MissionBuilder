@@ -1,4 +1,4 @@
-MDM_PoliceEvadeObjective = MDM_Objective:class()
+MDM_PoliceEvadeObjective = {}
 
 local args = {
   initialLevel = 1
@@ -9,12 +9,13 @@ function MDM_PoliceEvadeObjective:new (args)
   end
 
   local objective = MDM_Objective:new(args)
-  setmetatable(objective, self)
-  self.__index = self
   objective.title = args.title or "Evade the police"
   objective.task = args.task or "Evade the police"
   objective.description = args.description or "Evade the police"
   objective.initLevel = args.initialLevel
+
+  objective:OnObjectiveStart(MDM_PoliceEvadeObjective._OnObjectiveStart)
+  objective:OnUpdate(MDM_PoliceEvadeObjective._OnUpdate)
   return objective
 end
 
@@ -22,22 +23,15 @@ function MDM_PoliceEvadeObjective.SetInitialWantedLevel(self,level)
   self.initLevel = level
 end
 
-function MDM_PoliceEvadeObjective.Update(self)
-  if not self.running then
-    return
-  end
-
+function MDM_PoliceEvadeObjective._OnUpdate(self)
   if not MDM_PoliceUtils.IsPlayerHunted() then
     MDM_Objective.SetOutcome(self,1)
   else
   end
-
-  MDM_Objective.Update(self)
 end
 
-function MDM_PoliceEvadeObjective.Start(self)
+function MDM_PoliceEvadeObjective._OnObjectiveStart(self)
   if self.initLevel > 0 then
     MDM_PoliceUtils.SetWantedLevel(self.initLevel)
   end
-  MDM_Objective.Start(self)
 end

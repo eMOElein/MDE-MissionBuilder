@@ -1,14 +1,10 @@
 MDM_PoliceFreeZoneDirector = {}
-MDM_PoliceFreeZoneDirector = MDM_Director:class()
-
 --- MDM_PoliceFreeZoneDirector
 -- Creates an area around a point in which the police is disabled when the player enters it.
 -- Police is enabled again when the player leaves the area.
 --
 function MDM_PoliceFreeZoneDirector:new (args)
   local director = MDM_Director:new(args)
-  setmetatable(director, self)
-  self.__index = self
 
   if not args.position then
     error("position not set",2)
@@ -29,14 +25,15 @@ function MDM_PoliceFreeZoneDirector:new (args)
     director.showArea = args.showArea
   end
 
+  director.ShowArea = MDM_PoliceFreeZoneDirector.ShowArea
+  director:OnEnabled(function() MDM_PoliceFreeZoneDirector._OnEnabled(director) end)
+  director:OnDisabled(function() MDM_PoliceFreeZoneDirector._OnDisabled(director) end)
+  director:OnUpdate(function() MDM_PoliceFreeZoneDirector._OnUpdate(director) end)
+
   return director
 end
 
-function MDM_PoliceFreeZoneDirector.Update(self)
-  if not self:IsEnabled() then
-    return
-  end
-
+function MDM_PoliceFreeZoneDirector._OnUpdate(self)
   --entered area
   local isInArea =  MDM_Utils.Player.IsInArea(self.area)
   if isInArea and not self.previousInArea then
@@ -49,20 +46,16 @@ function MDM_PoliceFreeZoneDirector.Update(self)
   end
 
   self.previousInArea = isInArea
-
-  MDM_Director.Update(self)
 end
 
-function MDM_PoliceFreeZoneDirector.Enable(self)
+function MDM_PoliceFreeZoneDirector._OnEnabled(self)
   self:ShowArea(self.args.showArea)
-  MDM_Director.Enable(self)
 end
 
-function MDM_PoliceFreeZoneDirector.Disable(self)
+function MDM_PoliceFreeZoneDirector._OnDisabled(self)
   self:ShowArea(false)
   self.previousInArea = false
   MDM_PoliceUtils.EnablePolice()
-  MDM_Director.Disable(self)
 end
 
 --- MDM_PoliceFreeZoneDirector.ShowArea

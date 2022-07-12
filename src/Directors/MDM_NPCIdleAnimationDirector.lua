@@ -1,6 +1,4 @@
 MDM_NPCIdleAnimationDirector = {}
-MDM_NPCIdleAnimationDirector = MDM_Director:class()
-
 
 function MDM_NPCIdleAnimationDirector:new (args)
   if not args.animation then
@@ -16,11 +14,12 @@ function MDM_NPCIdleAnimationDirector:new (args)
   end
 
   local director = MDM_Director:new(args)
-  setmetatable(director, self)
-  self.__index = self
-
   director.npc = args.npc
   director.animation = args.animation
+
+  director:OnEnabled(function() MDM_NPCIdleAnimationDirector._OnEnabled(director) end)
+  director:OnUpdate(function() MDM_NPCIdleAnimationDirector._OnUpdate(director) end)
+  director:OnDisabled(function() MDM_NPCIdleAnimationDirector._OnDisabled(director) end)
 
   if director.npc:IsSpawned() then
     director:Enable()
@@ -28,8 +27,6 @@ function MDM_NPCIdleAnimationDirector:new (args)
     director.npc:OnSpawned(function() director:Enable() end)
     director.npc:OnDespawned(function() director:Disable() end)
   end
-
-  director._on_Update = function() MDM_NPCIdleAnimationDirector.Update(director) end
 
   return director
 end
@@ -43,51 +40,29 @@ function MDM_NPCIdleAnimationDirector._PlayAnimation(self)
 
     entity:PlayAnimation(self.animation, true)
   end
-
-  function MDM_NPCIdleAnimationDirector._StopAnimation(self)
-    local entity = self.npc:GetGameEntity()
-    if not entity then
-      return
-    end
-
-    if entity.StopAllAnimations then
-      entity:StopAllAnimations()
-    end
-  end
 end
 
-function MDM_NPCIdleAnimationDirector.Enable(self)
-  --  print("Enabling")
-  if self:IsEnabled() then
+function MDM_NPCIdleAnimationDirector._StopAnimation(self)
+  local entity = self.npc:GetGameEntity()
+  if not entity then
     return
   end
 
-  MDM_Director.Enable(self)
+  if entity.StopAllAnimations then
+    entity:StopAllAnimations()
+  end
+end
 
-  -- MDM_Core.callbackSystem.RegisterCallback("on_update",self._on_Update)
+
+function MDM_NPCIdleAnimationDirector._OnEnabled(self)
   MDM_NPCIdleAnimationDirector._PlayAnimation(self)
-
 end
 
-function MDM_NPCIdleAnimationDirector.Disable(self)
-  --  print("Disabling")
-  if not self:IsEnabled() then
-    return
-  end
-
-  MDM_Director.Disable(self)
-
-
-  --  MDM_Core.callbackSystem.UnregisterCallback("on_update",self._on_Update)
+function MDM_NPCIdleAnimationDirector._OnDisabled(self)
   MDM_NPCIdleAnimationDirector._StopAnimation(self)
 end
 
-function MDM_NPCIdleAnimationDirector.Update(self)
-  --  print("Updating")
-  if not self:IsEnabled() then
-    return
-  end
-
+function MDM_NPCIdleAnimationDirector._OnUpdate(self)
   local releaseThreshold = 2
   local gameEntity = self.npc:GetGameEntity()
 
@@ -100,7 +75,7 @@ function MDM_NPCIdleAnimationDirector.Update(self)
   end
 
   if gameEntity:GetEnemyPerceptionState() > releaseThreshold then
-    MDM_NPCIdleAnimationDirector.Disable(self)
+    self:Disable()
   end
 
 end
