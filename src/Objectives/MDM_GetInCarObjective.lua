@@ -1,11 +1,8 @@
 MDM_GetInCarObjective = {}
-MDM_GetInCarObjective = MDM_Objective:class()
 
 function MDM_GetInCarObjective:new (args)
   local objective = MDM_Objective:new(args)
-  setmetatable(objective, self)
-  self.__index = self
-  
+
   objective.cars = MDM_List:new()
 
   if args.car then
@@ -19,6 +16,10 @@ function MDM_GetInCarObjective:new (args)
   if #objective.cars == 0 then
     error("no car set",2)
   end
+
+  objective:OnObjectiveStart(MDM_GetInCarObjective._OnObjectiveStart)
+  objective:OnObjectiveEnd(MDM_GetInCarObjective._OnObjectiveEnd)
+  objective:OnUpdate(MDM_GetInCarObjective._OnUpdate)
 
   return objective
 end
@@ -38,9 +39,7 @@ function MDM_GetInCarObjective.AddCar(self,car)
 
 end
 
-function MDM_GetInCarObjective.Start(self)
-  MDM_Objective.Start(self)
-
+function MDM_GetInCarObjective._OnObjectiveStart(self)
   for _,c in ipairs(self.cars) do
     if not c:IsSpawned() then
       c:Spawn()
@@ -48,9 +47,7 @@ function MDM_GetInCarObjective.Start(self)
   end
 end
 
-function MDM_GetInCarObjective.Stop(self)
-  MDM_Objective.Stop(self)
-
+function MDM_GetInCarObjective._OnObjectiveEnd(self)
   if self.carBlips then
     for _,b in ipairs(self.carBlips) do
       b:Hide()
@@ -58,9 +55,7 @@ function MDM_GetInCarObjective.Stop(self)
   end
 end
 
-function MDM_GetInCarObjective.Update(self)
-  MDM_Objective.Update(self)
-
+function MDM_GetInCarObjective._OnUpdate(self)
   if not self.carBlips  then
     self.carBlips = MDM_List:new()
     for _,c in ipairs(self.cars) do

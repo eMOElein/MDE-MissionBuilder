@@ -1,5 +1,4 @@
 MDM_EntityDistanceDirector = {}
-MDM_EntityDistanceDirector = MDM_Director:class()
 
 function MDM_EntityDistanceDirector:new (args)
   if args.entity == nil then
@@ -31,9 +30,6 @@ function MDM_EntityDistanceDirector:new (args)
   end
 
   local director = MDM_Director:new(args)
-  setmetatable(director, self)
-  self.__index = self
-
   director.entity = args.entity
   director.distance = args.distance
   director.callback = args.callback
@@ -54,39 +50,25 @@ function MDM_EntityDistanceDirector:new (args)
     })
   end
 
+  director:OnEnabled(MDM_EntityDistanceDirector._OnEnabled)
+  director:OnDisabled(MDM_EntityDistanceDirector._OnDisabled)
+  director:OnUpdate(MDM_EntityDistanceDirector._OnUpdate)
+
   return director
 end
 
-function MDM_EntityDistanceDirector.Enable(self)
-  MDM_Director.Enable(self)
-
-  if self:IsEnabled() then
-    return
-  end
-
+function MDM_EntityDistanceDirector._OnEnabled(self)
   self.warningPrevious = false
 end
 
 
-function MDM_EntityDistanceDirector.Disable(self)
-  MDM_Director.Disable(self)
-
-  if not self:IsEnabled() then
-    return
-  end
-
+function MDM_EntityDistanceDirector._OnDisabled(self)
   if self.warningPrevious and game then
     game.hud:SendMessageMovie("HUD", "OnHideFreerideNotification")
   end
 end
 
-function MDM_EntityDistanceDirector.Update(self)
-  MDM_Director.Update(self)
-
-  if not self:IsEnabled() then
-    return
-  end
-
+function MDM_EntityDistanceDirector._OnUpdate(self)
   self.distanceArea.position = self.entity:GetPos()
 
   if self.warningArea then

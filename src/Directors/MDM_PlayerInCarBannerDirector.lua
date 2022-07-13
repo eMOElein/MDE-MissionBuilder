@@ -1,7 +1,6 @@
 --- MDM_PlayerInCarBannerDirector
 -- Director that shows a banner when the player is not inside the monitored car.
 MDM_PlayerInCarBannerDirector = {}
-MDM_PlayerInCarBannerDirector = MDM_Director:class()
 
 --- The constructor configuration table must contain the following fields.
 -- @param mission an instance of MDM_Mission that this director is attached to.
@@ -12,23 +11,19 @@ function MDM_PlayerInCarBannerDirector:new (config)
   end
 
   local director = MDM_Director:new({mission = config.mission})
-  setmetatable(director, self)
-  self.__index = self
 
   director.carEntity = config.car
   director.text = config.text or "Get Back In The Car"
   director.banner = MDM_Banner:new(director.text)
   director.banner.color = 0
   director.showing = false
+
+  director:OnUpdate(MDM_PlayerInCarBannerDirector._OnUpdate)
+
   return director
 end
 
---@Overwrite
-function MDM_PlayerInCarBannerDirector.Update(self)
-  if not self:IsEnabled() then
-    return
-  end
-
+function MDM_PlayerInCarBannerDirector._OnUpdate(self)
   if not MDM_Utils.Player.IsInCar(self.car) and not self.banner:IsShowing() then
     self.banner:Show()
   end
@@ -36,8 +31,6 @@ function MDM_PlayerInCarBannerDirector.Update(self)
   if MDM_Utils.Player.IsInCar(self.car) and self.banner:IsShowing() then
     self.banner:Hide()
   end
-
-  MDM_Director.Update(self)
 end
 
 --@Overwrite

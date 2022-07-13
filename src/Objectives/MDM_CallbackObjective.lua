@@ -9,7 +9,7 @@ function MDM_CallbackObjective:new (args)
   end
 
   objective.callback = args.callback
-  objective:OnUpdate(function() MDM_CallbackObjective._OnUpdate(objective) end)
+  objective:OnUpdate(MDM_CallbackObjective._OnUpdate)
   return objective
 end
 

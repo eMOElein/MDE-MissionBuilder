@@ -12,7 +12,7 @@ function MDM_CallbackDirector:new (args)
   local director = MDM_Director:new(args)
   director.callback = args.callback
   
-  director:OnUpdate(function() MDM_CallbackDirector._OnUpdate(director) end)
+  director:OnUpdate(MDM_CallbackDirector._OnUpdate)
 
   return director
 end

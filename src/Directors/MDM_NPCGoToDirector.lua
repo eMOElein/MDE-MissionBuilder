@@ -1,10 +1,7 @@
 MDM_NPCGoToDirector = {}
-MDM_NPCGoToDirector = MDM_Director:class()
 
 function MDM_NPCGoToDirector:new (args)
   local director = MDM_Director:new(args)
-  setmetatable(director, self)
-  self.__index = self
 
   if not args.npc then
     error("npc not set",2)
@@ -20,15 +17,15 @@ function MDM_NPCGoToDirector:new (args)
     position = director.position,
     radius = 1
   })
-  self.previousPerception = nil
+
+  director.previousPerception = nil
+
+  director:OnUpdate(MDM_NPCGoToDirector._OnUpdate)
+
   return director
 end
 
-function MDM_NPCGoToDirector.Update(self)
-  if not MDM_Director.Update(self) then
-    return
-  end
-
+function MDM_NPCGoToDirector._OnUpdate(self)
   local gameEntity = self.npc:GetGameEntity()
 
   if not gameEntity then
@@ -68,11 +65,6 @@ function MDM_NPCGoToDirector.Update(self)
 
   --  print("Perception: " ..gameEntity:GetEnemyPerceptionState())
   self.previousPerception = gameEntity:GetEnemyPerceptionState()
-end
-
-function MDM_NPCGoToDirector.Disable(self)
-  MDM_Director.Disable(self)
-  --      print("Disabling MoveTo")
 end
 
 function MDM_NPCGoToDirector.UnitTest()

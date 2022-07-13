@@ -1,5 +1,4 @@
 MDM_SpeakToObjective = {}
-MDM_SpeakToObjective = MDM_Objective:class()
 
 function MDM_SpeakToObjective:new(args)
   if not args.npc then
@@ -7,11 +6,12 @@ function MDM_SpeakToObjective:new(args)
   end
 
   local objective = MDM_Objective:new(args)
-  setmetatable(objective, self)
-  self.__index = self
-
   objective.npc = args.npc
   objective.radius = args.radius or 2
+
+  objective:OnObjectiveStart(MDM_SpeakToObjective._OnObjectiveStart)
+  objective:OnObjectiveEnd(MDM_SpeakToObjective._OnObjectiveEnd)
+  objective:OnUpdate(MDM_SpeakToObjective._OnUpdate)
 
   return objective
 end
@@ -25,9 +25,7 @@ function MDM_SpeakToObjective:PlayerDistanceToObjective(vector)
   return Distance
 end
 
-function MDM_SpeakToObjective.Start(self)
-  MDM_Objective.Start(self)
-
+function MDM_SpeakToObjective._OnObjectiveStart(self)
   if not self.blip then
     self.blip = MDM_Blip.ForNPC({npc = self.npc})
   end
@@ -35,20 +33,13 @@ function MDM_SpeakToObjective.Start(self)
   self.blip:Show()
 end
 
-function MDM_SpeakToObjective.Stop(self)
+function MDM_SpeakToObjective._OnObjectiveEnd(self)
   if self.blip then
     self.blip:Hide()
   end
-
-  MDM_Objective.Stop(self)
 end
 
-function MDM_SpeakToObjective.Update(self)
-  MDM_Objective.Update(self)
-  if not self.running then
-    return
-  end
-
+function MDM_SpeakToObjective._OnUpdate(self)
   local posPlayer = MDM_Utils.Player.GetPos()
   local posNPC = self.npc:GetPos()
 

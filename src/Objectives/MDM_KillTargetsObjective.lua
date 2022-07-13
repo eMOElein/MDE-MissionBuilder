@@ -46,11 +46,11 @@ function MDM_KillTargetsObjective._TargetsDead(self)
 end
 
 function MDM_KillTargetsObjective._OnUpdate(self)
-  if not MDM_KillTargetsObjective._TargetsDead(self) then
-    return
-  end
+  local targetsDead = MDM_KillTargetsObjective._TargetsDead(self)
 
-  self:Succeed()
+  if targetsDead then
+    self:Succeed()
+  end
 end
 
 function MDM_KillTargetsObjective._OnObjectiveEnd(self)

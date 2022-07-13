@@ -46,7 +46,7 @@ function MDM_Director.Enable(self)
     MDM_Core.callbackSystem.RegisterCallback("on_update", self._onUpdate)
   end
 
-  MDM_Utils.ForEach(self.onEnabledCallbacks,function(callback) callback() end)
+  MDM_Utils.ForEach(self.onEnabledCallbacks,function(callback) callback(self) end)
 end
 
 function MDM_Director.IsEnabled(self)
@@ -66,7 +66,7 @@ function MDM_Director.Disable(self)
   end
 
   for i,callback in ipairs(self.onDisabledCallbacks) do
-    callback()
+    callback(self)
   end
 
 end
@@ -89,7 +89,7 @@ function MDM_Director.Update(self)
     return
   end
 
-  self.onUpdateCallbacks:ForEach(function(callback) callback() end)
+  self.onUpdateCallbacks:ForEach(function(callback) callback(self) end)
 end
 
 --@Overwrite

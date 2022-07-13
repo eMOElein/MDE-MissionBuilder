@@ -2,12 +2,9 @@
 -- DEPRECATED DO NOT USE !!! ------
 -----------------------------------
 MDM_HurtNPCObjective = {}
-MDM_HurtNPCObjective = MDM_Objective:class()
 
 function MDM_HurtNPCObjective:new(args)
   local objective = MDM_Objective:new(args)
-  setmetatable(objective, self)
-  self.__index = self
 
   if not args.npc then
     error("npc not set",2)
@@ -19,8 +16,12 @@ function MDM_HurtNPCObjective:new(args)
 
   objective.npc = args.npc
   objective.threshold = args.threshold
-  --objective.blip = MDM_ObjectivePosition:new(objective:GetTitle(),objective.npc:GetPos())
   objective.onThresholdCallbacks = {}
+
+  objective:OnObjectiveStart(MDM_HurtNPCObjective._OnObjectiveStart)
+  objective:OnObjectiveEnd(MDM_HurtNPCObjective._OnObjectiveEnd)
+  objective:OnUpdate(MDM_HurtNPCObjective._OnUpdate)
+
   return objective
 end
 
@@ -28,30 +29,22 @@ function MDM_HurtNPCObjective.OnThreshold(self)
 
 end
 
-function MDM_HurtNPCObjective.Update(self)
-  if not self:IsRunning() then
-    return
-  end
-
+function MDM_HurtNPCObjective._OnUpdate(self)
   if self.npc:GetHealth() <= self.threshold then
     self:Succeed()
   end
-
 end
 
-function MDM_HurtNPCObjective.Start(self)
+function MDM_HurtNPCObjective._OnObjectiveStart(self)
   if not self.blip then
     self.blip = MDM_Blip.ForNPC({npc=self.npc})
   end
 
   self.blip:Show()
-  MDM_Objective.Start(self)
 end
 
-function MDM_HurtNPCObjective.Stop(self)
-  --  self.hurtDirector:Disable()
+function MDM_HurtNPCObjective._OnObjectiveEnd(self)
   self.blip:Hide()
-  MDM_Objective.Stop(self)
 end
 
 function MDM_HurtNPCObjective.UnitTest()

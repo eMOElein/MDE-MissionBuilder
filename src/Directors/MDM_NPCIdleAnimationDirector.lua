@@ -17,9 +17,9 @@ function MDM_NPCIdleAnimationDirector:new (args)
   director.npc = args.npc
   director.animation = args.animation
 
-  director:OnEnabled(function() MDM_NPCIdleAnimationDirector._OnEnabled(director) end)
-  director:OnUpdate(function() MDM_NPCIdleAnimationDirector._OnUpdate(director) end)
-  director:OnDisabled(function() MDM_NPCIdleAnimationDirector._OnDisabled(director) end)
+  director:OnEnabled(MDM_NPCIdleAnimationDirector._OnEnabled)
+  director:OnUpdate(MDM_NPCIdleAnimationDirector._OnUpdate)
+  director:OnDisabled(MDM_NPCIdleAnimationDirector._OnDisabled)
 
   if director.npc:IsSpawned() then
     director:Enable()

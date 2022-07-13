@@ -26,9 +26,10 @@ function MDM_PoliceFreeZoneDirector:new (args)
   end
 
   director.ShowArea = MDM_PoliceFreeZoneDirector.ShowArea
-  director:OnEnabled(function() MDM_PoliceFreeZoneDirector._OnEnabled(director) end)
-  director:OnDisabled(function() MDM_PoliceFreeZoneDirector._OnDisabled(director) end)
-  director:OnUpdate(function() MDM_PoliceFreeZoneDirector._OnUpdate(director) end)
+
+  director:OnEnabled(MDM_PoliceFreeZoneDirector._OnEnabled)
+  director:OnDisabled(MDM_PoliceFreeZoneDirector._OnDisabled)
+  director:OnUpdate(MDM_PoliceFreeZoneDirector._OnUpdate)
 
   return director
 end

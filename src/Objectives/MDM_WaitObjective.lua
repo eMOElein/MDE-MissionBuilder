@@ -1,10 +1,7 @@
 MDM_WaitObjective = {}
-MDM_WaitObjective = MDM_Objective:class()
 
 function MDM_WaitObjective:new(args)
   local objective = MDM_Objective:new(args)
-  setmetatable(objective, self)
-  self.__index = self
 
   if args.seconds == nil then
     error("seconds",2)
@@ -20,23 +17,13 @@ function MDM_WaitObjective:new(args)
     objective.timerBanner = MDM_Banner:new(args.bannerText)
   end
 
+  objective:OnUpdate(MDM_WaitObjective._OnUpdate)
+
   return objective
 end
 
-function MDM_WaitObjective.Start(self)
-  MDM_Objective.Start(self)
-end
 
-function MDM_WaitObjective.Stop(self)
-  MDM_Objective.Stop(self)
-end
-
-function MDM_WaitObjective.Update(self)
-  MDM_Objective.Update(self)
-  if not self.running then
-    return
-  end
-
+function MDM_WaitObjective._OnUpdate(self)
   if not self.timerStarted then
     MDM_HUDUtils.StartTimer(self.args.seconds)
     self.timerStarted = true
@@ -67,7 +54,7 @@ function MDM_WaitObjective.Update(self)
         self.timerBanner:Hide()
       end
 
-      MDM_Objective.Succeed(self)
+      self:Succeed()
     end
 
   end

@@ -8,14 +8,15 @@ function MDM_GoToObjective:new(args)
   local objective = MDM_Objective:new(args)
   objective.vector = args.position
   objective.radius = args.radius or 20
-  objective:OnObjectiveStart(function() MDM_GoToObjective._OnObjectiveStart(objective) end)
-  objective:OnObjectiveEnd(function() MDM_GoToObjective._OnObjectiveEnd(objective) end)
-  objective:OnUpdate(function() MDM_GoToObjective._OnUpdate(objective) end)
 
   objective.area = MDM_Area.ForSphere({
     position = objective.vector,
     radius = objective.radius
   })
+
+  objective:OnObjectiveStart(MDM_GoToObjective._OnObjectiveStart)
+  objective:OnObjectiveEnd(MDM_GoToObjective._OnObjectiveEnd)
+  objective:OnUpdate(MDM_GoToObjective._OnUpdate)
 
   return objective
 end
@@ -27,6 +28,7 @@ end
 
 function MDM_GoToObjective._OnObjectiveStart(self)
   if not self.blip then
+  print(self)
     self.blip = MDM_Blip.ForVector({vector = self.vector})
   end
 

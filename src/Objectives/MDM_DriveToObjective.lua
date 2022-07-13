@@ -16,9 +16,9 @@ function MDM_DriveToObjective:new(args)
   objective.car = args.car
   objective.onFoot = true
 
-  objective:OnObjectiveStart(function() MDM_DriveToObjective._OnObjectiveStart(objective) end)
-  objective:OnObjectiveEnd(function() MDM_DriveToObjective._OnObjectiveEnd(objective) end)
-  objective:OnUpdate(function() MDM_DriveToObjective._OnUpdate(objective) end)
+  objective:OnObjectiveStart(MDM_DriveToObjective._OnObjectiveStart)
+  objective:OnObjectiveEnd(MDM_DriveToObjective._OnObjectiveEnd)
+  objective:OnUpdate(MDM_DriveToObjective._OnUpdate)
 
 
   objective.area = MDM_Area.ForSphere({

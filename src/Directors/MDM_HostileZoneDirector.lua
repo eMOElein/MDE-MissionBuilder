@@ -27,9 +27,9 @@ function MDM_HostileZoneDirector:new (args)
     radius = director.radius
   })
 
-  director:OnEnabled(function() MDM_HostileZoneDirector._OnEnabled(director) end)
-  director:OnDisabled(function() MDM_HostileZoneDirector._OnDisabled(director) end)
-  director:OnUpdate(function() MDM_HostileZoneDirector._OnUpdate(director) end)
+  director:OnEnabled(MDM_HostileZoneDirector._OnEnabled)
+  director:OnDisabled(MDM_HostileZoneDirector._OnDisabled)
+  director:OnUpdate(MDM_HostileZoneDirector._OnUpdate)
 
   return director
 end

@@ -9,7 +9,7 @@ function MDM_LeaveAreaObjective:new(config)
   local objective = MDM_Objective:new(config)
 
   objective.area = config.area
-  objective:OnUpdate(function() MDM_LeaveAreaObjective._OnUpdate(objective) end)
+  objective:OnUpdate(MDM_LeaveAreaObjective._OnUpdate)
 
   return objective
 end
