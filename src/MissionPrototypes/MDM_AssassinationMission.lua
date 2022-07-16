@@ -35,7 +35,7 @@ function MDM_AssassinationMission:new(args)
     end
   end
 
-  mission.position = MDM_Utils.GetFirstElement(mission.targets):GetPos()
+  mission.position = MDM_Utils.GetFirstElement(mission.targets):GetPosition()
   mission.destinationPosition = args.destinationPosition
   mission.radius = args.radius or 100
 

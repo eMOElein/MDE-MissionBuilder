@@ -24,7 +24,6 @@ function MDM_Objective:new(args)
   if not args.mission then
     error("mission not set",2)
   end
-
   -- initializations
   objective.mission = args.mission
   objective.title = args.title or "New Objective"
@@ -45,6 +44,7 @@ function MDM_Objective:new(args)
   if args.onObjectiveStart then objective:OnObjectiveStart(args.onObjectiveStart) end
   if args.onObjectiveEnd then objective:OnObjectiveEnd(args.onObjectiveEnd) end
   if args.onUpdate then objective:OnUpdate(args.onUpdate) end
+
   return objective
 end
 
@@ -81,33 +81,6 @@ function MDM_Objective.OnUpdate(self,callback)
   table.insert(self.onUpdateCallbacks,callback)
 end
 
-function MDM_Objective.GetDescription(self)
-  return self.description
-end
-
-function MDM_Objective.GetTask(self)
-  return self.task
-end
-
-function MDM_Objective.GetTitle(self)
-  return self.title
-end
-
-function MDM_Objective.SetDescription(self,description)
-  self.description = description
-end
-
-function MDM_Objective.SetTask(self,task)
-  self.task = task
-end
-
-function MDM_Objective.SetTitle(self,title)
-  self.title = title
-end
-
-function MDM_Objective:RemoveQuest()
-end
-
 function MDM_Objective.Start(self)
   if self.running then
     return
@@ -117,7 +90,7 @@ function MDM_Objective.Start(self)
 
   if game then
     if self.title then
-      game.hud:UpdateSimpleObjective(self:GetTitle(), "param 2", true, true, "param 3")
+      game.hud:UpdateSimpleObjective(self.title, "param 2", true, true, "param 3")
     end
   end
 
@@ -131,7 +104,7 @@ function MDM_Objective.Start(self)
 end
 
 function MDM_Objective.OnObjectiveStop(self,callback)
-  MDM_Objective.OnObjectiveEnd(self,callback)
+  self:OnObjectiveEnd(callback)
 end
 
 function MDM_Objective.OnObjectiveEnd(self,callback)
@@ -176,7 +149,7 @@ function MDM_Objective.Stop(self)
   end
 
   if game then
-    HUD_RemoveQuestObjective(self:GetTitle())
+    HUD_RemoveQuestObjective(self.title)
     game.hud:RemoveEntityIndicator(self.entity)
   end
 

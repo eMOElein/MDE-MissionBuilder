@@ -70,7 +70,7 @@ function MDM_CarTheftMission:new(config)
 end
 
 function MDM_CarTheftMission._IsCarDelivered(self , car)
-  local distance = MDM_Vector.DistanceToPoint(self.destinationArea.position,car:GetPos())
+  local distance = MDM_Vector.DistanceToPoint(self.destinationArea.position,car:GetPosition())
   return distance <= self.destinationArea.radius
 end
 
@@ -165,7 +165,7 @@ function MDM_CarTheftMission._GetPlayerCar(mission)
 end
 
 function MDM_CarTheftMission._IsCarInTargetArea(mission,car)
-  return mission.destinationArea:IsInside(car:GetPos())
+  return mission.destinationArea:IsInside(car:GetPosition())
 end
 
 function MDM_CarTheftMission._OnMissionEnd(mission)

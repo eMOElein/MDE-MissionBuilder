@@ -28,7 +28,6 @@ end
 
 function MDM_GoToObjective._OnObjectiveStart(self)
   if not self.blip then
-  print(self)
     self.blip = MDM_Blip.ForVector({vector = self.vector})
   end
 

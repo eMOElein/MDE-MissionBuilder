@@ -45,7 +45,7 @@ end
 
 function MDM_DestroyCarInAreaObjective._OnUpdate(self)
   local damage = not self.car:CanDrive()
-  local position = self.area:IsInside(self.car:GetPos())
+  local position = self.area:IsInside(self.car:GetPosition())
 
   if damage and position then
     self:Succeed()
@@ -62,5 +62,5 @@ function MDM_DestroyCarInAreaObjective.UnitTest()
   local car = MDM_Car:new("smith_v12",MDM_Utils.GetVector(-180.402725,-897.841553,2.624493),MDM_Utils.GetVector(-0.021050,0.999603,-0.018721))
 
 
-  local obj = MDM_DestroyCarInAreaObjective:new({mission = mission, car = car , position = car:GetPos(), radius = 5})
+  local obj = MDM_DestroyCarInAreaObjective:new({mission = mission, car = car , position = car:GetPosition(), radius = 5})
 end

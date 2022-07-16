@@ -5,11 +5,11 @@ function MDM_EntityDistanceDirector:new (args)
     error("entity not set",2)
   end
 
-  if not args.entity.GetPos == nil then
+  if not args.entity.GetPosition == nil then
     error("entity has no GetPos function",2)
   end
 
-  if type(args.entity.GetPos) ~= "function" then
+  if type(args.entity.GetPosition) ~= "function" then
     error("entity.GetPos is not of type function",2)
   end
 
@@ -38,14 +38,14 @@ function MDM_EntityDistanceDirector:new (args)
   director.warningCallback = args.warningCallback
 
   director.distanceArea = MDM_Area.ForSphere({
-    position = director.entity:GetPos(),
+    position = director.entity:GetPosition(),
     radius = director.distance
   })
 
 
   if director.warningDistance then
     director.warningArea = MDM_Area.ForSphere({
-      position = director.entity:GetPos(),
+      position = director.entity:GetPosition(),
       radius = director.warningDistance
     })
   end
@@ -69,10 +69,10 @@ function MDM_EntityDistanceDirector._OnDisabled(self)
 end
 
 function MDM_EntityDistanceDirector._OnUpdate(self)
-  self.distanceArea.position = self.entity:GetPos()
+  self.distanceArea.position = self.entity:GetPosition()
 
   if self.warningArea then
-    self.warningArea.position = self.entity:GetPos()
+    self.warningArea.position = self.entity:GetPosition()
   end
 
   local warning = self.warningArea and not MDM_Utils.Player.IsInArea(self.warningArea)
@@ -118,14 +118,14 @@ function MDM_EntityDistanceDirector.UnitTest()
 
   director:Enable()
   director:Update()
-  npc:SetPos(MDM_Utils.GetVector(22,0,0))
+  npc:SetPosition(MDM_Utils.GetVector(22,0,0))
   director:Update()
-  npc:SetPos(MDM_Utils.GetVector(31,0,0))
+  npc:SetPosition(MDM_Utils.GetVector(31,0,0))
   director:Update()
   director:Update()
-  npc:SetPos(MDM_Utils.GetVector(0,0,0))
+  npc:SetPosition(MDM_Utils.GetVector(0,0,0))
   director:Update()
-  npc:SetPos(MDM_Utils.GetVector(22,0,0))
+  npc:SetPosition(MDM_Utils.GetVector(22,0,0))
   director:Update()
   director:Disable()
 

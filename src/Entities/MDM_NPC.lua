@@ -35,8 +35,8 @@ function MDM_NPC:new(args)
   npc.battleArchetype = args.battleArchetype
 
   --attributes
-  npc.pos = args.position
-  npc.dir = args.direction or MDM_Utils.GetVector(0,0,0)
+  npc.position = args.position
+  npc.direction = args.direction or MDM_Utils.GetVector(0,0,0)
   npc.ally = args.ally
 
   if args.idleAnimation then
@@ -69,16 +69,16 @@ function MDM_NPC.AttackPlayer(self)
   end
 end
 
-function MDM_NPC.GetPos(self)
+function MDM_NPC.GetPosition(self)
   if self.ent then
     return self.ent:GetPos()
   else
-    return self.pos
+    return self.position
   end
 end
 
-function MDM_NPC.SetPos(self,position)
-  self.pos = position
+function MDM_NPC.SetPosition(self,position)
+  self.position = position
 end
 
 function MDM_NPC:newCivilian(args)
@@ -163,13 +163,13 @@ function MDM_NPC.GetHealth(self)
   return self.health
 end
 
-function MDM_NPC.GetPos(self)
+function MDM_NPC.GetPosition(self)
   local gameEntity = self:GetGameEntity()
 
   if gameEntity and gameEntity.GetPos then
     return gameEntity:GetPos()
   else
-    return self.pos
+    return self.position
   end
 end
 
@@ -195,13 +195,13 @@ function MDM_NPC.Godmode(self,bool)
   end
 end
 
-local function _SpawnNPC(self,callback, spawnId, pos, dir)
+local function _SpawnNPC(self,callback, spawnId, position, direction)
   if not game then
     return
   end
 
   if not self.spawner then
-    self.spawner = _CreateSpawner(self.pos,self.dir)
+    self.spawner = _CreateSpawner(self.position,self.direction)
     self.spawner:Activate()
   end
 
@@ -213,8 +213,8 @@ local function _SpawnNPC(self,callback, spawnId, pos, dir)
     Wait(runtimeSpawner:GetSpawnProfileLoadSyncObject())
 
     local object = runtimeSpawner:CreateObject()
-    object:SetPos(pos)
-    object:SetDir(dir)
+    object:SetPos(position)
+    object:SetDir(direction)
     object:Activate()
 
     local npcGuid = object:GetGUID()
@@ -336,7 +336,7 @@ function MDM_NPC.Spawn(self)
     end
   end
 
-  _SpawnNPC(self,callback, self.npcId,self.pos,self.dir)
+  _SpawnNPC(self,callback, self.npcId,self.position,self.direction)
 end
 
 function MDM_NPC.MakeEnemy(self)

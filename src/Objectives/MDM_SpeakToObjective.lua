@@ -41,7 +41,7 @@ end
 
 function MDM_SpeakToObjective._OnUpdate(self)
   local posPlayer = MDM_Utils.Player.GetPos()
-  local posNPC = self.npc:GetPos()
+  local posNPC = self.npc:GetPosition()
 
   if MDM_Vector.DistanceToPoint(posNPC,posPlayer) <= self.radius then
     self:Succeed()

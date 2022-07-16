@@ -73,7 +73,7 @@ end
 function MDM_Utils.DistanceToPlayer(entity)
   local distance = 0
   if game then
-    distance = getp():GetPos():DistanceToPoint(entity:GetPos())
+    distance = getp():GetPos():DistanceToPoint(entity:GetPosition())
   end
 
   return distance

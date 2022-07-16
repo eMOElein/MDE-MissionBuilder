@@ -20,7 +20,7 @@ end
 function MDM_Core._Initialize()
   MDM_Core.missionManager = MDM_MissionManager:new()
 
--- MDM_Core._InitializePlugins()
+  -- MDM_Core._InitializePlugins()
   --  MDM_Core.callbackSystem.RegisterCallback("on_player_vehicle_entered",function() print(" vehicle entered") end)
   --  MDM_Core.callbackSystem.RegisterCallback("on_player_vehicle_left",function() print("vehicle left") end)
   -- MDM_Core.callbackSystem.RegisterCallback("on_player_district_changed",function(args) MDM_TestFunctions.ShowDistrictBanner({district = args.districtNew, time = 3500}) end)
@@ -37,7 +37,13 @@ function MDM_Core._InitializePlugins()
     if plugin.luas then
       MDM_LuaLoader.ImportLuas(plugin.luas)
     end
-    print("initializing plugin: " ..plugin.title)
+
     plugin.Initialize()
+
+    if plugin.missions then
+      for _,mission in ipairs(plugin.missions) do
+        MDM_Core.missionManager:AddMissionProvider(mission)
+      end
+    end
   end
 end

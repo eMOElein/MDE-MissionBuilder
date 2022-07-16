@@ -118,7 +118,7 @@ function TestMissions.DuelTest()
     mission:AddObjective(MDM_RestorePlayerObjective:new({mission = mission}))
 
     local noPoliceDirecotr = MDM_PoliceFreeZoneDirector:new({
-      position = args.enemyNpcs[1]:GetPos(),
+      position = args.enemyNpcs[1]:GetPosition(),
       radius = 100
     })
     MDM_ActivatorUtils.RunBetweenObjectives(noPoliceDirecotr,objective1_startAttack,objective100_KillTargets)
@@ -284,15 +284,17 @@ function TestMissions.DestroyCarInAreaTest()
 end
 
 function TestMissions.WaitObjectiveTest()
-  local mission = MDM_Mission:new({})
+  local mission = MDM_Mission:new({
+    title = "Wait Objective Test"
+  })
 
   local objective = MDM_WaitObjective:new({
+    mission = mission,
     seconds = 10,
     bannerText = "wait"
   })
 
   mission:AddObjective(objective)
-  --  MDM_Core.missionManager:StartMission(mission)
   return mission
 end
 
@@ -396,6 +398,12 @@ function TestMissions.WaypointMission()
     description = "Blablabla",
     position = MDM_Utils.GetVector(-907.94,-160.41,2),
     noPolice = true
+  })
+
+  mission:AddObjectives({
+    objective1,
+    objective2,
+    objective3
   })
 
   return mission
@@ -515,7 +523,6 @@ function TestMissions.WalkToTest()
     mission = mission,
     title ="Take out your targets",
     targets = {npcTarget},
-    onObjectiveStart = function() mover:Enable() end
   })
 
 
@@ -523,6 +530,7 @@ function TestMissions.WalkToTest()
   mission:AddObjective(objective50_spawnerObjective)
   mission:AddObjective(objective100_KillTargets)
 
+  MDM_ActivatorUtils.RunWhileObjective(mover,objective100_KillTargets)
 
   return mission
 end

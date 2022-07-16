@@ -707,21 +707,19 @@ function MDM_LucasBertone.M7_2_Robbery()
     assets = {car_trautenberg,npc_Driver}
   })
 
-  local objective50_waitForSpawns = MDM_SpawnerObjective:new ({
+  local objective_1000_Spawner = MDM_SpawnerObjective:new ({
     mission = mission,
     spawnables = {npc_Driver,car_trautenberg}
   })
-  mission:AddObjective(objective50_waitForSpawns)
 
-  local objective1 = MDM_GoToObjective:new({
+  local objective_2000_GoToSchool = MDM_GoToObjective:new({
     mission = mission,
     position = MDM_Utils.GetVector(1582.7761,-513.8941,49.780258),
     radius = 50,
     title = "Steal the Trautenberg from the Oak Wood Junior High-School."
   })
-  mission:AddObjective(objective1)
 
-  local objective3_GetInCar = MDM_GetInCarObjective:new({
+  local objective_3000_StealCar = MDM_GetInCarObjective:new({
     mission = mission,
     car = car_trautenberg,
     title = "Steal the Trautenberg.",
@@ -733,20 +731,27 @@ function MDM_LucasBertone.M7_2_Robbery()
       car_trautenberg:GetGameEntity():SetNavModeWanderArea(false,nil)
     end
   })
-  mission:AddObjective(objective3_GetInCar)
 
 
-  local objective400_ToPaulie = MDM_GoToObjective:new({
+  local objective_4000_GoToPaulie = MDM_GoToObjective:new({
     mission = mission,
     position = MDM_Locations.OG_PAULIES_APARTMENT,
     radius = 20,
     title = "Drive to Paulies apartment",
     noPolice = true
   })
-  mission:AddObjective(objective400_ToPaulie)
+
+  mission:AddObjectives({
+    objective_1000_Spawner,
+    objective_2000_GoToSchool,
+    objective_3000_StealCar,
+    objective_4000_GoToPaulie
+  })
+  mission:AddObjective(objective_4000_GoToPaulie)
 
   return mission
 end
+
 
 MDM_UnitTest.RegisterTest({name = "MDM_LucasBertone.M1_1_Fairplay", func = MDM_LucasBertone.M1_1_Fairplay})
 MDM_UnitTest.RegisterTest({name = "MDM_LucasBertone.M2_1_TripToTheCountry", func = MDM_LucasBertone.M2_1_TripToTheCountry})

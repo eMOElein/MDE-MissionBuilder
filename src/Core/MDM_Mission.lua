@@ -18,10 +18,12 @@ function MDM_Mission:new (args)
     error("args not set",2)
   end
 
-  mission.objectives = {}
-  mission.OnActiveObjectiveChangedCallbacks = {}
-  mission.OnMissionEndCallbacks = {}
-  mission.OnMissionStartCallbacks = {}
+  mission.objectives = MDM_List:new()
+  mission.assets = MDM_List:new()
+  mission.OnActiveObjectiveChangedCallbacks = MDM_List:new()
+  mission.OnMissionEndCallbacks = MDM_List:new()
+  mission.OnMissionStartCallbacks = MDM_List:new()
+  
   mission.running = false
   mission.currentObjective = 0
   mission.description = ""
@@ -38,7 +40,7 @@ function MDM_Mission:new (args)
   mission.initialOutfit = args.initialOutfit
   mission.initialSeason = args.initialSeason
   mission.initialWeather = args.initialWeather
-  mission.assets = {}
+
 
   if args.onMissionStart then
     mission:OnMissionStart(args.onMissionStart)

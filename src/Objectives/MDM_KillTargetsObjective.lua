@@ -20,7 +20,7 @@ function MDM_KillTargetsObjective:new (args)
 end
 
 function MDM_KillTargetsObjective._OnObjectiveStart(self)
-  self.blip = MDM_Blip.ForVector({vector = self.targets[1]:GetPos()})
+  self.blip = MDM_Blip.ForVector({vector = self.targets[1]:GetPosition()})
   self.blip:Show()
 
   MDM_Utils.SpawnAll(self.targets)

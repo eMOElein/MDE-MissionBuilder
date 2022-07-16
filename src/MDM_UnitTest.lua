@@ -3,6 +3,7 @@ require("MDM_LuaLoader")
 MDM_UnitTest = {
   _tests = {},
   _luas = {
+    "UnitTests/MDM_Director_Test",
     "UnitTests/MDM_AreaTest",
     "UnitTests/MDM_SphereAreaTest",
     "UnitTests/MDM_CarTest",
@@ -49,7 +50,7 @@ function all()
   ----------------
   --- Directors --
   ----------------
-  MDM_UnitTest.RegisterTest({name = "MDM_Director.UnitTest", func = MDM_Director.UnitTest})
+  MDM_UnitTest.RegisterTest({name = "MDM_Director_Test.UnitTest", func = MDM_Director_Test.UnitTest})
   MDM_UnitTest.RegisterTest({name = "MDM_PlayerInCarBannerDirector.UnitTest", func = MDM_PlayerInCarBannerDirector.UnitTest})
   MDM_UnitTest.RegisterTest({name = "MDM_PoliceFreeZoneDirector.UnitTest", func = MDM_PoliceFreeZoneDirector.UnitTest})
   MDM_UnitTest.RegisterTest({name = "MDM_HostileZoneDirector.UnitTest", func = MDM_HostileZoneDirector.UnitTest})
@@ -124,3 +125,4 @@ MDM_LuaLoader.ImportLuas(MDM_UnitTest._luas)
 all()
 MDM_ShootoutMission.UnitTest()
 print("ALL OK!")
+

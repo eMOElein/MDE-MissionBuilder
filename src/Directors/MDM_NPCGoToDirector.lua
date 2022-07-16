@@ -37,7 +37,7 @@ function MDM_NPCGoToDirector._OnUpdate(self)
     return true
   end
 
-  if self.area:IsInside(self.npc:GetPos()) then
+  if self.area:IsInside(self.npc:GetPosition()) then
     self:Disable()
     return true
   end

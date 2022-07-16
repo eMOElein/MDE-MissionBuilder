@@ -1,12 +1,6 @@
 MDM_Car = {}
 MDM_Car = MDM_Entity:class()
 
-local arguments = {
-  carId = nil,
-  direction = nil,
-  position = nil
-}
-
 function MDM_Car.ForConfigs(configs)
   if not configs then
     error("confifgs not set",2)
@@ -61,8 +55,8 @@ function MDM_Car:new(args, dummyPos, dummyDir)
   car.game_id = nil
   car.spawning = false
   car.spawned = false
-  car.spawnPos = args.position
-  car.spawnDir = args.direction
+  car.position = args.position
+  car.direction = args.direction
   car.indestructable = args.indestructable
   car.lightsOn = args.lightsOn
 
@@ -162,8 +156,8 @@ function MDM_Car.Spawn(self)
         -- MDM_VehicleUtils.AdvancedCarSpawner( self, self.OnGameEntitySpawned, self.carId, self.spawnPos, self.spawnDir)
         _SpawnCar(self,{
           carId = self.carId,
-          position = self.spawnPos,
-          direction = self.spawnDir,
+          position = self.position,
+          direction = self.direction,
           callback = self.OnGameEntitySpawned
         })
     end)
@@ -185,7 +179,7 @@ function MDM_Car.Despawn(self)
   end
 end
 
-function MDM_Car.GetDir(self)
+function MDM_Car.GetDirection(self)
   local veh = self:GetGameEntity()
   if veh then
     return veh:GetDir()
@@ -198,14 +192,6 @@ end
 
 function MDM_Car.IsSpawning(self)
   return self.spawning
-end
-
-function MDM_Car.SetSpawnPos(self,pos)
-  self.spawnPos = pos
-end
-
-function MDM_Car.SetpawnDir(self,dir)
-  self.spawnDir = dir
 end
 
 function MDM_Car.Explode(self)

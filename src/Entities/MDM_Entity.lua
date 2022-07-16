@@ -16,8 +16,8 @@ function MDM_Entity:new(spawnPos, spawnDir)
   entity.respawntime = -1
   entity.isactive = false
   entity.spawned = false
-  entity.spawnPos = spawnPos
-  entity.spawnDir = spawnDir
+  entity.position = spawnPos
+  entity.direction = spawnDir
   entity.gameEntity = nil
   entity.onSpawnedCallbacks = MDM_List:new()
   entity.onDespawnedCallbacks = MDM_List:new()
@@ -25,28 +25,20 @@ function MDM_Entity:new(spawnPos, spawnDir)
   return entity
 end
 
-function MDM_Entity.GetDir(self)
-  return self.dir
+function MDM_Entity.GetDirection(self)
+  return self.direction
 end
 
 function MDM_Entity.GetGameEntity(self)
   return self.gameEntity
 end
 
-function MDM_Entity.GetPos(self)
+function MDM_Entity.GetPosition(self)
   if game and self and self:GetGameEntity() and self:GetGameEntity().GetPos ~= nil then
     return self:GetGameEntity():GetPos()
   else
-    return self.spawnPos
+    return self.position
   end
-end
-
-function MDM_Entity.GetSpawnPos(self)
-  return self.spawnPos
-end
-
-function MDM_Entity.GetSpawnDir(self)
-  return self.spawnDir
 end
 
 function MDM_Entity.IsActive(self)
