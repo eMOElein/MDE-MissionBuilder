@@ -72,7 +72,8 @@ function MDM_MissionPack.Initialize()
       title = "Omerta 1-2",
       client = client_lucas_bertone,
       missionSupplier = MDM_LucasBertone.M3_1_Omerta
-    },{
+    },
+    {
       title = "Omerta 2-2",
       client = client_lucas_bertone,
       missionSupplier = MDM_LucasBertone.M3_2_Omerta
@@ -136,7 +137,7 @@ function MDM_MissionPack.Initialize()
   --  MDM_MissionPack.InitializeLucasBertoneMissions()
   --  MDM_MissionPack.InitializeFrankMissions()
   --  MDM_MissionPack.InitializeVincenzoMissions()
-    MDM_MissionPack.InitializeRalphMissions()
+  MDM_MissionPack.InitializeRalphMissions()
   MDM_MissionPack.InitializeTestMissions()
 
 end

@@ -1,9 +1,5 @@
 MDM_Director = {}
 
-local args = {
-  mission = nil
-}
-
 function MDM_Director:class()
   local director = {}
   setmetatable(director, self)
@@ -17,7 +13,7 @@ function MDM_Director:new (args)
   if not args then
     error("args not set",2)
   end
-
+ 
   director.enabled = false
   director.onEnabledCallbacks = MDM_List:new()
   director.onDisabledCallbacks = MDM_List:new()
