@@ -16,7 +16,7 @@ function MDM_MissionUtils.RunTimerBetweenObjectives(mission, objectiveFrom, obje
     MDM_HUDUtils.HideTimer()
   end)
 
-  local timerZeroDetector = MDM_CallbackDirector:new({
+  local timerZeroDetector = MDM_CallbackFeature:new({
     callback = function()
       local time = game.hud:TimerGetTime()
       if time and time == 0 then
@@ -24,6 +24,6 @@ function MDM_MissionUtils.RunTimerBetweenObjectives(mission, objectiveFrom, obje
       end
     end
   })
-  MDM_ActivatorUtils.EnableOnObjectiveStart(timerZeroDetector,objectiveFrom)
-  MDM_ActivatorUtils.DisableOnObjectiveStop(timerZeroDetector,objectiveTo)
+  MDM_FeatureUtils.EnableOnObjectiveStart(timerZeroDetector,objectiveFrom)
+  MDM_FeatureUtils.DisableOnObjectiveStop(timerZeroDetector,objectiveTo)
 end

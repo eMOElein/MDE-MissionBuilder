@@ -1,6 +1,6 @@
-MDM_EntityDistanceDirector = {}
+MDM_EntityDistanceFeature = {}
 
-function MDM_EntityDistanceDirector:new (args)
+function MDM_EntityDistanceFeature:new (args)
   if args.entity == nil then
     error("entity not set",2)
   end
@@ -29,46 +29,46 @@ function MDM_EntityDistanceDirector:new (args)
     error("callback is not of type function",2)
   end
 
-  local director = MDM_Director:new(args)
-  director.entity = args.entity
-  director.distance = args.distance
-  director.callback = args.callback
-  director.warningDistance = args.warningDistance
-  director.warningText = args.warningText
-  director.warningCallback = args.warningCallback
+  local feature = MDM_Feature:new(args)
+  feature.entity = args.entity
+  feature.distance = args.distance
+  feature.callback = args.callback
+  feature.warningDistance = args.warningDistance
+  feature.warningText = args.warningText
+  feature.warningCallback = args.warningCallback
 
-  director.distanceArea = MDM_Area.ForSphere({
-    position = director.entity:GetPosition(),
-    radius = director.distance
+  feature.distanceArea = MDM_Area.ForSphere({
+    position = feature.entity:GetPosition(),
+    radius = feature.distance
   })
 
 
-  if director.warningDistance then
-    director.warningArea = MDM_Area.ForSphere({
-      position = director.entity:GetPosition(),
-      radius = director.warningDistance
+  if feature.warningDistance then
+    feature.warningArea = MDM_Area.ForSphere({
+      position = feature.entity:GetPosition(),
+      radius = feature.warningDistance
     })
   end
 
-  director:OnEnabled(MDM_EntityDistanceDirector._OnEnabled)
-  director:OnDisabled(MDM_EntityDistanceDirector._OnDisabled)
-  director:OnUpdate(MDM_EntityDistanceDirector._OnUpdate)
+  feature:OnEnabled(MDM_EntityDistanceFeature._OnEnabled)
+  feature:OnDisabled(MDM_EntityDistanceFeature._OnDisabled)
+  feature:OnUpdate(MDM_EntityDistanceFeature._OnUpdate)
 
-  return director
+  return feature
 end
 
-function MDM_EntityDistanceDirector._OnEnabled(self)
+function MDM_EntityDistanceFeature._OnEnabled(self)
   self.warningPrevious = false
 end
 
 
-function MDM_EntityDistanceDirector._OnDisabled(self)
+function MDM_EntityDistanceFeature._OnDisabled(self)
   if self.warningPrevious and game then
     game.hud:SendMessageMovie("HUD", "OnHideFreerideNotification")
   end
 end
 
-function MDM_EntityDistanceDirector._OnUpdate(self)
+function MDM_EntityDistanceFeature._OnUpdate(self)
   self.distanceArea.position = self.entity:GetPosition()
 
   if self.warningArea then
@@ -103,12 +103,12 @@ function MDM_EntityDistanceDirector._OnUpdate(self)
   end
 end
 
-function MDM_EntityDistanceDirector.UnitTest()
+function MDM_EntityDistanceFeature.UnitTest()
   local count = 0
   local countWarning = 0
   local npc = MDM_NPC:new({npcId = "1234", position = MDM_Utils.GetVector(0,0,0)})
 
-  local director = MDM_EntityDistanceDirector:new({
+  local feature = MDM_EntityDistanceFeature:new({
     entity = npc,
     distance = 30,
     warningDistance = 20,
@@ -116,18 +116,18 @@ function MDM_EntityDistanceDirector.UnitTest()
     warningCallback = function() countWarning = countWarning +1 end
   })
 
-  director:Enable()
-  director:Update()
+  feature:Enable()
+  feature:Update()
   npc:SetPosition(MDM_Utils.GetVector(22,0,0))
-  director:Update()
+  feature:Update()
   npc:SetPosition(MDM_Utils.GetVector(31,0,0))
-  director:Update()
-  director:Update()
+  feature:Update()
+  feature:Update()
   npc:SetPosition(MDM_Utils.GetVector(0,0,0))
-  director:Update()
+  feature:Update()
   npc:SetPosition(MDM_Utils.GetVector(22,0,0))
-  director:Update()
-  director:Disable()
+  feature:Update()
+  feature:Disable()
 
   if countWarning ~= 2 then
     error("countWarning should be 2 but was " ..countWarning)

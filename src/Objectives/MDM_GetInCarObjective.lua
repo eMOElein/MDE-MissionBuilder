@@ -4,6 +4,7 @@ function MDM_GetInCarObjective:new (args)
   local objective = MDM_Objective:new(args)
 
   objective.cars = MDM_List:new()
+  objective.AddCar = MDM_GetInCarObjective.AddCar
 
   if args.car then
     objective.cars:Add(args.car)
@@ -32,11 +33,10 @@ function MDM_GetInCarObjective.AddCar(self,car)
   self.cars:Add(car)
 
   if self.carBlips then
-    local blip = MDM_Blip.ForCar(car)
+    local blip = MDM_Blip.ForCar({car = car})
     blip:Show()
     self.carBlips:Add(blip)
   end
-
 end
 
 function MDM_GetInCarObjective._OnObjectiveStart(self)

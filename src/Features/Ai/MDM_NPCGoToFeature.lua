@@ -1,7 +1,7 @@
-MDM_NPCGoToDirector = {}
+MDM_NPCGoToFeature = {}
 
-function MDM_NPCGoToDirector:new (args)
-  local director = MDM_Director:new(args)
+function MDM_NPCGoToFeature:new (args)
+  local director = MDM_Feature:new(args)
 
   if not args.npc then
     error("npc not set",2)
@@ -13,6 +13,7 @@ function MDM_NPCGoToDirector:new (args)
 
   director.npc = args.npc
   director.position = args.position
+  director.onPositionReachedCallbacks = MDM_List:new()
   director.area = MDM_Area.ForSphere({
     position = director.position,
     radius = 1
@@ -20,13 +21,22 @@ function MDM_NPCGoToDirector:new (args)
 
   director.previousPerception = nil
 
-  director:OnUpdate(MDM_NPCGoToDirector._OnUpdate)
+  director:OnUpdate(MDM_NPCGoToFeature._OnUpdate)
 
   return director
 end
 
-function MDM_NPCGoToDirector._OnUpdate(self)
+function MDM_NPCGoToFeature._OnPositionReached(self)
+  self.onPositionReachedCallbacks:ForEach(function(c) c() end)
+end
+
+function MDM_NPCGoToFeature.OnPositionReached(self,callback)
+  self.onPositionReachedCallbacks:add(callback)
+end
+
+function MDM_NPCGoToFeature._OnUpdate(self)
   local gameEntity = self.npc:GetGameEntity()
+  local releaseThreshold = 2
 
   if not gameEntity then
     return false
@@ -38,11 +48,12 @@ function MDM_NPCGoToDirector._OnUpdate(self)
   end
 
   if self.area:IsInside(self.npc:GetPosition()) then
+    self:_OnPositionReached()
     self:Disable()
     return true
   end
 
-  if not self.moveInitialized then
+  if not self.moveInitialized and gameEntity:GetEnemyPerceptionState() <= releaseThreshold then
     --    print("Init with: " ..tostring(self.position))
     gameEntity:MoveVec(self.position)
     self.moveInitialized = true
@@ -52,7 +63,6 @@ function MDM_NPCGoToDirector._OnUpdate(self)
     self.previousPerception = 0
   end
 
-  local releaseThreshold = 2
   if gameEntity:GetEnemyPerceptionState() > releaseThreshold and self.previousPerception <= releaseThreshold then
     --   print("Release with: " ..tostring(gameEntity:GetPos()))
     gameEntity:MoveVec(gameEntity:GetPos())
@@ -67,9 +77,9 @@ function MDM_NPCGoToDirector._OnUpdate(self)
   self.previousPerception = gameEntity:GetEnemyPerceptionState()
 end
 
-function MDM_NPCGoToDirector.UnitTest()
+function MDM_NPCGoToFeature.UnitTest()
   local npc = MDM_NPC:new({ npcId = "123", position = MDM_Utils.GetVector(1,1,1)})
-  local director = MDM_NPCGoToDirector:new ({npc = npc, position = MDM_Utils.GetVector(5,5,5)})
+  local director = MDM_NPCGoToFeature:new ({npc = npc, position = MDM_Utils.GetVector(5,5,5)})
   director:Enable()
   director:Update()
   director:Update()

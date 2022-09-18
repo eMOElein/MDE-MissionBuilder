@@ -117,11 +117,11 @@ function TestMissions.DuelTest()
 
     mission:AddObjective(MDM_RestorePlayerObjective:new({mission = mission}))
 
-    local noPoliceDirecotr = MDM_PoliceFreeZoneDirector:new({
+    local noPoliceDirecotr = MDM_PoliceFreeZoneFeature:new({
       position = args.enemyNpcs[1]:GetPosition(),
       radius = 100
     })
-    MDM_ActivatorUtils.RunBetweenObjectives(noPoliceDirecotr,objective1_startAttack,objective100_KillTargets)
+    MDM_FeatureUtils.RunBetweenObjectives(noPoliceDirecotr,objective1_startAttack,objective100_KillTargets)
 
     return mission
   end
@@ -439,22 +439,22 @@ function TestMissions.GetInCar()
   mission:AddObjective(objective2)
 
   -- Create Player in Car Detector and Use it while Objective 2 is active
-  local detector= MDM_PlayerInCarBannerDirector:new ({car = falconerCar})
-  MDM_ActivatorUtils.RunWhileObjective(detector,objective2)
+  local detector= MDM_PlayerInCarBannerFeature:new ({car = falconerCar})
+  MDM_FeatureUtils.RunWhileObjective(detector,objective2)
 
   local onCarDestroyed = function()
     mission:SetFailDescription("You destroyed the car")
     mission:Fail()
   end
 
-  local damageDirector = MDM_CallbackDirector:new({
+  local damageDirector = MDM_CallbackFeature:new({
     callback = function()
       if not falconerCar:CanDrive() then
         onCarDestroyed()
       end
     end
   })
-  MDM_ActivatorUtils.RunWhileObjective(damageDirector,objective2)
+  MDM_FeatureUtils.RunWhileObjective(damageDirector,objective2)
 
   mission:AddAssets({falconerCar})
 
@@ -482,7 +482,7 @@ function TestMissions.HostileZoneTest()
   })
   mission:AddObjective(objective)
 
-  local hostileZone =  MDM_HostileZoneDirector:new({
+  local hostileZone =  MDM_HostileZoneFeature:new({
     position = position,
     radius = 80,
     detectionRadius = 5,
@@ -491,7 +491,7 @@ function TestMissions.HostileZoneTest()
   }
   )
 
-  MDM_ActivatorUtils.RunBetweenObjectives(hostileZone,objective,objective)
+  MDM_FeatureUtils.RunBetweenObjectives(hostileZone,objective,objective)
 
   mission:AddAssets({npc1})
 
@@ -530,7 +530,7 @@ function TestMissions.WalkToTest()
   mission:AddObjective(objective50_spawnerObjective)
   mission:AddObjective(objective100_KillTargets)
 
-  MDM_ActivatorUtils.RunWhileObjective(mover,objective100_KillTargets)
+  MDM_FeatureUtils.RunWhileObjective(mover,objective100_KillTargets)
 
   return mission
 end
@@ -637,14 +637,14 @@ function TestMissions.DistanceDiretorTest()
     targets = {npcTarget}
   })
 
-  local distanceDirector = MDM_EntityDistanceDirector:new({
+  local distanceDirector = MDM_EntityDistanceFeature:new({
     entity = npcTarget,
     distance = 50,
     warningDistance = 30,
     warningText = "Get back to your target",
     callback = function() mission:Fail("You lost your target") end
   })
-  MDM_ActivatorUtils.RunWhileObjective(distanceDirector,objective_200_killTarget)
+  MDM_FeatureUtils.RunWhileObjective(distanceDirector,objective_200_killTarget)
 
   mission:AddObjective(objective_200_killTarget)
   mission:AddObjective(objective_100_spawner)

@@ -1,6 +1,6 @@
-MDM_HostileZoneDirector = {}
+MDM_HostileZoneFeature = {}
 
-function MDM_HostileZoneDirector:new (args)
+function MDM_HostileZoneFeature:new (args)
   if not args then
     error("args not set",2)
   end
@@ -17,7 +17,7 @@ function MDM_HostileZoneDirector:new (args)
     print("WARN: enemies list is empty",2)
   end
 
-  local director = MDM_Director:new(args)
+  local director = MDM_Feature:new(args)
 
   director.args = args
   director.index = 1
@@ -27,14 +27,14 @@ function MDM_HostileZoneDirector:new (args)
     radius = director.radius
   })
 
-  director:OnEnabled(MDM_HostileZoneDirector._OnEnabled)
-  director:OnDisabled(MDM_HostileZoneDirector._OnDisabled)
-  director:OnUpdate(MDM_HostileZoneDirector._OnUpdate)
+  director:OnEnabled(MDM_HostileZoneFeature._OnEnabled)
+  director:OnDisabled(MDM_HostileZoneFeature._OnDisabled)
+  director:OnUpdate(MDM_HostileZoneFeature._OnUpdate)
 
   return director
 end
 
-function MDM_HostileZoneDirector._OnUpdate(self)
+function MDM_HostileZoneFeature._OnUpdate(self)
   if not MDM_Utils.Player.IsInArea(self.area) then
     return
   end
@@ -57,14 +57,14 @@ function MDM_HostileZoneDirector._OnUpdate(self)
   end
 end
 
-function MDM_HostileZoneDirector._OnEnabled(self)
+function MDM_HostileZoneFeature._OnEnabled(self)
   if self.showArea and self.area then
     self.area:Show()
   end
 end
 
-function MDM_HostileZoneDirector._OnDisabled(self)
-  MDM_Director.Disable(self)
+function MDM_HostileZoneFeature._OnDisabled(self)
+  MDM_Feature.Disable(self)
 
   if self.area then
     self.area:Hide()
@@ -72,8 +72,8 @@ function MDM_HostileZoneDirector._OnDisabled(self)
 end
 
 
-function MDM_HostileZoneDirector.UnitTest()
-  local director = MDM_HostileZoneDirector:new({
+function MDM_HostileZoneFeature.UnitTest()
+  local director = MDM_HostileZoneFeature:new({
     position = MDM_Utils.GetVector(0,0,0),
     radius = 50,
     detectionRadius = 20,

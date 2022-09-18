@@ -69,14 +69,14 @@ function XXX_YourMissions.M1_RunAroundTheBlock()
 
   -- we create a director that fails the mission if the player enters a car.
   -- we run it while objective1 - objective5 are active.
-  local carDirector = MDM_CallbackDirector:new({
+  local carDirector = MDM_CallbackFeature:new({
     callback = function()
       if MDM_Utils.Player.IsInCar() then
         mission:Fail("Mission Failed: You cheated!!!")
       end
     end
   })
-  MDM_ActivatorUtils.RunBetweenObjectives(carDirector,objective1,objective5)
+  MDM_FeatureUtils.RunBetweenObjectives(carDirector,objective1,objective5)
 
 
   -- Add the objectives to the mission

@@ -92,13 +92,13 @@ function MDM_AssassinationMission:new(args)
   -----------------------
   ------ Directors ------
   -----------------------
-  local noPoliceZoneDirector = MDM_PoliceFreeZoneDirector:new({
+  local noPoliceZoneDirector = MDM_PoliceFreeZoneFeature:new({
     mission = mission,
     position = mission.position,
     radius = mission.radius,
     showArea = true
   })
-  MDM_ActivatorUtils.RunBetweenObjectives(noPoliceZoneDirector,objective_200_KillTargets,objective_300_leave)
+  MDM_FeatureUtils.RunBetweenObjectives(noPoliceZoneDirector,objective_200_KillTargets,objective_300_leave)
 
   return mission
 end

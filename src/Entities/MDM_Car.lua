@@ -120,6 +120,16 @@ function MDM_Car.OnGameEntitySpawned(self,args)
   end
 end
 
+function MDM_Car.IsEngineOn(self)
+  local gameEntity = self:GetGameEntity()
+
+  if not gameEntity then
+    return false
+  end
+
+  return gameEntity:IsEngineOn()
+end
+
 function MDM_Car.SetLightsOn(self, bool)
   self.lightsOn = bool
 

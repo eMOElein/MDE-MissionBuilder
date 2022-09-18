@@ -40,7 +40,7 @@ function MDM_NPC:new(args)
   npc.ally = args.ally
 
   if args.idleAnimation then
-    self.idleAnimation = MDM_NPCIdleAnimationDirector:new({
+    self.idleAnimation = MDM_NPCIdleAnimationFeature:new({
       npc = npc,
       animation = args.idleAnimation
     })

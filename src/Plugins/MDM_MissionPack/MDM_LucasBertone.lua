@@ -67,10 +67,10 @@ function MDM_LucasBertone.M1_1_Fairplay()
 
   -- Create the director that notifies the HUD when the player is not in the vehicle.
   -- Only active while objective2 is running.
-  local director= MDM_PlayerInCarBannerDirector:new ({
+  local director= MDM_PlayerInCarBannerFeature:new ({
     car = smithV12Car
   })
-  MDM_ActivatorUtils.RunWhileObjective(director,objective3)
+  MDM_FeatureUtils.RunWhileObjective(director,objective3)
 
   return mission
 end
@@ -228,14 +228,14 @@ function MDM_LucasBertone.M3_1_Omerta()
   })
   mission:AddObjective(objective3)
 
-  local bigStanAliveDirector = MDM_CallbackDirector:new({
+  local bigStanAliveDirector = MDM_CallbackFeature:new({
     callback = function ()
       if npc_big_stan:IsDead() then
         mission:Fail("You killed Big Stan")
       end
     end
   })
-  MDM_ActivatorUtils.RunBetweenObjectives(bigStanAliveDirector,objective2,objective3)
+  MDM_FeatureUtils.RunBetweenObjectives(bigStanAliveDirector,objective2,objective3)
   return mission
 end
 
@@ -450,14 +450,14 @@ function MDM_LucasBertone.M5_1_CremeDeLaCreme()
   mission:AddObjective(objective5)
 
   --We don't want the car to be destroyed before we are at the lighthouse.
-  local damageDirector = MDM_CallbackDirector:new({
+  local damageDirector = MDM_CallbackFeature:new({
     callback = function ()
       if not car_shubert:CanDrive() then
         mission:Fail("You did not destroy the car in the right location!")
       end
     end
   })
-  MDM_ActivatorUtils.RunBetweenObjectives(damageDirector,objective2,objective3)
+  MDM_FeatureUtils.RunBetweenObjectives(damageDirector,objective2,objective3)
 
   return mission
 end
@@ -551,14 +551,14 @@ function MDM_LucasBertone.M6_1_Election()
   MDM_MissionUtils.RunTimerBetweenObjectives(mission,objective2, objective2, 300, function() mission:Fail("You did not make it in time") end)
 
   -- Fail the mission if the distance to Paulie is too high but print a warning to give the player the chance to get back to Paulie.
-  local friendDistanceDirector = MDM_EntityDistanceDirector:new({
+  local friendDistanceDirector = MDM_EntityDistanceFeature:new({
     entity = npc_friend,
     distance = 50,
     warningDistance = 25,
     warningText = "Get back to Lucas' friend",
     callback = function() mission:Fail("You lost Lucas' friend") end
   })
-  MDM_ActivatorUtils.RunWhileObjective(friendDistanceDirector,objective3)
+  MDM_FeatureUtils.RunWhileObjective(friendDistanceDirector,objective3)
 
   return mission
 end
@@ -665,11 +665,11 @@ function MDM_LucasBertone.M7_1_Robbery()
 
   -- Disabling the police in the zone where the shooting is happening.
   -- We only activate it during the neccessary objectives.
-  local noPoliceZoneDirector = MDM_PoliceFreeZoneDirector:new({
+  local noPoliceZoneDirector = MDM_PoliceFreeZoneFeature:new({
     position = MDM_Utils.GetVector(506.13187,-711.24323,4.2604446),
     radius = 60
   })
-  MDM_ActivatorUtils.RunWhileObjective(noPoliceZoneDirector,objective3)
+  MDM_FeatureUtils.RunWhileObjective(noPoliceZoneDirector,objective3)
 
   -- Visit Lucas Bertone
   local objective4 = MDM_GoToObjective:new({

@@ -1,16 +1,16 @@
---- MDM_PlayerInCarBannerDirector
+--- MDM_PlayerInCarBannerFeature
 -- Director that shows a banner when the player is not inside the monitored car.
-MDM_PlayerInCarBannerDirector = {}
+MDM_PlayerInCarBannerFeature = {}
 
 --- The constructor configuration table must contain the following fields.
 -- @param mission an instance of MDM_Mission that this director is attached to.
 -- @param car an instance of MDM_Car
-function MDM_PlayerInCarBannerDirector:new (config)
+function MDM_PlayerInCarBannerFeature:new (config)
   if not config.car then
     error("carEntity not set",2)
   end
 
-  local director = MDM_Director:new({mission = config.mission})
+  local director = MDM_Feature:new({mission = config.mission})
 
   director.carEntity = config.car
   director.text = config.text or "Get Back In The Car"
@@ -18,12 +18,12 @@ function MDM_PlayerInCarBannerDirector:new (config)
   director.banner.color = 0
   director.showing = false
 
-  director:OnUpdate(MDM_PlayerInCarBannerDirector._OnUpdate)
+  director:OnUpdate(MDM_PlayerInCarBannerFeature._OnUpdate)
 
   return director
 end
 
-function MDM_PlayerInCarBannerDirector._OnUpdate(self)
+function MDM_PlayerInCarBannerFeature._OnUpdate(self)
   if not MDM_Utils.Player.IsInCar(self.car) and not self.banner:IsShowing() then
     self.banner:Show()
   end
@@ -34,15 +34,15 @@ function MDM_PlayerInCarBannerDirector._OnUpdate(self)
 end
 
 --@Overwrite
-function MDM_PlayerInCarBannerDirector.Destroy(self)
+function MDM_PlayerInCarBannerFeature.Destroy(self)
   self.banner:Hide()
-  MDM_Director.Destroy(self)
+  MDM_Feature.Destroy(self)
 end
 
-function MDM_PlayerInCarBannerDirector.UnitTest()
+function MDM_PlayerInCarBannerFeature.UnitTest()
   local m = MDM_Mission:new({title = ""})
 
-  local director = MDM_PlayerInCarBannerDirector:new({mission = m,car = {}})
+  local director = MDM_PlayerInCarBannerFeature:new({mission = m,car = {}})
   director:Enable()
   director:Update()
 

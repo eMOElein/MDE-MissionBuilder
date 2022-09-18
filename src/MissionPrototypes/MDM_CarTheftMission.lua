@@ -20,6 +20,7 @@ function MDM_CarTheftMission:new(config)
   mission.cars = MDM_List:new()
   mission.bodyguards = MDM_List:new()
   mission.bodyguardsDetectionRange = config.bodyguardsDetectionRange or 20
+  mission.bodyguardAiList = MDM_List:new(self)
 
   mission.destinationArea = MDM_Area.ForSphere({
     position = config.destination.position,
@@ -34,7 +35,8 @@ function MDM_CarTheftMission:new(config)
 
   if config.bodyguards then
     for _,b in ipairs(config.bodyguards) do
-      mission.bodyguards:Add(MDM_NPC:new(b))
+      local bodyguardNpc = MDM_NPC:new(b)
+      mission.bodyguards:Add(bodyguardNpc)
     end
   end
 
@@ -66,6 +68,21 @@ function MDM_CarTheftMission:new(config)
 
   mission:AddObjective(objective_500_SpawnerObjective)
   mission:AddObjective(MDM_CarTheftMission._StealObjective(mission))
+
+
+  ---------------------------------------------------------
+  ---------------------- AI -----------------------
+  ---------------------------------------------------------
+  for _,b in ipairs(mission.bodyguards) do
+    local carguardAi = MDM_AI_NPC_Carguard:new({
+      npc = b,
+      cars = mission.cars
+    })
+    MDM_FeatureUtils.DisableOnMissionEnd(carguardAi, mission)
+    MDM_FeatureUtils.EnableOnObjectiveEnd(carguardAi,objective_500_SpawnerObjective)
+    mission.bodyguardAiList:Add(carguardAi)
+  end
+
   return mission
 end
 
@@ -119,6 +136,10 @@ function MDM_CarTheftMission._StealObjective(mission)
   objective:OnUpdate(function()
     for _,c in ipairs(mission.cars) do
       if not MDM_CarTheftMission._IsCarInTargetArea(mission,c) and not objective.cars:Contains(c) then
+        if not objective.AddCar then
+          print("ERROR!!!")
+        end
+
         objective:AddCar(c)
       end
     end
@@ -140,7 +161,7 @@ function MDM_CarTheftMission._DeliverObjective(mission,car)
     radius = mission.destinationArea.radius,
     onObjectiveStart = function()
       MDM_Core.callbackSystem.RegisterCallback("on_player_vehicle_left",mission.onVehicleLeft)
-      MDM_CarTheftMission._BodyuguardAttack(mission)
+      --      MDM_CarTheftMission._BodyuguardAttack(mission)
     end,
     onObjectiveEnd = function()
       MDM_Core.callbackSystem.UnregisterCallback("on_player_vehicle_left",mission.onVehicleLeft)

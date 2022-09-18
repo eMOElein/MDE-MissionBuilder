@@ -1,6 +1,6 @@
-MDM_CallbackDirector = {}
+MDM_CallbackFeature = {}
 
-function MDM_CallbackDirector:new (args)
+function MDM_CallbackFeature:new (args)
   if not args.callback then
     error("callback not set",2)
   end
@@ -9,14 +9,14 @@ function MDM_CallbackDirector:new (args)
     error("provided callback is no function",2)
   end
 
-  local director = MDM_Director:new(args)
+  local director = MDM_Feature:new(args)
   director.callback = args.callback
   
-  director:OnUpdate(MDM_CallbackDirector._OnUpdate)
+  director:OnUpdate(MDM_CallbackFeature._OnUpdate)
 
   return director
 end
 
-function MDM_CallbackDirector._OnUpdate(self)
+function MDM_CallbackFeature._OnUpdate(self)
   self.callback()
 end

@@ -3,7 +3,7 @@ require("MDM_LuaLoader")
 MDM_UnitTest = {
   _tests = {},
   _luas = {
-    "UnitTests/MDM_Director_Test",
+    "UnitTests/MDM_Feature_Test",
     "UnitTests/MDM_AreaTest",
     "UnitTests/MDM_SphereAreaTest",
     "UnitTests/MDM_CarTest",
@@ -48,14 +48,14 @@ function all()
   MDM_UnitTest.RegisterTest({name = "MDM_NPCTest.UnitTest", func = MDM_NPCTest.UnitTest})
   MDM_UnitTest.RegisterTest({name = "MDM_CarTest.UnitTest", func = MDM_CarTest.UnitTest})
   ----------------
-  --- Directors --
+  --- Features --
   ----------------
-  MDM_UnitTest.RegisterTest({name = "MDM_Director_Test.UnitTest", func = MDM_Director_Test.UnitTest})
-  MDM_UnitTest.RegisterTest({name = "MDM_PlayerInCarBannerDirector.UnitTest", func = MDM_PlayerInCarBannerDirector.UnitTest})
-  MDM_UnitTest.RegisterTest({name = "MDM_PoliceFreeZoneDirector.UnitTest", func = MDM_PoliceFreeZoneDirector.UnitTest})
-  MDM_UnitTest.RegisterTest({name = "MDM_HostileZoneDirector.UnitTest", func = MDM_HostileZoneDirector.UnitTest})
-  MDM_UnitTest.RegisterTest({name = "MDM_NPCGoToDirector.UnitTest", func = MDM_NPCGoToDirector.UnitTest})
-  MDM_UnitTest.RegisterTest({name = "MDM_EntityDistanceDirector.UnitTest", func = MDM_EntityDistanceDirector.UnitTest})
+  MDM_UnitTest.RegisterTest({name = "MDM_Feature_Test.UnitTest", func = MDM_Feature_Test.UnitTest})
+  MDM_UnitTest.RegisterTest({name = "MDM_PlayerInCarBannerFeature.UnitTest", func = MDM_PlayerInCarBannerFeature.UnitTest})
+  MDM_UnitTest.RegisterTest({name = "MDM_PoliceFreeZoneFeature.UnitTest", func = MDM_PoliceFreeZoneFeature.UnitTest})
+  MDM_UnitTest.RegisterTest({name = "MDM_HostileZoneFeature.UnitTest", func = MDM_HostileZoneFeature.UnitTest})
+  MDM_UnitTest.RegisterTest({name = "MDM_NPCGoToDirector.UnitTest", func = MDM_NPCGoToFeature.UnitTest})
+  MDM_UnitTest.RegisterTest({name = "MDM_EntityDistanceFeature.UnitTest", func = MDM_EntityDistanceFeature.UnitTest})
   ----------------
   -- Objectives --
   ----------------
@@ -75,7 +75,7 @@ function all()
   ----------------
   MDM_UnitTest.RegisterTest({name = "MDM_GangWarMission.UnitTest", func = MDM_GangWarMission.UnitTest})
   MDM_UnitTest.RegisterTest({name = "MDM_SimpleRaceMission.UnitTest", func = MDM_SimpleRaceMission.UnitTest})
-  MDM_UnitTest.RegisterTest({name = "MDM_ActivatorUtils.UnitTest", func = MDM_ActivatorUtils.UnitTest})
+  MDM_UnitTest.RegisterTest({name = "MDM_FeatureUtils.UnitTest", func = MDM_FeatureUtils.UnitTest})
   MDM_UnitTest.RegisterTest({name = "MDM_AssassinationMissionConfigurations.CreateRandomAssassinationMission", func = MDM_AssassinationMissionConfigurations.CreateRandomAssassinationMission})
   MDM_UnitTest.RegisterTest({name = "MDM_CarTheftMission.UnitTest" , func = MDM_CarTheftMission.UnitTest})
   MDM_UnitTest.RegisterTest({name = "MDM_ShootoutMission.UnitTest" , func = MDM_ShootoutMission.UnitTest})
@@ -125,4 +125,5 @@ MDM_LuaLoader.ImportLuas(MDM_UnitTest._luas)
 all()
 MDM_ShootoutMission.UnitTest()
 print("ALL OK!")
+
 

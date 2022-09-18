@@ -1,36 +1,36 @@
-MDM_Director = {}
+MDM_Feature = {}
 
-function MDM_Director:class()
-  local director = {}
-  setmetatable(director, self)
+function MDM_Feature:class()
+  local feature = {}
+  setmetatable(feature, self)
   self.__index = self
-  return director
+  return feature
 end
 
-function MDM_Director:new (args)
-  local director = MDM_Director:class()
+function MDM_Feature:new (args)
+  local feature = MDM_Feature:class()
 
   if not args then
     error("args not set",2)
   end
  
-  director.enabled = false
-  director.onEnabledCallbacks = MDM_List:new()
-  director.onDisabledCallbacks = MDM_List:new()
-  director.onUpdateCallbacks = MDM_List:new()
+  feature.enabled = false
+  feature.onEnabledCallbacks = MDM_List:new()
+  feature.onDisabledCallbacks = MDM_List:new()
+  feature.onUpdateCallbacks = MDM_List:new()
 
   if args.onEnabled then
-    director:OnEnabled(args.onEnabled)
+    feature:OnEnabled(args.onEnabled)
   end
 
   if args.onDisabled then
-    director:OnDisabled(args.onDisabled)
+    feature:OnDisabled(args.onDisabled)
   end
 
-  return director
+  return feature
 end
 
-function MDM_Director.Enable(self)
+function MDM_Feature.Enable(self)
   if self.enabled then
     return
   end
@@ -45,11 +45,11 @@ function MDM_Director.Enable(self)
   MDM_Utils.ForEach(self.onEnabledCallbacks,function(callback) callback(self) end)
 end
 
-function MDM_Director.IsEnabled(self)
+function MDM_Feature.IsEnabled(self)
   return self.enabled
 end
 
-function MDM_Director.Disable(self)
+function MDM_Feature.Disable(self)
   if not self:IsEnabled() then
     return
   end
@@ -67,20 +67,20 @@ function MDM_Director.Disable(self)
 
 end
 
-function MDM_Director.OnDisabled(self,callback)
+function MDM_Feature.OnDisabled(self,callback)
   self.onDisabledCallbacks:Add(callback)
 end
 
-function MDM_Director.OnEnabled(self,callback)
+function MDM_Feature.OnEnabled(self,callback)
   self.onEnabledCallbacks:Add(callback)
 end
 
-function MDM_Director.OnUpdate(self,callback)
+function MDM_Feature.OnUpdate(self,callback)
   self.onUpdateCallbacks:Add(callback)
 end
 
 
-function MDM_Director.Update(self)
+function MDM_Feature.Update(self)
   if not self:IsEnabled() then
     return
   end

@@ -156,10 +156,10 @@ function MDM_SalieriMissions.M1_BackyardTrouble()
   })
 
   -- police should not interfere during the shooting. only afterwards.
-  local noPoliceZoneDirector = MDM_PoliceFreeZoneDirector:new({
+  local noPoliceZoneDirector = MDM_PoliceFreeZoneFeature:new({
     position = MDM_Vector:new(-671.66565,-10.197743,3.1811743), radius = 60
   })
-  MDM_ActivatorUtils.RunWhileObjective(noPoliceZoneDirector,objective_2000_killTargest)
+  MDM_FeatureUtils.RunWhileObjective(noPoliceZoneDirector,objective_2000_killTargest)
 
   mission:AddObjectives({
     objective_0500_Spawner,
@@ -247,37 +247,37 @@ function MDM_SalieriMissions.M2_WhiskyWhopper()
   }
 
   -- Deactivate the police during the shooting
-  local noPoliceZoneDirector = MDM_PoliceFreeZoneDirector:new({
+  local noPoliceZoneDirector = MDM_PoliceFreeZoneFeature:new({
     position = compoundZone.position,
     radius = compoundZone.radius
   })
-  MDM_ActivatorUtils.RunBetweenObjectives(noPoliceZoneDirector,objective_200_FindTruck,objective_300_GetInTruck)
+  MDM_FeatureUtils.RunBetweenObjectives(noPoliceZoneDirector,objective_200_FindTruck,objective_300_GetInTruck)
 
   -- Make the enemies on the compound attack the player on sight if close enough
-  local hostileZoneDirector = MDM_HostileZoneDirector:new({
+  local hostileZoneDirector = MDM_HostileZoneFeature:new({
     position = compoundZone.position,
     radius = compoundZone.radius,
     detectionRadius = 15,
     enemies = enemyNpcs,
     showArea = true
   })
-  MDM_ActivatorUtils.RunBetweenObjectives(hostileZoneDirector,objective_200_FindTruck,objective_300_GetInTruck)
+  MDM_FeatureUtils.RunBetweenObjectives(hostileZoneDirector,objective_200_FindTruck,objective_300_GetInTruck)
 
-  local playerInTruckBannerDetector= MDM_PlayerInCarBannerDirector:new ({
+  local playerInTruckBannerDetector= MDM_PlayerInCarBannerFeature:new ({
     car = car_truck,
     text = "Get back in the truck"
   })
-  MDM_ActivatorUtils.RunWhileObjective(playerInTruckBannerDetector,objective_400_GotoMeetingpoint)
+  MDM_FeatureUtils.RunWhileObjective(playerInTruckBannerDetector,objective_400_GotoMeetingpoint)
 
   -- Fail the mission if the distance to Paulie is too high but print a warning to give the player the chance to get back to Paulie.
-  local paulieDistanceDirector = MDM_EntityDistanceDirector:new({
+  local paulieDistanceDirector = MDM_EntityDistanceFeature:new({
     entity = npc_paulie,
     distance = 60,
     warningDistance = 40,
     warningText = "Get back to Paulie",
     callback = function() mission:Fail("You lost Paulie") end
   })
-  MDM_ActivatorUtils.RunBetweenObjectives(paulieDistanceDirector,objective_200_FindTruck,objective_400_GotoMeetingpoint)
+  MDM_FeatureUtils.RunBetweenObjectives(paulieDistanceDirector,objective_200_FindTruck,objective_400_GotoMeetingpoint)
 
   return mission
 end

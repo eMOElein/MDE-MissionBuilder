@@ -1,6 +1,6 @@
-MDM_NPCIdleAnimationDirector = {}
+MDM_NPCIdleAnimationFeature = {}
 
-function MDM_NPCIdleAnimationDirector:new (args)
+function MDM_NPCIdleAnimationFeature:new (args)
   if not args.animation then
     error("animation not set",2)
   end
@@ -13,13 +13,13 @@ function MDM_NPCIdleAnimationDirector:new (args)
     error("npc has no npcId",2)
   end
 
-  local director = MDM_Director:new(args)
+  local director = MDM_Feature:new(args)
   director.npc = args.npc
   director.animation = args.animation
 
-  director:OnEnabled(MDM_NPCIdleAnimationDirector._OnEnabled)
-  director:OnUpdate(MDM_NPCIdleAnimationDirector._OnUpdate)
-  director:OnDisabled(MDM_NPCIdleAnimationDirector._OnDisabled)
+  director:OnEnabled(MDM_NPCIdleAnimationFeature._OnEnabled)
+  director:OnUpdate(MDM_NPCIdleAnimationFeature._OnUpdate)
+  director:OnDisabled(MDM_NPCIdleAnimationFeature._OnDisabled)
 
   if director.npc:IsSpawned() then
     director:Enable()
@@ -31,7 +31,7 @@ function MDM_NPCIdleAnimationDirector:new (args)
   return director
 end
 
-function MDM_NPCIdleAnimationDirector._PlayAnimation(self)
+function MDM_NPCIdleAnimationFeature._PlayAnimation(self)
   if self.animation ~= nil and type(self.animation) == "string" then
     local entity = self.npc:GetGameEntity()
     if not entity then
@@ -42,7 +42,7 @@ function MDM_NPCIdleAnimationDirector._PlayAnimation(self)
   end
 end
 
-function MDM_NPCIdleAnimationDirector._StopAnimation(self)
+function MDM_NPCIdleAnimationFeature._StopAnimation(self)
   local entity = self.npc:GetGameEntity()
   if not entity then
     return
@@ -54,15 +54,15 @@ function MDM_NPCIdleAnimationDirector._StopAnimation(self)
 end
 
 
-function MDM_NPCIdleAnimationDirector._OnEnabled(self)
-  MDM_NPCIdleAnimationDirector._PlayAnimation(self)
+function MDM_NPCIdleAnimationFeature._OnEnabled(self)
+  MDM_NPCIdleAnimationFeature._PlayAnimation(self)
 end
 
-function MDM_NPCIdleAnimationDirector._OnDisabled(self)
-  MDM_NPCIdleAnimationDirector._StopAnimation(self)
+function MDM_NPCIdleAnimationFeature._OnDisabled(self)
+  MDM_NPCIdleAnimationFeature._StopAnimation(self)
 end
 
-function MDM_NPCIdleAnimationDirector._OnUpdate(self)
+function MDM_NPCIdleAnimationFeature._OnUpdate(self)
   local releaseThreshold = 2
   local gameEntity = self.npc:GetGameEntity()
 
