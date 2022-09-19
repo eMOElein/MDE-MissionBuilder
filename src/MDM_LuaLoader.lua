@@ -33,7 +33,7 @@ MDM_LuaLoader._luas = {
   "Features/Gameplay/MDM_PoliceFreeZoneFeature",
   "Features/Ai/MDM_NPCGoToFeature",
   "Features/Ai/MDM_NPCIdleAnimationFeature",
-  "Features/Ai/MDM_AI_NPC_Carguard",
+  "Features/Ai/MDM_AI_NPC_CarguardAi",
   "Features/Gameplay/MDM_HostileZoneFeature",
   "Features/Gameplay/MDM_EntityDistanceFeature",
   "Entities/MDM_Entity",

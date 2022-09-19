@@ -81,8 +81,17 @@ function MDM_Entity.IsSpawned(self)
 end
 
 function MDM_Entity.OnSpawned(self, callback)
+  self:OnEntitySpawned(callback)
+end
+
+function MDM_Entity.OnEntitySpawned(self, callback)
   self.onSpawnedCallbacks:Add(callback)
 end
+
+function MDM_Entity.OnEntityDespawned(self, callback)
+  self.onDespawnedCallbacks:Add(callback)
+end
+
 
 function MDM_Entity.OnDespawned(self, callback)
   self.onDespawnedCallbacks:Add(callback)

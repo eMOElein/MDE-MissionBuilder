@@ -50,6 +50,15 @@ function MDM_FeatureUtils.TieToFeature(feature, parentfeature)
   parentfeature:OnDisabled(function() feature:Disable() end)
 end
 
+function MDM_FeatureUtils.RunWhileEntitySpawned(feature, entity)
+  entity:OnEntityDespawned(function() feature:Disable() end)
+  entity:OnEntitySpawned(function() feature:Enable() end)
+
+  if entity:IsSpawned() then
+    feature:Enable()
+  end
+end
+
 function MDM_FeatureUtils.UnitTest()
   local mission = MDM_Mission:new({title = ""})
   local objective = MDM_Objective:new({mission = mission})

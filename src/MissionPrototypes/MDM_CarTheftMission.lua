@@ -20,7 +20,6 @@ function MDM_CarTheftMission:new(config)
   mission.cars = MDM_List:new()
   mission.bodyguards = MDM_List:new()
   mission.bodyguardsDetectionRange = config.bodyguardsDetectionRange or 20
-  mission.bodyguardAiList = MDM_List:new(self)
 
   mission.destinationArea = MDM_Area.ForSphere({
     position = config.destination.position,
@@ -37,6 +36,13 @@ function MDM_CarTheftMission:new(config)
     for _,b in ipairs(config.bodyguards) do
       local bodyguardNpc = MDM_NPC:new(b)
       mission.bodyguards:Add(bodyguardNpc)
+
+      local carguardAi = MDM_AI_NPC_CarguardAi:new({
+        npc = bodyguardNpc,
+        cars = mission.cars
+      })
+      MDM_FeatureUtils.RunWhileEntitySpawned(carguardAi, bodyguardNpc)
+
     end
   end
 
@@ -68,20 +74,6 @@ function MDM_CarTheftMission:new(config)
 
   mission:AddObjective(objective_500_SpawnerObjective)
   mission:AddObjective(MDM_CarTheftMission._StealObjective(mission))
-
-
-  ---------------------------------------------------------
-  ---------------------- AI -----------------------
-  ---------------------------------------------------------
-  for _,b in ipairs(mission.bodyguards) do
-    local carguardAi = MDM_AI_NPC_Carguard:new({
-      npc = b,
-      cars = mission.cars
-    })
-    MDM_FeatureUtils.DisableOnMissionEnd(carguardAi, mission)
-    MDM_FeatureUtils.EnableOnObjectiveEnd(carguardAi,objective_500_SpawnerObjective)
-    mission.bodyguardAiList:Add(carguardAi)
-  end
 
   return mission
 end

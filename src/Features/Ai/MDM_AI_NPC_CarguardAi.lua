@@ -1,6 +1,6 @@
-MDM_AI_NPC_Carguard = {}
+MDM_AI_NPC_CarguardAi = {}
 
-function MDM_AI_NPC_Carguard:new(args)
+function MDM_AI_NPC_CarguardAi:new(args)
   if not args then
     error("args not set",2)
   end
@@ -21,23 +21,23 @@ function MDM_AI_NPC_Carguard:new(args)
   director.engineStates = {}
   director.detectionRange = 30
 
-  director:OnEnabled(MDM_AI_NPC_Carguard._OnEnabled)
-  director:OnUpdate(MDM_AI_NPC_Carguard._OnUpdate)
-  director:OnDisabled(MDM_AI_NPC_Carguard._OnDisabled)
+  director:OnEnabled(MDM_AI_NPC_CarguardAi._OnEnabled)
+  director:OnUpdate(MDM_AI_NPC_CarguardAi._OnUpdate)
+  director:OnDisabled(MDM_AI_NPC_CarguardAi._OnDisabled)
 
   return director
 end
 
 
-function MDM_AI_NPC_Carguard._OnEnabled(self)
-
+function MDM_AI_NPC_CarguardAi._OnEnabled(self)
+  print("EnableAi")
 end
 
-function MDM_AI_NPC_Carguard._OnDisabled(self)
-
+function MDM_AI_NPC_CarguardAi._OnDisabled(self)
+  print("DisableAi")
 end
 
-function MDM_AI_NPC_Carguard._OnUpdate(self)
+function MDM_AI_NPC_CarguardAi._OnUpdate(self)
   if not self.npc then
     return
   end
@@ -45,6 +45,8 @@ function MDM_AI_NPC_Carguard._OnUpdate(self)
   if not self.npc:IsSpawned() then
     return
   end
+
+  print("updating")
 
   local releaseThreshold = 2
   local gameEntity = self.npc:GetGameEntity()
@@ -61,16 +63,16 @@ function MDM_AI_NPC_Carguard._OnUpdate(self)
     return
   end
 
-  MDM_AI_NPC_Carguard._EngineState(self)
+  MDM_AI_NPC_CarguardAi._EngineState(self)
 
   if self.attacking then
     return
   end
 
-  MDM_AI_NPC_Carguard._Detection(self)
+  MDM_AI_NPC_CarguardAi._Detection(self)
 end
 
-function MDM_AI_NPC_Carguard._Detection(self)
+function MDM_AI_NPC_CarguardAi._Detection(self)
   local gameEntity = self.npc:GetGameEntity()
 
   if not gameEntity then
@@ -82,13 +84,12 @@ function MDM_AI_NPC_Carguard._Detection(self)
       if MDM_Utils.Player.IsInCar(car) and gameEntity:GetSeePlayer() then
         self.attacking = true
         self.npc:AttackPlayer()
-        break
       end
     end
   end
 end
 
-function MDM_AI_NPC_Carguard._EngineState(self)
+function MDM_AI_NPC_CarguardAi._EngineState(self)
   for _,car in ipairs(self.cars) do
     local current = car:IsEngineOn()
     local previous = self.engineStates[car]

@@ -472,6 +472,13 @@ function MDM_LucasBertone.M5_2_CremeDeLaCreme()
   local npc_enemy1 = MDM_NPC:new({npcId="18187434932497386406", position = MDM_Vector:new(545.29333,423.88425,19.781425), direction= MDM_Vector:new(-0.5477711,-0.83662814,0)})
   local npc_enemy2 = MDM_NPC:new({npcId="18187434932497386406", position = MDM_Vector:new(519.13971,426.54214,19.845762), direction= MDM_Vector:new(-0.5401746,-0.84155297,0)})
 
+  for _,enemy in ipairs({npc_enemy1,npc_enemy2}) do
+    local carguardAi = MDM_AI_NPC_CarguardAi:new({
+      npc = enemy,
+      cars = {car_celeste}
+    })
+    MDM_FeatureUtils.RunWhileEntitySpawned(carguardAi, enemy)
+  end
 
   local mission = MDM_Mission:new({
     title = "Lucas Bertone 5-2 - Creme de la Creme",
@@ -488,7 +495,7 @@ function MDM_LucasBertone.M5_2_CremeDeLaCreme()
     car = car_celeste,
     title = "Steal the Celeste Mark 5 from the diner.",
     onObjectiveStart = function() print("Spawning") MDM_Utils.SpawnAll({car_celeste,npc_enemy1,npc_enemy2}) end,
-    onObjectiveEnd = function() npc_enemy1:AttackPlayer() npc_enemy2:AttackPlayer() end
+  --    onObjectiveEnd = function() npc_enemy1:AttackPlayer() npc_enemy2:AttackPlayer() end
   })
   mission:AddObjective(objective1)
 
