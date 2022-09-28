@@ -149,12 +149,23 @@ function MDM_LucasBertone.M2_2_TripToTheCountry()
     assets = {car_culver}
   })
 
-  local objective1 = MDM_GetInCarObjective:new({
+  -- Objective 500: Drive to Oakwood.
+  local objective500 = MDM_GoToObjective:new({
+    mission = mission,
+    position = car_culver:GetPosition(),
+    radius = 150,
+    title = "Drive to Oakwood",
+    task = "Drive to Oakwood",
+    description = "Drive to the House Oakwood"
+  })
+  mission:AddObjective(objective500)
+
+  local objective1000 = MDM_GetInCarObjective:new({
     mission = mission,
     car = car_culver,
     title = "Steal the Culver in Oakwood"
   })
-  mission:AddObjective(objective1)
+  mission:AddObjective(objective1000)
 
   -- Objective 2: Drive back to Salieris bar.
   local objective2 = MDM_GoToObjective:new({
@@ -472,13 +483,9 @@ function MDM_LucasBertone.M5_2_CremeDeLaCreme()
   local npc_enemy1 = MDM_NPC:new({npcId="18187434932497386406", position = MDM_Vector:new(545.29333,423.88425,19.781425), direction= MDM_Vector:new(-0.5477711,-0.83662814,0)})
   local npc_enemy2 = MDM_NPC:new({npcId="18187434932497386406", position = MDM_Vector:new(519.13971,426.54214,19.845762), direction= MDM_Vector:new(-0.5401746,-0.84155297,0)})
 
-  for _,enemy in ipairs({npc_enemy1,npc_enemy2}) do
-    local carguardAi = MDM_AI_NPC_CarguardAi:new({
-      npc = enemy,
-      cars = {car_celeste}
-    })
-    MDM_FeatureUtils.RunWhileEntitySpawned(carguardAi, enemy)
-  end
+  MDM_FeatureUtils.RunWhileEntitySpawned(MDM_AI_NPC_CarguardAi:new({npc = npc_enemy1, car = car_celeste}),npc_enemy1)
+  MDM_FeatureUtils.RunWhileEntitySpawned(MDM_AI_NPC_CarguardAi:new({npc = npc_enemy2, car = car_celeste}),npc_enemy2)
+
 
   local mission = MDM_Mission:new({
     title = "Lucas Bertone 5-2 - Creme de la Creme",

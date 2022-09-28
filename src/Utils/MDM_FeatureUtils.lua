@@ -46,6 +46,10 @@ end
 
 -- Registers a callback to a parent feature that enabls and deactivates the feature together with the parent feature
 function MDM_FeatureUtils.TieToFeature(feature, parentfeature)
+  if not parentfeature.OnEnabled then
+    error("OnEnabled method does not exist in parentFeature",2)
+  end
+
   parentfeature:OnEnabled(function() feature:Enable() end)
   parentfeature:OnDisabled(function() feature:Disable() end)
 end

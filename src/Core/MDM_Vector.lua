@@ -14,6 +14,8 @@ function MDM_Vector:new(x,y,z)
       z = z
     }
   end
+  
+  vector.DistanceToPoint = MDM_Vector.DistanceToPoint
 
   return vector
 end

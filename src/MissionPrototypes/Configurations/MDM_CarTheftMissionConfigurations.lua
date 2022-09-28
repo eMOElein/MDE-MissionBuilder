@@ -28,9 +28,19 @@ MDM_CarTheftMissionConfigurations.carThefts = {
       -- shotgun
       {npcId = "2624519215596331124", position = MDM_Vector:new(-583.04688,-234.88284,2.9995117), direction = MDM_Vector:new(-0.98360193,-0.1803534,0)},
       {npcId = "2624519215596331124", position = MDM_Vector:new(-583.78436,-228.15913,2.9418721), direction = MDM_Vector:new(-0.99942607,0.033875942,0)},
-      {npcId = "2624519215596331124",  position = MDM_Vector:new(-592.9212,-224.10063,3.7150674), direction = MDM_Vector:new(-0.73223102,-0.68105638,0)}
-    -- colt
-    --      {npcId = "18187434932497386406", position = MDM_Utils.GetVector(-572.57776,-224.13161,2.9868155), direction = MDM_Utils.GetVector(-0.48098215,-0.87673044,0),battleArchetype = "archetype_triggerman_base_pol"}
+      {npcId = "2624519215596331124", position = MDM_Vector:new(-592.9212,-224.10063,3.7150674), direction = MDM_Vector:new(-0.73223102,-0.68105638,0)},
+      -- colt
+      {npcId = "18187434932497386406", position = MDM_Vector:new(-574.2561,-236.09093,3.0060992), direction = MDM_Vector:new(-0.86400533,0.5034827,0)},
+      -- thompson
+      {npcId = "8866396308432925397",
+        position = MDM_Vector:new(-610.41675,-238.49673,3.0145183),
+        direction = MDM_Vector:new(-0.99842227,-0.056151628,0),
+        patrol = {
+          MDM_Vector:new(-610.2821,-225.09016,2.9366913),
+          MDM_Vector:new(-610.41675,-238.49673,3.0145183)
+        }
+      },
+
     }
   },
 --  {

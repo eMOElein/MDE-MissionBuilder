@@ -56,6 +56,7 @@ function all()
   MDM_UnitTest.RegisterTest({name = "MDM_HostileZoneFeature.UnitTest", func = MDM_HostileZoneFeature.UnitTest})
   MDM_UnitTest.RegisterTest({name = "MDM_NPCGoToDirector.UnitTest", func = MDM_NPCGoToFeature.UnitTest})
   MDM_UnitTest.RegisterTest({name = "MDM_EntityDistanceFeature.UnitTest", func = MDM_EntityDistanceFeature.UnitTest})
+  MDM_UnitTest.RegisterTest({name = "MDM_AI_BasicDetection.UnitTest",func = MDM_AI_BasicDetection.UnitTest})
   ----------------
   -- Objectives --
   ----------------
@@ -124,6 +125,8 @@ MDM_LuaLoader.ImportLuas(MDM_LuaLoader._luas)
 MDM_LuaLoader.ImportLuas(MDM_UnitTest._luas)
 all()
 MDM_ShootoutMission.UnitTest()
+MDM_AI_BasicDetection.UnitTest()
 print("ALL OK!")
+
 
 

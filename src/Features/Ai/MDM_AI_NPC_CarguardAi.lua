@@ -9,23 +9,27 @@ function MDM_AI_NPC_CarguardAi:new(args)
     error("npc not set",2)
   end
 
-  if not args.cars then
+  local carguardAi = MDM_Feature:new(args)
+
+  carguardAi.npc = args.npc
+  carguardAi.cars = MDM_List:new(args.cars)
+  carguardAi.engineStates = {}
+  carguardAi.detectionRange = args.detectionRange or 35
+  carguardAi.hearingDistance = args.hearingDistance or 20
+
+  if args.car then
+    carguardAi.cars:Add(args.car)
+  end
+
+  if not carguardAi.cars or #carguardAi.cars == 0 then
     error("cars not set",2)
   end
 
+  carguardAi:OnEnabled(MDM_AI_NPC_CarguardAi._OnEnabled)
+  carguardAi:OnUpdate(MDM_AI_NPC_CarguardAi._OnUpdate)
+  carguardAi:OnDisabled(MDM_AI_NPC_CarguardAi._OnDisabled)
 
-  local director = MDM_Feature:new(args)
-
-  director.npc = args.npc
-  director.cars = args.cars
-  director.engineStates = {}
-  director.detectionRange = 30
-
-  director:OnEnabled(MDM_AI_NPC_CarguardAi._OnEnabled)
-  director:OnUpdate(MDM_AI_NPC_CarguardAi._OnUpdate)
-  director:OnDisabled(MDM_AI_NPC_CarguardAi._OnDisabled)
-
-  return director
+  return carguardAi
 end
 
 
@@ -46,7 +50,7 @@ function MDM_AI_NPC_CarguardAi._OnUpdate(self)
     return
   end
 
-  print("updating")
+  --  print("updating")
 
   local releaseThreshold = 2
   local gameEntity = self.npc:GetGameEntity()
@@ -63,11 +67,11 @@ function MDM_AI_NPC_CarguardAi._OnUpdate(self)
     return
   end
 
-  MDM_AI_NPC_CarguardAi._EngineState(self)
-
   if self.attacking then
     return
   end
+
+  MDM_AI_NPC_CarguardAi._EngineState(self)
 
   MDM_AI_NPC_CarguardAi._Detection(self)
 end
@@ -100,6 +104,10 @@ function MDM_AI_NPC_CarguardAi._EngineState(self)
 
       -- on engine turned on
       if current and not previous then
+        print("Distance: " ..self.npc:GetPosition():DistanceToPoint(MDM_PlayerUtils.GetPos()))
+        if self.npc:GetPosition():DistanceToPoint(MDM_PlayerUtils.GetPos()) <= 2 then
+
+        end
         gameEntity:TurnAtVec(car:GetPosition(),1)
       end
 

@@ -72,6 +72,10 @@ function MDM_List.IndexOf(self,object)
 end
 
 function MDM_List.Map(self, mapper)
+  if not mapper then
+    error("mapper not set",2)
+  end
+
   local newList = MDM_List:new()
 
   for _,o in ipairs(self) do

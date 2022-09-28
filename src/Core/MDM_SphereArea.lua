@@ -18,6 +18,7 @@ function MDM_SphereArea:new(config)
   area.position = config.position
   area.radius = config.radius
   area.color = config.color or 4
+  area.SetPosition = MDM_SphereArea.SetPosition
 
   area.IsInside = MDM_SphereArea._IsInside
   area.Show = MDM_SphereArea._Show
@@ -26,6 +27,9 @@ function MDM_SphereArea:new(config)
   return area
 end
 
+function MDM_SphereArea.SetPosition(self,position)
+  self.position = position
+end
 function MDM_SphereArea._Hide(self)
   MDM_Area.Hide(self)
 

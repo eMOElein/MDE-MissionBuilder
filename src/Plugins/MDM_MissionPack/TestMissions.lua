@@ -48,6 +48,87 @@ function TestMissions.Test()
   --game.hud:StartCountDown(20) Countdown vom Rennen
 end
 
+function TestMissions.BasicDetectionTest()
+  local npc = MDM_NPC:newFriend({npcId = "13604348442857333985", position = MDM_Vector:new(-912.05573,-169.46973,2.8635244), direction = MDM_Vector:new(0.99868453,0.051275015,0)})
+  local banner = MDM_Banner:new("")
+
+  local detectionAi = MDM_AI_BasicDetection:new({
+    positionSupplier = function() return npc:GetPosition() end,
+    onDistanceAreaChanged = function(self, newDistance, oldDistance) banner.title = tostring(newDistance) banner:Show() end,
+    onDetected = function() detected = true end
+  })
+
+  local mission = MDM_Mission:new({
+    onMissionEnd = function() banner:Hide()end
+  })
+
+  mission:AddAsset(npc)
+
+  local objective_1000 = MDM_SpawnerObjective:new({
+    mission = mission,
+    spawnables = {npc}
+  })
+
+  local objective_2000 = MDM_KillTargetsObjective:new({
+    mission = mission,
+    targets = {npc}
+  })
+
+  mission:AddObjectives({
+    objective_1000,
+    objective_2000
+  })
+
+  MDM_FeatureUtils.RunWhileEntitySpawned(detectionAi,npc)
+
+  return mission
+end
+
+function TestMissions.PatrolTest()
+
+  local npc = MDM_NPC:newFriend({npcId = "13604348442857333985", position = MDM_Vector:new(-912.05573,-169.46973,2.8635244), direction = MDM_Vector:new(0.99868453,0.051275015,0)})
+
+  local pos1 = MDM_Vector:new(-909.13428,-169.12682,2.8591447)
+  local pos2 = MDM_Vector:new(-908.85626,-180.35814,2.8549209)
+  local pos3 = pos1
+  local pos4 = MDM_Vector:new(-912.05573,-169.46973,2.8635244)
+
+  local patrolAi = MDM_AI_NPC_BasicPatrol:new({
+    npc = npc,
+    positions = {
+      pos1,
+      pos2,
+      pos3,
+      pos4
+    }
+  })
+  MDM_FeatureUtils.RunWhileEntitySpawned(patrolAi,npc)
+
+
+  local mission = MDM_Mission:new({
+    startPosition = MDM_Vector:new(-906.9397,-163.73718,2.8607993)
+  })
+
+  mission:AddAsset(npc)
+
+  local objective_1000 = MDM_SpawnerObjective:new({
+    mission = mission,
+    spawnables = {npc}
+  })
+
+  local objective_2000 = MDM_KillTargetsObjective:new({
+    mission = mission,
+    targets = {npc}
+  })
+
+  mission:AddObjectives({
+    objective_1000,
+    objective_2000
+  })
+
+  return mission
+end
+
 function TestMissions.DuelTest()
 
   --- @param enemyNpcs = MDM_NPC instances
@@ -195,7 +276,10 @@ function TestMissions.PursuitTest()
       car_police:GetGameEntity():SetSirenOn(true)
       car_police:GetGameEntity():SetBeaconLightOn(true)
       car_police:GetGameEntity():SetMaxAISpeed(true,65)
-      car_police:GetGameEntity():SetNavModeHunt(npc_target:GetGameEntity(),5,  enums.CarHuntRole.FOLLOW    )
+      -- car_police:GetGameEntity():SetNavModeHunt(npc_target:GetGameEntity(),5,  enums.CarHuntRole.FOLLOW    )
+      car_police:GetGameEntity():SetNavModeHunt(npc_target:GetGameEntity(),5,  enums.CarHuntRole.ALL    )
+
+      --      car_police:GetGameEntity():SetNavModeHuntTeleport(false,npc_target:GetGameEntity(),5,  enums.CarHuntRole.ALL    )
 
       getp():GetOnVehicle(car_player:GetGameEntity(), 1, false, "WALK")
 
@@ -652,6 +736,7 @@ function TestMissions.DistanceDiretorTest()
 end
 
 MDM_UnitTest.RegisterTest({name = "TestMissions.GetInCar", func = TestMissions.GetInCar})
+MDM_UnitTest.RegisterTest({name = "TestMissions.BasicDetectionTest", func = TestMissions.BasicDetectionTest})
 MDM_UnitTest.RegisterTest({name = "TestMissions.KillMission", func = TestMissions.KillMission})
 MDM_UnitTest.RegisterTest({name = "TestMissions.WaypointMission", func = TestMissions.WaypointMission})
 MDM_UnitTest.RegisterTest({name = "TestMissions.GangWarTest", func = TestMissions.GangWarTest})
@@ -662,3 +747,4 @@ MDM_UnitTest.RegisterTest({name = "TestMissions.CivilWanderTest", func = TestMis
 MDM_UnitTest.RegisterTest({name = "TestMissions.PursuitTest", func = TestMissions.PursuitTest})
 MDM_UnitTest.RegisterTest({name = "TestMissions.CarchaseTest", func = TestMissions.CarchaseTest})
 MDM_UnitTest.RegisterTest({name = "TestMissions.DistanceDiretorTest", func = TestMissions.DistanceDiretorTest})
+MDM_UnitTest.RegisterTest({name = "TestMissions.Patroltest", func = TestMissions.PatrolTest})

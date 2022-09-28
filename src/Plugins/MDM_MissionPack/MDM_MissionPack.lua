@@ -283,6 +283,13 @@ end
 function MDM_MissionPack.InitializeTestMissions()
   local client = "DebugMissions"
 
+  local BasicDetection = {
+    title = "Basic Detection",
+    client = client,
+    missionSupplier =  TestMissions.BasicDetectionTest
+  }
+  MDM_Core.missionManager:AddMissionProvider(BasicDetection)
+
   local GetInCar = {
     title = "GetInCar",
     client = client,
@@ -296,6 +303,13 @@ function MDM_MissionPack.InitializeTestMissions()
     missionSupplier = TestMissions.KillMission
   }
   MDM_Core.missionManager:AddMissionProvider(KillMission)
+
+  local PatrolMission = {
+    title = "NPC Patrol",
+    client = client,
+    missionSupplier = TestMissions.PatrolTest
+  }
+  MDM_Core.missionManager:AddMissionProvider(PatrolMission)
 
   local WaypointMission = {
     title = "Waypoint Mission",

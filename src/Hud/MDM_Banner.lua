@@ -17,6 +17,13 @@ function MDM_Banner:new(title)
   return banner
 end
 
+function MDM_Banner.SetTitle(self,title)
+  self.title = title
+  if self:IsShowing() then
+    self:Show()
+  end
+end
+
 function MDM_Banner.SetColor(self,color)
   self.color = color
   return self
