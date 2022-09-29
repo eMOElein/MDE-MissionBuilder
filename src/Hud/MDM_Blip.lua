@@ -58,6 +58,7 @@ function MDM_Blip:_new(config)
 
   blip.entity = config.entity
   blip.onupdate = function() MDM_Blip._OnUpdate(blip) end
+  blip.iconType = "objective_primary"
 
   MDM_Blip.instances = MDM_Blip.instances +1
   blip.instance = MDM_Blip.instances
@@ -79,36 +80,19 @@ function MDM_Blip._OnUpdate(self)
 
     if game then
       self.marker = game.navigation:RegisterObjectiveEntityDirect(self.entity:GetGameEntity(), "Unknown 1", "Unknown 2", true)
-      game.hud:AddEntityIndicator(self.entity:GetGameEntity(),"objective_primary", MDM_Vector:new(0,0,0))
-      --    game.hud:AddEntityIndicator(self.entity:GetGameEntity(), "melee_charge", MDM_Vector:new(0,0,0))
-      --   game.hud:AddEntityIndicator(self.entity:GetGameEntity(),"district_objective", MDM_Vector:new(0,0,0))
-      --     game.hud:AddEntityIndicator(self.entity:GetGameEntity(),"squealer", MDM_Vector:new(0,0,0))
-      -- game.hud:AddEntityIndicator(self.entity:GetGameEntity(),"bagman", MDM_Vector:new(0,0,0))
-      --   game.hud:AddEntityIndicator(self.entity:GetGameEntity(),"vehicle_delivery", MDM_Vector:new(0,0,0))
-      --    game.hud:AddEntityIndicator(self.entity:GetGameEntity(),"melee_finisher", MDM_Vector:new(0,0,0))
-      --  game.hud:AddEntityIndicator(self.entity:GetGameEntity(),"hideout_bonus", MDM_Vector:new(0,0,0))
+      game.hud:AddEntityIndicator(self.entity:GetGameEntity(),self.iconType, MDM_Vector:new(0,0,0))
+
       --   game.hud:AddEntityIndicator(self.entity:GetGameEntity(),"hideout_health_station", MDM_Vector:new(0,0,0))
       --    game.hud:AddEntityIndicator(self.entity:GetGameEntity(),"hideout_weapon_locker", MDM_Vector:new(0,0,0))
       --  game.hud:AddEntityIndicator(self.entity:GetGameEntity(),"hideout_flak_vest", MDM_Vector:new(0,0,0))
       --    game.hud:AddEntityIndicator(self.entity:GetGameEntity(),"money", MDM_Vector:new(0,0,0))
-      --    game.hud:AddEntityIndicator(self.entity:GetGameEntity(),"entrance_interact", MDM_Vector:new(0,0,0))
       --     game.hud:AddEntityIndicator(self.entity:GetGameEntity(),"entrance_advertise", MDM_Vector:new(0,0,0))
       --     game.hud:AddEntityIndicator(self.entity:GetGameEntity(),"relay_interact", MDM_Vector:new(0,0,0))
-
-      --     Q - Tastatursymbol
-      --     game.hud:AddEntityIndicator(self.entity:GetGameEntity(),"melee_attack", MDM_Vector:new(0,0,0))
 
       --     game.hud:AddEntityIndicator(self.entity:GetGameEntity(),"relay_collectable", MDM_Vector:new(0,0,0))
       --     game.hud:AddEntityIndicator(self.entity:GetGameEntity(),"vehicle_locked_target", MDM_Vector:new(0,0,0))
       --     game.hud:AddEntityIndicator(self.entity:GetGameEntity(),"phone", MDM_Vector:new(0,0,0))
 
-      -- Rotes Icon mit Zielfadenkreuz ---
-      --      game.hud:AddEntityIndicator(self.entity:GetGameEntity(),"hitman", MDM_Vector:new(0,0,0))
-
-      -- Offenes Auge wei� ???
-      --          game.hud:AddEntityIndicator(self.entity:GetGameEntity(),"binoculars", MDM_Vector:new(0,0,0))
-
-      --     game.hud:AddEntityIndicator(self.entity:GetGameEntity(),"lock_advertise", MDM_Vector:new(0,0,0))
       --    game.hud:AddEntityIndicator(self.entity:GetGameEntity(),"alarm_advertise", MDM_Vector:new(0,0,0))
 
       -- wei�er truck
@@ -119,12 +103,6 @@ function MDM_Blip._OnUpdate(self)
 
 
       --    game.hud:AddEntityIndicator(self.entity:GetGameEntity(),"muscle_burke", MDM_Vector:new(0,0,0))
-
-      -- Q auf tastatur
-      --      game.hud:AddEntityIndicator(self.entity:GetGameEntity(),"melee_stealth_kill", MDM_Vector:new(0,0,0))
-
-      --    game.hud:AddEntityIndicator(self.entity:GetGameEntity(),"gate_crash_advertise", MDM_Vector:new(0,0,0))
-      --    game.hud:AddEntityIndicator(self.entity:GetGameEntity(),"gate", MDM_Vector:new(0,0,0))
       --     game.hud:AddEntityIndicator(self.entity:GetGameEntity(),"alarm", MDM_Vector:new(0,0,0))
       --      game.hud:AddEntityIndicator(self.entity:GetGameEntity(),"deposit", MDM_Vector:new(0,0,0))
       --      game.hud:AddEntityIndicator(self.entity:GetGameEntity(),"mobile_store", MDM_Vector:new(0,0,0))
@@ -150,7 +128,7 @@ function MDM_Blip.Hide(self)
 
   if game and self.marker  then
     HUD_UnregisterIcon(self.marker)
-    game.hud:RemoveEntityIndicator(self.entity:GetGameEntity(), "objective_primary", MDM_Vector:new(0,0,0))
+    game.hud:RemoveEntityIndicator(self.entity:GetGameEntity(), self.iconType, MDM_Vector:new(0,0,0))
     self.marker = nil
   end
 end

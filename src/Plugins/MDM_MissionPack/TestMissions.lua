@@ -86,12 +86,12 @@ end
 
 function TestMissions.PatrolTest()
 
-  local npc = MDM_NPC:newFriend({npcId = "13604348442857333985", position = MDM_Vector:new(-912.05573,-169.46973,2.8635244), direction = MDM_Vector:new(0.99868453,0.051275015,0)})
+  local npc = MDM_NPC:newFriend({npcId = "13604348442857333985", position = MDM_Vector:new(-1722.4747,300.64154,22.720945), direction = MDM_Vector:new(0.99868453,0.051275015,0)})
 
-  local pos1 = MDM_Vector:new(-909.13428,-169.12682,2.8591447)
-  local pos2 = MDM_Vector:new(-908.85626,-180.35814,2.8549209)
-  local pos3 = pos1
-  local pos4 = MDM_Vector:new(-912.05573,-169.46973,2.8635244)
+  local pos1 = MDM_Vector:new(-1737.3948,293.03293,21.158731)
+  local pos2 = MDM_Vector:new(-1731.4111,282.30789,21.057386)
+  local pos3 = MDM_Vector:new(-1718.8314,290.66013,22.497913)
+  local pos4 = MDM_Vector:new(-1722.4747,300.64154,22.720945)
 
   local patrolAi = MDM_AI_NPC_BasicPatrol:new({
     npc = npc,
@@ -106,7 +106,7 @@ function TestMissions.PatrolTest()
 
 
   local mission = MDM_Mission:new({
-    startPosition = MDM_Vector:new(-906.9397,-163.73718,2.8607993)
+    startPosition = MDM_Vector:new(-1711.4769,301.31213,23.593981)
   })
 
   mission:AddAsset(npc)
